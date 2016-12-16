@@ -1,0 +1,117 @@
+<?xml version="1.0" encoding="GBK"?>
+<!--
+To change this template, choose Tools | Templates
+and open the template in the editor.
+-->
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.1//EN" "http://www.w3.org/TR/xhtml11/DTD/xhtml11.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:util="http://java.sun.com/jsf/composite/xhtml">
+    <h:head>
+        <link href="./../resources/common/css/default.css" rel="stylesheet" type="text/css" />
+        <link href="./../resources/common/css/cssIcon.css" rel="stylesheet" type="text/css" />
+    </h:head>
+    <h:body>
+        <h:form>
+            <util:confirm  uid="offlineDisk" mess="${res.get('offlinetip')}" action="#{virtualDiskBean.offline_real()}" update=":form:poolList">
+
+            </util:confirm> 
+        </h:form>
+        <h:form>
+            <util:confirm  uid="delDiskPool" mess="${res.get('delpoolreal')}" action="#{virtualDiskBean.delDiskPool_real()}" update=":form:poolList">
+
+            </util:confirm> 
+        </h:form>
+        <h:form>
+            <util:confirm  uid="delDisk" mess="${res.get('deldiskreal')}" action="#{virtualDiskBean.delDisk_real()}" update=":form:poolList">
+
+            </util:confirm>
+        </h:form>
+        <h:form id="form">
+            <h1 class="title ui-widget-header ui-corner-all">${res.get('title')}</h1>
+            <p:messages id="messages" showDetail="true" autoUpdate="true" closable="true" />
+            <br/>           
+            <div style="overflow-x: auto; width:100%;padding-bottom: 2px!important;padding-bottom: 14px;">
+                <p:dataTable id="poolList" var="diskPoolInfo" value="#{virtualDiskBean.poolList}" emptyMessage="#{global.get('emptyMessage')}">
+                   <p:ajax event="rowToggle" listener="#{virtualDiskBean.onRowToggle}" update="diskList" />
+                    <p:column style="width:2%">  
+                        <p:rowToggler />  
+                    </p:column> 
+                   <p:column headerText="${res.get('name')}" disabledSelection="true" style="width: 122px;">  
+                        <h:outputText value="#{diskPoolInfo.poolName}"/>  
+                    </p:column>
+                    <p:column headerText="${res.get('state')}" disabledSelection="true" style=" text-align: center; white-space: nowrap;">  
+                        <h:outputText value="#{diskPoolInfo.state}"/>  
+                    </p:column>
+                   <p:column headerText="${res.get('belong')}" disabledSelection="true" style="width: 122px;">  
+                       <h:outputText value="#{diskPoolInfo.diskarea}"/>  
+                    </p:column>
+                    <p:column headerText="${res.get('operation')}" style=" white-space: nowrap;">
+                        <p:graphicImage value="#{diskPoolInfo.lineURL}"  width="16" height="16" style=" vertical-align:middle;"/>
+                        <p:commandLink id="onlineButton" disabled="#{diskPoolInfo.cantOnline}" value="#{diskPoolInfo.onlineState}" action="#{virtualDiskBean.linePool}" update="poolList" style=" vertical-align:middle;"> 
+                            <f:setPropertyActionListener value="#{diskPoolInfo}" target="#{virtualDiskBean.selectPool}" />
+                        </p:commandLink>
+                        <p:spacer width="10"/>
+                        <p:graphicImage value="../resources/common/picture/delete.png" style=" vertical-align:middle;"/>
+                        <p:commandLink id="deleteButton" disabled="#{diskPoolInfo.cantdel}" value="${global.get('delete')}" action="#{virtualDiskBean.delDiskPool}" update="poolList" style=" vertical-align:middle;"> 
+                            <f:setPropertyActionListener value="#{diskPoolInfo}" target="#{virtualDiskBean.selectPool}" />
+                        </p:commandLink>
+                        <p:spacer width="10"/>
+                        <p:graphicImage value="../resources/common/picture/synchronization.png" style=" vertical-align:middle;"/>
+                        <p:commandLink id="syncButton" disabled="#{diskPoolInfo.cantSync}" value="${res.get('syncdisk')}"  update="poolList" style=" vertical-align:middle;"> 
+                        </p:commandLink>
+                        <p:spacer width="10"/>
+                        <p:graphicImage value="../resources/common/picture/lun.png" style=" vertical-align:middle;"/>
+                        <p:commandLink id="mapButton" disabled="#{diskPoolInfo.cantLUN}" value="${res.get('lunmapping')}"  action="#{virtualDiskBean.lunMapping}" update="poolList" style=" vertical-align:middle;"> 
+                            <f:setPropertyActionListener value="#{diskPoolInfo}" target="#{virtualDiskBean.selectPool}" />
+                        </p:commandLink>
+                        <p:spacer width="10"/>
+                        <p:graphicImage value="../resources/volume/picture/addDisk.png" style=" vertical-align:middle;"/>
+                        <p:commandLink id="adddiskButton" disabled="#{diskPoolInfo.cantDisk}" value="${res.get('createdisk')}" update="poolList" style=" vertical-align:middle;" action="#{virtualDiskBean.createDisk}"> 
+                            <f:setPropertyActionListener value="#{diskPoolInfo}" target="#{virtualDiskBean.selectPool}" />
+                        </p:commandLink>
+                    </p:column>
+                    <p:rowExpansion>
+                        <div style="overflow-x:auto; width: 100%;padding-bottom: 0px!important;padding-bottom: 6px;">
+                            <p:dataTable var="virtualDiskInfo" value="#{diskPoolInfo.diskList}" id="diskList" style=" margin-top: 10px;margin-bottom: 6px; margin-right: 0px !important;margin-right: -70px;" emptyMessage="#{global.get('emptyMessage')}">  
+                                <p:column headerText="${res.get('name')}" style=" white-space: nowrap;">  
+                                    <h:outputText value="#{virtualDiskInfo.diskName}" />  
+                                </p:column> 
+                                <p:column headerText="${res.get('disksize')}" style=" white-space: nowrap;">  
+                                    <h:outputText value="#{virtualDiskInfo.diskSize}"/>  
+                                </p:column>  
+                                <p:column headerText="${res.get('state')}" disabledSelection="true" style=" white-space: nowrap;">  
+                                    <h:outputText value="#{virtualDiskInfo.state}"/>  
+                                </p:column>
+                                <p:column headerText="${res.get('guid')}" disabledSelection="true" >  
+                                    <h:outputText value="#{virtualDiskInfo.GUID}"/>  
+                                </p:column>
+                                <p:column headerText="${res.get('filesize')}" disabledSelection="true" style="width: 100px;text-align:center;">  
+                                    <h:outputText value="#{virtualDiskInfo.fileSize}"/>  
+                                </p:column>
+                                <p:column headerText="${res.get('operation')}" disabledSelection="true" style=" white-space: nowrap;">  
+                                    <p:graphicImage value="../resources/common/picture/delete.png" style=" vertical-align:middle;"/>
+                                    <p:commandLink id="deletedisk" disabled="#{virtualDiskInfo.cantdel}" value="${global.get('delete')}" action="#{virtualDiskBean.delDisk}" update="diskList" style=" vertical-align:middle;"> 
+                                        <f:setPropertyActionListener value="#{virtualDiskInfo}" target="#{virtualDiskBean.selectDisk}" />
+                                    </p:commandLink>  
+                                </p:column>
+                            </p:dataTable>
+                        </div>
+                    </p:rowExpansion>
+                </p:dataTable>   
+            </div>
+            
+        </h:form>
+        <p:ajaxStatus style="width:64px;height:64px;position:fixed;right:5px;bottom:5px">  
+            <f:facet name="start">  
+                <p:graphicImage value="../resources/common/picture/loading.gif" />  
+            </f:facet>  
+                
+            <f:facet name="complete">  
+                <h:outputText value="" />  
+            </f:facet>  
+        </p:ajaxStatus>
+    </h:body>
+</html>

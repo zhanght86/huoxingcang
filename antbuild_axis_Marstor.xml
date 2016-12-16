@@ -1,0 +1,125 @@
+<?xml version="1.0" encoding="GB18030" ?>
+<project name="msa" default="build" basedir="." >
+    <!-- 一些编译时用到的变量，主要是路径及最终jar文件名，都是相对于当前路径的相对路径 -->
+    <!-- 其中 DistDir变量名不能更改 -->
+    <property name="ModuleName" value="MSACommonModuleServer"/>
+    <property name="SrcDir" value="src/java"/> 			<!-- 源代码路径 -->
+    <property name="WebDir" value="web"/> 			<!-- xhtml路径 -->   
+    <property name="DestDir" value="dest"/>		<!-- 打包路径 -->
+    <property name="DestDir.class" value="${DestDir}/WEB-INF/classes"/> 			<!-- classes路径 -->
+    <property name="DistDir" value="dist/vendor/marstor"/>			<!-- jar文件最终分发位置 -->
+    <property name="WarName" value="ROOT.war" /> <!-- jar包的文件名 -->
+    <property name="LibDir" value="web/WEB-INF/lib"/>			<!-- 编译时用到的第三方包 -->
+    <property name="tomcatLib" value="J:\web\apache-tomcat-6.0.35\lib"/> <!-- 编译时用到的第三方包 -->
+	
+    <!-- 创建路径 -->
+    <target name="init" depends="-init-private">
+        <mkdir dir="${DestDir}"/>
+        <mkdir dir="${DestDir.class}"/>
+        <mkdir dir="${DistDir}"/>
+    </target>
+	
+    <!-- 清理 -->
+    <target name="clean">
+        <delete dir="${DestDir}"/>
+        <delete dir="${DistDir}/${WarName}"/>
+    </target>
+    
+    <target  name="-init-private" >
+        <property file="nbproject/private/private.properties"/>
+    </target>
+	
+	
+    <!-- 拷贝资源文件 -->
+    <target name="copyfile" depends="init">     
+        <copy todir="${DestDir.class}">
+            <fileset dir="${SrcDir}">
+                <include name ="**/*.properties"/>
+                <include name ="**/*.xml"/>               
+            </fileset>
+        </copy>
+        <copy todir="${DestDir}">
+            <fileset dir="${WebDir}">
+                <include name ="**/*"/>
+                <exclude name="test/"/>
+                <exclude name="resources/Blank/"/>
+                <exclude name="resources/U-Backup/"/>
+                <exclude name="resources/TOYOU/"/>
+                <exclude name="resources/TOPSEC/"/>
+				<exclude name="resources/DHC/"/>
+				<exclude name="resources/SUPOOL/"/>
+				<exclude name="resources/FX/"/>
+                <exclude name="WEB-INF/lib/axis2/*"/>
+                <exclude name="WEB-INF/lib/axis2/endorsed/*"/>
+                <exclude name="WEB-INF/lib/axis2"/>
+                <exclude name="WEB-INF/lib/jersey/api/*"/>
+                <exclude name="WEB-INF/lib/jersey/lib/*"/>
+                <exclude name="WEB-INF/lib/jersey/ext/*"/>
+                <exclude name="WEB-INF/lib/jersey/api"/>
+                <exclude name="WEB-INF/lib/jersey/lib"/>
+                <exclude name="WEB-INF/lib/jersey/ext"/>
+                <exclude name="WEB-INF/lib/jersey"/>               
+            </fileset>
+        </copy>
+        <copy todir="${DestDir}/WEB-INF/lib">
+            <fileset dir="${LibDir}/ServerJars">
+                <include name ="*.jar"/>
+            </fileset>
+            <fileset dir="${LibDir}/axis2">
+                <include name ="*.jar"/>
+            </fileset>
+            <fileset dir="${LibDir}/axis2/endorsed">
+                <include name ="*.jar"/>
+            </fileset>    
+            <fileset dir="${LibDir}/jersey/api">
+                <include name ="*.jar"/>
+            </fileset>  
+            <fileset dir="${LibDir}/jersey/lib">
+                <include name ="*.jar"/>
+            </fileset>  
+            <fileset dir="${LibDir}/jersey/ext">
+                <include name ="*.jar"/>
+            </fileset>  			
+            <fileset dir=".">
+                <include name ="MSAJniLoader.jar"/>
+            </fileset>
+        </copy>
+    </target>
+	
+    <!-- 开始编译 -->
+    <target name="compile" depends="clean,init">
+        <javac target="1.6" source="1.6" includeantruntime="false" srcdir="${SrcDir}" destdir="${DestDir.class}" debug="true" encoding="gbk">
+            <classpath>
+                <fileset dir="${LibDir}">
+                    <include name ="**/*.jar"/>
+                </fileset>
+                <fileset dir="${j2ee.server.home}/lib">
+                    <include name ="**/*.jar"/>
+                </fileset>
+            </classpath>
+        </javac>
+    </target>
+	
+    <tstamp>
+        <format property="TODAY" pattern="yyyyMMddHHmm" />
+    </tstamp>
+
+
+    <!-- 将编译结果打包，同时将第三方包打入自己的包 -->
+    <target  name="build" depends="compile,copyfile">
+        <war warfile="${DistDir}/${WarName}" webxml="${DestDir}/WEB-INF/web.xml">  
+            <manifest>
+                <attribute name="Built-Date" value="${TODAY}"/>
+                <attribute name="Version" value="5.0 "/>
+            </manifest>
+            <!--<lib dir="${DestDir}/WEB-INF/lib"/>-->  
+            <!--<classes dir="${DestDir.class}"/>-->  
+            <fileset dir="${DestDir}"/>  
+        </war>  
+    </target>
+	
+    <!-- 运行包 -->
+    <target name="run" depends="build">
+        <java classname="com.marstor.msa.main.CilentMain" classpath="${DistDir}/${JarName}"/>
+    </target>
+</project>

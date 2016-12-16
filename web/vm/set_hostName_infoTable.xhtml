@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="GBK"?>
+<!--
+To change this template, choose Tools | Templates
+and open the template in the editor.
+-->
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.1//EN" "http://www.w3.org/TR/xhtml11/DTD/xhtml11.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:p="http://primefaces.org/ui"
+                template="../template/framework.xhtml">
+    <ui:define name="content">
+        <h1 title="System Infomation" class="title ui-widget-header ui-corner-all">设置——主机名</h1>
+        <br/>
+        <h:panelGrid columns="3" cellpadding="5">  
+            <h:outputLabel for="hostname" value="主机名：" />  
+            <p:inputText id="hostname" value="msaserver" required="true" label="Hostname">  
+                <f:validateLength minimum="2" />  
+            </p:inputText>  
+            <p:message for="hostname" id="lblErrFirstName" />  
+
+            <p:spacer width="60" height="10" />
+            <h:outputLabel for="surname" value="默认设备的主机名。 ASCII字母或数字，它必须开始和结束，并且只能包含ASCII字母，数字和连字符（“ - ”）" /> 
+        </h:panelGrid>
+        <p:separator />
+        <p:spacer width="80" height="6" />
+        <p:commandButton id="btn" value="Save"  actionListener="#{personBean.savePerson}"/>
+ 
+    </ui:define>
+</ui:composition>

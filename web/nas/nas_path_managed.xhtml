@@ -1,0 +1,281 @@
+<?xml version="1.0" encoding="GBK"?>
+<!--
+To change this template, choose Tools | Templates
+and open the template in the editor.
+-->
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.1//EN" "http://www.w3.org/TR/xhtml11/DTD/xhtml11.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:p="http://primefaces.org/ui"
+                template="../template/framework.xhtml">
+
+    <ui:define name="left">
+        <ui:include src="../panel/leftMenu.xhtml"/>
+    </ui:define>
+
+    <ui:define name="content">
+
+        <script type="text/javascript">
+                    function clickConfirm(xhr, status, args) {
+                     var r = args.result;
+                      if(r=="failed") {
+                        alert("请关闭共享功能！");
+                        return  false;
+                     }
+                     if(r=="on") {
+                          return  false;
+                     }
+               
+                      return  true;
+                     }
+                     function clickSave(xhr, status, args) {
+
+                     var r = args.result;
+                      alert(r);
+               
+                      
+                     }
+                     function init() {
+                          //document.getElementById("form:duplicate_input").disabled = true;
+                          
+                         var  value = document.getElementById("form:duplicate_input").checked;
+                         //alert(value);
+                         if(!value) {
+                            // document.getElementById("form:check_input").checked = true;
+                             document.getElementById("form:check_input").setAttribute("disabled", "true");
+                         }else {
+                             document.getElementById("form:check_input").setAttribute("disabled", "false");
+                             
+                         }
+//                         var  value = document.getElementById("form:check_input").disabled;
+//                         alert(value);
+                         var  value = document.getElementById("form:quota_input").checked;
+                         if(value) {
+                             document.getElementById("form:maxSpace").disabled = false;
+                         }else {
+                             document.getElementById("form:maxSpace").disabled = true;
+                         }
+                     }
+                     
+                     function  clickDuplicate() {
+                         var  value = document.getElementById("form:duplicate").checked;
+                         if(!value) {
+                             document.getElementById("form:check").disabled = true;
+                         }else {
+                             document.getElementById("form:check").disabled = false;
+                         }
+                     }
+                     function  clickCompress() {
+                         var  value = document.getElementById("form:compress").checked;
+                         if(!value) {
+                             document.getElementById("form:pannellevel").disabled = true;
+                         }else {
+                             document.getElementById("form:pannellevel").disabled = false;
+                         }
+                     }
+                     function clickQuota() {
+                          var  value = document.getElementById("form:quota").checked;
+                         if(!value) {
+                             document.getElementById("form:maxSpace").disabled = true;
+                         }else {
+                             document.getElementById("form:maxSpace").disabled = false;
+                         }
+                     }
+                     function  initConfigParamDialog() {
+                          var  value = document.getElementById("form:duplicate").checked;
+                         if(!value) {
+                             document.getElementById("form:check").disabled = true;
+                         }else {
+                             document.getElementById("form:check").disabled = false;
+                         }
+                         var  value = document.getElementById("form:compress").checked;
+                         if(!value) {
+                             document.getElementById("form:pannellevel").disabled = true;
+                         }else {
+                             document.getElementById("form:pannellevel").disabled = false;
+                         }
+                          var  value = document.getElementById("form:quota").checked;
+                         if(!value) {
+                             document.getElementById("form:maxSpace").disabled = true;
+                         }else {
+                             document.getElementById("form:maxSpace").disabled = false;
+                         }
+                     }
+                     
+                    
+        </script>
+        <h:form id="form">
+            <h1 title="Share Path Infomation" class="title ui-widget-header ui-corner-all">共享目录管理</h1>
+            <p:dataTable emptyMessage="#{global.get('emptyMessage')}"  id="paths" var="path" value="#{sharePathTable.model.paths}" rowKey="#{path.name}" selection="#{sharePathTable.selectedPath}"  selectionMode="single" editable="true" >
+                <p:column headerText="目录">
+                    #{path.name}  
+                </p:column>
+                <!--                <p:column headerText="NFS" >
+                                    {path.nfsOnOrOff}
+                                </p:column>
+                                <p:column headerText="CIFS" >
+                                    {path.cifsOnOrOff}
+                                </p:column>-->
+
+                <p:column headerText="已用空间" >
+                    #{path.used}
+                </p:column>
+                <p:column headerText="未用空间" >
+                    #{path.available}
+                </p:column>
+                <p:column headerText="挂载点" >
+                    #{path.mountpoint}
+                </p:column>
+                <p:column headerText="状态" >
+                    #{path.onOrOff}
+                </p:column>
+                <p:column headerText="设置" >
+                    <p:commandButton  value="#{path.setStatus}" style="font-size: 12px" update=":form:paths" actionListener="#{sharePathTable.initConfigStatus}" oncomplete="if(clickConfirm(xhr, status, args)) confirmOffLine.show()"  >
+                        <f:param name="path" value="#{path.name}" />
+                    </p:commandButton> 
+                </p:column>
+                <f:facet name="footer" >
+                    <p:commandButton id="add" value="创建共享目录"  oncomplete="addShareDialog.show()" />
+                    <p:commandButton id="deleteu" value="删除共享目录" oncomplete="confirmDeletePath.show()" />
+                    <p:commandButton  value="设置参数" actionListener="#{sharePathTable.initParamDialog}"  oncomplete="configParamDialog.show()" update=":form:configParam" />
+                </f:facet>
+            </p:dataTable>
+            <p:dialog id="addshare" header="创建共享目录" widgetVar="addShareDialog" resizable="false" modal="true" >  
+
+                <h:panelGrid columns="3" cellpadding="5"  >  
+                    <h:outputLabel for="pathname" value="目录名：" />  
+                    <p:inputText value="#{addPath.pathName}" id="pathname"  label="pathname"  >
+                        <!--                        <f:validateRegex pattern=".*[A-Z].*" />-->
+
+                    </p:inputText>
+                    <!--                    <h:message for="pathname" />-->
+                    <!--                    <f:validator validatorId="ShareNameValidator" ></f:validator>-->
+                    <!--                    <h:messages/>-->
+                    <!--                    <h:message for="pathname" ></h:message>-->
+                    <!--                    <h:inputText id="share"  value="{editlink.shareNameEdit}"  >
+                                            <f:validator validatorId="ShareNameValidator" ></f:validator>
+                                        </h:inputText>
+                                        <h:message for="share" ></h:message>-->
+                    <br/>
+                    <h:outputLabel for="volume" value="卷组：" />  
+                    <p:selectOneMenu id="volume" value="#{addPath.selectedVolume}">  
+                        <f:selectItems value="#{addPath.volumeNames}" />  
+                    </p:selectOneMenu>
+
+                </h:panelGrid>  
+                <p:spacer width="80" height="6" />
+
+                <p:commandButton id="addButton" value="确定"  actionListener="#{addPath.addPath}" update=":form:paths"    oncomplete="addShareDialog.hide()">
+                    <!--                        <f:attribute name="folder" value="{sharepath.folder}" />
+                                            <f:attribute name="volume" value="{volumes.selectedName}" />-->
+                </p:commandButton>  
+                <p:commandButton id="closeButton" value="返回" oncomplete="addShareDialog.hide();"/>  
+
+            </p:dialog>
+            <p:confirmDialog id="confirmDeleteDialog" message="确定删除目录吗？" severity="alert" widgetVar="confirmDeletePath" >  
+                <p:commandButton  value="确定" update=":form:paths" oncomplete="confirmDeletePath.hide()"  actionListener="#{sharePathTable.removePath}" />  
+                <p:commandButton  value="返回" oncomplete="confirmDeletePath.hide()"  />    
+
+            </p:confirmDialog>
+
+            <p:confirmDialog id="confirmOffLineDialog" message="确定要离线吗？" severity="alert" widgetVar="confirmOffLine" >  
+                <p:commandButton  value="确定" update=":form:paths" oncomplete="confirmOffLine.hide()"  actionListener="#{sharePathTable.configStatusForPath}" />  
+                <p:commandButton  value="返回" oncomplete="confirmOffLine.hide()"  />    
+
+            </p:confirmDialog>
+
+            <p:dialog id="configParam" header="设置参数" widgetVar="configParamDialog" resizable="false" modal="true" onShow="initConfigParamDialog()"  >  
+                <h:panelGrid columns="2" >
+
+
+                    <h:panelGrid columns="2" >
+                        <h:panelGrid columns="1" >
+                            <h:selectBooleanCheckbox id="duplicate"  value="#{sharePathTable.editPath.startDeduplicate}" onclick="clickDuplicate()" >
+                                
+                            </h:selectBooleanCheckbox>
+                        </h:panelGrid>
+                        <h:panelGrid columns="1" >
+                            <h:outputLabel value="启用重复数据删除" />
+                        </h:panelGrid>
+                    </h:panelGrid>
+                    <h:panelGrid columns="2" >
+                        <h:panelGrid columns="1" >
+                            <h:selectBooleanCheckbox id="check" value="#{sharePathTable.editPath.startCheck}"  >
+
+                            </h:selectBooleanCheckbox>
+                        </h:panelGrid>
+                        <h:panelGrid columns="1" >
+                            <h:outputLabel value="启用数据校验" />
+                        </h:panelGrid>
+                    </h:panelGrid>
+                    <h:panelGrid columns="2" >
+                        <h:panelGrid columns="1" >
+                            <h:selectBooleanCheckbox id="compress"  value="#{sharePathTable.editPath.startCompress}" onclick="clickCompress()" >
+                                <!--                        <p:ajax  listener="{sharePathTable.selectedPath.changeCompress}" update="pannelSpin" /> -->
+                            </h:selectBooleanCheckbox>
+                        </h:panelGrid>
+                        <h:panelGrid columns="1" >
+                            <h:outputLabel value="启用数据压缩" />
+                        </h:panelGrid>
+                    </h:panelGrid>
+                    <h:panelGrid columns="2" id="pannellevel"  >
+                        <h:panelGrid columns="1" >
+                            <p:spinner id="minmax" size="1" value="#{sharePathTable.editPath.selectedLevel}"  min="1" max="9"/>  
+                        </h:panelGrid>
+                        <h:panelGrid columns="1" >
+                            <h:outputLabel value="（级别1-9）" />
+                        </h:panelGrid>
+                    </h:panelGrid>
+                    
+            </h:panelGrid>
+            <h:panelGrid columns="2" >
+                <h:panelGrid columns="1" >
+                    <h:selectBooleanCheckbox id="quota"  value="#{sharePathTable.editPath.startQuota}" onclick="clickQuota()" >
+                    </h:selectBooleanCheckbox>
+                </h:panelGrid>
+                <h:panelGrid columns="1" >
+                    <h:outputLabel value="启用配额管理" />
+                </h:panelGrid>
+            </h:panelGrid>
+
+
+            <!--                <h:outputLabel for="minmax" value="Min/Max: " />  -->
+
+            <h:panelGrid columns="2" >
+                <h:panelGrid columns="1" width="130px" >
+                    <h:outputLabel value="最大分配空间：" />
+                </h:panelGrid>
+                <h:panelGrid columns="2">
+                    <p:inputText id="maxSpace" value="#{sharePathTable.editPath.maxSpace}" style="width: 80px"  />
+                    <h:outputLabel value="GB" />
+                </h:panelGrid>
+                <h:panelGrid columns="1">
+                    <h:outputLabel value="块大小：" />
+                </h:panelGrid>
+                <h:panelGrid columns="1">
+                    <p:selectOneMenu value="#{sharePathTable.editPath.selectedBlockSize}" >
+                        <f:selectItems value="#{sharePathTable.editPath.blockSize}" />
+                    </p:selectOneMenu>
+                </h:panelGrid>
+            </h:panelGrid>
+            <br/>
+            <p:spacer width="80" height="6" />
+
+            <p:commandButton value="确定"  actionListener="#{sharePathTable.saveConfigParam}" update=":form:paths"    oncomplete="configParamDialog.hide()">
+                <!--                        <f:attribute name="folder" value="{sharepath.folder}" />
+                                        <f:attribute name="volume" value="{volumes.selectedName}" />-->
+            </p:commandButton>  
+            <p:spacer width="10" height="6" />
+            <p:commandButton value="返回" oncomplete="configParamDialog.hide();"/>  
+
+        </p:dialog>
+    </h:form>
+
+
+
+</ui:define>
+
+
+</html>

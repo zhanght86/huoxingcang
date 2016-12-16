@@ -1,0 +1,107 @@
+<?xml version="1.0" encoding="GBK"?>
+<!--
+To change this template, choose Tools | Templates
+and open the template in the editor.
+-->
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.1//EN" "http://www.w3.org/TR/xhtml11/DTD/xhtml11.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:p="http://primefaces.org/ui"
+                xmlns:util="http://java.sun.com/jsf/composite/xhtml">
+    <h:head>
+        <link href="./../resources/common/css/default.css" rel="stylesheet" type="text/css" />
+        <link href="./../resources/common/css/cssIcon.css" rel="stylesheet" type="text/css" />
+        <script type="text/javascript">
+            $(document).ready(function() {
+                $("#tab1\\:form\\:upload").change(function() {
+                    $("#img").hide();
+                    var str = document.getElementById("tab1:form:upload").value.toLowerCase();
+                    var len = str.length;
+                    var last = str.lastIndexOf("\\");
+                    var filename;
+                    if (-1 === last) {
+                        filename = str;
+                    } else {
+                        filename = str.substring(last + 1, len);
+                    }
+                    var name = /^[a-zA-Z_0-9]+\.{1}[a-zA-Z]+$/;
+                    var result = name.test(filename);
+                    if (result !== true) {
+                        $("#tab1\\:form")[0].reset();
+                        remind.show();
+                    }
+                });
+            });
+            $(document).ready(function() {
+                $("#tab1\\:form\\:button").click(function() {
+                    $("#img").show();
+                });
+            });
+        </script>
+    </h:head>
+    <h:body>
+        <h1 title="System Infomation" class="title ui-widget-header ui-corner-all">#{global.get('backuptitle')}#{res.get('title')}</h1>
+        <p:messages showDetail="true" autoUpdate="true" closable="true" /><br/> 
+        <p:tabView style="border:none; " id="tab1" activeIndex="#{bAgentManager.IIndex}">
+            <p:tab title="${res.get('tab2')}">
+                <h:form id="form0">
+                    <div style="overflow-x: auto;">
+                        <p:dataTable id="service" var="service" value="#{bAgentManager.clientList}" style="white-space: nowrap" emptyMessage="#{global.get('emptyMessage')}" >
+                            <p:column headerText="#{res.get('serial')}"  style="text-align:center" >  
+                                <h:outputText value="#{service.serial}"/>  
+                            </p:column>   
+                            <p:column headerText="#{res.get('system')}"  style="text-align:center" >  
+                                <h:outputText value="#{service.strAgentOS}"/>  
+                            </p:column>   
+                            <p:column headerText="#{res.get('platform')}"  style="text-align:center" >  
+                                <h:outputText value="#{service.strAgentPlatform}"/>  
+                            </p:column>   
+                            <p:column headerText="#{res.get('filename')}"  style="text-align:center" >  
+                                <h:outputText value="#{service.strDescription}"/>  
+                            </p:column>   
+                            <p:column headerText="#{res.get('date')}"  style="text-align:center" >  
+                                <h:outputText value="#{service.strAgentDate}"/>  
+                            </p:column>   
+                            <p:column headerText="#{res.get('update')}"  style="text-align:center" >  
+                                <h:outputText value="#{service.strAgentModifyDate}"/>  
+                            </p:column>   
+                            <p:column headerText="#{global.get('operation')}">
+                                <p:graphicImage value="../resources/common/picture/download.png" style=" vertical-align:middle; width: 16px; height: 16px;"/>
+                                <p:commandLink id="download" disabled="#{user.type!=2}" value="${res.get('download')}"  style=" vertical-align:middle;" ajax="false" >
+                                    <f:setPropertyActionListener value="#{service}" target="#{bAgentManager.selected}"/>
+                                    <p:fileDownload value="#{bAgentManager.agentFile}" />
+                                </p:commandLink>
+                            </p:column>
+                        </p:dataTable>   <br/>                   
+                    </div>
+                </h:form>
+            </p:tab>
+            <p:tab title="${res.get('tab1')}">
+                <h:form id="form" enctype="multipart/form-data">
+                    <p:selectBooleanCheckbox id="cover" value="#{bAgentManager.BCover}"/>
+                    <h:outputLabel for="cover" value="#{res.get('cover')}"/><br/>
+                    <p:fileUpload  id="upload" mode="simple" label="#{res.get('browser')}" 
+                                   value="#{bAgentManager.file}" disabled="#{user.type!=2}" multiple="false"/>
+                    <p:spacer height="0" width="20"/>
+                    <p:commandButton id="button" value="#{res.get('upload')}" disabled="#{user.type!=2}" ajax="false" icon="uploadIcon" 
+                                     actionListener="#{bAgentManager.handleFileUpload()}" update=":form0:service"/>
+                    <img id="img" style="width:64px;height:64px;position:fixed;right:5px;bottom:5px;display: none" src="../resources/common/picture/loading.gif"/><br/>
+                </h:form>
+            </p:tab>
+        </p:tabView>
+        <h:form id="form1">
+            <util:info id="remind"  uid="remind" mess="#{res.get('updateRight')}" />
+        </h:form>  
+        <p:ajaxStatus style="width:64px;height:64px;position:fixed;right:5px;bottom:5px">  
+            <f:facet name="start">  
+                <p:graphicImage value="../resources/common/picture/loading.gif" />  
+            </f:facet>  
+
+            <f:facet name="complete">  
+                <h:outputText value="" />  
+            </f:facet>  
+        </p:ajaxStatus>
+    </h:body>
+</ui:composition>

@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="GBK"?>
+<!--
+To change this template, choose Tools | Templates
+and open the template in the editor.
+-->
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.1//EN" "http://www.w3.org/TR/xhtml11/DTD/xhtml11.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:p="http://primefaces.org/ui"
+                xmlns:util="http://java.sun.com/jsf/composite/xhtml">
+    <h:head>
+        <link href="./../resources/common/css/default.css" rel="stylesheet" type="text/css" />
+        <link href="./../resources/common/css/cssIcon.css" rel="stylesheet" type="text/css" />
+        <script type="text/javascript">
+            $(document).ready(function() {
+                $("#tabView\\:form1\\:upload").change(function() {
+                    var str = document.getElementById("tabView:form1:upload").value.toString();
+                    var len = str.length;
+                    var last = str.lastIndexOf("\\");
+                    var filename;
+                    if (-1 === last) {
+                        filename = str;
+                    } else {
+                        filename = str.substring(last + 1, len);
+                    }
+                    var name = /^MarsServer.xml$/i;
+                    var result = name.test(filename);
+                    if (result !== true) {
+                        remind.show();
+                    }
+                });
+            });
+        </script>
+    </h:head>
+    <h:body>
+        <h1 title="System Infomation" class="title ui-widget-header ui-corner-all">#{global.get('backuptitle')}#{res.get('title')}</h1>
+        <p:messages autoUpdate="true" redisplay="true" showDetail="true" closable="true" /><br/>
+
+        <h:form id="form1" >
+
+            <p:dataTable id="service" var="service" value="#{bServiceManager.list}" emptyMessage="#{global.get('emptyMessage')}" >
+                <p:column headerText="#{res.get('service')}"  style="text-align:center" >  
+                    <h:outputText value="#{service.agentName}"/>  
+                </p:column>   
+                <p:column headerText="#{res.get('status')}"  style="text-align:center" >  
+                    <h:outputText value="#{service.agentState}"/>  
+                </p:column> 
+            </p:dataTable><br/>
+        </h:form>
+    </h:body>
+</ui:composition>

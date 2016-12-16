@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="GBK"?>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:p="http://primefaces.org/ui">
+    <head>
+        <title>${oem.get('title')}</title>
+        <LINK REL="SHORTCUT ICON" HREF="#{request.contextPath}/resources/oempic/favicon.ico"/>
+        <link href="#{request.contextPath}/resources/common/css/default.css" rel="stylesheet" type="text/css" /> 
+        <style type="text/css">
+            /*            *{
+                            border: 0px;
+                        }
+                        frame{
+                            border: 0px;
+                        }*/
+            #bottom_frame{
+              padding: 0;
+              margin: 0;
+             }
+        </style>  
+        <script language="javascript"> 
+//            var myTime = setTimeout("Timeout()", 6000000); 
+//            function resetTime() {
+//                clearTimeout(myTime);
+//                myTime = setTimeout('Timeout()', 6000000); 
+//            }
+//            function Timeout() {
+//                alert("您的登录已超时, 请点确定后重新登录!"); 
+//                document.location.href="../template/login.xhtml"              
+//            }
+        </script>
+    </head>
+    <div>
+        <frameset WIDTH="100px"  frameborder="0" noresize="1" scrolling ="no" rows="75,*, 25">
+            <frame  name="top_frame" noresize="1" scrolling ="no" id="top_frame" src="#{request.contextPath}/template/top.xhtml"  />
+            <frameset cols="*,1250,*"  noresize="1" scrolling ="no">
+                <frame noresize="1" frameborder="0" style="border:none;" scrolling ="no" src="#{request.contextPath}/template/blank.xhtml"></frame>
+                <frameset name="mid_frame" cols="240,*" frameborder="no" scrollable="no" >
+                    <frame name="left_frame" scrollable="no" style="border:none;" id="left_frame" src="#{request.contextPath}/template/leftMenuFrame.xhtml" noresize="noresize"/>
+                    <frame name="right_frame" id="right_frame" src="#{request.contextPath}/common/monitor.xhtml"/>
+                </frameset>
+                <frame noresize="1" scrolling ="no" frameborder="0"  border="no" src="#{request.contextPath}/template/blank.xhtml"></frame>
+            </frameset>
+            <frame name="bottom_frame" noresize="1" frameborder="0" scrolling ="no" id="bottom_frame" src="#{request.contextPath}/template/bottom.xhtml" />
+        </frameset>
+    </div>
+
+
+</html>

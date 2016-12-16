@@ -1,0 +1,100 @@
+<?xml version="1.0" encoding="GBK"?>
+<!--
+To change this template, choose Tools | Templates
+and open the template in the editor.
+-->
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.1//EN" "http://www.w3.org/TR/xhtml11/DTD/xhtml11.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:p="http://primefaces.org/ui"
+                xmlns:util="http://java.sun.com/jsf/composite/xhtml">
+
+    <h:head>
+        <link href="./../resources/common/css/default.css" rel="stylesheet" type="text/css" />
+        <link href="./../resources/common/css/cssIcon.css" rel="stylesheet" type="text/css" />
+    </h:head>
+    <h:body>
+        <h:form id="form">
+            <h1 class="title ui-widget-header ui-corner-all">#{global.get('cdp')}${res.get('title')}</h1>
+            <p:messages id="messages" showDetail="true" autoUpdate="true" closable="true" />
+            <br></br>
+                <h:panelGrid columns="2" cellpadding="5" >  
+                    <h:outputLabel value="${res.get('diskgroup')}"/> 
+                    <h:outputLabel value="#{checkSnapBean.localDiskGroup}" />
+                    <h:outputLabel value="${res.get('ip')}"/> 
+                    <h:outputLabel value="#{checkSnapBean.ip}" />
+                    <h:outputLabel value="${res.get('remotediskgroup')}"/> 
+                    <h:outputLabel value="#{checkSnapBean.remoteDiskGroup}" />
+                    <h:outputLabel value="${res.get('last')}"/> 
+                    <h:outputLabel value="#{checkSnapBean.snapName}" />
+                    <h:outputLabel value="${res.get('lasttime')}"/> 
+                    <h:outputLabel value="#{checkSnapBean.snapTime}" />
+                    <h:outputLabel value="${res.get('usetime')}"/> 
+                    <h:outputLabel value="#{checkSnapBean.useTime}" />
+
+                </h:panelGrid>
+                <h:panelGrid columns="2" cellpadding="5">  
+                    <h:outputLabel id="labtip" value="#{checkSnapBean.lable}" style="color: #cc3333;font-size:12pt;font-weight: bold;" />
+                </h:panelGrid>  
+                <br></br>
+                
+                <p:panel id="levelS" style=" border: none; width: 101.3%; margin-left: -21px; margin-right: -41px;">
+                    <h:panelGrid columns="2" >
+                        <h:outputLabel id="label" rendered="#{checkSnapBean.isRollbacking}" value="#{res.get('rolling')}" />
+                        <p:ajaxStatus   id="rollingstatus" rendered="#{checkSnapBean.isRollbacking}" style="width:16px;height:16px;" >  
+                            <f:facet name="start">
+                                <p:graphicImage value="../resources/common/picture/ajaxloadingbar.gif" />  
+                            </f:facet>
+                            <f:facet name="complete">
+                                <p:graphicImage value="../resources/common/picture/ajaxloadingbar.gif" />  
+                            </f:facet>
+                        </p:ajaxStatus>
+                    </h:panelGrid>
+                    <p:poll  autoStart="#{checkSnapBean.isRollbacking}" widgetVar="rollbackpoll" listener="#{checkSnapBean.checkRollbacking()}"   interval="3" update=":form" />
+                    <p:toolbar>  
+                        <p:toolbarGroup align="right">  
+                            <p:commandButton id="multiViewButton" value="${res.get('delete')}" icon="rollbackIcon" disabled="#{checkSnapBean.cantEdit}" action="#{checkSnapBean.handleDelete}" update=":deleteConfirm "/>
+                        </p:toolbarGroup> 
+                    </p:toolbar>
+                    <div style="overflow-x: auto; width:100%;padding-bottom: 2px !important; padding-bottom: 14px;">
+                        <p:dataTable id="snapList" var="snapinfo" value="#{checkSnapBean.snapList}"  rowIndexVar="row" emptyMessage="#{global.get('emptyMessage')}">  
+                            <p:column headerText="${res.get('num')}" width="80" style="text-align:center">  
+                                <h:outputText value="#{row + 1}"/>  
+                            </p:column>
+                            <p:column headerText="${res.get('name')}" disabledSelection="true" sortBy="#{snapinfo.strName}" >  
+                                <h:outputText value="#{checkSnapBean.getSnapName_to(snapinfo.strName)}"/>  
+                            </p:column>
+                            <p:column headerText="${res.get('time')}" disabledSelection="true" sortBy="#{snapinfo.createdTime}">  
+                                <h:outputText value="#{snapinfo.createdTime}"/>  
+                            </p:column>
+                            <p:column headerText="${res.get('size')}" disabledSelection="true" sortBy="#{snapinfo.createdTime}">  
+                                <h:outputText value="#{snapinfo.strUsed}B"/>  
+                            </p:column>
+                        </p:dataTable>
+                    </div>
+                    <div style="text-align: center; width: 101.3%;">
+
+                        <p:commandButton id="addButton" icon="snapIcon" disabled="#{checkSnapBean.rollback_ok}" value="${res.get('copy')}" action="#{checkSnapBean.copy()}"/>  
+                    </div>
+                </p:panel>
+       
+          
+        </h:form>
+        <h:form id="deleteConfirm">
+            <util:confirm  uid="deletesnap" mess="#{res.get('lab')}" action="#{checkSnapBean.handle()}" update=":form">
+
+            </util:confirm>
+        </h:form>
+        <p:ajaxStatus style="width:64px;height:64px;position:fixed;right:5px;bottom:5px">  
+            <f:facet name="start">  
+                <p:graphicImage value="../resources/common/picture/loading.gif" />  
+            </f:facet>  
+
+            <f:facet name="complete">  
+                <h:outputText value="" />
+            </f:facet>  
+        </p:ajaxStatus>
+    </h:body>
+</ui:composition>

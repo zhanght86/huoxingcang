@@ -1,0 +1,88 @@
+<?xml version="1.0" encoding="GBK"?>
+<!--
+To change this template, choose Tools | Templates
+and open the template in the editor.
+-->
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.1//EN" "http://www.w3.org/TR/xhtml11/DTD/xhtml11.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:util="http://java.sun.com/jsf/composite/xhtml">
+    <h:head>
+        <link href="./../resources/common/css/default.css" rel="stylesheet" type="text/css" />
+        <link href="./../resources/common/css/cssIcon.css" rel="stylesheet" type="text/css" />
+    </h:head>
+    <h:body>
+        <h:form id="form">
+            <h1 class="title ui-widget-header ui-corner-all">${res.get('title')}</h1>
+            <p:messages id="messages" showDetail="true" autoUpdate="true" closable="true" />
+            <br/>
+            <h:panelGrid columns="2" cellpadding="5" >  
+                <h:outputLabel for="poolName" value="${res.get('poolname')}"/> 
+                <h:outputLabel value="#{lunmappingBean.poolname}" id="poolName" />
+                
+                <h:outputLabel for="path" value="${res.get('path')}"/> 
+                <h:outputLabel value="#{lunmappingBean.zfsPath}" id="path"  style="width: 180px;"/>
+            </h:panelGrid>
+           <br/>
+           <p:toolbar>  
+               <p:toolbarGroup align="right">  
+                   <p:commandButton id="addButton" icon="addIcon" value="${global.get('add')}"  action="#{lunmappingBean.addView}" update="lunList"/> 
+               </p:toolbarGroup> 
+           </p:toolbar>
+            <div style="overflow-x: auto; width:100%;padding-bottom: 2px!important;padding-bottom: 14px;">
+                <p:dataTable id="lunList" var="viewInfo" value="#{lunmappingBean.viewList}" emptyMessage="#{global.get('emptyMessage')}">  
+                    <p:column style="width:2%">  
+                        <p:rowToggler />  
+                    </p:column> 
+                    <p:column headerText="${res.get('type')}" disabledSelection="true">  
+                        <h:outputText value="#{viewInfo.type}"/>  
+                    </p:column>
+                    <p:column headerText="${res.get('hostgroupnameStr')}" disabledSelection="true">  
+                        <h:outputText value="#{viewInfo.hostGroupNameStr}"/>  
+                    </p:column>
+                    <p:column headerText="${res.get('operation')}" style=" white-space: nowrap;" >
+                        <p:graphicImage value="../resources/common/picture/deletelun.png" style=" vertical-align:middle;"/>
+                        <p:commandLink id="delButton" value="${res.get('dellun')}" onclick="delLUN.show()" update="lunList" style=" vertical-align:middle;"> 
+                            <f:setPropertyActionListener value="#{viewInfo}" target="#{lunmappingBean.selectView}" />
+                        </p:commandLink>
+                    </p:column>
+                    <p:rowExpansion>
+                        <div style="overflow-x:auto; width: 100%;padding-bottom: 0px!important;padding-bottom: 6px;">
+                            <p:dataTable var="diskDetail" value="#{viewInfo.diskDetail}" id="detail" style=" margin-top: 10px;margin-bottom: 6px; margin-right: 0px !important;margin-right: -70px;" emptyMessage="#{global.get('emptyMessage')}" >  
+                                <p:column headerText="${res.get('diskname')}">  
+                                    <h:outputText value="#{diskDetail.diskname}" />  
+                                </p:column> 
+                                <p:column headerText="${res.get('guid')}">  
+                                    <h:outputText value="#{diskDetail.guid}"/>  
+                                </p:column>    
+                                <p:column headerText="${res.get('lun')}" style="text-align: center;">  
+                                    <h:outputText value="#{diskDetail.lun}" />  
+                                </p:column>    
+                            </p:dataTable>
+                        </div>
+                    </p:rowExpansion>
+
+                </p:dataTable>   
+            </div>
+            <br/>
+            <div style="text-align: center;">
+                <p:commandButton id="closeButton" icon="cancleIcon" value="${global.get('return')}"  immediate="true"  action="virtualdisklist?faces-redirect=true"/>  
+            </div>
+            
+            <util:confirm  uid="delLUN" mess="${res.get('delluntip')}" action="#{lunmappingBean.removeView()}" update=":form:lunList">
+
+            </util:confirm>
+        </h:form>
+        <p:ajaxStatus style="width:64px;height:64px;position:fixed;right:5px;bottom:5px">  
+            <f:facet name="start">  
+                <p:graphicImage value="../resources/common/picture/loading.gif" />  
+            </f:facet>  
+
+            <f:facet name="complete">  
+                <h:outputText value="" />  
+            </f:facet>  
+        </p:ajaxStatus>
+    </h:body>
+</html>

@@ -1,0 +1,81 @@
+<?xml version="1.0" encoding="GBK"?>
+<!--
+To change this template, choose Tools | Templates
+and open the template in the editor.
+-->
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.1//EN" "http://www.w3.org/TR/xhtml11/DTD/xhtml11.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:util="http://java.sun.com/jsf/composite/xhtml">
+
+    <h:head>
+        <link href="./../resources/common/css/default.css" rel="stylesheet" type="text/css" />
+        <link href="./../resources/common/css/cssIcon.css" rel="stylesheet" type="text/css" />
+    </h:head>
+    <h:body>
+        <h:form id="form">
+            <h1 class="title ui-widget-header ui-corner-all">${res.get('title')}</h1>
+            <p:messages id="messages" showDetail="true" autoUpdate="true" closable="true" />
+            <br></br>
+            <h:panelGrid columns="1" cellpadding="5">
+                <h:panelGroup>
+                    <h:outputLabel value="${res.get('volumename')}"/>
+                    <h:outputLabel id="volumename" value="#{capacityVolumeBean.volumeName}"/>
+                </h:panelGroup>
+                <h:panelGroup>
+                    <h:outputLabel value="${res.get('raidtype')}"/>
+                    <h:outputLabel value="${capacityVolumeBean.raidLable}，${capacityVolumeBean.raidLableTip}"/>
+                </h:panelGroup>
+                <h:panelGroup>
+                    <p:toolbar>  
+                        <p:toolbarGroup align="right">  
+                            <p:commandButton id="refshLink" disabled="#{user.type!=2}" value="${res.get('refshlink')}" icon="scanIcon" update="form:diskList" actionListener="#{capacityVolumeBean.refresh()}"/> 
+                        </p:toolbarGroup> 
+                    </p:toolbar>
+                    <p:dataTable id="diskList"  var="disk" value="#{capacityVolumeBean.diskModel}" selection="#{capacityVolumeBean.selectedDisks}" emptyMessage="#{global.get('emptyMessage')}" >  
+
+                        <p:column selectionMode="multiple" style="width:18px;text-align:center"/> 
+                        <p:column headerText="${res.get('diskName')}"  style="text-align:center">  
+                            <h:outputText value="#{disk.diskName}"/>  
+                        </p:column>
+                        <p:column headerText="${res.get('position')}"  style="text-align:center">  
+                            <h:outputText value="#{disk.position}"/>  
+                        </p:column>
+                        <p:column headerText="${res.get('num')}"  style="text-align:center">  
+                            <h:outputText value="#{disk.num}"/>  
+                        </p:column>
+                        <p:column headerText="${res.get('size')}" style="text-align:center">  
+                            <h:outputText value="#{disk.size}"/>  
+                        </p:column>
+
+                    </p:dataTable>
+                </h:panelGroup>
+            </h:panelGrid>
+            <br/>
+            <div>
+                <p:spacer width="202px" height="40px"/>
+                <p:commandButton value="${global.get('save')}" disabled="#{user.type!=2}" icon="saveIcon" action="#{capacityVolumeBean.handle(capacityVolumeBean.volumeName,capacityVolumeBean.raidType)}"   update=":capacityConfirm">
+
+                </p:commandButton>
+                <p:spacer width="8px"/>
+                <p:commandButton value="${global.get('return')}" disabled="#{user.type!=2}" icon="cancleIcon" immediate="true"  action="#{capacityVolumeBean.cancleButton}"/>
+            </div>
+        </h:form>
+        <h:form id="capacityConfirm">
+            <util:confirm  uid="capacity" mess="#{capacityVolumeBean.tip}" action="#{capacityVolumeBean.capacityVolume()}" >
+
+            </util:confirm>
+        </h:form>
+        <p:ajaxStatus style="width:64px;height:64px;position:fixed;right:5px;bottom:5px">  
+            <f:facet name="start">  
+                <p:graphicImage value="../resources/common/picture/loading.gif" />  
+            </f:facet>  
+
+            <f:facet name="complete">  
+                <h:outputText value="" />  
+            </f:facet>  
+        </p:ajaxStatus>
+    </h:body>
+</html>

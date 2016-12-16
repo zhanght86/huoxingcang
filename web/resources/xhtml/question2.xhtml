@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="GBK"?>
+<!--
+To change this template, choose Tools | Templates
+and open the template in the editor.
+-->
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.1//EN" "http://www.w3.org/TR/xhtml11/DTD/xhtml11.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:composite="http://java.sun.com/jsf/composite"
+      xmlns:h="http://xmlns.jcp.org/jsf/html">
+    
+    <composite:interface>
+        <composite:attribute name="uid" required="true"/>
+        <composite:attribute name="mess" targets="s" />
+        <composite:actionSource name="confirmBox:okButton confirmBox:cancelButton"/>
+        <composite:attribute name="action" targets="okButton"/>
+        
+    </composite:interface>  
+
+    <!-- IMPLEMENTATION -->  
+    <composite:implementation> 
+        
+        <p:dialog id="infoBox" header="#{global.get('info')}" widgetVar="#{cc.attrs.uid}"
+                  width="325" modal="true" focus="okButton" resizable="false">
+            <h:panelGrid columns="3" style="text-align : center;">
+                <h:graphicImage value="../resources/common/picture/confirm.png" style="width: 32px; height: 32px;vertical-align:middle"/>
+                <p:spacer width="10px"/>
+                <h:outputText value="#{cc.attrs.mess}" />
+            </h:panelGrid>
+            <h:panelGrid  columns="1" style="text-align : center; width: 300px"> 
+                <p:row>
+                    <p:commandButton id="okButton" value="#{global.get('yes')}"/>
+                    <p:spacer style="width: 10px; height: 5px"/>
+                    <p:commandButton id="cancelButton" value="#{global.get('no')}" oncomplete="#{cc.attrs.uid}.hide();"/>
+                </p:row>
+            </h:panelGrid>
+        </p:dialog>
+    </composite:implementation> 
+</html>
+

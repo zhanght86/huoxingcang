@@ -1,0 +1,523 @@
+<?xml version="1.0" encoding="gb2312" ?> 
+ <MarsMSA>
+- <ResourceInfo>
+- 	<Bean>
+		<Author>王麒</Author> 
+		<ResourceID>300001</ResourceID> 
+		<Macro>LOG_START_VM_SUCCESS</Macro> 
+		<Chinese>启动虚拟机'%1'成功,虚拟机原状态'%2'</Chinese> 
+		<English>Start VM '%1' Success,Original Status'%2'</English> 
+    </Bean>
+- 	<Bean>
+		<Author>王麒</Author> 
+		<ResourceID>300002</ResourceID> 
+		<Macro>LOG_START_VM_FAILED</Macro> 
+		<Chinese>启动虚拟机'%1'失败,虚拟机原状态'%2'错误:%3</Chinese> 
+		<English>Start VM '%1' Failed,Original Status'%2',Error:%3</English> 
+	</Bean>
+	-<Bean>
+		<Author>王麒</Author> 
+		<ResourceID>300003</ResourceID> 
+		<Macro>LOG_POWEROFF_VM_SUCCESS</Macro> 
+		<Chinese>关闭虚拟机'%1'成功,虚拟机原状态'%2'</Chinese> 
+		<English>Poweroff VM '%1' Success,Original Status'%2'</English> 
+    </Bean>
+- 	<Bean>
+		<Author>王麒</Author> 
+		<ResourceID>300004</ResourceID> 
+		<Macro>LOG_POWEROFF_VM_FAILED</Macro> 
+		<Chinese>关闭虚拟机'%1'失败,虚拟机原状态'%2'错误:%3</Chinese> 
+		<English>Poweroff VM '%1' Failed,Original Status'%2',Error:%3</English> 
+	</Bean>
+	-<Bean>
+		<Author>王麒</Author> 
+		<ResourceID>300005</ResourceID> 
+		<Macro>LOG_PAUSE_VM_SUCCESS</Macro> 
+		<Chinese>暂停虚拟机'%1'成功,虚拟机原状态'%2'</Chinese> 
+		<English>Pause VM '%1' Success,Original Status'%2'</English> 
+    </Bean>
+- 	<Bean>
+		<Author>王麒</Author> 
+		<ResourceID>300006</ResourceID> 
+		<Macro>LOG_PAUSE_VM_FAILED</Macro> 
+		<Chinese>暂停虚拟机'%1'失败,虚拟机原状态'%2'错误:%3</Chinese> 
+		<English>Pause VM '%1' Failed,Original Status'%2',Error:%3</English> 
+	</Bean>
+	-<Bean>
+		<Author>王麒</Author> 
+		<ResourceID>300007</ResourceID> 
+		<Macro>LOG_RESUME_VM_SUCCESS</Macro> 
+		<Chinese>恢复运行虚拟机'%1'成功,虚拟机原状态'%2'</Chinese> 
+		<English>Resume VM '%1' Success,Original Status'%2'</English> 
+    </Bean>
+- 	<Bean>
+		<Author>王麒</Author> 
+		<ResourceID>300008</ResourceID> 
+		<Macro>LOG_RESUME_VM_FAILED</Macro> 
+		<Chinese>恢复运行虚拟机'%1'失败,虚拟机原状态'%2'错误:%3</Chinese> 
+		<English>Resume VM '%1' Failed,Original Status'%2',Error:%3</English> 
+	</Bean>
+	-<Bean>
+		<Author>王麒</Author> 
+		<ResourceID>300009</ResourceID> 
+		<Macro>LOG_RESET_VM_SUCCESS</Macro> 
+		<Chinese>重启虚拟机'%1'成功,虚拟机原状态'%2'</Chinese> 
+		<English>Reset VM '%1' Success,Original Status'%2'</English> 
+    </Bean>
+- 	<Bean>
+		<Author>王麒</Author> 
+		<ResourceID>300010</ResourceID> 
+		<Macro>LOG_RESET_VM_FAILED</Macro> 
+		<Chinese>重启虚拟机'%1'失败,虚拟机原状态'%2'错误:%3</Chinese> 
+		<English>Reset VM '%1' Failed,Original Status'%2',Error:%3</English> 
+	</Bean>
+	-<Bean>
+		<Author>王麒</Author> 
+		<ResourceID>300011</ResourceID> 
+		<Macro>LOG_CREATE_VM_SUCCESS</Macro> 
+		<Chinese>创建虚拟机'%1'成功,虚拟机路径:'%2',操作系统：'%3',CPU数量：'%4',内存大小：'%5',远程连接地址：‘%6’,远程连接端口号：'%7',控制器:IDE Controller,设备：光盘驱动器,控制器：SCSI Controller，设备：'%8'</Chinese> 
+		<English>Create VM '%1' Success,Path:'%2',OS:'%3',CPU Num:'%4',Memory Size:'%5',Remote Address:'%6',Remote Port:'%7',Controller: 'IDE Controller',Decice:'CD-ROM',Controller:'SCSI Controller',Device:'%8'</English> 
+    </Bean>
+- 	<Bean>
+		<Author>王麒</Author> 
+		<ResourceID>300012</ResourceID> 
+		<Macro>LOG_CREATE_VM_FAILED</Macro> 
+		<Chinese>创建虚拟机'%1'失败,虚拟机路径:'%2',操作系统：'%3',CPU数量：'%4',内存大小：'%5',远程连接地址：‘%6’,远程连接端口号：'%7',控制器:IDE Controller,设备：光盘驱动器,控制器：SCSI Controller，设备：'%8',错误:%9</Chinese> 
+		<English>Create VM '%1' Failed,Path:'%2',OS:'%3',CPU Num:'%4',Memory Size:'%5',Remote Address:'%6',Remote Port:'%7',Controller: 'IDE Controller',Decice:'CD-ROM',Controller:'SCSI Controller',Device:'%8',Error:%9</English> 
+	</Bean>
+	-<Bean>
+		<Author>王麒</Author> 
+		<ResourceID>300013</ResourceID> 
+		<Macro>LOG_REMOVE_VM_SUCCESS</Macro> 
+		<Chinese>删除虚拟机'%1'成功</Chinese> 
+		<English>Remove VM '%1' Success</English> 
+    </Bean>
+- 	<Bean>
+		<Author>王麒</Author> 
+		<ResourceID>300014</ResourceID> 
+		<Macro>LOG_REMOVE_VM_FAILED</Macro> 
+		<Chinese>删除虚拟机'%1'失败,错误:%2</Chinese> 
+		<English>Remove VM '%1' Failed,Error:%2</English> 
+	</Bean>
+	-<Bean>
+		<Author>王麒</Author> 
+		<ResourceID>300015</ResourceID> 
+		<Macro>LOG_GET_VM_INFOMATION_SUCCESS</Macro> 
+		<Chinese>获取虚拟机'%1'信息成功</Chinese> 
+		<English>Get VM '%1' Infomation Success</English> 
+    </Bean>
+- 	<Bean>
+		<Author>王麒</Author> 
+		<ResourceID>300016</ResourceID> 
+		<Macro>LOG_GET_VM_INFOMATION_FAILED</Macro> 
+		<Chinese>获取虚拟机'%1'信息失败,错误:%2</Chinese> 
+		<English>Get VM '%1' Infomation Failed,Error:%2</English> 
+	</Bean>
+	-<Bean>
+		<Author>王麒</Author> 
+		<ResourceID>300017</ResourceID> 
+		<Macro>LOG_GET_VM_LIST_SUCCESS</Macro> 
+		<Chinese>获取虚拟机列表成功</Chinese> 
+		<English>Get VM List Success</English> 
+    </Bean>
+- 	<Bean>
+		<Author>王麒</Author> 
+		<ResourceID>300018</ResourceID> 
+		<Macro>LOG_GET_VM_LIST_FAILED</Macro> 
+		<Chinese>获取虚拟机列表失败,错误:%1</Chinese> 
+		<English>Get VM List Failed,Error:%1</English> 
+	</Bean>
+	-<Bean>
+		<Author>王麒</Author> 
+		<ResourceID>300019</ResourceID> 
+		<Macro>LOG_CREATE_VIRTUAL_DISK_SUCCESS</Macro> 
+		<Chinese>创建容量为'%1'MB的动态扩展虚拟磁盘'%2'成功</Chinese> 
+		<English>Create Size '%1' Dynamic Virtual Disk'%2'Success</English> 
+    </Bean>
+- 	<Bean>
+		<Author>王麒</Author> 
+		<ResourceID>300020</ResourceID> 
+		<Macro>LOG_CREATE_VIRTUAL_DISK_FAILED</Macro> 
+		<Chinese>创建容量为'%1'MB的动态扩展虚拟磁盘'%2'失败 ,错误:%3</Chinese> 
+		<English>Create Size '%1' Dynamic Virtual Disk'%2'Failed,Error:%3</English> 
+	</Bean>
+	-<Bean>
+		<Author>王麒</Author> 
+		<ResourceID>300021</ResourceID> 
+		<Macro>LOG_REGISTER_VM_SUCCESS</Macro> 
+		<Chinese>注册虚拟机'%1'成功</Chinese> 
+		<English>Register VM '%1' Success</English> 
+    </Bean>
+- 	<Bean>
+		<Author>王麒</Author> 
+		<ResourceID>300022</ResourceID> 
+		<Macro>LOG_REGISTER_VM_FAILED</Macro> 
+		<Chinese>注册虚拟机'%1'失败,错误:%2</Chinese> 
+		<English>Register VM '%1' Failed,Error:%2</English> 
+	</Bean>
+	<Bean>
+		<Author>王麒</Author> 
+		<ResourceID>300023</ResourceID> 
+		<Macro>LOG_SYSTEM_CONFIG_SUCCESS</Macro> 
+		<Chinese>虚拟机'%1'系统设置成功，设置结果：CPU数量'%2',内存大小'%3'MB,远程连接地址'%4',远程连接端口‘%5’,IOACPI状态‘%6’,VRDE多链接状态'%7',启动顺序‘%8’‘%9’‘%10’</Chinese> 
+		<English>VM '%1' System Config Success,Config Result:CPU Num:'%2',Memory Size:'%3'MB,Remote Address:'%4',Remote Port:'%5',IOACPI Status:'%6',VRDE Muti Connection Status:'%7',Boot:'%8''%9''%10'</English> 
+    </Bean>
+- 	<Bean>
+		<Author>王麒</Author> 
+		<ResourceID>300024</ResourceID> 
+		<Macro>LOG_SYSTEM_CONFIG_FAILED</Macro> 
+		<Chinese>虚拟机'%1'系统设置失败,错误:%2</Chinese> 
+		<English> VM '%1' System Config Failed,Error:%2</English> 
+	</Bean>
+	<Bean>
+		<Author>王麒</Author> 
+		<ResourceID>300025</ResourceID> 
+		<Macro>LOG_NETWORK_CONFIG_SUCCESS</Macro> 
+		<Chinese>虚拟机'%1'网络设置成功</Chinese> 
+		<English>VM '%1' Network Config Success</English> 
+    </Bean>
+- 	<Bean>
+		<Author>王麒</Author> 
+		<ResourceID>300026</ResourceID> 
+		<Macro>LOG_NETWORK_CONFIG_FAILED</Macro> 
+		<Chinese>虚拟机'%1'网络设置失败,错误:%2</Chinese> 
+		<English>VM '%1' Network Config Failed,Error:%2</English> 
+	</Bean>
+	<Bean>
+		<Author>王麒</Author> 
+		<ResourceID>300027</ResourceID> 
+		<Macro>LOG_ADD_STORAGE_SUCCESS</Macro> 
+		<Chinese>虚拟机'%1'在控制器'%2'添加存储设备'%3'端口号：'%4'设备号：'%5'成功</Chinese> 
+		<English>VM '%1' On Controller '%2' Add Storage '%3' Port:'%4' Device:'%5'Success</English> 
+    </Bean>
+- 	<Bean>
+		<Author>王麒</Author> 
+		<ResourceID>300028</ResourceID> 
+		<Macro>LOG_ADD_STORAGE_FAILED</Macro> 
+		<Chinese>虚拟机'%1'在控制器'%2'添加存储设备'%3'端口号：'%4'设备号：'%5'失败,错误:%6</Chinese> 
+		<English>VM '%1' On Controller '%2' Add Storage '%3' Port:'%4' Device:'%5'Failed,Error:%6</English> 
+	</Bean>
+	<Bean>
+		<Author>王麒</Author> 
+		<ResourceID>300029</ResourceID> 
+		<Macro>LOG_UNINSTALL_STORAGE_SUCCESS</Macro> 
+		<Chinese>虚拟机'%1'在控制器'%2'删除存储设备'%3'端口号：'%4'设备号：'%5'成功</Chinese> 
+		<English>VM '%1' On Controller '%2' Uninstall Storage '%3'Port:'%4' Device:'%5'Success</English> 
+    </Bean>
+- 	<Bean>
+		<Author>王麒</Author> 
+		<ResourceID>300030</ResourceID> 
+		<Macro>LOG_UNINSTALL_STORAGE_FAILED</Macro> 
+		<Chinese>虚拟机'%1'在控制器'%2'删除存储设备'%3'端口号：'%4'设备号：'%5'失败,错误:%6</Chinese> 
+		<English>VM '%1' On Controller '%2' Uninstall Storage '%3'Port:'%4' Device:'%5'Failed,Error:%6</English> 
+	</Bean>
+	<Bean>
+		<Author>王麒</Author> 
+		<ResourceID>300031</ResourceID> 
+		<Macro>LOG_MODIFY_STORAGE_SUCCESS</Macro> 
+		<Chinese>虚拟机'%1'更新控制器‘%2’芯片组为‘%3’成功</Chinese> 
+		<English>VM '%1' Modify Controller '%2' Chipset '%3' Success</English> 
+    </Bean>
+- 	<Bean>
+		<Author>王麒</Author> 
+		<ResourceID>300032</ResourceID> 
+		<Macro>LOG_MODIFY_STORAGE_FAILED</Macro> 
+		<Chinese>虚拟机'%1'更新控制器‘%2’芯片组为‘%3’失败,错误:%4</Chinese> 
+		<English>VM '%1' Modify Controller '%2' Chipset '%3' Failed,Error:%4</English> 
+	</Bean>
+	<Bean>
+		<Author>王麒</Author> 
+		<ResourceID>300033</ResourceID> 
+		<Macro>LOG_GET_HOST_NIC_SUCCESS</Macro> 
+		<Chinese>获取主机网卡成功</Chinese> 
+		<English>Get Host NIC Success</English> 
+    </Bean>
+- 	<Bean>
+		<Author>王麒</Author> 
+		<ResourceID>300034</ResourceID> 
+		<Macro>LOG_GET_HOST_NIC_FAILED</Macro> 
+		<Chinese>获取主机网卡失败,错误:%1</Chinese> 
+		<English>Get Host NIC Failed,Error:%1</English> 
+	</Bean>
+	<Bean>
+		<Author>王麒</Author> 
+		<ResourceID>300035</ResourceID> 
+		<Macro>LOG_GET_HOST_HARDWARE_INFOMATION_SUCCESS</Macro> 
+		<Chinese>获取主机硬件信息成功</Chinese> 
+		<English>Get Host Hardware Infomation Success</English> 
+    </Bean>
+- 	<Bean>
+		<Author>王麒</Author> 
+		<ResourceID>300036</ResourceID> 
+		<Macro>LOG_GET_HOST_HARDWARE_INFOMATION_FAILED</Macro> 
+		<Chinese>获取主机硬件信息失败,错误:%1</Chinese> 
+		<English>Get Host Hardware Infomation Failed,Error:%1</English> 
+	</Bean>
+	<Bean>
+		<Author>王麒</Author> 
+		<ResourceID>300037</ResourceID> 
+		<Macro>LOG_SET_NIC_MAC_SUCCESS</Macro> 
+		<Chinese>生成虚拟机'%1'虚拟网卡MAC地址‘%2’成功</Chinese> 
+		<English>Generate VM '%1' NIC MAC '%2'Success</English> 
+    </Bean>
+- 	<Bean>
+		<Author>王麒</Author> 
+		<ResourceID>300038</ResourceID> 
+		<Macro>LOG_SET_NIC_MAC_FAILED</Macro> 
+		<Chinese>生成虚拟机'%1'虚拟网卡MAC地址失败,错误:%2</Chinese> 
+		<English>Generate VM '%1'NIC MAC Failed,Error:%2</English> 
+	</Bean>
+	<Bean>
+		<Author>王麒</Author> 
+		<ResourceID>300039</ResourceID> 
+		<Macro>LOG_GET_HOST_DIRECTORY_FILES_SUCCESS</Macro> 
+		<Chinese>获取主机目录'%1'下文件路径成功</Chinese> 
+		<English>Get Host '%1' Directory Files Success</English> 
+    </Bean>
+- 	<Bean>
+		<Author>王麒</Author> 
+		<ResourceID>300040</ResourceID> 
+		<Macro>LOG_GET_HOST_DIRECTORY_FILES_FAILED</Macro> 
+		<Chinese>获取主机目录'%1'下文件路径失败,错误:%2</Chinese> 
+		<English>Get Host '%1'Directory Files Failed,Error:%2</English> 
+	</Bean>
+	<Bean>
+		<Author>王麒</Author> 
+		<ResourceID>300041</ResourceID> 
+		<Macro>LOG_GET_VIRTUAL_DISK_INFORMATION_SUCCESS</Macro> 
+		<Chinese>获取虚拟硬盘'%1'详细信息成功</Chinese> 
+		<English>Get Virtual Disk '%1'Infomation Success</English> 
+    </Bean>
+- 	<Bean>
+		<Author>王麒</Author> 
+		<ResourceID>300042</ResourceID> 
+		<Macro>LOG_GET_VIRTUAL_DISK_INFORMATION_FAILED</Macro> 
+		<Chinese>获取虚拟硬盘'%1'详细信息失败,错误:%2</Chinese> 
+		<English>Get Virtual Disk '%1'Infomation Failed,Error:%2</English> 
+	</Bean>
+	<Bean>
+		<Author>王麒</Author> 
+		<ResourceID>300043</ResourceID> 
+		<Macro>LOG_GET_ISO_PATH_SUCCESS</Macro> 
+		<Chinese>获取ISO镜像列表成功</Chinese> 
+		<English>Get ISO Path Success</English> 
+    </Bean>
+- 	<Bean>
+		<Author>王麒</Author> 
+		<ResourceID>300044</ResourceID> 
+		<Macro>LOG_GET_ISO_PATH_FAILED</Macro> 
+		<Chinese>获取ISO镜像列表失败,错误:%1</Chinese> 
+		<English>Get ISO Path Failed,Error:%1</English> 
+	</Bean>
+	<Bean>
+		<Author>王麒</Author> 
+		<ResourceID>300045</ResourceID> 
+		<Macro>LOG_MODIFY_ISO_SUCCESS</Macro> 
+		<Chinese>虚拟机'%1'更新虚拟光驱ISO镜像成功,ISO：'%2'</Chinese> 
+		<English>VM'%1'Modify ISO '%2' Success</English> 
+    </Bean>
+- 	<Bean>
+		<Author>王麒</Author> 
+		<ResourceID>300046</ResourceID> 
+		<Macro>LOG_MODIFY_ISO_FAILED</Macro> 
+		<Chinese>虚拟机'%1'更新虚拟光驱ISO镜像失败,ISO：'%2',错误:%3</Chinese> 
+		<English>VM'%1'Modify ISO '%2' Failed,Error:%3</English> 
+	</Bean>
+	<Bean>
+		<Author>王麒</Author> 
+		<ResourceID>300047</ResourceID> 
+		<Macro>LOG_CLEAR_DISK_SUCCESS</Macro> 
+		<Chinese>清理磁盘'%1'成功</Chinese> 
+		<English>Clear Disk '%1' Success</English> 
+    </Bean>
+- 	<Bean>
+		<Author>王麒</Author> 
+		<ResourceID>300048</ResourceID> 
+		<Macro>LOG_CLEAR_DISK_FAILED</Macro> 
+		<Chinese>清理磁盘'%1'失败,错误:%2</Chinese> 
+		<English>Clear Disk '%1' Failed,Error:%2</English> 
+	</Bean>
+	<Bean>
+		<Author>王麒</Author> 
+		<ResourceID>300049</ResourceID> 
+		<Macro>LOG_IMPORT_CONFIG_SUCCESS</Macro> 
+		<Chinese>导入虚拟机配置文件成功</Chinese> 
+		<English>Import Virtual Machine Config File Success</English> 
+    </Bean>
+- 	<Bean>
+		<Author>王麒</Author> 
+		<ResourceID>300050</ResourceID> 
+		<Macro>LOG_IMPORT_CONFIG_FAILED</Macro> 
+		<Chinese>导入虚拟机配置文件失败</Chinese> 
+		<English>Import Virtual Machine Config File Failed</English> 
+	</Bean>
+	<Bean>
+		<Author>王麒</Author> 
+		<ResourceID>300051</ResourceID> 
+		<Macro>LOG_IMPORT_CONFIG_SUCCESS</Macro> 
+		<Chinese>导出虚拟机配置文件成功</Chinese> 
+		<English>Export Virtual Machine Config File Success</English> 
+    </Bean>
+- 	<Bean>
+		<Author>王麒</Author> 
+		<ResourceID>300052</ResourceID> 
+		<Macro>LOG_IMPORT_CONFIG_FAILED</Macro> 
+		<Chinese>导出虚拟机配置文件失败</Chinese> 
+		<English>Export Virtual Machine Config File Failed</English> 
+	</Bean>
+    <Bean>
+		<Author>王麒</Author> 
+		<ResourceID>300053</ResourceID> 
+		<Macro>LOG_ADD_CONTROLLER_SUCCESS</Macro> 
+		<Chinese>虚拟机'%1'添加控制器'%2'成功</Chinese> 
+		<English>VM '%1' Add Controller '%2' Success</English> 
+    </Bean>
+- 	<Bean>
+		<Author>王麒</Author> 
+		<ResourceID>300054</ResourceID> 
+		<Macro>LOG_ADD_CONTRLLOER_FAILED</Macro> 
+		<Chinese>虚拟机'%1'添加控制器'%2'失败,错误:%3</Chinese> 
+		<English>VM '%1' Add Controller '%2' Failed,Error:%3</English> 
+	</Bean>
+	<Bean>
+		<Author>王麒</Author> 
+		<ResourceID>300055</ResourceID> 
+		<Macro>LOG_CREATE_VIRTUAL_DISK_SUCCESS</Macro> 
+		<Chinese>创建容量为'%1'MB的固定大小虚拟磁盘'%2'成功</Chinese> 
+		<English>Create Size '%1' Stati Virtual Disk'%2'Success</English> 
+    </Bean>
+- 	<Bean>
+		<Author>王麒</Author> 
+		<ResourceID>300056</ResourceID> 
+		<Macro>LOG_CREATE_VIRTUAL_DISK_FAILED</Macro> 
+		<Chinese>创建容量为'%1'MB的固定大小虚拟磁盘'%2'失败 ,错误:%3</Chinese> 
+		<English>Create Size '%1' Stati Virtual Disk '%2' Failed,Error:%3</English> 
+	</Bean>
+	<Bean>
+		<Author>王麒</Author> 
+		<ResourceID>300057</ResourceID> 
+		<Macro>LOG_REMOVE_CONTROLLER_SUCCESS</Macro> 
+		<Chinese>虚拟机'%1'删除控制器'%2'成功</Chinese> 
+		<English>VM '%1' Remove Controller '%2' Success</English> 
+    </Bean>
+- 	<Bean>
+		<Author>王麒</Author> 
+		<ResourceID>300058</ResourceID> 
+		<Macro>LOG_REMOVE_CONTRLLOER_FAILED</Macro> 
+		<Chinese>虚拟机'%1'删除控制器'%2'失败,错误:%3</Chinese> 
+		<English>VM '%1' Remove Controller '%2' Failed,Error:%3</English> 
+	</Bean>
+    <Bean>
+		<Author>王麒</Author> 
+		<ResourceID>300059</ResourceID> 
+		<Macro>LOG_ADD_NIC_SUCCESS</Macro> 
+		<Chinese>虚拟机'%1'添加网卡'%2'成功</Chinese> 
+		<English>VM '%1' Add NIC '%2' Success</English> 
+    </Bean>
+- 	<Bean>
+		<Author>王麒</Author> 
+		<ResourceID>300060</ResourceID> 
+		<Macro>LOG_ADD_NIC_FAILED</Macro> 
+		<Chinese>虚拟机'%1'添加网卡'%2'失败,错误:%3</Chinese> 
+		<English>VM '%1' Add NIC '%2' Failed,Error:%3</English> 
+	</Bean>
+	<Bean>
+		<Author>王麒</Author> 
+		<ResourceID>300061</ResourceID> 
+		<Macro>LOG_ADD_NIC_SUCCESS</Macro> 
+		<Chinese>虚拟机'%1'删除网卡'%2'成功</Chinese> 
+		<English>VM '%1' Remove NIC '%2' Success</English> 
+    </Bean>
+- 	<Bean>
+		<Author>王麒</Author> 
+		<ResourceID>300062</ResourceID> 
+		<Macro>LOG_ADD_NIC_FAILED</Macro> 
+		<Chinese>虚拟机'%1'删除网卡'%2'失败,错误:%3</Chinese> 
+		<English>VM '%1' Remove NIC '%2' Failed,Error:%3</English> 
+	</Bean>
+    <Bean>
+		<Author>王麒</Author> 
+		<ResourceID>300063</ResourceID> 
+		<Macro>LOG_BIND_NIC_SUCCESS</Macro> 
+		<Chinese>虚拟机'%1'网卡'%2'绑定物理网卡'%3'成功</Chinese> 
+		<English>VM '%1' NIC '%2' Bind physical NIC '%3' Success</English> 
+    </Bean>
+- 	<Bean>
+		<Author>王麒</Author> 
+		<ResourceID>300064</ResourceID> 
+		<Macro>LOG_BIND_NIC_FAILED</Macro> 
+		<Chinese>虚拟机'%1'网卡'%2'绑定物理网卡'%3'失败,错误:%4</Chinese> 
+		<English>VM '%1' NIC '%2' Bind physical NIC '%3' ,Error:%4</English> 
+	</Bean>
+	<Bean>
+		<Author>王麒</Author> 
+		<ResourceID>300065</ResourceID> 
+		<Macro>LOG_CONN_NIC_SUCCESS</Macro> 
+		<Chinese>虚拟机'%1'网卡'%2'接入网线成功</Chinese> 
+		<English>VM '%1' NIC '%2' Cable Conntect Success</English> 
+    </Bean>
+- 	<Bean>
+		<Author>王麒</Author> 
+		<ResourceID>300066</ResourceID> 
+		<Macro>LOG_CONN_NIC_FAILED</Macro> 
+		<Chinese>虚拟机'%1'网卡'%2'接入网线失败,错误:%3</Chinese> 
+		<English>VM '%1' NIC '%2' Cable Conntect Failed,Error:%3</English> 
+	</Bean>
+    <Bean>
+		<Author>王麒</Author> 
+		<ResourceID>300067</ResourceID> 
+		<Macro>LOG_UNCONN_NIC_SUCCESS</Macro> 
+		<Chinese>虚拟机'%1'网卡'%2'断开网线成功</Chinese> 
+		<English>VM '%1' NIC '%2' Cable Disconnect Success</English> 
+    </Bean>
+- 	<Bean>
+		<Author>王麒</Author> 
+		<ResourceID>300068</ResourceID> 
+		<Macro>LOG_UNCONN_NIC_FAILED</Macro> 
+		<Chinese>虚拟机'%1'网卡'%2'断开网线失败,错误:%3</Chinese> 
+		<English>VM '%1' NIC '%2' Cable Disconnect Failed,Error:%3</English> 
+	</Bean>
+    <Bean>
+		<Author>王麒</Author> 
+		<ResourceID>300069</ResourceID> 
+		<Macro>LOG_MODIFY_STORAGE_PORT_SUCCESS</Macro> 
+		<Chinese>虚拟机'%1'在控制器'%2'修改存储设备'%3'端口号：'%4'设备号：'%5'成功</Chinese> 
+		<English>VM '%1' On Controller '%2' Add Storage '%3' Port:'%4' Device:'%5'Success</English> 
+    </Bean>
+- 	<Bean>
+		<Author>王麒</Author> 
+		<ResourceID>300070</ResourceID> 
+		<Macro>LOG_MODIFY_STORAGE_PORT_FAILED</Macro> 
+		<Chinese>虚拟机'%1'在控制器'%2'修改存储设备'%3'端口号：'%4'设备号：'%5'失败,错误:%6</Chinese> 
+		<English>VM '%1' On Controller '%2' Add Storage '%3' Port:'%4' Device:'%5'Failed,Error:%6</English> 
+	</Bean>
+    <Bean>
+		<Author>王麒</Author> 
+		<ResourceID>300071</ResourceID> 
+		<Macro>LOG_CLEAR_ISO_SUCCESS</Macro> 
+		<Chinese>清理ISO镜像'%1'成功</Chinese> 
+		<English>Clear ISO '%1' Success</English> 
+    </Bean>
+- 	<Bean>
+		<Author>王麒</Author> 
+		<ResourceID>300072</ResourceID> 
+		<Macro>LOG_CLEAR_ISO_FAILED</Macro> 
+		<Chinese>清理ISO镜像'%1'失败</Chinese> 
+		<English>Clear ISO '%1' Failed</English> 
+	</Bean>
+	<Bean>
+		<Author>王麒</Author> 
+		<ResourceID>300073</ResourceID> 
+		<Macro>LOG_UPLOAD_ISO_SUCCESS</Macro> 
+		<Chinese>上传ISO镜像'%1'成功</Chinese> 
+		<English>Upload ISO '%1' Success</English> 
+    </Bean>
+- 	<Bean>
+		<Author>王麒</Author> 
+		<ResourceID>300074</ResourceID> 
+		<Macro>LOG_UPLOAD_ISO_FAILED</Macro> 
+		<Chinese>上传ISO镜像'%1'失败</Chinese> 
+		<English>Upload ISO '%1' Failed</English> 
+	</Bean>
+    </ResourceInfo>
+ </MarsMSA>

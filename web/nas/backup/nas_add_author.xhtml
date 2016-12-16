@@ -1,0 +1,485 @@
+<?xml version="1.0" encoding="GBK"?>
+<!--
+To change this template, choose Tools | Templates
+and open the template in the editor.
+-->
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.1//EN" "http://www.w3.org/TR/xhtml11/DTD/xhtml11.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+    <!--                template="../template/framework.xhtml"-->
+
+
+
+    <!--    <f:verbatim>
+            
+        </f:verbatim>-->
+
+    <!--    <ui:define name="left">
+            <ui:include src="../panel/leftMenu.xhtml"/>
+        </ui:define>-->
+
+    <!--    <ui:define name="content">-->
+    <h:head>
+        <link href="./../resources/common/css/cssIcon.css" rel="stylesheet" type="text/css" />
+        <link href="./../resources/common/css/default.css" rel="stylesheet" type="text/css" />
+    </h:head>
+    <h:body>
+        <script language="JavaScript">
+
+            function  uuu() {
+                //alert("hello!world!!");
+                var v = document.forms["form:aaa"].value;
+                alert(v);
+            }
+            function result(xhr, status, args) {
+                var str = args.result;
+                if (str == "failed") {
+                    return  false;
+                } else {
+                    return  true;
+                }
+                // alert(args.result);
+            }
+            function clickRead() {
+                var value = document.getElementById("form:read").checked;
+                //alert(value);
+                if (value) {
+                    document.getElementById("form:readfile").checked = true;
+                    document.getElementById("form:readbasic").checked = true;
+                    document.getElementById("form:readexpand").checked = true;
+                    document.getElementById("form:list").checked = true;
+                    document.getElementById("form:readacl").checked = true;
+                }
+                if (!value) {
+                    document.getElementById("form:readfile").checked = false;
+                    document.getElementById("form:readbasic").checked = false;
+                    document.getElementById("form:readexpand").checked = false;
+                    document.getElementById("form:list").checked = false;
+                    document.getElementById("form:readacl").checked = false;
+                }
+            }
+            function clickReadAuthority() {
+
+                var readfile = document.getElementById("form:readfile").checked;
+                var readbasic = document.getElementById("form:readbasic").checked;
+                var readexpand = document.getElementById("form:readexpand").checked;
+                var readlist = document.getElementById("form:list").checked;
+                var readacl = document.getElementById("form:readacl").checked;
+                //alert(readbasic);
+                if (readfile == true || readbasic == true || readexpand == true || readlist == true || readacl == true) {
+                    document.getElementById("form:read").checked = true;
+                } else {
+                    document.getElementById("form:read").checked = false;
+                }
+            }
+            function clickWrite() {
+                var value = document.getElementById("form:write").checked;
+                //alert(value);
+                if (value) {
+                    document.getElementById("form:writefile").checked = true;
+                    document.getElementById("form:writeowner").checked = true;
+                    document.getElementById("form:writebasic").checked = true;
+                    document.getElementById("form:writeextend").checked = true;
+                    document.getElementById("form:writeacl").checked = true;
+                }
+                if (!value) {
+                    document.getElementById("form:writefile").checked = false;
+                    document.getElementById("form:writeowner").checked = false;
+                    document.getElementById("form:writebasic").checked = false;
+                    document.getElementById("form:writeextend").checked = false;
+                    document.getElementById("form:writeacl").checked = false;
+                }
+
+
+            }
+            function clickWriteAuthority() {
+
+                var writefile = document.getElementById("form:writefile").checked;
+                var writeowner = document.getElementById("form:writeowner").checked;
+                var writebasic = document.getElementById("form:writebasic").checked;
+                var writeextend = document.getElementById("form:writeextend").checked;
+                var writeacl = document.getElementById("form:writeacl").checked;
+                //alert(readbasic);
+                if (writefile == true || writeowner == true || writebasic == true || writeextend == true || writeacl == true) {
+                    document.getElementById("form:write").checked = true;
+                } else {
+                    document.getElementById("form:write").checked = false;
+                }
+            }
+            function clickCreate() {
+                var value = document.getElementById("form:create").checked;
+                if (value) {
+                    document.getElementById("form:createfile").checked = true;
+                    document.getElementById("form:createchild").checked = true;
+
+                }
+                if (!value) {
+                    document.getElementById("form:createfile").checked = false;
+                    document.getElementById("form:createchild").checked = false;
+                }
+            }
+            function clickCreateAuthority() {
+
+                var createfile = document.getElementById("form:createfile").checked;
+                var createchild = document.getElementById("form:createchild").checked;
+
+                if (createfile == true || createchild == true) {
+                    document.getElementById("form:create").checked = true;
+                } else {
+                    document.getElementById("form:create").checked = false;
+                }
+            }
+            function clickDelete() {
+                var value = document.getElementById("form:delete").checked;
+                if (value) {
+                    document.getElementById("form:deletefile").checked = true;
+                    document.getElementById("form:deletechild").checked = true;
+
+                }
+                if (!value) {
+                    document.getElementById("form:deletefile").checked = false;
+                    document.getElementById("form:deletechild").checked = false;
+                }
+            }
+            function clickDeleteAuthority() {
+
+                var deletefile = document.getElementById("form:deletefile").checked;
+                var deletechild = document.getElementById("form:deletechild").checked;
+
+                if (deletefile == true || deletechild == true) {
+                    document.getElementById("form:delete").checked = true;
+                } else {
+                    document.getElementById("form:delete").checked = false;
+                }
+            }
+            function clickExecute() {
+                var value = document.getElementById("form:execute").checked;
+                if (value) {
+                    document.getElementById("form:executefile").checked = true;
+
+                }
+                if (!value) {
+                    document.getElementById("form:executefile").checked = false;
+                }
+            }
+            function clickExecuteAuthority() {
+
+                var executefile = document.getElementById("form:executefile").checked;
+
+                if (executefile == true) {
+                    document.getElementById("form:execute").checked = true;
+                } else {
+                    document.getElementById("form:execute").checked = false;
+                }
+            }
+            function clickInherit() {
+                var value = document.getElementById("form:inherit").checked;
+                if (value) {
+                    document.getElementById("form:fileinherit").checked = true;
+                    document.getElementById("form:dirinherit").checked = true;
+
+                }
+                if (!value) {
+                    document.getElementById("form:fileinherit").checked = false;
+                    document.getElementById("form:dirinherit").checked = false;
+                }
+            }
+            function clickInheritAuthority() {
+
+                var fileinherit = document.getElementById("form:fileinherit").checked;
+                var dirinherit = document.getElementById("form:dirinherit").checked;
+
+                if (fileinherit == true || dirinherit == true) {
+                    document.getElementById("form:inherit").checked = true;
+                } else {
+                    document.getElementById("form:inherit").checked = false;
+                }
+            }
+        </script>
+        <h:form id="form">
+            <h1 title="Share Path Infomation" style="font-weight: normal"  class="title ui-widget-header ui-corner-all">存储功能>NAS网络存储>共享目录>权限>添加</h1>
+            <p:messages showSummary="true" showDetail="false" autoUpdate="true" closable="true" />
+            <br/>
+            <p:panel style="width: 450px;border-color: transparent;"  >
+                <h:panelGrid id="grid"  columns="2" cellpadding="5"  >
+                    <h:outputLabel  value="类型"   />  
+                    <p:selectOneMenu id="style" value="#{addauthority.selectedType}" style="width: 90px"  >
+                        <p:ajax event="change" update="name"  listener="#{addauthority.changeValue}" />
+                        <!--                                <f:selectItem itemLabel="请选择" itemValue="" />-->
+                        <f:selectItem itemLabel="用户" itemValue="用户" />
+                        <f:selectItem itemLabel="组" itemValue="组" />
+                    </p:selectOneMenu>
+                    <h:outputLabel  value="名称"  />  
+                    <p:selectOneMenu id="name" value="#{addauthority.selectedName}" style="width: 90px" > 
+                        <!--                                <f:selectItem itemLabel="请选择" itemValue="" />-->
+                        <!--                            <f:selectItems value="{addauthors.names}" />-->
+                        <f:selectItems value="#{addauthority.selectedNames}" />
+                    </p:selectOneMenu>
+                </h:panelGrid>
+                <h:panelGrid id="readGrid" columns="5" >
+                    <h:outputLabel value="读" style="vertical-align: middle" />
+                    <p:spacer width="20" height="10" />
+                    <h:panelGrid columns="2">
+                        <p:selectBooleanCheckbox id="read" value="#{addauthority.read}" style="vertical-align: middle" >
+                            <p:ajax update="readauthor" listener="#{addauthority.changeRead}" />
+                        </p:selectBooleanCheckbox> 
+                        <h:outputLabel style="vertical-align: middle" value="允许读取文件、目录和属性" />
+                    </h:panelGrid>
+                    <p:spacer width="6" height="10" />
+                    <p:commandLink style="font-size: 15px" disabled="#{user.type!=2}" rendered="#{addauthority.readFoldRendered}" value="#{res.get('fold')}" actionListener="#{addauthority.clickReadMore}" update="readpannel readGrid" />
+                    <p:commandLink style="font-size: 15px" disabled="#{user.type!=2}" rendered="#{not addauthority.readFoldRendered}" value="#{res.get('unfold')}" actionListener="#{addauthority.clickReadMore}" update="readpannel readGrid" />
+                </h:panelGrid>
+                <p:outputPanel style="padding-bottom: -1px;margin-bottom: -1px"  id="readpannel" >
+                    <h:panelGrid columns="2">
+                        <p:spacer width="19" height="10" />
+                        <p:panel style="width: 610px;height: 160px;border-color: transparent" rendered="#{addauthority.readRendered}"   >
+                            <h:panelGrid id="readauthor" columns="2" width="200px">
+                                <p:selectBooleanCheckbox id="readfile" style="vertical-align: middle" value="#{addauthority.readFile}"  >
+                                    <p:ajax  update="read" listener="#{addauthority.changeReadAuthor}" />
+                                </p:selectBooleanCheckbox>
+                                <h:outputLabel value="允许读取文件"  style="line-height: 25px;vertical-align: middle" />
+                                <p:selectBooleanCheckbox id="list" style="vertical-align: middle" value="#{addauthority.listContent}"  >
+                                    <p:ajax  update="read" listener="#{addauthority.changeReadAuthor}" />
+                                </p:selectBooleanCheckbox>
+                                <h:outputLabel value="允许列出目录" style="line-height: 25px;vertical-align: middle" />
+                                <p:selectBooleanCheckbox id="readbasic" style="vertical-align: middle" value="#{addauthority.readBasicAttribute}">
+                                    <p:ajax  update="read" listener="#{addauthority.changeReadAuthor}" />
+                                </p:selectBooleanCheckbox>
+                                <h:outputLabel value="允许读取文件基本属性" style="line-height: 25px;vertical-align: middle" />
+                                <p:selectBooleanCheckbox id="readexpand" style="vertical-align: middle" value="#{addauthority.readExpandAttribute}"  >
+                                    <p:ajax  update="read" listener="#{addauthority.changeReadAuthor}" />
+                                </p:selectBooleanCheckbox>
+                                <h:outputLabel value="允许读取文件扩展属性" style="line-height: 25px;vertical-align: middle" />
+                                <p:selectBooleanCheckbox id="readacl" style="vertical-align: middle" value="#{addauthority.readACL}"  >
+                                    <p:ajax  update="read" listener="#{addauthority.changeReadAuthor}" />
+                                </p:selectBooleanCheckbox>
+                                <h:outputLabel value="允许读取ACL"  style="line-height: 25px;vertical-align: middle" />
+                            </h:panelGrid>
+                        </p:panel> 
+                    </h:panelGrid>
+                </p:outputPanel>
+                <h:panelGrid id="writeGrid" columns="5" >
+                    <h:outputLabel value="写" style="vertical-align: middle"/>
+                    <p:spacer width="20" height="10" />
+                    <h:panelGrid columns="2">
+                        <p:selectBooleanCheckbox id="write" value="#{addauthority.write}" style="vertical-align: middle"  >
+                            <p:ajax update="writeauthor" listener="#{addauthority.changeWrite}" />
+                        </p:selectBooleanCheckbox>
+                        <h:outputLabel value="允许写文件和属性" style="vertical-align: middle"/>
+                    </h:panelGrid>
+                    <p:spacer width="6" height="10" />
+                    <p:commandLink style="font-size: 15px" disabled="#{user.type!=2}"  rendered="#{addauthority.writeFoldRendered}" value="#{res.get('fold')}"  actionListener="#{addauthority.clickWriteMore}" update="writepannel writeGrid" />
+                    <p:commandLink style="font-size: 15px" disabled="#{user.type!=2}"  rendered="#{not addauthority.writeFoldRendered}" value="#{res.get('unfold')}"  actionListener="#{addauthority.clickWriteMore}" update="writepannel writeGrid" />
+                </h:panelGrid>
+                <!--                <h:panelGrid columns="2" >
+                                    <p:spacer width="30" height="10" />
+                                    <p:commandLink disabled="{user.type!=2}" value="更多..." actionListener="{addauthority.clickWriteMore}" update="writepannel" />
+                                </h:panelGrid>-->
+                <p:outputPanel  id="writepannel" >
+                    <h:panelGrid columns="2">
+                        <p:spacer width="19" height="10" />
+                        <p:panel style="width: 610px;height: 160px;border-color: transparent" rendered="#{addauthority.writeRendered}"   >
+                            <h:panelGrid id="writeauthor" columns="2" width="200px">
+                                <p:selectBooleanCheckbox  id="writefile" value="#{addauthority.writeFile}" style="vertical-align: middle">
+                                    <p:ajax update="write" listener="#{addauthority.changeWriteAuthor}" />
+                                </p:selectBooleanCheckbox>  
+                                <h:outputLabel value="允许写文件" style="line-height: 25px;vertical-align: middle"  />
+                                <p:selectBooleanCheckbox id="writeowner" value="#{addauthority.writeFileOwner}" style="vertical-align: middle" >
+                                    <p:ajax update="write" listener="#{addauthority.changeWriteAuthor}" />
+                                </p:selectBooleanCheckbox>
+                                <h:outputLabel value="允许写文件的属主" style="line-height: 25px;vertical-align: middle"  />
+                                <p:selectBooleanCheckbox id="writebasic" value="#{addauthority.writeFileBasicAttribute}" style="vertical-align: middle" >
+                                    <p:ajax update="write" listener="#{addauthority.changeWriteAuthor}" />
+                                </p:selectBooleanCheckbox>
+                                <h:outputLabel value="允许写文件基本属性" style="line-height: 25px;vertical-align: middle" />
+                                <p:selectBooleanCheckbox id="writeextend" value="#{addauthority.writeFileExpandAttribute}" style="vertical-align: middle" >
+                                    <p:ajax update="write" listener="#{addauthority.changeWriteAuthor}" />
+                                </p:selectBooleanCheckbox>
+                                <h:outputLabel value="允许写文件扩展属性" style="line-height: 25px;vertical-align: middle" /> 
+                                <p:selectBooleanCheckbox id="writeacl" value="#{addauthority.writeACl}" style="vertical-align: middle" >
+                                    <p:ajax update="write" listener="#{addauthority.changeWriteAuthor}" />
+                                </p:selectBooleanCheckbox>
+                                <h:outputLabel value="允许写ACL" style="line-height: 25px;vertical-align: middle" />
+                            </h:panelGrid>
+                        </p:panel> 
+                    </h:panelGrid>
+
+                </p:outputPanel>
+
+                <h:panelGrid id="createGrid" columns="5" >
+                    <h:outputLabel value="创建" style="vertical-align: middle" />
+                    <p:spacer width="3" height="10" />
+                    <h:panelGrid columns="3">
+                        <p:selectBooleanCheckbox id="create" value="#{addauthority.create}" style="vertical-align: middle" >
+                            <p:ajax update="createauthor" listener="#{addauthority.changeCreate}" />
+                        </p:selectBooleanCheckbox>
+                        <!--                        <p:spacer width="3" height="10" />-->
+                        <h:outputLabel value="允许创建文件和目录" style="vertical-align: middle" />
+                    </h:panelGrid>
+                    <p:spacer width="6" height="10" />
+                    <p:commandLink style="font-size: 15px" disabled="#{user.type!=2}" rendered="#{addauthority.createFoldRendered}" value="#{res.get('fold')}" actionListener="#{addauthority.clickCreateMore}" update="createpannel createGrid" />
+                    <p:commandLink style="font-size: 15px" disabled="#{user.type!=2}" rendered="#{not addauthority.createFoldRendered}" value="#{res.get('unfold')}" actionListener="#{addauthority.clickCreateMore}" update="createpannel createGrid" />
+                </h:panelGrid>
+                <!--                <h:panelGrid columns="2" >
+                                    <p:spacer width="30" height="10" />
+                                    <p:commandLink disabled="{user.type!=2}" value="更多..." actionListener="{addauthority.clickCreateMore}" update="createpannel" />
+                                </h:panelGrid>-->
+                <p:outputPanel  id="createpannel" >
+                    <h:panelGrid columns="2">
+                        <p:spacer width="18" height="10" />
+                        <p:panel style="width: 610px;height: 80px;border-color: transparent" rendered="#{addauthority.createRendered}"   >
+                            <!--                            <p:commandButton value="aaa" />-->
+                            <h:panelGrid  id="createauthor" columns="2" width="200"  >
+                                <p:selectBooleanCheckbox  id="createfile" style="vertical-align: middle" value="#{addauthority.createFile}">
+                                    <p:ajax update="create" listener="#{addauthority.changeCreateAuthor}" />
+                                </p:selectBooleanCheckbox>
+                                <h:outputLabel value="允许创建文件" style="line-height: 25px;vertical-align: middle"  />
+                                <p:selectBooleanCheckbox id="createchild" style="vertical-align: middle" value="#{addauthority.createSubDirectory}">
+                                    <p:ajax update="create" listener="#{addauthority.changeCreateAuthor}" />
+                                </p:selectBooleanCheckbox>
+                                <h:outputLabel value="允许创建子目录" style="line-height: 25px;vertical-align: middle"  />
+                            </h:panelGrid>
+                        </p:panel> 
+                    </h:panelGrid>
+
+                </p:outputPanel>
+
+                <h:panelGrid id="deleteGrid" columns="5" >
+                    <h:outputLabel value="删除" style="vertical-align: middle"  />
+                    <p:spacer width="3" height="10" />
+                    <h:panelGrid columns="3">
+                        <p:selectBooleanCheckbox id="delete" style="vertical-align: middle"  value="#{addauthority.delete}" >
+                            <p:ajax update="deleteauthor" listener="#{addauthority.changeDelete}" />
+                        </p:selectBooleanCheckbox>
+                        <!--                        <p:spacer width="3" height="10" />-->
+                        <h:outputLabel value="允许删除文件和目录" style="vertical-align: middle"  />
+                    </h:panelGrid>
+                    <p:spacer width="6" height="10" />
+                    <p:commandLink style="font-size: 15px" disabled="#{user.type!=2}" rendered="#{addauthority.deleteFoldRendered}" value="#{res.get('fold')}" actionListener="#{addauthority.clickDeleteMore}" update="deletepannel deleteGrid" />
+                    <p:commandLink style="font-size: 15px" disabled="#{user.type!=2}" rendered="#{not addauthority.deleteFoldRendered}" value="#{res.get('unfold')}" actionListener="#{addauthority.clickDeleteMore}" update="deletepannel deleteGrid" />
+                </h:panelGrid>
+                <!--                <h:panelGrid columns="2" >
+                                    <p:spacer width="30" height="10" />
+                                    <p:commandLink disabled="{user.type!=2}" value="更多..." actionListener="{addauthority.clickDeleteMore}" update="deletepannel" />
+                                </h:panelGrid>-->
+                <p:outputPanel  id="deletepannel" >
+                    <h:panelGrid columns="2">
+                        <p:spacer width="18" height="10" />
+                        <p:panel style="width: 610px;height: 80px;border-color: transparent" rendered="#{addauthority.deleteRendered}"   >
+                            <!--                            <p:commandButton value="aaa" />-->
+                            <h:panelGrid id="deleteauthor" columns="2" width="150" >
+                                <p:selectBooleanCheckbox id="deletefile" style="vertical-align: middle"  value="#{addauthority.deleteFile}" >
+                                    <p:ajax update="delete" listener="#{addauthority.changeDeleteAuthor}" />
+                                </p:selectBooleanCheckbox>
+                                <h:outputLabel value="删除文件" style="line-height: 25px;vertical-align: middle"  />
+                                <p:selectBooleanCheckbox id="deletechild" style="vertical-align: middle"  value="#{addauthority.deleteChild}" >
+                                    <p:ajax update="delete" listener="#{addauthority.changeDeleteAuthor}" />
+                                </p:selectBooleanCheckbox>
+                                <h:outputLabel value="删除子文件" style="line-height: 25px;vertical-align: middle"  />
+                            </h:panelGrid>
+                        </p:panel> 
+                    </h:panelGrid>
+
+                </p:outputPanel>
+
+                <h:panelGrid id="executeGrid" columns="5" >
+                    <h:outputLabel value="执行" style="vertical-align: middle" />
+                    <p:spacer width="3" height="10" />
+                    <h:panelGrid  columns="2" >
+                        <p:selectBooleanCheckbox id="execute" style="vertical-align: middle" value="#{addauthority.execute}" >
+                            <p:ajax update="executeauthor" listener="#{addauthority.changeExecute}" />
+                        </p:selectBooleanCheckbox>
+                        <h:outputLabel value="允许执行" style="vertical-align: middle" />
+                    </h:panelGrid>
+                    <p:spacer width="6" height="10" />
+                    <p:commandLink style="font-size: 15px" disabled="#{user.type!=2}" rendered="#{addauthority.executeFoldRendered}" value="#{res.get('fold')}" actionListener="#{addauthority.clickExecuteMore}" update="executeauthor executeGrid" />
+                    <p:commandLink style="font-size: 15px" disabled="#{user.type!=2}" rendered="#{not addauthority.executeFoldRendered}" value="#{res.get('unfold')}" actionListener="#{addauthority.clickExecuteMore}" update="executeauthor executeGrid" />
+                </h:panelGrid>
+                <!--                <h:panelGrid columns="2" >
+                                    <p:spacer width="30" height="10" />
+                                    <p:commandLink disabled="{user.type!=2}" value="更多..." actionListener="{addauthority.clickExecuteMore}" update="executeauthor" />
+                                </h:panelGrid>-->
+                <p:outputPanel  id="executeauthor" >
+                    <h:panelGrid columns="2">
+                        <p:spacer width="18" height="10" />
+                        <p:panel style="width: 610px;height: 50px;border-color: transparent" rendered="#{addauthority.executeRendered}"   >
+                            <!--                            <p:commandButton value="aaa" />-->
+                            <h:panelGrid  columns="2" width="150">
+                                <p:selectBooleanCheckbox id="executefile" style="vertical-align: middle" value="#{addauthority.executeFile}" >
+                                    <p:ajax update="execute" listener="#{addauthority.changeExecuteAuthor}" />
+                                </p:selectBooleanCheckbox>
+                                <h:outputLabel value="允许执行文件" style="line-height: 25px;vertical-align: middle"  />
+                            </h:panelGrid>
+                        </p:panel> 
+                    </h:panelGrid>
+
+                </p:outputPanel>
+
+                <h:panelGrid id="inheritGrid" columns="5" >
+                    <h:outputLabel value="继承" style="vertical-align: middle" />
+                    <p:spacer width="3" height="10" />
+                    <h:panelGrid columns="2"  >
+                        <p:selectBooleanCheckbox id="inherit" value="#{addauthority.inherit}" style="vertical-align: middle">
+                            <p:ajax update="inheritauthor" listener="#{addauthority.changeInherit}"/>
+                        </p:selectBooleanCheckbox>
+                        <h:outputLabel value="允许继承" style="line-height: 25px;vertical-align: middle"  />
+                    </h:panelGrid>
+                    <p:spacer width="6" height="10" />
+                    <p:commandLink style="font-size: 15px" disabled="#{user.type!=2}" rendered="#{addauthority.inheritFoldRendered}" value="#{res.get('fold')}" actionListener="#{addauthority.clickInheritMore}" update="inheriteauthor inheritGrid" />
+                    <p:commandLink style="font-size: 15px" disabled="#{user.type!=2}" rendered="#{not addauthority.inheritFoldRendered}" value="#{res.get('unfold')}" actionListener="#{addauthority.clickInheritMore}" update="inheriteauthor inheritGrid" />
+                </h:panelGrid>
+                <!--                <h:panelGrid columns="2" >
+                                    <p:spacer width="30" height="10" />
+                                    <p:commandLink disabled="{user.type!=2}" value="更多..." actionListener="{addauthority.clickInheritMore}" update="inheriteauthor" />
+                                </h:panelGrid>-->
+                <p:outputPanel  id="inheriteauthor" >
+                    <h:panelGrid columns="2" >
+                        <p:spacer width="18" height="10" />
+                        <p:panel style="width: 610px;height: 80px;border-color: transparent" rendered="#{addauthority.inheritRendered}"   >
+                            <!--                            <p:commandButton value="aaa" />-->
+                            <h:panelGrid id ="inheritauthor" columns="2" width="150">
+                                <p:selectBooleanCheckbox id="fileinherit" style="vertical-align: middle" value="#{addauthority.fileInherit}">
+                                    <p:ajax update="inherit" listener="#{addauthority.changeInheritAuthor}" />
+                                </p:selectBooleanCheckbox>
+                                <h:outputLabel value="文件继承" style="line-height: 25px;vertical-align: middle"  />
+                                <p:selectBooleanCheckbox id="dirinherit" style="vertical-align: middle" value="#{addauthority.dirInherit}" >
+                                    <p:ajax update="inherit" listener="#{addauthority.changeInheritAuthor}" />
+                                </p:selectBooleanCheckbox>
+                                <h:outputLabel value="子目录继承" style="line-height: 25px;vertical-align: middle"  />
+                            </h:panelGrid>
+                        </p:panel> 
+                    </h:panelGrid>
+                </p:outputPanel>
+            </p:panel>
+            <p:panel style="width: 450px;border-color: transparent;text-align: center">
+                <!--<br/>-->
+                <!--<p:spacer width="86" height="10" />-->
+                <!--                <p:commandButton value="确定" style="vertical-align: middle;" update="error" actionListener="{sharelist.editBean.addACLToList}" oncomplete="if(result(xhr, status, args)) confirmCreate.show()" />-->
+                <p:commandButton value="#{global.get('save')}" icon="saveIcon" style="vertical-align: middle;"   action="#{addauthority.save()}"  />
+                <p:spacer width="6" height="10" />
+                <p:commandButton value="#{global.get('return')}" icon="cancleIcon" style="vertical-align: middle;" action="#{addauthority.back()}" />
+                <!--                </h:panelGrid> -->
+            </p:panel>
+            <!--                    </h:panelGrid>-->
+            <p:confirmDialog width="200" height="50" id="confirmONNFSDialog" header="确认" message="添加成功" severity="alert" widgetVar="confirmCreate" > 
+                <p:spacer height="10" width="25" />
+                <p:commandButton style="font-size: 13px"  value="确定"  oncomplete="confirmCreate.hide()"  action="nas_authority?faces-redirect=true" />  
+                <!--                <p:commandButton style="font-size: 13px"  value="返回" update=":form" oncomplete="confirmONNFS.hide()"  actionListener="{sharelist.setNFSOFF}" />    -->
+            </p:confirmDialog>
+
+        </h:form>
+        <p:ajaxStatus style="width:64px;height:64px;position:fixed;right:5px;bottom:5px">  
+            <f:facet name="start">  
+                <p:graphicImage value="../resources/common/picture/loading.gif" />  
+            </f:facet>  
+
+            <f:facet name="complete">  
+                <h:outputText value="" />  
+            </f:facet>  
+        </p:ajaxStatus>
+        <!--    </ui:define>-->
+    </h:body>
+</html>

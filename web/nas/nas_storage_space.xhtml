@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="GBK"?>
+<!--
+To change this template, choose Tools | Templates
+and open the template in the editor.
+-->
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.1//EN" "http://www.w3.org/TR/xhtml11/DTD/xhtml11.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:p="http://primefaces.org/ui"
+      template="../template/framework.xhtml">
+    <h:head>
+        <link href="./../resources/common/css/default.css" rel="stylesheet" type="text/css" />
+        <link href="./../resources/common/css/cssIcon.css" rel="stylesheet" type="text/css" />
+    </h:head>
+    <h:body>                                                
+        <h1 class="title ui-widget-header ui-corner-all">#{res.get('title')}</h1>
+        <!--<p:messages showSummary="true" showDetail="false" autoUpdate="true" closable="true" />-->
+        <h:form id="form1" >
+            <br/>
+            <!--<p:panel style="text-align: left;border-color: transparent;" >-->
+                <p:dataTable emptyMessage="#{global.get('emptyMessage')}" id="spaces" value="#{storageSpaceBean.spaces}" var="space" >
+                    <p:column style="width:2%">  
+                        <p:rowToggler />  
+                    </p:column> 
+                    <p:column headerText="#{global.get('name')}">  
+                        <h:outputText value="#{space.name}"/>  
+                    </p:column>
+                    <p:column headerText="#{res.get('used')}"  style="text-align:center" >  
+                        <h:outputText value="#{space.usedStr}"/>  
+                    </p:column>
+                    <p:column headerText="#{res.get('unUsed')}" style="text-align:center" >  
+                        <h:outputText value="#{space.available}"/>  
+                    </p:column>
+                    <p:column headerText="#{global.get('operation')}">
+                        <p:graphicImage value="../resources/common/picture/edit.png" style=" vertical-align:middle;"/>
+                        <p:commandLink  id="setButton" value="#{res.get('set')}" disabled="#{user.type!=2}" immediate="true" action="#{storageSpaceBean.doBeforeConfigFileSys(space)}"  style=" vertical-align:middle;"> 
+
+                        </p:commandLink>
+                    </p:column>
+                    <p:rowExpansion>
+                        <div style="overflow-x:auto; width: 100%;padding-bottom: 0px!important;padding-bottom: 6px;">
+                            <p:dataTable  value="#{space.details}" var="detail" id="detail"  emptyMessage="#{global.get('emptyMessage')}">  
+                                <p:column headerText="" >  
+                                    <h:outputText value="#{detail.name}" />  
+                                </p:column> 
+                                <p:column headerText="" >  
+                                    <h:outputText value="#{detail.value}"/>  
+                                </p:column>      
+                            </p:dataTable>
+                        </div>
+                    </p:rowExpansion>
+                </p:dataTable>
+            <!--</p:panel>-->
+
+            <!--            </p:panel>-->
+        </h:form>
+        <p:ajaxStatus style="width:64px;height:64px;position:fixed;right:5px;bottom:5px">  
+            <f:facet name="start">  
+                <p:graphicImage value="../resources/common/picture/loading.gif" />  
+            </f:facet>  
+
+            <f:facet name="complete">  
+                <h:outputText value="" />  
+            </f:facet>  
+        </p:ajaxStatus>
+    </h:body>
+</html>

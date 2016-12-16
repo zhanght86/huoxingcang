@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="GBK"?>
+<!--
+To change this template, choose Tools | Templates
+and open the template in the editor.
+-->
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.1//EN" "http://www.w3.org/TR/xhtml11/DTD/xhtml11.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+    <h:head>
+        <link href="./../resources/common/css/default.css" rel="stylesheet" type="text/css" />
+        <link href="./../resources/common/css/cssIcon.css" rel="stylesheet" type="text/css" />
+    </h:head>
+    <h:body>
+        <h:form id="form">
+            <h1 class="title ui-widget-header ui-corner-all">#{res.get('title')}</h1>
+            <p:messages showSummary="true" showDetail="false" autoUpdate="true" closable="true" />
+            <br/>
+            <p:panel style="width: 350px;text-align: left;border-color: transparent;" >
+                <!--               <p:spacer width="8" height="6" />
+                               <p:selectBooleanCheckbox style="vertical-align: middle"   value="{configiSCSITargetBindingBean.isStart}" >
+                                   <p:ajax update="ipbind" listener="{configiSCSITargetBindingBean.listen()}" />
+                               </p:selectBooleanCheckbox>
+                                <p:spacer width="5" height="6" />
+                                <h:outputLabel value="{res.get('startBind')}" style="vertical-align: middle"  />
+                                <br/>-->
+                <p:selectOneRadio id="radio" value="#{configiSCSITargetBindingBean.radioValue}" layout="custom" >  
+                    <f:selectItem itemLabel="#{res.get('allIP')}" itemValue="1" ></f:selectItem>
+                    <f:selectItem itemLabel="#{res.get('specificIP')}" itemValue="2" />   
+                    <p:ajax listener="#{configiSCSITargetBindingBean.listen()}" update=":form" />
+                </p:selectOneRadio>
+                <h:panelGrid columns="5">
+                    <p:radioButton id="opt1" for="radio" itemIndex="0" >
+                    </p:radioButton>
+                    <h:outputLabel value="#{res.get('allIP')}" for="opt1" />
+                    <p:spacer width="30" />
+                    <p:radioButton id="opt2" for="radio" itemIndex="1" >
+                    </p:radioButton>
+                    <h:outputLabel value="#{res.get('specificIP')}" for="opt2" />
+                </h:panelGrid>
+                <br/>
+                    <p:dataTable rendered="#{configiSCSITargetBindingBean.tableRender}"  id="ipbind"  value="#{configiSCSITargetBindingBean.dataModel}" selection="#{configiSCSITargetBindingBean.selectedIP}" var="bind" emptyMessage="#{global.get('emptyMessage')}" >
+                        <p:column   selectionMode="multiple" width="60" style="text-align:center;vertical-align: middle"/> 
+                        <p:column  headerText="#{res.get('ip')}"  >
+                            <h:outputLabel  value="#{bind.ip}"  />
+                        </p:column>
+                    </p:dataTable> 
+
+            </p:panel>
+            <p:panel style="width: 350px;text-align: center;border-color: transparent;" >
+                <p:commandButton   id="addButton" value="#{global.get('save')}" icon="saveIcon" action="#{configiSCSITargetBindingBean.save()}" >
+                </p:commandButton>
+                <p:spacer width="8" height="6" />
+                <p:commandButton  id="closeButton" icon="cancleIcon" immediate="true" value="#{global.get('return')}" action="scsi_target?faces-redirect=true&amp;activeIndex=1" />  
+            </p:panel>
+        </h:form>
+        <p:ajaxStatus style="width:64px;height:64px;position:fixed;right:5px;bottom:5px">  
+            <f:facet name="start">  
+                <p:graphicImage value="../resources/common/picture/loading.gif" />  
+            </f:facet>  
+
+            <f:facet name="complete">  
+                <h:outputText value="" />  
+            </f:facet>  
+        </p:ajaxStatus>
+    </h:body>
+</html>

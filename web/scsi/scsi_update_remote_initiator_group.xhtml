@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="GBK"?>
+<!--
+To change this template, choose Tools | Templates
+and open the template in the editor.
+-->
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.1//EN" "http://www.w3.org/TR/xhtml11/DTD/xhtml11.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:p="http://primefaces.org/ui">
+    <h:head>
+        <link href="./../resources/common/css/default.css" rel="stylesheet" type="text/css" />
+        <link href="./../resources/common/css/cssIcon.css" rel="stylesheet" type="text/css" />
+        <style  type="text/css">
+            .ui-picklist-item {
+                width: 400px;
+                
+                
+            }
+        </style>
+    </h:head>
+    
+    <h:body>
+        <h:form>
+            <h1 style="width: 710px" class="title ui-widget-header ui-corner-all">#{res.get('title')}</h1>
+            <br/>
+            <p:panel style="width: 600px;text-align: left;border-color: transparent;" >
+                <!--selection="{remoteInitiatorData.groupTemp.selectedInitiator}"--> 
+                <!--                <p:dataTable  value="{updateRemoteInitiatorGroup.newGroup.avalibleInitiators}" var="initiator" >
+                                    <p:column selectionMode="multiple" style="width:2%" />
+                                    <p:column width="20" >
+                                        <p:spacer width="20" height="10" />
+                                        <p:selectBooleanCheckbox value="{initiator.belongGroupOrNot}" style="vertical-align: middle" >
+                                            
+                                        </p:selectBooleanCheckbox>
+                                    </p:column>
+                                    <p:column headerText="Initiator名称">
+                                        {initiator.name}
+                                    </p:column>
+                                </p:dataTable>-->
+                <p:pickList  id="picklist" value="#{modifyFCInitiatorGroupBean.group.model}" var="initiator" itemValue="#{initiator}" itemLabel="#{initiator}"   >
+                    <f:facet name="sourceCaption">Initiator</f:facet>  
+                    <f:facet name="targetCaption">#{res.get('InitiatorMember')}</f:facet>
+                    <p:column  >
+                        <!--<h:outputLink id="data" >-->
+                            <h:outputLabel style="width:600px;" value="#{initiator}" />
+                        <!--</h:outputLink>-->
+                        <!--<p:tooltip  for="data" value="{initiator.name}"  showEffect="fade" hideEffect="fade" />-->
+                    </p:column> 
+                    
+                </p:pickList>
+            </p:panel>
+            <br/><br/>
+            <p:panel style="width: 600px;text-align: center;border-color: transparent;" >
+                <p:commandButton  id="addButton" value="#{global.get('save')}" icon="saveIcon" action="#{modifyFCInitiatorGroupBean.save()}"   >
+                </p:commandButton>
+                <p:spacer width="8" height="6" />
+                <p:commandButton immediate="true"  id="closeButton" icon="cancleIcon" value="#{global.get('return')}" action="scsi_host?faces-redirect=true" />  
+            </p:panel>
+        </h:form>
+        <p:ajaxStatus style="width:64px;height:64px;position:fixed;right:5px;bottom:5px">  
+            <f:facet name="start">  
+                <p:graphicImage value="../resources/common/picture/loading.gif" />  
+            </f:facet>  
+
+            <f:facet name="complete">  
+                <h:outputText value="" />  
+            </f:facet>  
+        </p:ajaxStatus>
+    </h:body>
+</html>

@@ -1,0 +1,436 @@
+<?xml version="1.0" encoding="GBK"?>
+<!--
+To change this template, choose Tools | Templates
+and open the template in the editor.
+-->
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.1//EN" "http://www.w3.org/TR/xhtml11/DTD/xhtml11.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:p="http://primefaces.org/ui"
+                xmlns:util="http://java.sun.com/jsf/composite/xhtml"> 
+    <!--      template="../template/framework.xhtml"-->
+    <!--    <ui:define name="head">-->
+
+    <!--    </ui:define>-->
+
+    <!--    <ui:define name="content">-->
+    <h:head>
+        <script type="text/javascript">
+            function handleModifyOKRequest(xhr, status, args) {
+
+                if (args.isEdit == 1) {
+                    window.location.href = "vm_vminfotable_modifyController.jsf";
+                } else {
+                    alert("未添加此控制器，请添加。");
+                }
+            }
+
+            function modifyOKRequest(xhr, status, args) {
+                //                alert("args.isEdit="+args.isEdit+";args.conType="+args.conType);
+
+                if (args.isEdit == 1) {
+                    document.getElementById("form1:modify1").disabled = true;
+                } else {
+                    document.getElementById("form1:modify1").disabled = false;
+                }
+            }
+
+
+
+        </script>
+
+
+        <link href="./../resources/common/css/default.css" rel="stylesheet" type="text/css" />
+        <link href="./../resources/common/css/cssIcon.css" rel="stylesheet" type="text/css" />
+    </h:head>
+    <h:body>
+        <h:form id="tip1">
+            <util:confirm  uid="deleteNet" mess="#{res.get('deletenetip_left')}#{vMInfoTableBean.vmInfo.selectNetworkCardName}#{res.get('deletenetip_right')}" action="#{vMInfoTableBean.vmInfo.deleteNetworkCard}" update=":form1" >
+            </util:confirm>
+        </h:form>
+        <h:form id="tip2">
+            <util:confirm_check  uid="deleteIDEStorage" mess="#{res.get('deletestoragetip_left')}#{vMInfoTableBean.vmInfo.ideController.selectStorageName}#{res.get('deletestoragetip_right')}" booldel="#{controllerInfo.booldel}" action="#{vMInfoTableBean.vmInfo.ideController.deleteStorage_byIDE(controllerInfo.booldel)}" update=":form1">
+
+            </util:confirm_check>
+        </h:form>
+        <h:form id="tip3">
+            <util:confirm_check  uid="deleteSCSIStorage" mess="#{res.get('deletestoragetip_left')}#{vMInfoTableBean.vmInfo.scsiController.selectStorageName}#{res.get('deletestoragetip_right')}" booldel="#{controllerInfo.booldel}" action="#{vMInfoTableBean.vmInfo.scsiController.deleteStorage_byIDE(controllerInfo.booldel)}" update=":form1">
+
+            </util:confirm_check>
+        </h:form>
+        <h:form id="tip4">
+            <util:confirm_check  uid="deleteSASStorage" mess="#{res.get('deletestoragetip_left')}#{vMInfoTableBean.vmInfo.sasController.selectStorageName}#{res.get('deletestoragetip_right')}" booldel="#{controllerInfo.booldel}" action="#{vMInfoTableBean.vmInfo.sasController.deleteStorage_byIDE(controllerInfo.booldel)}" update=":form1">
+
+            </util:confirm_check>
+        </h:form>
+        <!--         <h:form>
+                    <util:confirm_check  uid="deleteStorage" mess="确实要删除此设备吗？" booldel="{controllerInfo.booldel}" action="{controllerInfo.deleteStorage_byIDE(controllerInfo.booldel)}" update=":form1">
+        
+                    </util:confirm_check>
+                </h:form>-->
+        <h:form id="tip5">
+            <util:confirm  uid="deleteCDStorage" mess="#{res.get('deletestoragetip_left')}#{vMInfoTableBean.vmInfo.ideController.selectStorageName}#{res.get('deletestoragetip_right')}" action="#{vMInfoTableBean.vmInfo.ideController.deleteCD_Storage_byIDE()}" update=":form1">
+
+            </util:confirm>
+        </h:form>
+        <h:form id="tip6">
+            <util:confirm  uid="deleteController" mess="#{res.get('deletecontrollertip_left')}#{vMInfoTableBean.vmInfo.selectedControllerName}#{res.get('deletecontrollertip_right')}" action="#{vMInfoTableBean.vmInfo.handleController_del(vMInfoTableBean.vmInfo.vmNAME)}" update=":form1">
+
+            </util:confirm>
+        </h:form>
+        <h:form id="form1">
+            <h1 class="title ui-widget-header ui-corner-all">${global.get('moduletitle')}${res.get('this_title')}</h1>
+            <p:messages id="messages" showDetail="true" autoUpdate="true" closable="true" />
+            <br/>
+            <p:tabView id="tabView" dynamic="true" cache="true" style="border: none;"> 
+
+                <p:tab id="tab1" title="${res.get('tab1')}"> 
+                    <br/>
+
+                    <h:outputLabel value="#{res.get('vmname')}#{vMInfoTableBean.vmInfo.vmNAME}"/>                                                   
+                    <p:accordionPanel activeIndex="#{netWorkCardBean.accordionActive1}">
+                        <p:tab title="${res.get('tab1_storage')}">
+
+                            <h1 title="Controller" style="color:black ">${res.get('controller_info')}</h1>                          
+                            <p:dataTable id="controllerTypeList" var="con" value="#{vMInfoTableBean.vmInfo.controllerTypeList}" style="width: 300px" emptyMessage="#{global.get('emptyMessage')}" >  
+                                <p:column headerText="${res.get('controllername')}">  
+                                    <h:outputText value="#{con.controllerName}" />  
+                                </p:column>     
+                                <p:column headerText="${res.get('operate')}" style="text-align:center; ">    
+                                    <p:graphicImage value="../resources/common/picture/edit.png" width="16" height="16" style="vertical-align:middle" />
+                                    <p:commandLink id="modify1" value="${res.get('editcontroller')}" immediate="true" disabled="#{con.edit}" update=":form1" action="#{vMInfoTableBean.vmInfo.isCanEditController}" >
+                                        <f:setPropertyActionListener value="#{con}" target="#{vMInfoTableBean.vmInfo.selectedControllerType}" />                 
+                                    </p:commandLink>
+                                     <p:spacer width="10"/>
+                                     <p:graphicImage value="#{con.icon}" width="16" height="16" style="vertical-align:middle"/>
+                                    <p:commandLink id="oper" immediate="true" disabled="#{con.add_del}"  value="#{con.operation}" update=":form1 :tip6" action="#{vMInfoTableBean.vmInfo.handleControll(con.operation,vMInfoTableBean.vmInfo.vmNAME)}">
+                                        <f:setPropertyActionListener value="#{con}" target="#{vMInfoTableBean.vmInfo.selectedControllerType}" />
+                                    </p:commandLink>
+                                </p:column>
+                            </p:dataTable> 
+                            <br/>
+
+                            <h1 title="IDE" style="color:black ">${res.get('ide')}</h1>  
+
+                            <p:toolbar>  
+                                <p:toolbarGroup align="right">  
+                                    <p:commandButton id="addIDE_CD" value="${res.get('addcd')}" icon="addCDIcon" immediate="true" update="ide" action="#{creatDisk.createCD_byIDE(vMInfoTableBean.vmInfo.vmNAME)}" disabled="#{vMInfoTableBean.vmInfo.notaddCD_IDE}"/>
+                                    <p:spacer width="3"/>
+                                    <p:commandButton id="addIDE_disk" value="${res.get('adddisk')}" icon="addDiskIcon" immediate="true" update="ide" action="#{vMInfoTableBean.vmInfo.setControType(vMInfoTableBean.vmInfo.vmNAME,1)}" disabled="#{vMInfoTableBean.vmInfo.notaddDisk_IDE}"/>
+                                </p:toolbarGroup> 
+                            </p:toolbar>
+                            <div style="overflow-x: auto; width:100%;padding-bottom: 2px !important; padding-bottom: 14px;">
+                                <p:dataTable id="ide" var="ideBean" value="#{vMInfoTableBean.vmInfo.ideController.storage}"  emptyMessage="#{global.get('emptyMessage')}" >  
+                                    <p:column headerText="${res.get('Storage_deviceName')}" style="min-width:200px;">  
+                                        <h:outputText value="#{ideBean.storageName}" />  
+                                    </p:column>     
+                                    <p:column headerText="${res.get('Storage_deviceState')}" style=" white-space: nowrap;">  
+                                        <h:outputText value="#{ideBean.strstate}" />  
+                                    </p:column>  
+                                    <p:column headerText="${res.get('Storage_devicePort')}" style=" white-space: nowrap;">  
+                                        <h:outputText value="#{ideBean.attribue}" />  
+                                    </p:column>     
+                                    <p:column headerText="${res.get('Storage_deviceType')}" style=" white-space: nowrap;">  
+                                        <h:outputText value="#{ideBean.storageAttachFormat}" />  
+                                    </p:column>  
+                                    <p:column headerText="${res.get('Storage_allocateSize')}" style=" white-space: nowrap;">  
+                                        <h:outputText value="#{ideBean.storageAttachSize}" />  
+                                    </p:column>  
+                                    <p:column headerText="${res.get('Storage_actualSize')}" style=" white-space: nowrap;">  
+                                        <h:outputText value="#{ideBean.storageAttachUsedSize}" />  
+                                    </p:column>     
+                                    <p:column headerText="${res.get('Storage_location')}" style=" min-width:200px;">  
+                                        <h:outputText value="#{ideBean.storageAttachMedium}" />
+                                    </p:column> 
+                                    <p:column headerText="${res.get('operate')}" style="white-space: nowrap;">        
+                                        <p:graphicImage value="../resources/common/picture/edit.png" width="16" height="16" style="vertical-align:middle" />
+                                        <p:commandLink id="modifyIDEButton" value="${res.get('modify')}" disabled="#{ideBean.cantdei_modify}"  update="ide" action="#{vMInfoTableBean.vmInfo.ideController.setName(vMInfoTableBean.vmInfo.vmNAME,ideBean.storageAttachMedium,ideBean.storageAttachType,ideBean.storageAttachPort,ideBean.storageAttachDevice)}">
+                                            <f:param  name="storageType" value="ide" />
+                                            <f:setPropertyActionListener value="#{ideBean}" target="#{vMInfoTableBean.vmInfo.ideController.selectStorage}" />               
+                                        </p:commandLink>
+                                        <p:spacer width="10"/>
+                                         <p:graphicImage value="../resources/common/picture/delete.png" width="16" height="16" style="vertical-align:middle"/>
+                                        <p:commandLink id="deleteIDEButton" disabled="#{ideBean.cantdei_modify}" value="${res.get('delete')}" update="ide :tip2 :tip5" action="#{vMInfoTableBean.vmInfo.ideController.deleteStorage(vMInfoTableBean.vmInfo.vmNAME,1)}">          
+                                            <f:setPropertyActionListener value="#{ideBean}" target="#{vMInfoTableBean.vmInfo.ideController.selectStorage}" />
+                                        </p:commandLink>
+
+                                        <p:spacer width="10" rendered="#{ideBean.haveiso}"/>
+                                        <p:graphicImage rendered="#{ideBean.haveiso}" value="../resources/vm/picture/iso.png" width="16" height="16" style="vertical-align:middle"/>
+                                        <p:commandLink id="isoButton" rendered="#{ideBean.haveiso}" disabled="#{ideBean.cantiso}" value="${res.get('iso')}" update="ide" action="#{vMInfoTableBean.vmInfo.ideController.isoMenu(vMInfoTableBean.vmInfo.vmNAME,ideBean.storageAttachPort,ideBean.storageAttachDevice)}">          
+                                            <f:setPropertyActionListener value="#{ideBean}" target="#{vMInfoTableBean.vmInfo.ideController.selectStorage}" />
+                                        </p:commandLink>
+
+                                        <p:spacer width="10" rendered="#{ideBean.haveiso}"/>
+                                        <p:graphicImage rendered="#{ideBean.haveiso}" value="../resources/vm/picture/driver.png" width="16" height="16" style="vertical-align:middle"/>
+                                        <p:commandLink id="driveButton" rendered="#{ideBean.haveiso}" disabled="#{ideBean.cantiso}" value="${res.get('driver')}" update="ide" action="#{vMInfoTableBean.vmInfo.ideController.physicsMenu(vMInfoTableBean.vmInfo.vmNAME,ideBean.storageAttachPort,ideBean.storageAttachDevice)}">          
+                                            <f:setPropertyActionListener value="#{ideBean}" target="#{vMInfoTableBean.vmInfo.ideController.selectStorage}" />
+                                        </p:commandLink>
+
+                                        <p:spacer width="10" rendered="#{ideBean.haveejectdisk}"/>
+                                        <p:graphicImage rendered="#{ideBean.haveejectdisk}" value="../resources/vm/picture/ejectdisk.png" width="16" height="16" style="vertical-align:middle"/>
+                                        <p:commandLink id="ejectDisk" rendered="#{ideBean.haveejectdisk}" disabled="#{ideBean.cantejectdisk}" value="${res.get('ejectdisk')}" update="ide" action="#{vMInfoTableBean.vmInfo.ideController.removeDisk(vMInfoTableBean.vmInfo.vmNAME,ideBean.storageAttachPort,ideBean.storageAttachDevice)}">          
+                                            <f:setPropertyActionListener value="#{ideBean}" target="#{vMInfoTableBean.vmInfo.ideController.selectStorage}" />
+                                        </p:commandLink>
+                                    </p:column>
+                                </p:dataTable>
+                            </div>
+
+                            <br/>
+
+                            <h1 title="SCSI" style="color:black ">${res.get('scsi')}</h1>
+                            <p:toolbar>  
+                                <p:toolbarGroup align="right">  
+                                    <p:commandButton id="addSCSI_disk" value="${res.get('adddisk')}" icon="addDiskIcon" update="scsi" action="#{vMInfoTableBean.vmInfo.setControType(vMInfoTableBean.vmInfo.vmNAME,2)}" disabled="#{vMInfoTableBean.vmInfo.notaddDisk_SCSI}"/>
+                                </p:toolbarGroup> 
+                            </p:toolbar>
+                            <div style="overflow-x: auto; width:100%;padding-bottom: 2px !important; padding-bottom: 14px;">
+                                <p:dataTable id="scsi" var="scsiBean" value="#{vMInfoTableBean.vmInfo.scsiController.storage}" emptyMessage="#{global.get('emptyMessage')}" >  
+                                    <p:column headerText="${res.get('Storage_deviceName')}" style="min-width:200px;">  
+                                        <h:outputText value="#{scsiBean.storageName}" />  
+                                    </p:column>     
+                                    <p:column headerText="${res.get('Storage_deviceState')}" style="white-space: nowrap;">  
+                                        <h:outputText value="#{scsiBean.strstate}" />  
+                                    </p:column>  
+                                    <p:column headerText="${res.get('Storage_devicePort')}" style="white-space: nowrap;">  
+                                        <h:outputText value="#{scsiBean.attribue}" />  
+                                    </p:column>     
+                                    <p:column headerText="${res.get('Storage_deviceType')}" style="white-space: nowrap;">  
+                                        <h:outputText value="#{scsiBean.storageAttachFormat}" />  
+                                    </p:column>  
+                                    <p:column headerText="${res.get('Storage_allocateSize')}" style="white-space: nowrap;">  
+                                        <h:outputText value="#{scsiBean.storageAttachSize }" />  
+                                    </p:column>  
+                                    <p:column headerText="${res.get('Storage_actualSize')}" style="white-space: nowrap;">  
+                                        <h:outputText value="#{scsiBean.storageAttachUsedSize}" />  
+                                    </p:column>     
+                                    <p:column headerText="${res.get('Storage_location')}" style="min-width:200px;">  
+                                        <h:outputText value="#{scsiBean.storageAttachMedium}" />  
+                                    </p:column>  
+                                    <p:column headerText="${res.get('operate')}" style="white-space: nowrap;">  
+                                        <!--                                            <p:commandButton id="deleteSCSIButton" icon="ui-icon-close" immediate="true" update="scsi" oncomplete="scsiStorageDialog.show()" style="width: 20px; height: 20px">
+                                                                                        <f:setPropertyActionListener value="{scsiBean}" target="{vMList.selectedVM.scsiController.selectStorage}" />
+                                                                                    </p:commandButton> 
+                                                                                    <p:commandButton id="modifySCSIButton"  immediate="true" update="scsi" action="{modifyDiskPort.setName}" icon="ui-icon-pencil" style="width: 20px; height: 20px">
+                                                                                        <f:param  name="storageType" value="scsi" />
+                                                                                        <f:setPropertyActionListener value="{scsiBean}" target="{vMList.selectedVM.scsiController.selectStorage}" />
+                                                                                    </p:commandButton>-->
+                                        <p:graphicImage value="../resources/common/picture/edit.png" width="16" height="16" style="vertical-align:middle" />
+                                        <p:commandLink id="modifySCSIButton" value="${res.get('modify')}" disabled="#{scsiBean.cantdei_modify}"  update="scsi" action="#{vMInfoTableBean.vmInfo.scsiController.setName(vMInfoTableBean.vmInfo.vmNAME,scsiBean.storageAttachMedium,scsiBean.storageAttachType,scsiBean.storageAttachPort,scsiBean.storageAttachDevice)}">
+                                            <f:param  name="storageType" value="scsi" />
+                                            <f:setPropertyActionListener value="#{scsiBean}" target="#{vMInfoTableBean.vmInfo.scsiController.selectStorage}" />               
+                                        </p:commandLink>
+                                        <p:spacer width="10"/>
+                                        <p:graphicImage value="../resources/common/picture/delete.png" width="16" height="16" style="vertical-align:middle"/>
+                                        <p:commandLink id="deleteSCSIButton" disabled="#{scsiBean.cantdei_modify}" value="${res.get('delete')}" update="scsi :tip3" action="#{vMInfoTableBean.vmInfo.scsiController.deleteStorage(vMInfoTableBean.vmInfo.vmNAME,2)}">
+                                            <f:setPropertyActionListener value="#{scsiBean}" target="#{vMInfoTableBean.vmInfo.scsiController.selectStorage}" />
+                                        </p:commandLink>
+                                    </p:column>  
+                                </p:dataTable> 
+                            </div>
+
+                            <br></br>
+                            <h1 title="SAS" style="color:black ">${res.get('sas')}</h1>
+                            <p:toolbar>  
+                                <p:toolbarGroup align="right">  
+                                    <p:commandButton id="addSAS_disk" value="${res.get('adddisk')}" icon="addDiskIcon" immediate="true" update="sas" action="#{vMInfoTableBean.vmInfo.setControType(vMInfoTableBean.vmInfo.vmNAME,3)}" disabled="#{vMInfoTableBean.vmInfo.notaddDisk_SAS}"/>
+                                </p:toolbarGroup> 
+                            </p:toolbar>
+                            <div style="overflow-x: auto; width:100%;padding-bottom: 2px !important; padding-bottom: 14px;">
+                                <p:dataTable id="sas" var="sasBean" value="#{vMInfoTableBean.vmInfo.sasController.storage}" style="width: 720px" emptyMessage="#{global.get('emptyMessage')}" >  
+                                    <p:column headerText="${res.get('Storage_deviceName')}" style="min-width:200px;"> 
+                                        <h:outputText value="#{sasBean.storageName}" />  
+                                    </p:column>     
+                                    <p:column headerText="${res.get('Storage_deviceState')}" style="white-space: nowrap;">  
+                                        <h:outputText value="#{sasBean.strstate}" />  
+                                    </p:column>  
+                                    <p:column headerText="${res.get('Storage_devicePort')}" style="white-space: nowrap;">  
+                                        <h:outputText value="#{sasBean.attribue}" />  
+                                    </p:column>     
+                                    <p:column headerText="${res.get('Storage_deviceType')}" style="white-space: nowrap;">  
+                                        <h:outputText value="#{sasBean.storageAttachFormat}" />  
+                                    </p:column>  
+                                    <p:column headerText="${res.get('Storage_allocateSize')}" style="white-space: nowrap;">  
+                                        <h:outputText value="#{sasBean.storageAttachSize}" />  
+                                    </p:column>  
+                                    <p:column headerText="${res.get('Storage_actualSize')}" style="white-space: nowrap;">  
+                                        <h:outputText value="#{sasBean.storageAttachUsedSize}" />  
+                                    </p:column>     
+                                    <p:column headerText="${res.get('Storage_location')}" style="min-width:200px;">  
+                                        <h:outputText value="#{sasBean.storageAttachMedium}" />  
+                                    </p:column>  
+                                    <p:column headerText="${res.get('operate')}" style="white-space: nowrap;">  
+                                        <!--                                            <p:commandButton id="deleteSASButton" icon="ui-icon-close" immediate="true" update="sas" oncomplete="sasStorageDialog.show()" style="width: 20px; height: 20px">
+                                                                                        <f:setPropertyActionListener value="{sasBean}" target="{vMList.selectedVM.sasController.selectStorage}" />
+                                                                                    </p:commandButton> 
+                                                                                    <p:commandButton id="modifySASButton"  immediate="true" update="sas" action="{modifyDiskPort.setName}" icon="ui-icon-pencil" style="width: 20px; height: 20px">
+                                                                                        <f:param  name="storageType" value="sas" />
+                                                                                        <f:setPropertyActionListener value="{sasBean}" target="{vMList.selectedVM.sasController.selectStorage}" />
+                                                                                    </p:commandButton>-->
+                                        <p:graphicImage value="../resources/common/picture/edit.png" width="16" height="16" style="vertical-align:middle" />
+                                        <p:commandLink id="modifySASButton" value="${res.get('modify')}" disabled="#{sasBean.cantdei_modify}"  update="sas" action="#{vMInfoTableBean.vmInfo.scsiController.setName(vMInfoTableBean.vmInfo.vmNAME,sasBean.storageAttachMedium,sasBean.storageAttachType,sasBean.storageAttachPort,sasBean.storageAttachDevice)}">
+                                            <f:param  name="storageType" value="sas" />
+                                            <f:setPropertyActionListener value="#{sasBean}" target="#{vMInfoTableBean.vmInfo.sasController.selectStorage}" />              
+                                        </p:commandLink>
+                                         <p:spacer width="10"/>
+                                         <p:graphicImage value="../resources/common/picture/delete.png" width="16" height="16" style="vertical-align:middle"/>
+                                        <p:commandLink id="deleteSASButton" disabled="#{sasBean.cantdei_modify}" value="${res.get('delete')}" update="sas :tip4" action="#{vMInfoTableBean.vmInfo.sasController.deleteStorage(vMInfoTableBean.vmInfo.vmNAME,3)}">
+                                            <f:setPropertyActionListener value="#{sasBean}" target="#{vMInfoTableBean.vmInfo.sasController.selectStorage}" />
+                                        </p:commandLink>
+                                    </p:column>                        
+                                </p:dataTable>
+                            </div>
+
+                        </p:tab>
+
+                        <p:tab title="${res.get('tab1_network')}" >
+
+                            <p:toolbar>  
+                                <p:toolbarGroup align="right">  
+                                    <p:commandButton id="addNet" value="${res.get('add')}" icon="addIcon" action="#{vMInfoTableBean.vmInfo.toAddNIC}" disabled="#{vMInfoTableBean.vmInfo.notaddNet}"/>
+                                </p:toolbarGroup> 
+                            </p:toolbar>
+                            <p:dataTable id="netList" var="net" value="#{vMInfoTableBean.vmInfo.networkInterfaceCard}" emptyMessage="#{global.get('emptyMessage')}" >   
+                                <p:column headerText="${res.get('tab1_network')}">  
+                                    <h:outputText value="#{net.vmNICName}" />  
+                                </p:column>     
+                                <p:column headerText="${res.get('macaddress')}">  
+                                    <h:outputText value="#{net.macAddress}" />  
+                                </p:column>  
+                                <p:column headerText="${res.get('strcableconnected')}" style="text-align: center">  
+                                    <h:outputText value="#{net.strCableConnected}" />  
+                                </p:column>   
+                                <p:column headerText="${res.get('operate')}">
+                                    <p:graphicImage value="../resources/common/picture/edit.png" width="16" height="16" style="vertical-align:middle" />  
+                                    <p:commandLink id="modifyButton" value="${res.get('modify')}" disabled="#{net.dei_modify}" update="netList" action="#{vMInfoTableBean.vmInfo.toMdifyNIC}">
+                                        <f:setPropertyActionListener value="#{net}" target="#{vMInfoTableBean.vmInfo.selectNetworkCard}" />
+                                    </p:commandLink>
+                                    <p:spacer width="10"/>
+                                    <p:graphicImage value="../resources/common/picture/delete.png" width="16" height="16" style="vertical-align:middle"/>
+                                    <p:commandLink id="deleteNetButton" value="${res.get('delete')}" disabled="#{net.dei_modify}" update="netList :tip1" action="#{vMInfoTableBean.vmInfo.toDeleteNetworkCard()}">
+                                        <f:setPropertyActionListener value="#{net}" target="#{vMInfoTableBean.vmInfo.selectNetworkCard}" />
+                                    </p:commandLink>
+                                </p:column>
+                            </p:dataTable> 
+
+                        </p:tab>
+                    </p:accordionPanel> 
+                    <div style=" text-align: center">
+                        <p:spacer width="2" height="50"/>
+                        <p:commandButton  icon="cancleIcon" value="${global.get('return')}" action="vm_VMListTable?faces-redirect=true"/>   
+                    </div>
+
+
+                </p:tab>
+                <p:tab id="tab2" title="${res.get('tab2')}">
+                    <div style="margin-left: -10px;">
+                        ${res.get('tab2_info')}
+                        <p:panel style="width: 690px;">
+                            <h:panelGrid columns="2">  
+                                <h:panelGrid columns="2" cellpadding="5">
+                                    <h:outputLabel value="${res.get('vmnamestr')}"/>
+                                    <h:outputLabel value="#{vMInfoTableBean.vmNameStr}"/>
+
+                                    <h:outputLabel value="${res.get('ostypestr')}"/>
+                                    <h:outputLabel value="#{vMInfoTableBean.osTypeStr}"/>
+
+                                    <h:outputLabel value="${res.get('cpucorenumstr')}"/>
+                                    <p:selectOneMenu id="cpu" value="#{vMInfoTableBean.cpuCoreNumStr}" style="min-width: 185px; max-width:185px; width:185px; " disabled="#{vMInfoTableBean.cantSys}">  
+                                        <!--                                    <f:selectItem itemLabel="Select One" itemValue="" />  -->
+                                        <f:selectItems value="#{getCreateVM.cpuCoreNumList}" />  
+                                    </p:selectOneMenu> 
+
+                                    <h:outputLabel value="${res.get('memorysizestr')}"/>
+                                    <h:panelGroup>
+                                        <p:inputText id="rem" style="width: 153px" value="#{vMInfoTableBean.memorySizeStr}" disabled="#{vMInfoTableBean.cantSys}"/>MB
+                                    </h:panelGroup>
+
+                                    <h:outputLabel value="${res.get('supportIOAPICstr')}" />
+                                    <h:panelGroup>
+                                        <h:selectBooleanCheckbox id="checkBox" value="#{vMInfoTableBean.supportIOAPICStr}" label="check" disabled="#{vMInfoTableBean.cantSys}"/>
+                                        ${res.get('startIOAPICstr')}
+                                    </h:panelGroup>
+                                </h:panelGrid>
+
+                                <h:panelGrid columns="1">
+                                    ${res.get('bootsequencesstr')}
+                                    <p:orderList value="#{vMInfoTableBean.bootSequencesStr}" var="bootSequen" effect="clip"  
+                                                 itemValue="#{bootSequen}" converter="bootSequen" controlsLocation="right" id="bootList" style=" height: 100px;" disabled="#{vMInfoTableBean.cantSys}">  
+                                        <p:column style="width:15%">  
+                                            <p:graphicImage value="/resources/vm/picture/#{bootSequen.strIcon}" width="18" height="18" />  
+                                        </p:column>  
+
+                                        <p:column style="width:85%;">  
+                                            #{bootSequen.type}   
+                                        </p:column>  
+                                    </p:orderList> 
+                                </h:panelGrid>
+
+                            </h:panelGrid>
+                        </p:panel>
+
+
+                        <br></br>
+
+                        <!--                    <p:fieldset legend="远程桌面" style="width: 670px;">-->
+                        ${res.get('remote')}
+                        <p:panel style="width: 690px;">
+                            <h:panelGrid columns="2" cellpadding="5"> 
+                                <h:panelGrid columns="2"> 
+                                    ${res.get('remoteaddressstr')}
+                                    <p:selectOneMenu id="ip" value="#{vMInfoTableBean.remoteAddressStr}" style="min-width: 158px;" disabled="#{vMInfoTableBean.cantSys}">  
+                                        <!--                                    <f:selectItem itemLabel="Select One" itemValue="" />  -->
+                                        <f:selectItems value="#{getCreateVM.ipList}" />  
+                                    </p:selectOneMenu> 
+                                </h:panelGrid>
+                                <h:panelGrid columns="2" >
+                                    <p:spacer width="50"/>
+                                    <h:panelGroup>     
+                                        <h:selectBooleanCheckbox  id="connect" value="#{vMInfoTableBean.remoteMultipleConnectionsStr}" label="mulConnect" disabled="#{vMInfoTableBean.cantSys}"/>
+                                        ${res.get('remotemultipleconnectionsstr')}
+                                    </h:panelGroup>
+                                </h:panelGrid>
+                                <h:panelGrid columns="2"> 
+                                    ${res.get('remoteportstr')}
+                                    <p:inputText id="port" style="width: 150px" value="#{vMInfoTableBean.remotePortStr}" disabled="#{vMInfoTableBean.cantSys}"/>
+                                </h:panelGrid>           
+                            </h:panelGrid> 
+                        </p:panel>
+                        <!--                    </p:fieldset>-->
+                    </div>
+                    <br></br>
+
+                    <h:panelGrid columns="1" style="text-align : center;width: 680px">  
+                        <p:row>
+                            <p:column>
+                                <p:commandButton icon="saveIcon" value="${global.get('save')}" disabled="#{vMInfoTableBean.cantSys}" action="#{vMInfoTableBean.editSystem}" update=":form1"/>  
+                                <p:spacer width="8"/>
+                                <p:commandButton icon="cancleIcon" value="${global.get('return')}" action="vm_VMListTable?faces-redirect=true"/>   
+                            </p:column>
+
+                        </p:row>
+
+                    </h:panelGrid>
+
+                </p:tab>
+            </p:tabView>
+
+
+
+        </h:form>
+        <p:ajaxStatus style="width:64px;height:64px;position:fixed;right:5px;bottom:5px">  
+            <f:facet name="start">  
+                <p:graphicImage value="../resources/common/picture/loading.gif" />  
+            </f:facet>  
+
+            <f:facet name="complete">  
+                <h:outputText value="" />  
+            </f:facet>  
+        </p:ajaxStatus>
+    </h:body>
+
+
+
+    <!--    </ui:define>-->
+</ui:composition>

@@ -1,0 +1,333 @@
+<?xml version="1.0" encoding="gb2312" ?> 
+<MarsMSA>
+    <ResourceInfo> 
+    <!--
+        <Bean>
+            <Author>袁熙</Author>
+            <ResourceID>100011</ResourceID>
+            <Macro>LOG_GET_ALL_NET_SERVICE_NAME_INFOMATION_SUCCESS</Macro>
+            <Chinese>获取所有TNSName信息成功</Chinese>
+            <English>Get all tnsname information success</English>
+        </Bean>
+		-->	
+        <Bean>
+            <Author>袁熙</Author>
+            <ResourceID>100012</ResourceID>
+            <Macro>LOG_GET_ALL_NET_SERVICE_NAME_INFOMATION_FAILED</Macro>
+            <Chinese>获取所有TNSName信息失败</Chinese>
+            <English>Get all tnsname information failed</English>
+        </Bean>         
+        <Bean>
+            <Author>袁熙</Author>
+            <ResourceID>100031</ResourceID>
+            <Macro>LOG_MODIFY_TNS_NAME_SUCCESS</Macro>
+            <Chinese>添加网络服务名（NetServiceName=%1）成功</Chinese>
+            <English>Add NetServiceName (NetServiceName=%1) success</English>
+        </Bean> 
+        <Bean>
+            <Author>袁熙</Author>
+            <ResourceID>100032</ResourceID>
+            <Macro>LOG_MODIFY_TNS_NAME_FAILED</Macro>
+            <Chinese>添加网络服务名（NetServiceName=%1）失败，错误：%2</Chinese>
+            <English>Add NetServiceName (NetServiceName=%1) failed,Error:%2</English>
+        </Bean>         
+        <Bean>
+            <Author>袁熙</Author>
+            <ResourceID>100051</ResourceID>
+            <Macro>LOG_TEST_TNS_CONFIG_SUCCESS</Macro>
+            <Chinese>测试网络服务名（NetServiceName=%1）成功</Chinese>
+            <English>Test NetServiceName (NetServiceName=%1) success</English>
+        </Bean>
+        <Bean>
+            <Author>袁熙</Author>
+            <ResourceID>100052</ResourceID>
+            <Macro>LOG_TEST_TNS_CONFIG_FAILED</Macro>
+            <Chinese>测试网络服务名（NetServiceName=%1）失败，错误：%2</Chinese>
+            <English>Test NetServiceName (NetServiceName=%1) failed,Error:%2</English>
+        </Bean> 
+    <!--        
+        <Bean>
+            <Author>袁熙</Author>
+            <ResourceID>100071</ResourceID>
+            <Macro>LOG_GET_SINGLE_NET_SERVICE_NAME_INFOMATION_SUCCESS</Macro>
+            <Chinese>获取单个网络服务名信息（NetServiceName=%1）成功</Chinese>
+            <English>Get single NetServiceName (NetServiceName=%1)information success</English>
+        </Bean>
+    -->	
+        <Bean>
+            <Author>袁熙</Author>
+            <ResourceID>100072</ResourceID>
+            <Macro>LOG_GET_SINGLE_NET_SERVICE_NAME_INFOMATION_FAILED</Macro>
+            <Chinese>获取单个网络服务名信息（NetServiceName=%1）失败，错误：%2</Chinese>
+            <English>Get single NetServiceName (NetServiceName=%1)information failed,Error:%2</English>
+        </Bean>         
+        <Bean>
+            <Author>袁熙</Author>
+            <ResourceID>100091</ResourceID>
+            <Macro>LOG_DELETE_TNS_NAME_SUCCESS</Macro>
+            <Chinese>删除网络服务名（NetServiceName=%1）成功</Chinese>
+            <English>Delete NetServiceName (NetServiceName=%1) success</English>
+        </Bean> 
+        <Bean>
+            <Author>袁熙</Author>
+            <ResourceID>100092</ResourceID>
+            <Macro>LOG_DELETE_TNS_NAME_FAILED</Macro>
+            <Chinese>删除网络服务名（NetServiceName=%1）失败，错误：%2</Chinese>
+            <English>Delete NetServiceName (NetServiceName=%1) failed,Error:%2</English>
+        </Bean>         
+		<!--
+        <Bean>
+            <Author>袁熙</Author>
+            <ResourceID>100111</ResourceID>
+            <Macro>LOG_GET_ALL_DATABASES_INFOMATION_SUCCESS</Macro>
+            <Chinese>获取所有数据库名信息成功</Chinese>
+            <English>Get all DatabaseName information success</English>
+        </Bean>
+		-->		
+        <Bean>
+            <Author>袁熙</Author>
+            <ResourceID>100112</ResourceID>
+            <Macro>LOG_GET_ALL_DATABASES_INFOMATION_FAILED</Macro>
+            <Chinese>获取所有数据库名信息失败，错误：%1</Chinese>
+            <English>Get all DatabaseName information failed, Error: %1</English>
+        </Bean> 
+	      <Bean>
+            <Author>袁熙</Author>
+            <ResourceID>100131</ResourceID>
+            <Macro>LOG_MODIFY_DATABASE_NAME_SUCCESS</Macro>
+            <Chinese>修改单个数据库名信息（DatabaseName=%1）成功</Chinese>
+            <English>Modify single DatabaseName information (DatabaseName=%1) success</English>
+        </Bean>         
+        <Bean>
+            <Author>袁熙</Author>
+            <ResourceID>100132</ResourceID>
+            <Macro>LOG_MODIFY_DATABASE_NAME_FAILED</Macro>
+            <Chinese>修改单个数据库名信息（DatabaseName=%1）失败，错误：%2</Chinese>
+            <English>Modify single DatabaseName information (DatabaseName=%1) failed, Error: %2</English>
+        </Bean>
+	      <Bean>
+            <Author>袁熙</Author>
+            <ResourceID>100151</ResourceID>
+            <Macro>LOG_GET_SINGLE_DATABASES_INFOMATION_SUCCESS</Macro>
+            <Chinese>获取单个数据库名信息（DatabaseName=%1）成功</Chinese>
+            <English>Get single DatabaseName information (DatabaseName=%1) success</English>
+        </Bean>         
+        <Bean>
+            <Author>袁熙</Author>
+            <ResourceID>100152</ResourceID>
+            <Macro>LOG_GET_SINGLE_DATABASES_INFOMATION_FAILED</Macro>
+            <Chinese>获取单个数据库名信息（DatabaseName=%1）失败，错误：%2</Chinese>
+            <English>Get single DatabaseName information (DatabaseName=%1) failed, Error: %2</English>
+        </Bean> 	
+        <Bean>
+            <Author>袁熙</Author>
+            <ResourceID>100171</ResourceID>
+            <Macro>LOG_TEST_DATABASE_CONNECT_SUCCESS</Macro>
+            <Chinese>测试数据库的网络服务名 ‘%1’ 连接成功</Chinese>
+            <English>Test database NetServiceName '%1' connect success</English>
+        </Bean>         
+        <Bean>
+            <Author>袁熙</Author>
+            <ResourceID>100172</ResourceID>
+            <Macro>LOG_TEST_DATABASE_CONNECT_FAILED</Macro>
+            <Chinese>测试数据库的网络服务名 ‘%1’ 连接失败，错误：%2</Chinese>
+            <English>Test database NetServiceName '%1' connect failed, Error: %2</English>
+        </Bean> 
+        <Bean>
+            <Author>袁熙</Author>
+            <ResourceID>100191</ResourceID>
+            <Macro>LOG_SET_RMAN_PARAMETER_SUCCESS</Macro>
+            <Chinese>设置RMAN 参数成功</Chinese>
+            <English>Set RMAN parameters success</English>
+        </Bean>         
+        <Bean>
+            <Author>袁熙</Author>
+            <ResourceID>100192</ResourceID>
+            <Macro>LOG_SET_RMAN_PARAMETER_FAILED</Macro>
+            <Chinese>设置RMAN参数失败，错误：%1</Chinese>
+            <English>Set RMAN parameters failed, Error: %1</English>
+        </Bean> 
+        <Bean>
+            <Author>袁熙</Author>
+            <ResourceID>100211</ResourceID>
+            <Macro>LOG_DELETE_DATABASE_NAME_SUCCESS</Macro>
+            <Chinese>删除数据库名‘%1’成功</Chinese>
+            <English>Delete DatabaseName '%1' success</English>
+        </Bean>         
+        <Bean>
+            <Author>袁熙</Author>
+            <ResourceID>100212</ResourceID>
+            <Macro>LOG_DELETE_DATABASE_NAME_FAILED</Macro>
+            <Chinese>删除数据库名‘%1’失败，错误：%2</Chinese>
+            <English>Delete DatabaseName failed, Error: %1</English>
+        </Bean>
+	<Bean>
+            <Author>袁熙</Author>
+            <ResourceID>100231</ResourceID>
+            <Macro>LOG_QUERY_TABLESPACE_INFOMATION_SUCCESS</Macro>
+            <Chinese>查询数据库 ‘%1’ 表空间成功</Chinese>
+            <English>Query database '%1' space success</English>
+        </Bean>         
+        <Bean>
+            <Author>袁熙</Author>
+            <ResourceID>100232</ResourceID>
+            <Macro>LOG_QUERY_TABLESPACE_INFOMATION_FAILED</Macro>
+            <Chinese>查询数据库 ‘%1’ 表空间失败，错误：%2</Chinese>
+            <English>Disk group '%1' start cdp failed, Error: %2</English>
+        </Bean>
+        <Bean>
+            <Author>袁熙</Author>
+            <ResourceID>100251</ResourceID>
+            <Macro>LOG_GET_ALL_TASK_INFOMATION_SUCCESS</Macro>
+            <Chinese>获取数据库 ‘%1’ ，任务名 ‘%2’ 所有任务信息成功</Chinese>
+            <English>Get database '%1' ,task name '%2' all task success</English>
+        </Bean>         
+        <Bean>
+            <Author>袁熙</Author>
+            <ResourceID>100252</ResourceID>
+            <Macro>LOG_GET_ALL_TASK_INFOMATION_FAILED</Macro>
+            <Chinese>获取数据库 ‘%1’ ，任务名 ‘%2’ 所有任务信息失败，错误：%3</Chinese>
+            <English>Get database '%1' ,task name '%2' all task failed, Error: %3</English>
+        </Bean>         
+        <Bean>
+            <Author>袁熙</Author>
+            <ResourceID>100271</ResourceID>
+            <Macro>LOG_GET_RMAN_BACKUP_SCRIPT_SUCCESS</Macro>
+            <Chinese>获取RMAN备份任务脚本成功</Chinese>
+            <English>Get RMAN backup task script success</English>
+        </Bean>
+        <Bean>
+            <Author>袁熙</Author>
+            <ResourceID>100272</ResourceID>
+            <Macro>LOG_GET_RMAN_BACKUP_SCRIPT_FAILED</Macro>
+            <Chinese>获取RMAN备份任务脚本失败，错误：'%1'</Chinese>
+            <English>Get RMAN backup task script failed, Error: %1</English>
+        </Bean>  	
+        <Bean>
+            <Author>袁熙</Author>
+            <ResourceID>100291</ResourceID>
+            <Macro>LOG_DELETE_TASK_NAME_SUCCESS</Macro>
+            <Chinese>删除任务 ‘%1’ 信息成功</Chinese>
+            <English>Delete task '%1' information success</English>
+        </Bean>         
+        <Bean>
+            <Author>袁熙</Author>
+            <ResourceID>100292</ResourceID>
+            <Macro>LOG_DELETE_TASK_NAME_FAILED</Macro>
+            <Chinese>删除任务 ‘%1’ 信息失败，错误：%2</Chinese>
+            <English>Delete task '%1' information failed, Error: %2</English>
+        </Bean>	
+        <Bean>
+            <Author>袁熙</Author>
+            <ResourceID>100311</ResourceID>
+            <Macro>LOG_GET_TASK_INFOMATION_SUCCESS</Macro>
+            <Chinese>获取数据库 ‘%1’ 的任务 ‘%2’ 信息成功</Chinese>
+            <English>Get database '%1' task '%2' information success</English>
+        </Bean>         
+        <Bean>
+            <Author>袁熙</Author>
+            <ResourceID>100312</ResourceID>
+            <Macro>LOG_GET_TASK_INFOMATION_FAILED</Macro>
+            <Chinese>获取数据库 ‘%1’ 的任务 ‘%2’ 信息失败，错误：%3</Chinese>
+            <English>Get database '%1' task '%2' information failed, Error: %3</English>
+        </Bean>	
+        <Bean>
+            <Author>袁熙</Author>
+            <ResourceID>100331</ResourceID>
+            <Macro>LOG_GET_RMAN_RESOTRE_SCRIPT_SUCCESS</Macro>
+            <Chinese>生成RMAN恢复任务脚本成功</Chinese>
+            <English>Build RMAN restore task script success</English>
+        </Bean>         
+        <Bean>
+            <Author>袁熙</Author>
+            <ResourceID>100332</ResourceID>
+            <Macro>LOG_ADD_RESTORE_TASK_FAILED</Macro>
+            <Chinese>生成RMAN恢复任务脚本失败，错误：%1</Chinese>
+            <English>Build RMAN restore task script failed, Error: %1</English>
+        </Bean>
+        <Bean>
+            <Author>袁熙</Author>
+            <ResourceID>100351</ResourceID>
+            <Macro>LOG_GET_TASK_RMAN_LOG_SUCCESS</Macro>
+            <Chinese>获取数据库 ‘%1’ 任务 ‘%2’ 实例 ‘%3’ 的RMAN日志成功</Chinese>
+            <English>Get database '%1' task '%2' instance '%3' RMAN log success</English>
+        </Bean>         
+        <Bean>
+            <Author>袁熙</Author>
+            <ResourceID>100352</ResourceID>
+            <Macro>LOG_GET_TASK_RMAN_LOG_FAILED</Macro>
+            <Chinese>获取数据库 ‘%1’ 任务 ‘%2’ 实例 ‘%3’ 的RMAN日志失败，错误：%4</Chinese>
+            <English>Get database '%1' task '%2' instance '%3' RMAN log failed, Error: %4</English>
+        </Bean>	
+        <Bean>
+            <Author>袁熙</Author>
+            <ResourceID>100371</ResourceID>
+            <Macro>LOG_GET_RMAN_REALTIME_LOG_SUCCESS</Macro>
+            <Chinese>获取数据库 ‘%1’ 任务 ‘%2’ 的RMAN实时日志成功</Chinese>
+            <English>Get database '%1', task '%2' RMAN realtime log success</English>
+        </Bean>         
+        <Bean>
+            <Author>袁熙</Author>
+            <ResourceID>100372</ResourceID>
+            <Macro>LOG_GET_RMAN_REALTIME_LOG_FAILED</Macro>
+            <Chinese>获取数据库 ‘%1’ 任务 ‘%2’ 的RMAN实时日志失败，错误：%3</Chinese>
+            <English>Get database '%1', task '%2' RMAN realtime log failed, Error: %3</English>
+        </Bean>	
+        <Bean>
+            <Author>袁熙</Author>
+            <ResourceID>100391</ResourceID>
+            <Macro>LOG_DELETE_INSTANCE_LOG_SUCCESS</Macro>
+            <Chinese>删除数据库‘%1’任务‘%2’的实例‘%3’成功</Chinese>
+            <English>Delete database'%1'task'%2'instance'%3'success</English>
+        </Bean>         
+        <Bean>
+            <Author>袁熙</Author>
+            <ResourceID>100392</ResourceID>
+            <Macro>LOG_DELETE_INSTANCE_LOG_FAILED</Macro>
+            <Chinese>删除数据库‘%1’任务‘%2’的实例‘%3’失败，错误：%4</Chinese>
+            <English>Delete database'%1'task'%2'instance'%3'failed, Error: %4</English>
+        </Bean>
+   <Bean>
+            <Author>袁熙</Author>
+            <ResourceID>100411</ResourceID>
+            <Macro>LOG_EXECUTE_TASK_IMMEDIATELY_SUCCESS</Macro>
+            <Chinese>立即执行数据库‘%1’的任务‘%2’成功</Chinese>
+            <English>Execute database'%1'task'%2'immediately success</English>
+        </Bean>					
+   <Bean>
+            <Author>袁熙</Author>
+            <ResourceID>100412</ResourceID>
+            <Macro>LOG_EXECUTE_TASK_IMMEDIATELY_FAILED</Macro>
+            <Chinese>立即执行数据库‘%1’的备份任务‘%2’失败，错误：%3</Chinese>
+            <English>Execute database'%1'task'%2'immediately failed, Error: %3</English>
+        </Bean>					
+        <Bean>
+            <Author>袁熙</Author>
+            <ResourceID>100431</ResourceID>
+            <Macro>LOG_EXECUTE_BACKUP_TASK_SUCCESS</Macro>
+            <Chinese>执行数据库‘%1’的备份任务 ‘%2’成功</Chinese>
+            <English>Execute database'%1'bakup task'%2'success</English>
+        </Bean>					
+        <Bean>
+            <Author>袁熙</Author>
+            <ResourceID>100432</ResourceID>
+            <Macro>LOG_EXECUTE_BACKUP_TASK_FAILED</Macro>
+            <Chinese>执行数据库‘%1’的备份任务‘%2’失败，错误：%3</Chinese>
+            <English>Execute database'%1'bakup task'%2'failed, Error: %3</English>
+        </Bean>	
+        <Bean>
+            <Author>袁熙</Author>
+            <ResourceID>100451</ResourceID>
+            <Macro>LOG_EXECUTE_RESTORE_TASK_SUCCESS</Macro>
+            <Chinese>执行数据库‘%1’的恢复任务‘%2’成功</Chinese>
+            <English>Execute database'%1'restore task'%2'success</English>
+        </Bean>					
+        <Bean>
+            <Author>袁熙</Author>
+            <ResourceID>100452</ResourceID>
+            <Macro>LOG_EXECUTE_RESTORE_TASK_FAILED</Macro>
+            <Chinese>执行数据库‘%1’的恢复任务‘%2’失败，错误：%3</Chinese>
+            <English>Execute database'%1'restore task'%2'failed, Error: %3</English>
+        </Bean>																		
+    </ResourceInfo>
+</MarsMSA>	

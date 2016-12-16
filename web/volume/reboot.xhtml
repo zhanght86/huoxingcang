@@ -1,0 +1,81 @@
+<?xml version="1.0" encoding="GBK"?>
+<!--
+To change this template, choose Tools | Templates
+and open the template in the editor.
+-->
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.1//EN" "http://www.w3.org/TR/xhtml11/DTD/xhtml11.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:p="http://primefaces.org/ui">
+    <h:head>
+        <script language="javascript" type="text/javascript">
+            if (window !== top) {
+                top.location.href = location.href;
+            }
+            var n = 1;           
+            
+            var port = location.port;
+            param = location.search.substring(1);
+            strs = param.split("=");
+            if (strs[0] === "port") {
+                port = strs[1];
+            }                       
+
+            $.networkDetection = function(url, interval) {
+                var url = url;
+                var interval = interval;
+                online = false;
+                this.StartPolling = function() {
+                    this.StopPolling();
+                    this.timer = setInterval(poll, interval);
+                };
+                this.StopPolling = function() {
+                    clearInterval(this.timer);
+                };
+                this.setPollInterval = function(i) {
+                    interval = i;
+                };
+                this.getOnlineStatus = function() {
+                    return online;
+                };
+                function poll() {
+                    $.ajax({
+                        url: url,
+                        dataType: "text",
+                        error: function() {
+                            online = false;
+                            n++;
+                        },
+                        success: function() {
+                            online = true;
+                            uurl = location.hostname;
+                            location.port = port;
+                            window.location = "http://" + uurl + ":" + location.port + "/template/login.xhtml";
+                        }
+                    });
+                }
+                ;
+            };
+
+            var network = new $.networkDetection("http://" + location.hostname + ":" + port, 150000);
+            network.StartPolling();
+            $(document).bind("status.networkDetection", function(e, status) {
+                alert(status);
+            });
+
+        </script>  
+        <LINK REL="SHORTCUT ICON" HREF="#{request.contextPath}/resources/oempic/favicon.ico"/>
+        <link href="./../resources/common/css/default.css" rel="stylesheet" type="text/css" />
+        <link href="./../resources/common/css/cssIcon.css" rel="stylesheet" type="text/css" />
+
+    </h:head>
+
+    <h:body>
+        <h:form id="form">
+            <p:messages id="messages" showDetail="true" autoUpdate="true" closable="true" />
+            <br/>
+            <h:outputLabel value="${rebootBean.name}"/>
+            <p:commandButton rendered="false" action="${rebootBean.reboot2()}"></p:commandButton>
+        </h:form>
+    </h:body>
+</html>

@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="GBK"?>
+<!--
+To change this template, choose Tools | Templates
+and open the template in the editor.
+-->
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.1//EN" "http://www.w3.org/TR/xhtml11/DTD/xhtml11.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+    <h:head>
+        <link href="./../resources/common/css/default.css" rel="stylesheet" type="text/css" />
+        <link href="./../resources/common/css/cssIcon.css" rel="stylesheet" type="text/css" />
+        <script type="text/javascript" >
+            function init_cursor() {
+
+                //document.getElementById("form:group").focus();
+                var len = document.getElementById("form:targetName").value.length;
+                // document.getElementById("form:group").selectionStart =  document.getElementById("form:group").selectionEnd = len;
+
+                var txt = document.getElementById("form:targetName").createTextRange();
+                txt.moveStart('character', len);
+                txt.collapse(true);
+                txt.select();
+
+            }
+        </script>
+    </h:head>
+    <h:body onload="init_cursor();">
+        <h:form id="form" >
+            <h1 class="title ui-widget-header ui-corner-all">#{res.get('title')}</h1>
+            <p:messages showSummary="true" showDetail="false" autoUpdate="true" closable="true" />
+            <br/>
+            <!--            <p:inputText id="targetName"  style="width: 300px"   value="{createISCSITarget.name}" >
+                                        <p:ajax event="keyup" listener="{createISCSITarget.changeInputText()}" update="targetName" oncomplete="init_cursor();"  />
+                                        <f:validator  validatorId="targetNameValidator" />
+                                    </p:inputText>-->
+            <p:panel style="width: 700px;text-align: left;border-color: transparent;" >
+                <!--<h:panelGrid columns="1" width="100" >-->
+                <h:panelGrid columns="2" cellpadding="5" >
+                    <h:outputLabel value="#{res.get('targetName')}"  />
+                    <h:panelGrid columns="2" >
+                        <h:outputLabel style="width: 200px" value="#{createISCSITarget.targetStr}" />
+                        <p:inputText style="width: 130px" value="#{createISCSITarget.num}" />
+                    </h:panelGrid>
+                    <h:outputLabel value="#{res.get('targetAlias')}" />
+                    <p:inputText id="alias" style="width: 310px" value="#{createISCSITarget.alias}" >
+                        <!--<f:validator validatorId="targetAliasValidator" />-->
+                    </p:inputText>
+                </h:panelGrid>
+            </p:panel>
+            <!--<br/><br/>-->
+            <p:panel style="width: 450px;text-align: center;border-color: transparent;" >
+                <p:commandButton   id="addButton" value="#{global.get('save')}" icon="saveIcon"  action="#{createISCSITarget.save}" >
+                </p:commandButton>
+                <p:spacer width="8" height="6" />
+                <p:commandButton  id="closeButton" icon="cancleIcon" immediate="true" value="#{global.get('return')}" action="scsi_target?faces-redirect=true&amp;activeIndex=1" />  
+            </p:panel>
+        </h:form>
+        <p:ajaxStatus style="width:64px;height:64px;position:fixed;right:5px;bottom:5px">  
+            <f:facet name="start">  
+                <p:graphicImage value="../resources/common/picture/loading.gif" />  
+            </f:facet>  
+
+            <f:facet name="complete">  
+                <h:outputText value="" />  
+            </f:facet>  
+        </p:ajaxStatus>
+    </h:body>
+</html>

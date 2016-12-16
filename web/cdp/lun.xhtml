@@ -1,0 +1,114 @@
+<?xml version="1.0" encoding="GBK"?>
+<!--
+To change this template, choose Tools | Templates
+and open the template in the editor.
+-->
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.1//EN" "http://www.w3.org/TR/xhtml11/DTD/xhtml11.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:p="http://primefaces.org/ui"
+                xmlns:util="http://java.sun.com/jsf/composite/xhtml">
+    <!--template="../template/framework.xhtml"-->
+    <!--    <ui:define name="content">-->
+    <h:head>
+        <script type="text/javascript">
+            function handleModifyOKRequest(xhr, status, args) {
+                if (args.validationFailed || !args.loggedIn) {
+                    jQuery('#dialog').effect("shake", {times: 3}, 100);
+                } else {
+                    modifyDialog.hide();
+                    jQuery('#modifyLink').fadeOut();
+                }
+            }
+
+            function handleModifyCancleRequest(xhr, status, args) {
+                modifyDialog.hide();
+                jQuery('#modifyLink').fadeOut();
+            }
+
+            function handleAddUderRequest(xhr, status, args) {
+                addUserDialog.hide();
+                jQuery('#addLink').fadeOut();
+
+            }
+        </script>
+        <link href="./../resources/common/css/default.css" rel="stylesheet" type="text/css" />
+        <link href="./../resources/common/css/cssIcon.css" rel="stylesheet" type="text/css" />
+    </h:head>
+    <h:body style="width: auto;height:auto;">
+
+        <h:form id="form">
+            <h1 title="System Infomation" class="title ui-widget-header ui-corner-all">#{global.get('cdp')}${res.get('title')}</h1>
+            <p:messages id="messages" showDetail="true" autoUpdate="true" closable="true" />
+            <br/>  
+            <h:panelGrid  columns="2" cellpadding="5" >  
+                <h:outputLabel value="${res.get('dg')}"/> 
+                <h:outputLabel id="status" value="#{lunsBean.dg}#{lunsBean.lunStatus}" />
+            </h:panelGrid>
+            <br/>
+            <p:toolbar>  
+                <p:toolbarGroup align="right">  
+                    <p:commandButton id="addButton" disabled="#{user.type!=2 and lunsBean.disBtn}" value="${global.get('add')}" icon="addIcon" immediate="true" update=":form" action="#{lunsBean.addLun()}"/>  
+                    <p:spacer width="5" />
+                    <p:commandButton id="restoreButton" disabled="#{user.type!=2 or lunsBean.disBtn}" rendered="#{lunsBean.render}"  value="#{lunsBean.btn}" icon="startIcon" update=":form" action="#{lunsBean.LU()}"/>
+                    <p:commandButton id="pauseButton" disabled="#{user.type!=2 or lunsBean.disBtn}" rendered="#{!lunsBean.render}" value="#{lunsBean.btn}" icon="stopIcon" update=":form" action="#{lunsBean.LU()}"/>
+                </p:toolbarGroup> 
+            </p:toolbar>
+            <p:dataTable id="luns" var="lun" value="#{lunsBean.views}" emptyMessage="#{global.get('emptyMessage')}" >
+                <p:ajax event="rowToggle" listener="#{lunsBean.getExpansions(lun.hostGroupName)}" />
+                <p:column style="width:2%">
+                    <p:rowToggler />  
+                </p:column>
+                <p:column headerText="${res.get('header1')}" style="text-align : center;">  
+                    <h:outputText value="#{diskGroupsBean.getType(lun.hostGroupName)}" />  
+                </p:column>     
+                <p:column headerText="${res.get('header2')}" style="text-align : center;">
+                    <h:outputText value="#{diskGroupsBean.getStrLun(lun.hostGroupName)}" />  
+                </p:column>
+                <p:column headerText="${global.get('operation')}">
+                    <p:graphicImage value="../resources/common/picture/deletelun.png"  width="16" height="16" style=" vertical-align:middle;"/>
+                    <p:commandLink id="deleteButton" disabled="#{userInfo.notdelete}" value="${res.get('operation')}" update=":form"  style=" vertical-align:middle;"  onclick="c0.show();">
+                        <f:setPropertyActionListener value="#{lun}" target="#{lunsBean.selected}" />
+                    </p:commandLink>                    
+                </p:column>
+                <p:rowExpansion>
+                    <p:dataTable var="expansion" value="#{lunsBean.expansions}" id="detail" style=" margin-top: 10px;margin-bottom: 6px; margin-right: 0px !important;margin-right: -70px;">  
+                        <p:column headerText="#{res.get('eh1')}" style="text-align: center;">  
+                            <h:outputText value="#{expansion.name}"/>  
+                        </p:column>   
+                        <p:column headerText="#{res.get('eh2')}" style="text-align: center;">  
+                            <h:outputText value="#{expansion.serialNum}"/>  
+                        </p:column> 
+                        <p:column headerText="#{res.get('eh3')}" style="text-align: center;">  
+                            <h:outputText value="#{expansion.lun}"/>  
+                        </p:column>                      
+                    </p:dataTable>
+                </p:rowExpansion>
+            </p:dataTable>            
+            <br/>
+            <div style="text-align: center;">
+                <p:commandButton id="closeButton" icon="cancleIcon" value="${global.get('return')}"  immediate="true" action="dgs?faces-redirect=true"/>  
+            </div>
+            </h:form>
+        <h:form>
+            <util:confirm  uid="c0" mess="#{res.get('c0')}" action="#{lunsBean.disLUN()}" update=":form"/>
+            <util:confirm uid="disLUN" mess="#{res.get('confirm1')}#{global.get('what')}" action="#{lunsBean.offlineLU()}" update=":form"/>
+        
+        </h:form>
+        <p:ajaxStatus style="width:64px;height:64px;position:fixed;right:5px;bottom:5px">  
+            <f:facet name="start">  
+                <p:graphicImage value="../resources/common/picture/loading.gif" />  
+            </f:facet>  
+
+            <f:facet name="complete">  
+                <h:outputText value="" />  
+            </f:facet>  
+        </p:ajaxStatus>
+    </h:body>
+
+
+
+    <!--    </ui:define>-->
+</ui:composition>

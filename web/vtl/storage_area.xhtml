@@ -1,0 +1,152 @@
+<?xml version="1.0" encoding="GBK"?>
+<!--
+To change this template, choose Tools | Templates
+and open the template in the editor.
+-->
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.1//EN" "http://www.w3.org/TR/xhtml11/DTD/xhtml11.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:util="http://java.sun.com/jsf/composite/xhtml">
+    <h:head>
+        <link href="./../resources/common/css/default.css" rel="stylesheet" type="text/css" />
+        <link href="./../resources/common/css/cssIcon.css" rel="stylesheet" type="text/css" />
+    </h:head>
+    <h:body>
+        <h:form id="tip1">
+            <util:confirm  uid="offlineTape" mess="#{res.get('offlinetapetip_left')}#{vtlSABean.storageAreaName}#{res.get('offlinetapetip_right')}" action="#{vtlSABean.offline_real()}" update=":form:diskPoolList">
+
+            </util:confirm> 
+        </h:form>
+         <h:form id="tip2">
+            <util:confirm  uid="offlineTapeAutoRun" mess="‘#{vtlSABean.storageAreaName}#{res.get('offlineTapeAutoRun')}" action="#{vtlSABean.offline_auto_real()}" update=":form:diskPoolList">
+
+            </util:confirm> 
+        </h:form>
+        <h:form id="tip3">
+            <util:question1  uid="exporttapetip" mess="‘#{vtlSABean.storageAreaName}#{res.get('exporttape_right')}" action="#{vtlSABean.exportTape()}"  cancelAction="#{vtlSABean.toCancle()}">
+
+            </util:question1> 
+        </h:form>
+        <h:form id="form">
+            <h1 title="System Infomation" class="title ui-widget-header ui-corner-all">${global.get('moduletitle')}${res.get('title')}</h1>
+            <p:messages id="messages" showDetail="true" autoUpdate="true" closable="true" />
+            <p:outputPanel id="output" deferred="true">
+                <br></br>
+                <p:toolbar>  
+                    <p:toolbarGroup align="right">
+                        <p:commandButton id="checktapes" icon="checkIcon" value="${res.get('checktapes')}" immediate="true" action="#{vtlSABean.toTapes()}" /> 
+                    </p:toolbarGroup>
+                </p:toolbar>
+                <p:dataTable id="diskPoolList" var="sa" value="#{vtlSABean.views}" emptyMessage="#{global.get('emptyMessage')}">  
+                    <p:ajax event="rowToggle" listener="#{vtlSABean.initExpansion(sa)}" />
+                    <p:column style="width:2%">  
+                        <p:rowToggler />  
+                    </p:column> 
+                    <p:column headerText="${res.get('header1')}" disabledSelection="true">  
+                        <h:outputText value="#{sa.name}"/>  
+                    </p:column>
+                    <p:column headerText="${res.get('header2')}" disabledSelection="true" style="text-align:center;white-space: nowrap;">  
+                        <h:outputText value="#{sa.used}B"/>  
+                    </p:column>
+                    <p:column headerText="${res.get('header3')}" disabledSelection="true" style="text-align:center;white-space: nowrap;">  
+                        <h:outputText value="#{sa.available}B"/>  
+                    </p:column>
+                    <p:column headerText="${global.get('operation')}" style=" white-space: nowrap;" >
+                        <p:graphicImage value="../resources/vtl/picture/addtape.png" style=" vertical-align:middle; width: 16px; height: 16px;"/>
+                        <p:commandLink id="addTape" value="${res.get('o1')}" disabled="#{sa.cantuse}" action="#{vtlSABean.storageCreate()}" update="diskPoolList" style=" vertical-align:middle;"> 
+                            <f:setPropertyActionListener value="#{sa}" target="#{vtlSABean.selected}" />
+                        </p:commandLink>
+                        <!--                        <p:spacer width="10"/>
+                                                <p:graphicImage value="../resources/vtl/picture/deltape.png" style=" vertical-align:middle; width: 16px; height: 16px;"/>
+                                                <p:commandLink id="deleteTape" value="{res.get('o2')}" disabled="{sa.cantuse}" update="diskPoolList" style=" vertical-align:middle;" action="{vtlSABean.deleteTape()}"> 
+                                                    <f:setPropertyActionListener value="{sa}" target="{vtlSABean.selected}" />
+                                                </p:commandLink>  -->
+                        <p:spacer width="10"/>
+                        <p:graphicImage value="../resources/nas/picture/offline.png" style=" vertical-align:middle; width: 16px; height: 16px;"/>
+                        <p:commandLink id="import" value="${res.get('o4_1')}" disabled="#{sa.cantuse}" update="diskPoolList" style=" vertical-align:middle;" action="#{vtlSABean.importTape()}"> 
+                            <f:setPropertyActionListener value="#{sa}" target="#{vtlSABean.selected}" />
+                        </p:commandLink>
+                        <p:spacer width="10"/>
+                        <p:graphicImage value="../resources/nas/picture/online.png" style=" vertical-align:middle; width: 16px; height: 16px;"/>
+                        <p:commandLink id="outport" value="${res.get('o4_0')}" disabled="#{sa.cantuse}" update="diskPoolList" style=" vertical-align:middle;" action="#{vtlSABean.exportTape()}"> 
+                            <f:setPropertyActionListener value="#{sa}" target="#{vtlSABean.selected}" />
+                        </p:commandLink>
+                        <p:spacer width="10"/>
+                        <p:graphicImage value="#{vtlSABean.OnOffLineIcon(sa)}" style=" vertical-align:middle; width: 16px; height: 16px;"/>
+                        <p:commandLink id="onoffline" value="#{vtlSABean.OnOffLine(sa)}" disabled="#{(sa.canton_off) or (sa.onlineDisabled)}" update="diskPoolList :tip1 :tip2 :tip3" style=" vertical-align:middle;" action="#{vtlSABean.OnOffLine()}" onclick="this.blur()"> 
+                            <f:setPropertyActionListener value="#{sa}" target="#{vtlSABean.selected}" />
+                        </p:commandLink>
+                        <p:spacer width="10" />
+                        <p:graphicImage height="16"  width="16" style="border-color: transparent;vertical-align: middle"  value="../resources/common/picture/snap.png" />  
+                        <p:commandLink disabled="#{user.type!=2}" value="#{res.get('snapAndSync')}" style="vertical-align: middle" action="#{vtlSABean.configSnapSync(sa)}" >   
+                        </p:commandLink>
+                        <p:spacer width="10"/>
+                        <p:graphicImage value="../resources/common/picture/edit.png" style=" vertical-align:middle;"/>
+                        <p:commandLink id="settings" value="${res.get('o5')}" disabled="#{sa.cantset}"  update="diskPoolList" style=" vertical-align:middle;" action="#{vtlSABean.settings()}"> 
+                            <f:setPropertyActionListener value="#{sa}" target="#{vtlSABean.selected}" />
+                        </p:commandLink>
+
+                    </p:column>
+                    <p:rowExpansion>
+                        <p:accordionPanel id="accord" style="border:none; " styleClass="acordionPanelPostion" multiple="true">
+                            <p:tab title="#{res.get('tb1')}">
+                                <p:dataTable var="detailBean" value="#{vtlSABean.expansionsView}" id="detail" style=" margin-top: 10px;margin-bottom: 6px; margin-right: 0px !important;margin-right: -70px;" emptyMessage="#{global.get('emptyMessage')}">  
+                                    <p:column headerText="" style="width: 40%;">  
+                                        <h:outputText value="#{detailBean.name}" />  
+                                    </p:column> 
+                                    <p:column headerText="">
+                                        <h:outputText value="#{detailBean.value}"/>  
+                                    </p:column>      
+                                </p:dataTable>
+                            </p:tab>
+                            <p:tab title="#{res.get('tb2')}" >
+                                <p:dataTable emptyMessage="#{global.get('emptyMessage')}" id="disks" value="#{vtlSABean.storageAreaTapeCount}" var="tape" >
+                                    <p:column headerText="#{res.get('count')}">
+                                        <h:outputText value="#{tape.count}" />  
+                                    </p:column>
+                                    <p:column headerText="#{res.get('totalspace')}">
+                                        <h:outputText value="#{tape.totalspace}" />  
+                                    </p:column>
+                                    <p:column headerText="#{res.get('totalcapacity')}">
+                                        <h:outputText value="#{tape.totalcapacity}" />  
+                                    </p:column>
+                                    <p:column headerText="${global.get('operation')}" style=" white-space: nowrap;" >
+                                        <p:graphicImage value="../resources/common/picture/look.png" style=" vertical-align:middle;"/>
+                                        <p:commandLink id="detailIn" value="${res.get('detail')}" disabled="#{sa.cantset}" style=" vertical-align:middle;" action="#{vtlSABean.totapes()}"> 
+                                            <f:setPropertyActionListener value="#{sa}" target="#{vtlSABean.selected}" />
+                                        </p:commandLink>
+                                    </p:column>
+                                </p:dataTable>
+                                <!--                                <p:dataTable emptyMessage="{global.get('emptyMessage')}" id="disks" value="{vtlSABean.importedTapes}" var="tape" >
+                                                                    <p:column headerText="{res.get('h1')}">
+                                        <h:outputText value="{tape.name}" />
+                                    </p:column>
+                                    <p:column headerText="{res.get('h2')}">
+                                        <h:outputText value="{tape.barcode}" />  
+                                    </p:column>
+                                    <p:column headerText="{res.get('h3')}">
+                                        <h:outputText value="{vtl_util.sizeToString(tape.tapeSize)}" />  
+                                    </p:column>
+                                    <p:column headerText="{res.get('h4')}">
+                                        <h:outputText value="{vtl_util.strLocation(tape)}" />  
+                                    </p:column>
+                                </p:dataTable>-->
+                            </p:tab>
+                        </p:accordionPanel>
+                    </p:rowExpansion>
+                </p:dataTable>
+            </p:outputPanel>
+        </h:form>
+        <p:ajaxStatus style="width:64px;height:64px;position:fixed;right:5px;bottom:5px">  
+            <f:facet name="start">  
+                <p:graphicImage value="../resources/common/picture/loading.gif" />  
+            </f:facet>  
+
+            <f:facet name="complete">  
+                <h:outputText value="" />  
+            </f:facet>  
+        </p:ajaxStatus>
+    </h:body>
+</html>

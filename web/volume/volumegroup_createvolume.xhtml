@@ -1,0 +1,117 @@
+<?xml version="1.0" encoding="GBK"?>
+<!--
+To change this template, choose Tools | Templates
+and open the template in the editor.
+-->
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.1//EN" "http://www.w3.org/TR/xhtml11/DTD/xhtml11.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:f="http://java.sun.com/jsf/core">
+
+    <h:head>
+        <link href="./../resources/common/css/default.css" rel="stylesheet" type="text/css" />
+        <link href="./../resources/common/css/cssIcon.css" rel="stylesheet" type="text/css" />
+        <script type="text/javascript">
+            function checkType() {
+                var selRAID5 = form['form:state'][0].checked;
+                var selRAID6 = form['form:state'][1].checked;
+                var selRAID5_0 = form['form:state'][2].checked;
+                var selRAID6_0 = form['form:state'][3].checked;
+                var selRAID0 = form['form:state'][4].checked;
+                var selRAID1 = form['form:state'][5].checked;
+                var selThree = form['form:state'][6].checked;
+                if (selRAID5) {
+                    document.getElementById("form:raidLable").innerHTML = "至少选择三个磁盘";
+                    //                    alert("1");         
+                } else if (selRAID6) {
+                    document.getElementById("form:raidLable").innerHTML = "至少选择四个磁盘";
+                } else if (selRAID5_0) {
+                    document.getElementById("form:raidLable").innerHTML = "至少选择六个磁盘";
+                } else if (selRAID6_0) {
+                    document.getElementById("form:raidLable").innerHTML = "至少选择八个磁盘";
+                } else if (selRAID0) {
+                    document.getElementById("form:raidLable").innerHTML = "至少选择一个磁盘";
+                } else if (selRAID1) {
+                    document.getElementById("form:raidLable").innerHTML = "必须选择两个磁盘";
+                } else if (selThree) {
+                    document.getElementById("form:raidLable").innerHTML = "至少选择六个磁盘";
+                }
+            }
+        </script>
+    </h:head>
+    <h:body>
+<!--        <p:ajaxStatus onstart="statusDialog.show();" onsuccess="statusDialog.hide();"/>
+
+        <p:dialog modal="true" widgetVar="statusDialog" header="Status" draggable="false" closable="false">
+            <p:graphicImage value="../resources/common/picture/ajaxloadingbar.gif" />
+        </p:dialog>-->
+        <h:form id="form">
+            <h1 class="title ui-widget-header ui-corner-all">${res.get('title')}</h1>
+            <p:messages id="messages" showDetail="true" autoUpdate="true" closable="true" />
+            <br></br>
+            <h:panelGrid columns="1" cellpadding="5">
+                <h:panelGroup>
+                    <h:outputLabel value="${res.get('volumename')}"/>
+                    <p:inputText id="volumename" value="#{createVolumeBean.volumeName}"/>
+                </h:panelGroup>
+                <!--     disabledSelection="true"            <div style="overflow-y:auto; width: 100%; height: 155px;width: 400px; ">-->
+                <h:panelGroup>
+                    <p:toolbar>  
+                        <p:toolbarGroup align="right">  
+                            <p:commandButton id="refshLink" disabled="#{user.type!=2}" value="${res.get('refshlink')}" icon="scanIcon" update="form:diskList" actionListener="#{createVolumeBean.refresh()}"/> 
+                        </p:toolbarGroup> 
+                    </p:toolbar>
+                    <p:dataTable id="diskList"  var="disk" value="#{createVolumeBean.diskModel}" selection="#{createVolumeBean.selectedDisks}" emptyMessage="#{global.get('emptyMessage')}" >  
+
+                        <p:column selectionMode="multiple" style="width:18px;text-align:center"/> 
+                        <p:column headerText="${res.get('diskName')}"  style="text-align:center">  
+                            <h:outputText value="#{disk.diskName}"/>  
+                        </p:column>
+                        <p:column headerText="${res.get('position')}"  style="text-align:center">  
+                            <h:outputText value="#{disk.position}"/>  
+                        </p:column>
+                        <p:column headerText="${res.get('num')}"  style="text-align:center">  
+                            <h:outputText value="#{disk.num}"/>  
+                        </p:column>
+                        <p:column headerText="${res.get('size')}" style="text-align:center">  
+                            <h:outputText value="#{disk.size}"/>  
+                        </p:column>
+
+                    </p:dataTable>
+                </h:panelGroup>
+                <!--               </div>-->
+                <h:selectOneRadio id="state" value="#{createVolumeBean.raidType}" onclick="checkType();"   >  
+                    <f:selectItem itemLabel="RAID5" itemValue="0" />  
+                    <f:selectItem itemLabel="RAID6" itemValue="1" />  
+                    <f:selectItem itemLabel="RAID5+0" itemValue="2" />  
+                    <f:selectItem itemLabel="RAID6+0" itemValue="3" />  
+                    <f:selectItem itemLabel="RAID0" itemValue="4" />  
+                    <f:selectItem itemLabel="RAID1" itemValue="5" />  
+                    <f:selectItem itemLabel="${res.get('raidz3')}" itemValue="6" />  
+                </h:selectOneRadio>
+                <h:outputLabel value="#{createVolumeBean.raidLable}" id="raidLable"/>
+
+            </h:panelGrid>
+            <br/>
+            <div>
+                <p:spacer width="202px" height="40px"/>
+                <!--update="volumename diskList state"--> 
+                <p:commandButton value="${global.get('save')}" disabled="#{user.type!=2}" icon="saveIcon" action="#{createVolumeBean.handle(createVolumeBean.volumeName,createVolumeBean.raidType)}"  >
+
+                </p:commandButton>
+                <p:spacer width="8px"/>
+                <p:commandButton value="${global.get('return')}" disabled="#{user.type!=2}" icon="cancleIcon" immediate="true"  action="#{createVolumeBean.cancleButton}"/>
+            </div>
+        </h:form>
+        <p:ajaxStatus style="width:64px;height:64px;position:fixed;right:5px;bottom:5px">  
+            <f:facet name="start">  
+                <p:graphicImage value="../resources/common/picture/loading.gif" />  
+            </f:facet>  
+
+            <f:facet name="complete">  
+                <h:outputText value="" />  
+            </f:facet>  
+        </p:ajaxStatus>
+    </h:body>
+</html>

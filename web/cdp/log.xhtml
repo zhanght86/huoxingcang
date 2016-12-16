@@ -1,0 +1,80 @@
+<?xml version="1.0" encoding="GBK"?>
+<!--
+To change this template, choose Tools | Templates
+and open the template in the editor.
+-->
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.1//EN" "http://www.w3.org/TR/xhtml11/DTD/xhtml11.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:p="http://primefaces.org/ui"> 
+
+    <h:head>
+        <link href="./../resources/common/css/default.css" rel="stylesheet" type="text/css" />
+        <link href="./../resources/common/css/cssIcon.css" rel="stylesheet" type="text/css" />
+
+    </h:head>
+    <h:body>
+        <h:form id="form">
+            <h1 class="title ui-widget-header ui-corner-all">#{global.get('cdp')}${res.get('title')}</h1>
+            <br></br>
+            <p:panel style="border: none;">
+                <p:messages id="messages" showDetail="true" autoUpdate="true" closable="true" />
+                <h:panelGrid columns="3" cellpadding="15"> 
+                    <h:outputLabel value="${res.get('label1')}" />  
+                    <h:outputLabel value="#{logBean.group.diskCount}" /> 
+                    <h:outputLabel/>
+
+                    <h:outputLabel value="${res.get('label2')}" />  
+                    <h:outputLabel value="#{logBean.getts()}" /> 
+                    <h:outputLabel/>
+
+                    <h:outputLabel value="${res.get('label3')}" />               
+                    <p:slider for="txt1" display="output" displayTemplate="{value}%" style="width: 200px"/>  
+                    <h:outputText id="output" value="#{logBean.percent}%"/>
+
+                    <h:outputLabel value="${res.get('label4')}" /> 
+                    <p:inputText value="#{logBean.size}"/>
+                    <h:outputLabel value="GB"/>  
+
+                    <h:outputLabel value="${res.get('label5')}" /> 
+                    <p:inputText id="keepTime" value="#{logBean.keepTime}" disabled="#{logBean.tillFull}"/> 
+                    <h:outputLabel value="#{global.get('hour')}" style="width: 100px" />  
+
+                    <p:spacer />
+                    <h:panelGrid columns="2">
+                        <p:selectBooleanCheckbox style="vertical-align: middle" value="#{logBean.tillFull}" >
+                            <p:ajax event="change" update="keepTime"/>
+                        </p:selectBooleanCheckbox>
+                        <h:outputLabel value="${res.get('chb')}"  style="line-height: 25px;vertical-align: middle" />
+                    </h:panelGrid>
+                    <h:outputLabel/>
+                    
+                    <h:outputLabel value="${res.get('label6')}" />
+                    <h:selectOneRadio id="state" value="#{logBean.fullOption}">  
+                        <f:selectItem itemLabel="${res.get('rd1')}" itemValue="1" />  
+                        <f:selectItem itemLabel="${res.get('rd2')}" itemValue="3" />  
+                        <f:selectItem itemLabel="${res.get('rd3')}" itemValue="2" />  
+                    </h:selectOneRadio>  
+                </h:panelGrid> 
+                <br></br>
+                <p:spacer width="50" height="6" />
+
+                <p:commandButton id="addButton" icon="saveIcon" value="${global.get('save')}"  action="#{addDGBean.addDG()}"/>  
+                <p:spacer width="8"/>
+                <p:commandButton id="closeButton" icon="cancleIcon" value="${global.get('return')}"  immediate="true" onclick="javascript: window.history.go(-1);"/>  
+            </p:panel>
+            <h:inputHidden id="txt1" value="#{logBean.percent}"/>  
+        </h:form>
+        <p:ajaxStatus style="width:64px;height:64px;position:fixed;right:5px;bottom:5px">  
+            <f:facet name="start">  
+                <p:graphicImage value="../resources/common/picture/loading.gif" />  
+            </f:facet>  
+
+            <f:facet name="complete">  
+                <h:outputText value="" />
+            </f:facet>  
+        </p:ajaxStatus>
+    </h:body>
+</ui:composition>

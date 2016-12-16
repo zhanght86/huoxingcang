@@ -1,0 +1,110 @@
+<?xml version="1.0" encoding="GBK"?>
+<!--
+To change this template, choose Tools | Templates
+and open the template in the editor.
+-->
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.1//EN" "http://www.w3.org/TR/xhtml11/DTD/xhtml11.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:util="http://java.sun.com/jsf/composite/xhtml">
+    <h:head>
+        <link href="./../resources/common/css/default.css" rel="stylesheet" type="text/css" />
+        <link href="./../resources/common/css/cssIcon.css" rel="stylesheet" type="text/css" />
+        <script type="text/javascript">
+            function checkState() {
+                
+                
+                var selCreatDisk= form['form:state'][0].checked;   
+                var selExistDisk= form['form:state'][1].checked;    
+                var selNoDisk= form['form:state'][2].checked; 
+                
+                if(selCreatDisk) {
+                    document.getElementById("form:ipStr").disabled = true; 
+                    document.getElementById("form:ip").disabled = true;
+                    document.getElementById("form:subnetStr").disabled = true; 
+                    document.getElementById("form:subnet").disabled = true;
+                    //                    alert("1");         
+                }else if(selExistDisk) {
+                    document.getElementById("form:ipStr").disabled = false; 
+                    document.getElementById("form:ip").disabled = false;
+                    document.getElementById("form:subnetStr").disabled = false; 
+                    document.getElementById("form:subnet").disabled = false;   
+                }else if(selNoDisk) {
+                    document.getElementById("form:ipStr").disabled = true; 
+                    document.getElementById("form:ip").disabled = true;
+                    document.getElementById("form:subnetStr").disabled = true; 
+                    document.getElementById("form:subnet").disabled = true;
+                    //                    alert("3");   
+                }    
+            }
+            
+        </script>
+    </h:head>
+    <h:body>
+        <h:form id="form">
+            <h1 class="title ui-widget-header ui-corner-all">${res.get('title')}</h1>
+            <p:messages id="messages" showDetail="true" autoUpdate="true" closable="true" />
+            <br/>
+            <h:panelGrid columns="2" cellpadding="5">
+                <h:outputLabel value="${res.get('aggregation')}" />
+                <h:panelGroup>
+                    <p:spacer width="2px;"/> 
+                    <h:outputLabel value="#{modifyAggregateBean.nic}" />
+                </h:panelGroup>
+                    
+                <p:spacer width="2"/>
+                <h:selectOneRadio id="state" value="#{modifyAggregateBean.state}">  
+                    <f:selectItem itemLabel="${res.get('dynamic')}" itemValue="0" />  
+                    <f:selectItem itemLabel="${res.get('static')}" itemValue="1" />  
+                    <f:selectItem itemLabel="${res.get('disable')}" itemValue="2" />  
+                    <p:ajax update="ip subnet gateway defaultgateway" listener="#{modifyAggregateBean.changeBooleanCheckbox()}" />
+                </h:selectOneRadio>
+                
+                <h:outputLabel id="ipStr" value="${res.get('ip')}" />
+                <p:inputText id="ip" value="#{modifyAggregateBean.ip}" disabled="#{modifyAggregateBean.notIP}"/>
+
+                <h:outputLabel id="subnetStr" value="${res.get('subnet')}" />
+                <p:inputText id="subnet" value="#{modifyAggregateBean.subnet}" disabled="#{modifyAggregateBean.notIP}"/>
+
+                <h:outputLabel value="${res.get('gateway')}" id="gatewayStr"  />
+                <h:panelGroup>
+                    <p:inputText value="#{modifyAggregateBean.gateway}" id="gateway" disabled="#{modifyAggregateBean.notGameway}"/>
+                    <h:selectBooleanCheckbox  id="defaultgateway" value="#{modifyAggregateBean.defaultgateway}" disabled="#{modifyAggregateBean.notdefault}">
+                     <p:ajax listener="#{modifyAggregateBean.changeBooleanCheckbox(modifyAggregateBean.defaultgateway)}" update="gateway" />
+                    </h:selectBooleanCheckbox>
+                    ${res.get('default')}
+                </h:panelGroup>
+                
+                <h:outputLabel value="${res.get('lacp')}" /> 
+                <h:selectOneRadio id="lacp" value="#{modifyAggregateBean.mode}">  
+                    <f:selectItem itemLabel="${res.get('automatic')}" itemValue="0" />  
+                    <f:selectItem itemLabel="${res.get('initiative')}" itemValue="1" />  
+                    <f:selectItem itemLabel="${res.get('passive')}" itemValue="2" />  
+                </h:selectOneRadio>
+            </h:panelGrid>     
+            <br/>
+            <h:outputLabel value="#{modifyAggregateBean.tip}" id="tip" />
+            <br/>
+
+            <p:spacer width="52px;"/>
+            <p:commandButton value="${global.get('save')}" icon="saveIcon" action="#{modifyAggregateBean.confirm}"/>
+            <p:spacer style="width: 8px; height: 5px"/>
+            <p:commandButton value="${global.get('return')}" icon="cancleIcon" action="system_network?faces-redirect=true&amp;accordionActive1=1" id="btnCancle"/> 
+
+            <util:confirm  uid="modifyagg" mess="${res.get('modifyaggtip')}" action="#{modifyAggregateBean.saveAgg()}" >
+
+            </util:confirm>
+        </h:form>
+           <p:ajaxStatus style="width:64px;height:64px;position:fixed;right:5px;bottom:5px">  
+            <f:facet name="start">  
+                <p:graphicImage value="../resources/common/picture/loading.gif" />  
+            </f:facet>  
+                
+            <f:facet name="complete">  
+                <h:outputText value="" />  
+            </f:facet>  
+        </p:ajaxStatus>
+    </h:body>
+</html>

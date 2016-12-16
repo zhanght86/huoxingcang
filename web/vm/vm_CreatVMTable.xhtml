@@ -1,0 +1,241 @@
+<?xml version="1.0" encoding="GBK"?>
+<!--
+To change this template, choose Tools | Templates
+and open the template in the editor.
+-->
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.1//EN" "http://www.w3.org/TR/xhtml11/DTD/xhtml11.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:p="http://primefaces.org/ui">
+    
+    <!--    template="../template/framework.xhtml"-->
+    <!--    <ui:define name="head">-->
+
+    <h:head>
+        <script type="text/javascript">
+            function check() {
+                
+                var selCreatDisk= form['form:disk'][0].checked;   
+                var selExistDisk= form['form:disk'][1].checked;    
+                var selNoDisk= form['form:disk'][2].checked; 
+                
+                if(selCreatDisk) {
+                    document.getElementById("form:virDisk").disabled = true; 
+                    document.getElementById("form:virDiskName").disabled = false; 
+                
+                    document.getElementById("form:diskType").disabled = false; 
+                    document.getElementById("form:virDiskSize").disabled = false;
+                    //                    alert("1");         
+                }else if(selExistDisk) {
+                    document.getElementById("form:virDisk").disabled = false; 
+                    document.getElementById("form:virDiskName").disabled = true;  
+                    document.getElementById("form:diskType").disabled = true; 
+                    document.getElementById("form:virDiskSize").disabled = true;
+                    //                    alert("2"); 
+                }else if(selNoDisk) {
+                    document.getElementById("form:virDisk").disabled = true; 
+                    document.getElementById("form:virDiskName").disabled = true;
+                    document.getElementById("form:diskType").disabled = true; 
+                    document.getElementById("form:virDiskSize").disabled = true;
+                    //                    alert("3");   
+                }
+                
+                
+            }
+        </script>
+        <link href="./../resources/common/css/default.css" rel="stylesheet" type="text/css" />
+        <link href="./../resources/common/css/cssIcon.css" rel="stylesheet" type="text/css" />
+    </h:head>
+
+    <!--    </ui:define>-->
+
+    <!--    <ui:define name="content">-->
+    <h:body>
+        <h:form id="form">
+            <h1 class="title ui-widget-header ui-corner-all">${global.get('moduletitle')}${res.get('title')}</h1>
+           <p:messages id="messages" showDetail="true" autoUpdate="true" closable="true" />
+            <br></br>
+<!--            <br></br>-->
+            <!--            <p:panel style="margin-bottom:5px; height: 800px">  -->
+            <p:panelGrid style="width: 748px" >  
+                <p:row>  
+                    <p:column colspan="4" styleClass="ui-widget-header" style="width: 710px">${res.get('head1')}</p:column>  
+                </p:row> 
+                <p:row>  
+                    <p:column  style="width: 80px">${res.get('vmname')}</p:column>  
+                    <p:column>
+                        <p:inputText id="name" style="width: 271px" value="#{getCreateVM.vmNAME}"/>
+                    </p:column>   
+                    <p:column  style="width: 82px">${res.get('volume')}</p:column>  
+                    <p:column>
+                        <p:selectOneMenu id="volume" value="#{getCreateVM.volume}" style="min-width: 145px;max-width: 145px;">  
+                            <!--                                    <f:selectItem itemLabel="Select One" itemValue="" />  -->
+                            <f:selectItems value="#{getCreateVM.volumeList}" />  
+                        </p:selectOneMenu>              
+                    </p:column> 
+                </p:row>  
+                <p:row>  
+                    <p:column style="width: 80px">${res.get('ostype')}</p:column>  
+                    <p:column>
+                        <p:selectOneMenu id="os" value="#{getCreateVM.osType}" style="min-width:280px; max-width:280px; ">  
+                            <!--                                <f:selectItem itemLabel="Select OS" itemValue="" />  -->
+                            <f:selectItems value="#{getCreateVM.osTypes}" />  
+                            <p:ajax update="versions" listener="#{getCreateVM.handleCityChange}" />  
+                        </p:selectOneMenu> 
+                    </p:column> 
+                    <p:column style="width: 82px">${res.get('cpucorenum')}</p:column>  
+                    <p:column>
+                        <p:selectOneMenu id="cpu" value="#{getCreateVM.cpuCoreNum}" style="min-width: 145px;max-width:145px; ">  
+                            <!--                                                                    <f:selectItem itemLabel="Select One" itemValue="" />  -->
+                            <f:selectItems value="#{getCreateVM.cpuCoreNumList}" />  
+                        </p:selectOneMenu> 
+                    </p:column>                 
+                </p:row>
+                <p:row>      
+                    <p:column style="width: 80px">${res.get('vmversion')}</p:column>  
+                    <p:column>
+                        <p:selectOneMenu id="versions" value="#{getCreateVM.vmVersion}" style="min-width: 280px;max-width:280px;">  
+                            <!--                                 <f:selectItem itemLabel="Select Version" itemValue="" />  -->
+                            <f:selectItems value="#{getCreateVM.vmVersionList}" />  
+                            <p:ajax update="memorySize,virDiskSize" listener="#{getCreateVM.handleMemorySizeChange}" /> 
+
+                        </p:selectOneMenu> 
+                    </p:column>    
+                    <p:column style="width: 82px">${res.get('memorysize')}</p:column>  
+                    <p:column>
+                        <p:inputText id="memorySize" style="width: 137px" value="#{getCreateVM.memorySize}"/>MB   
+                        <br/>
+                        #{getCreateVM.memorySizeTip}
+                       
+                    </p:column> 
+                </p:row> 
+            </p:panelGrid>  
+            <br></br>
+
+            <p:panelGrid style="width: 748px">  
+                <p:row>  
+                    <p:column colspan="4" styleClass="ui-widget-header" style="width: 710px">${res.get('head2')}</p:column>  
+                </p:row>
+            </p:panelGrid> 
+            <h:panelGrid columns="1" style="width: 710px">
+                <h:selectOneRadio id="disk" value="#{getCreateVM.createDiskType}">  
+                    <f:selectItem itemLabel="${res.get('creatdisk')}" itemValue="0" />  
+                     <f:selectItem itemLabel="${res.get('nocreatdisk')}" itemValue="2" />  
+<!--                    <f:selectItem itemLabel="使用现有硬盘" itemValue="1" rendered="true" />  -->
+                   
+                    <p:ajax update="virDiskName diskType virDiskSize" listener="#{getCreateVM.changeBooleanCheckbox()}" />
+                </h:selectOneRadio>
+            </h:panelGrid>
+            <p:panelGrid style="width: 748px">
+<!--                <p:row>
+                    <p:column style="width: 145px">虚拟硬盘文件：</p:column> 
+                    <p:column colspan="3" style="width: 600px">
+                        <p:inputText id="virDisk" style="width: 165px" value="{getCreateVM.selectDiskName}" disabled="{getCreateVM.notFile}"/>
+                        <p:spacer width="5px;"/>
+                        <p:commandButton id="virDiskButt" value="浏览" action="{getCreateVM.clickButton()}" disabled="{getCreateVM.notFile}"/>
+                    </p:column> 
+                </p:row>-->
+                <p:row>
+                    <p:column style="width: 145px">${res.get('diskname')}</p:column> 
+                    <p:column colspan="3" style="width: 600px">
+                        <p:inputText id="virDiskName" style="width: 165px" value="#{getCreateVM.diskName}" disabled="#{getCreateVM.notName}"/>
+                    </p:column> 
+                </p:row>
+            </p:panelGrid>
+
+            <h:panelGrid columns="1" style="width: 710px">
+
+                <h:selectOneRadio id="diskType" value="#{getCreateVM.diskType}" disabled="#{getCreateVM.notName}">  
+                    <f:selectItem itemLabel="${res.get('disktype_auto')}" itemValue="0" />  
+                    <f:selectItem itemLabel="${res.get('disktype_fix')}" itemValue="1" />
+                </h:selectOneRadio> ${res.get('disktype_fix_tip')} 
+
+            </h:panelGrid>
+            <p:panelGrid style="width: 748px">
+                <p:row>  
+                    <p:column style="width: 145px">${res.get('diskSizen')}</p:column>
+                    <p:column colspan="3" style="width: 600px" > 
+                        <p:inputText id="virDiskSize" style="width: 165px" value="#{getCreateVM.diskSizen}" disabled="#{getCreateVM.notName}"/>GB #{getCreateVM.virDiskSizetip}
+                    </p:column> 
+                </p:row>
+
+            </p:panelGrid> 
+            <br></br>
+<!--            <br></br>-->
+            <p:panelGrid style="width: 748px">
+                <p:row>  
+                    <p:column colspan="4" styleClass="ui-widget-header" style="width: 710px">${res.get('head3')}</p:column>  
+                </p:row>
+                <p:row>  
+                    <p:column style="width: 92px">${res.get('ip')}</p:column>  
+                    <p:column  style="width: 245px">
+                        <p:selectOneMenu id="ip" value="#{getCreateVM.vrdeAddress}" style="min-width: 170px; max-width:170px; ">  
+                            <!--                                    <f:selectItem itemLabel="Select One" itemValue="" />  -->
+                            <f:selectItems value="#{getCreateVM.ipList}" />  
+                        </p:selectOneMenu> 
+                        <!--                                <h:inputText id="ip" style="width: 150px" required="true"/>-->
+                    </p:column> 
+                    <p:column>
+                        <h:selectBooleanCheckbox  id="connect" value="#{getCreateVM.vrdeMultipleConnection}" label="mulConnect"/>
+                        ${res.get('multipleconnection')}
+                    </p:column>
+
+                </p:row>  
+                <p:row> 
+                    <p:column style="width: 92px">${res.get('vrdeport')}</p:column>  
+                    <p:column colspan="2">
+                        <p:inputText id="port" style="width: 162px" value="#{getCreateVM.vrdePort}"/>
+                    </p:column>
+
+                </p:row>    
+
+            </p:panelGrid>  
+            <br></br>
+            <br></br>
+
+            <h:panelGrid columns="1" style="text-align : center;width: 710px">  
+                <p:row>
+                    <p:column>
+                        <p:commandButton icon="saveIcon" value="${global.get('save')}" action="#{getCreateVM.createVM_Info}" />
+                        <p:spacer style="width: 10px; height: 5px"/>
+                        <p:commandButton icon="cancleIcon" value="${global.get('return')}" action="vm_VMListTable?faces-redirect=true" id="btnCancle"/> 
+                    </p:column>
+
+                </p:row>
+
+            </h:panelGrid>
+<!--            <p:dialog id="dialog" header="选择虚拟磁盘" widgetVar="dlg" style="width: 300px" resizable="false" modal="true">  
+                <h:panelGrid columns="2" cellpadding="5">  
+                    <p:dataTable id="virtual" style="width: 270px; height:250px;" var="virtualDiskName" value="{getCreateVM.vdsModel}" rowKey="{virtualDiskName.name}"  
+                                 selection="{getCreateVM.selectedVirDisk}" emptyMessage="{global.get('emptyMessage')}" >  
+                        <p:column selectionMode="single" width="60" style="text-align:center"/> 
+                        <p:column headerText="虚拟磁盘名">  
+                         {virtualDiskName.name}   
+                        </p:column>  
+                    </p:dataTable> 
+                    <f:facet name="footer">  
+                        <p:commandButton id="loginButton" value="{global.get('ok')}"  action="{getCreateVM.okDialog()}"
+                                         update="dialog form:virDisk" style="position: relative; left: 60px" />
+                        <p:spacer width="10px"/>
+                        <p:commandButton id="cancelButton" value="{global.get('cancel')}" action="{getCreateVM.closeDialog()}"
+                                         style="position: relative; left: 60px" update="dialog"/>  
+                    </f:facet>  
+                </h:panelGrid>  
+
+            </p:dialog> -->
+            <!--            </p:panel> -->
+        </h:form>
+        <p:ajaxStatus style="width:64px;height:64px;position:fixed;right:5px;bottom:5px">  
+            <f:facet name="start">  
+                <p:graphicImage value="../resources/common/picture/loading.gif" />  
+            </f:facet>  
+                
+            <f:facet name="complete">  
+                <h:outputText value="" />  
+            </f:facet>  
+        </p:ajaxStatus>
+    </h:body>
+    <!--    </ui:define>-->
+</ui:composition>

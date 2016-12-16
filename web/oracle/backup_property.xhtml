@@ -1,0 +1,201 @@
+<?xml version="1.0" encoding="GBK"?>
+<!--
+To change this template, choose Tools | Templates
+and open the template in the editor.
+-->
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.1//EN" "http://www.w3.org/TR/xhtml11/DTD/xhtml11.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:p="http://primefaces.org/ui"
+                xmlns:util="http://java.sun.com/jsf/composite/xhtml">
+    <h:head>
+        <link href="./../resources/common/css/default.css" rel="stylesheet" type="text/css" />
+        <link href="./../resources/common/css/cssIcon.css" rel="stylesheet" type="text/css" />
+        <script type="text/javascript">
+            PrimeFaces.locales['cn'] = {
+                closeText: '确定',
+                prevText: '上',
+                nextText: '下',
+                monthNames: ['1月', '2月', '3月', '4月', '5月', '6月', '7月', '8月', '9月', '10月', '11月', '12月'],
+                monthNamesShort: ['1月', '2月', '3月', '4月', '5月', '6月', '7月', '8月', '9月', '10月', '11月', '12月'],
+                dayNames: ['日', '一', '二', '三', '四', '五', '六'],
+                dayNamesShort: ['日', '一', '二', '三', '四', '五', '六'],
+                dayNamesMin: ['日', '一', '二', '三', '四', '五', '六'],
+                weekHeader: 'Woche',
+                FirstDay: 1,
+                isRTL: false,
+                showMonthAfterYear: false,
+                yearSuffix: '',
+                timeOnlyTitle: 'Nur Zeit',
+                timeText: '时间',
+                hourText: '时',
+                minuteText: '分',
+                secondText: '秒',
+                currentText: '当前时间',
+                ampm: false,
+                month: 'Monat',
+                week: 'Woche',
+                day: 'Tag',
+                allDayText: 'Ganzer Tag'
+            };
+        </script>
+        <style type="text/css"> 
+
+            .ui-priority-primary{
+                font-weight: normal !important;
+            }
+            .ui-priority-secondary{
+                filter: normal !important;
+                font-weight: normal !important;
+            }
+        </style>
+    </h:head>
+    <h:body>
+        <h:form id="form">
+            <h1 title="System Infomation" class="title ui-widget-header ui-corner-all">#{global.get('backuptitle')}#{res.get('title')}</h1>
+            <p:messages id="messages" for="messages" showDetail="true" autoUpdate="true" closable="true" /><br/> 
+            <p:tabView style="border:none; ">
+                <p:tab title="${res.get('backupscript')}">
+                    <h:outputLabel value="#{res.get('jobname')}"/>
+                    <p:inputText value="#{bPropertyBean.jobName}"/>
+                    
+                    <br/><br/>
+                    <p:inputTextarea title="#{res.get('backupscript')}" style="width: 100%; height: 300px; overflow: auto " 
+                                     scrollHeight="300"  value="#{bPropertyBean.backupScript}">
+
+                    </p:inputTextarea>
+                </p:tab>
+                <p:tab title="${res.get('strategy')}">
+                    <p:selectOneRadio id="select"  layout="选择" value="#{bPropertyBean.strategyType}" >
+                        <p:ajax  listener="#{bPropertyBean.typeListener()}" update="date1 noend date2 cylce type week month" />
+                        <f:selectItem itemValue="1" itemLabel="#{res.get('immediately')}" />
+                        <f:selectItem itemValue="2" itemLabel="#{res.get('once')}" />
+                        <f:selectItem itemValue="3" itemLabel="#{res.get('repeat')}" />
+                    </p:selectOneRadio>
+
+                    <h:panelGrid columns="2" >
+                        <p:fieldset legend="#{res.get('begin')}" style="width: 220px;height: 80px" >
+                            <p:calendar locale="cn" pattern="yyyy-MM-dd HH:mm:ss" showButtonPanel="true" navigator="true"
+                                        id="date1" value="#{bPropertyBean.beginDate}"  disabled="#{bPropertyBean.BBeginDate}" /> 
+                        </p:fieldset>
+                        <p:fieldset legend="#{res.get('end')}" style="width: 370px; height: 80px" >
+                            <h:panelGrid columns="3" >
+                                <h:selectBooleanCheckbox id="noend" value="#{bPropertyBean.isNoEnd}" disabled="#{bPropertyBean.BNoEnd}" >
+                                    <p:ajax listener="#{bPropertyBean.endTimeListener()}" update="date2"/>
+                                </h:selectBooleanCheckbox>
+                                <h:outputLabel  value="#{res.get('noend')}"/>
+                                <p:calendar locale="cn" pattern="yyyy-MM-dd HH:mm:ss" showButtonPanel="true" navigator="true"
+                                            id="date2" value="#{bPropertyBean.endDate}" disabled="#{bPropertyBean.BEndDate}" /> 
+                            </h:panelGrid>
+                        </p:fieldset>
+                        <p:fieldset legend="#{res.get('cycle')}" style="width: 220px; height: 346px">
+                            <h:panelGrid columns="3" cellpadding="5" >
+                                <h:outputLabel  value="每" style="position: relative; top: -55px;"/>
+                                <p:spinner id="cylce" disabled="#{bPropertyBean.BCycle}" value="#{bPropertyBean.ICycle}" size="4" maxlength="8"  min="1" style="position: relative; top: -55px;"/>  
+                                <p:selectOneRadio id="type" disabled="#{bPropertyBean.BCycle}" value="#{bPropertyBean.IType}" layout="pageDirection" >
+                                    <p:ajax listener="#{bPropertyBean.cycleListener()}" update="week month" />
+                                    <f:selectItem itemValue="1" itemLabel="#{res.get('minute')}" />
+                                    <f:selectItem itemValue="2" itemLabel="#{res.get('hour')}" />
+                                    <f:selectItem itemValue="3" itemLabel="#{res.get('day')}" />
+                                    <f:selectItem itemValue="4" itemLabel="#{res.get('week')}" />
+                                    <f:selectItem itemValue="5" itemLabel="#{res.get('month')}" />
+                                </p:selectOneRadio>
+                            </h:panelGrid>
+
+                        </p:fieldset>
+
+                        <h:panelGrid columns="1" style="position: relative; " >
+                            <p:fieldset id="week" legend="日期（周）" style="width: 370px;" >
+                                <p:spacer width="30px" height="0"/>
+                                <h:selectBooleanCheckbox id="week1" value="#{bPropertyBean.week1}" disabled="#{bPropertyBean.BWeek}"/>
+                                #{res.get('monday')}
+                                <h:selectBooleanCheckbox id="week2" value="#{bPropertyBean.week2}" disabled="#{bPropertyBean.BWeek}"/>
+
+                                #{res.get('tuesday')}
+                                <h:selectBooleanCheckbox id="week3" value="#{bPropertyBean.week3}" disabled="#{bPropertyBean.BWeek}"/>
+                                #{res.get('wednesday')}
+                                <h:selectBooleanCheckbox id="week4" value="#{bPropertyBean.week4}" disabled="#{bPropertyBean.BWeek}"/>
+                                #{res.get('thursday')}<br/><p:spacer width="30px" height="0"/>
+                                <h:selectBooleanCheckbox id="week5" value="#{bPropertyBean.week5}" disabled="#{bPropertyBean.BWeek}"/>
+                                #{res.get('friday')}
+                                <h:selectBooleanCheckbox id="week6" value="#{bPropertyBean.week6}" disabled="#{bPropertyBean.BWeek}"/>
+                                #{res.get('saturday')}
+                                <h:selectBooleanCheckbox id="week7" value="#{bPropertyBean.week7}" disabled="#{bPropertyBean.BWeek}"/>
+                                #{res.get('sunday')}<br/><br/>
+                                <p:spacer width="50px" height="0"/>
+                                <p:commandButton id="week11" value="全部选择" update="week" action="#{bPropertyBean.weekAllSelect()}" disabled="#{bPropertyBean.BWeek}"/>
+                                <p:spacer width="50px" height="0"/>
+                                <p:commandButton id="week12" value="全部取消"  update="week" action="#{bPropertyBean.weekAllCancle()}" disabled="#{bPropertyBean.BWeek}"/>
+
+                            </p:fieldset>
+                            <p:fieldset id="month" legend="日期（月）" style="width: 370px;">
+                                <p:spacer width="30px" height="0"/>
+                                <h:selectBooleanCheckbox id="month1" value="#{bPropertyBean.month1}" disabled="#{bPropertyBean.BMonth}"/>01
+                                <h:selectBooleanCheckbox id="month2" value="#{bPropertyBean.month2}" disabled="#{bPropertyBean.BMonth}"/>02
+                                <h:selectBooleanCheckbox id="month3" value="#{bPropertyBean.month3}" disabled="#{bPropertyBean.BMonth}"/>03
+                                <h:selectBooleanCheckbox id="month4" value="#{bPropertyBean.month4}" disabled="#{bPropertyBean.BMonth}"/>04
+                                <h:selectBooleanCheckbox id="month5" value="#{bPropertyBean.month5}" disabled="#{bPropertyBean.BMonth}"/>05
+                                <h:selectBooleanCheckbox id="month6" value="#{bPropertyBean.month6}" disabled="#{bPropertyBean.BMonth}"/>06
+                                <h:selectBooleanCheckbox id="month7" value="#{bPropertyBean.month7}" disabled="#{bPropertyBean.BMonth}"/>07<br/>
+                                <p:spacer width="30px" height="0"/>
+                                <h:selectBooleanCheckbox id="month8" value="#{bPropertyBean.month8}" disabled="#{bPropertyBean.BMonth}"/>08
+                                <h:selectBooleanCheckbox id="month9" value="#{bPropertyBean.month9}" disabled="#{bPropertyBean.BMonth}"/>09
+                                <h:selectBooleanCheckbox id="month10" value="#{bPropertyBean.month10}" disabled="#{bPropertyBean.BMonth}"/>10
+                                <h:selectBooleanCheckbox id="month11" value="#{bPropertyBean.month11}" disabled="#{bPropertyBean.BMonth}"/>11
+                                <h:selectBooleanCheckbox id="month12" value="#{bPropertyBean.month12}" disabled="#{bPropertyBean.BMonth}"/>12
+                                <h:selectBooleanCheckbox id="month13" value="#{bPropertyBean.month13}" disabled="#{bPropertyBean.BMonth}"/>13
+                                <h:selectBooleanCheckbox id="month14" value="#{bPropertyBean.month14}" disabled="#{bPropertyBean.BMonth}"/>14<br/>
+                                <p:spacer width="30px" height="0"/>
+                                <h:selectBooleanCheckbox id="month15" value="#{bPropertyBean.month15}" disabled="#{bPropertyBean.BMonth}"/>15
+                                <h:selectBooleanCheckbox id="month16" value="#{bPropertyBean.month16}" disabled="#{bPropertyBean.BMonth}"/>16
+                                <h:selectBooleanCheckbox id="month17" value="#{bPropertyBean.month17}" disabled="#{bPropertyBean.BMonth}"/>17
+                                <h:selectBooleanCheckbox id="month18" value="#{bPropertyBean.month18}" disabled="#{bPropertyBean.BMonth}"/>18
+                                <h:selectBooleanCheckbox id="month19" value="#{bPropertyBean.month19}" disabled="#{bPropertyBean.BMonth}"/>19
+                                <h:selectBooleanCheckbox id="month20" value="#{bPropertyBean.month20}" disabled="#{bPropertyBean.BMonth}"/>20
+                                <h:selectBooleanCheckbox id="month21" value="#{bPropertyBean.month21}" disabled="#{bPropertyBean.BMonth}"/>21<br/>
+                                <p:spacer width="30px" height="0"/>
+                                <h:selectBooleanCheckbox id="month22" value="#{bPropertyBean.month22}" disabled="#{bPropertyBean.BMonth}"/>22
+                                <h:selectBooleanCheckbox id="month23" value="#{bPropertyBean.month23}" disabled="#{bPropertyBean.BMonth}"/>23
+                                <h:selectBooleanCheckbox id="month24" value="#{bPropertyBean.month24}" disabled="#{bPropertyBean.BMonth}"/>24
+                                <h:selectBooleanCheckbox id="month25" value="#{bPropertyBean.month25}" disabled="#{bPropertyBean.BMonth}"/>25
+                                <h:selectBooleanCheckbox id="month26" value="#{bPropertyBean.month26}" disabled="#{bPropertyBean.BMonth}"/>26
+                                <h:selectBooleanCheckbox id="month27" value="#{bPropertyBean.month27}" disabled="#{bPropertyBean.BMonth}"/>27
+                                <h:selectBooleanCheckbox id="month28" value="#{bPropertyBean.month28}" disabled="#{bPropertyBean.BMonth}"/>28<br/>
+                                <p:spacer width="30px" height="0"/>
+                                <h:selectBooleanCheckbox id="month29" value="#{bPropertyBean.month29}" disabled="#{bPropertyBean.BMonth}"/>29
+                                <h:selectBooleanCheckbox id="month30" value="#{bPropertyBean.month30}" disabled="#{bPropertyBean.BMonth}"/>30
+                                <h:selectBooleanCheckbox id="month31" value="#{bPropertyBean.month31}" disabled="#{bPropertyBean.BMonth}"/>31
+                                <h:selectBooleanCheckbox id="month32" value="#{bPropertyBean.month32}" disabled="#{bPropertyBean.BMonth}"/>#{res.get('endday')}<br/><br/>
+                                <p:spacer width="50px" height="0"/>
+                                <p:commandButton id="month_1" update="month" action="#{bPropertyBean.monthAllSelect()}" value="全部选择" disabled="#{bPropertyBean.BMonth}"/>
+                                <p:spacer width="50px" height="0"/>
+                                <p:commandButton id="month_2" update="month" action="#{bPropertyBean.monthAllCancle()}" value="全部取消" disabled="#{bPropertyBean.BMonth}"/>
+                            </p:fieldset>
+                        </h:panelGrid>
+                    </h:panelGrid>
+                </p:tab>
+
+            </p:tabView>
+            <p:panel style=" text-align:  center;  border-color:  #ffffff">
+            <p:commandButton value="#{res.get('create')}"  icon="setIcon"  action="#{bPropertyBean.createScript()}" ajax="false" />
+
+            <p:spacer width="8px"/>
+            <p:commandButton value="#{global.get('save')}" icon="saveIcon" action="#{bPropertyBean.sendJob()}" />
+
+            <p:spacer width="8px"/>
+            <p:commandButton value="${global.get('return')}" icon="cancleIcon" action="oracle_database?faces-redirect=true" />
+            </p:panel>
+        </h:form>
+        <p:ajaxStatus style="width:64px;height:64px;position:fixed;right:5px;bottom:5px">  
+            <f:facet name="start">  
+                <p:graphicImage value="../resources/common/picture/loading.gif" />  
+            </f:facet>  
+
+            <f:facet name="complete">  
+                <h:outputText value="" />  
+            </f:facet>  
+        </p:ajaxStatus>
+    </h:body>
+</ui:composition>

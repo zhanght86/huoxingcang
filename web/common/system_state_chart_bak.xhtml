@@ -1,0 +1,302 @@
+<?xml version="1.0" encoding="GBK"?>
+<!--
+To change this template, choose Tools | Templates
+and open the template in the editor.
+-->
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.1//EN" "http://www.w3.org/TR/xhtml11/DTD/xhtml11.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:c="http://java.sun.com/jsp/jstl/core" >
+    <!--template="../template/framework.xhtml"-->
+
+
+    <!--    <ui:define name="content">-->
+    <h:head>
+        <link href="./../resources/common/css/default.css" rel="stylesheet" type="text/css" />
+        <script type="text/javascript">
+        </script> 
+
+        <style type="text/css"> 
+            .jqplot-meterGauge-tick {
+                font-size: 1em;
+                color: #000000;
+            }
+
+            .jqplot-meterGauge-label {
+                font-size: 1em;
+                color: #000000;
+            }
+        </style> 
+
+    </h:head>
+    <h:body style="overflow-x: hidden">   
+        <h1 title="System Infomation" class="title ui-widget-header ui-corner-all">#{res.get('title')}</h1>
+        <br/>
+        <p:tabView id="view" dynamic="true"   style="border: none;" >
+            <!--:view:sys:poll1 :view:net:poll2 :view:disk_6:poll3 :view:disk_8:poll4 :view:disk_16:poll5-->
+            <p:ajax event="tabChange" listener="#{hardwarebean.onTabChange}" update=":view:sys :view:net :view:disk_6 :view:disk_8 :view:disk_16" />
+            <p:tab title="#{res.get('sysState')}" id="tab_sys" >
+                <h:form id="sys"> 
+                    <p:poll id="poll1"  interval="5" listener="#{hardwarebean.updateSysModel()}" update=":view:sys"  stop="#{hardwarebean.isStopUpdateSys}"   />  
+                    <!--<p:poll id="refreshTmp" interval="5" listener="{hardwarebean.updateTmpModel()}" update="tmpInfo" stop="{hardwarebean.isStopUpdateSys}" />-->              
+                    <p:fieldset legend="#{res.get('cpuInfo')}" style=" width: 680px; height: 240px"> 
+                        <h:panelGrid columns="2">
+                            <p:meterGaugeChart id="cpuInfo" value="#{hardwarebean.cpuModel}" seriesColors="009933, FFCC33, CC3300"
+                                               style="height:210px; width: 330px; background-size: 300px; float: left; color: #000000;" 
+                                               labelHeightAdjust="0"
+                                               intervalOuterRadius="100" label="百分比" title="CPU" />            
+                            <p:meterGaugeChart id="tmpInfo" value="#{hardwarebean.tmpModel}" seriesColors="009933,FFCC33, CC3300"
+                                               style="height:210px; width: 330px; background-size: 300px; float: left; color: #000000;" 
+                                               labelHeightAdjust="0"
+                                               intervalOuterRadius="100" label="℃" title="#{res.get('temperature')}"/>
+                        </h:panelGrid> 
+                    </p:fieldset>  <br/>
+                    <!--<p:poll id="refreshMem" interval="5" listener="{hardwarebean.updateMemModel()}" update="memory" stop="{hardwarebean.isStopUpdateSys}" />-->  
+                    <p:fieldset legend="#{res.get('memoryInfo')}" style=" width: 680px; height: 240px"> 
+                        <h:panelGrid columns="2">  
+                            <p:meterGaugeChart id="memory" value="#{hardwarebean.memModel}" seriesColors="009933,FFCC33, CC3300"
+                                               style="height:210px; width: 330px; background-size: 300px; float: left; color: #000000;" 
+                                               labelHeightAdjust="0"
+                                               intervalOuterRadius="100" label="GB" title="#{res.get('memory')}"/>
+                        </h:panelGrid>                       
+                    </p:fieldset>
+                    <br/>
+                    <!--<p:poll  id="refreshReadDisk" interval="5" listener="{hardwarebean.updateReadDiskModel()}" update="readdisk" stop="{hardwarebean.isStopUpdateSys}" />-->
+                    <!--<p:poll id="refreshWriteDisk" interval="5" listener="{hardwarebean.updateWriteDiskModel()}" update="writedisk" stop="{hardwarebean.isStopUpdateSys}" />-->
+                    <p:fieldset legend="#{res.get('diskInfo')}" style=" width: 680px; height: 240px"> 
+                        <h:panelGrid columns="2">
+                            <p:meterGaugeChart id="readdisk" value="#{hardwarebean.readDiskModel}" seriesColors="009933, FFCC33, CC3300"
+                                               style="height:210px; width: 330px; background-size: 300px; float: left; color: #000000;" 
+                                               labelHeightAdjust="0"  
+                                               intervalOuterRadius="100" label="MB/s" title="#{res.get('readDisk')}" />            
+                            <p:meterGaugeChart id="writedisk" value="#{hardwarebean.writeDiskModel}" seriesColors="009933,FFCC33, CC3300"
+                                               style="height:210px; width: 330px; background-size: 300px; float: left; color: #000000;" 
+                                               labelHeightAdjust="0"
+                                               intervalOuterRadius="100" label="MB/s" title="#{res.get('writeDisk')}"/>
+                        </h:panelGrid> 
+                    </p:fieldset>
+
+                </h:form>
+            </p:tab> 
+            <p:tab title="#{res.get('network')}" id="tab_net" >
+                <h:form id="net">
+                    <p:poll id="poll2" interval="5" listener="#{hardwarebean.updateNetWorkCard()}" update=":view:net" stop="#{hardwarebean.isStopUpdateNet}" />
+                    <c:forEach id="cc"  var="i"  begin="0"  end="#{hardwarebean.netCardNum}"   >
+                        <p:lineChart     style="width:700px;height:350px" showMarkers="false" title="#{hardwarebean.netCards.get(i).name}"
+                                      yaxisLabel="#{res.get('speed')}"
+                                      value="#{hardwarebean.netCards.get(i).networkModel}"
+                                       seriesColors="009933, CC3300"   minY="0" maxY="#{hardwarebean.netCards.get(i).maxSpeed}"
+                                      stacked="false"  xaxisAngle="60"/>
+                    </c:forEach>
+                </h:form>
+            </p:tab>
+            <p:tab title="#{res.get('disk')}" id="tab_disk" rendered="#{hardwarebean.isDisplayDiskPicture}" >
+                <h:form id="disk_6" rendered="#{hardwarebean.diskStatus.isDisk6}"  >
+                    <p:poll  id="poll3"  interval="5" listener="#{hardwarebean.updateDisk_6_Status()}" update=":view:disk_6" stop="#{hardwarebean.isStopUpdateDisk}"  />
+                    <div style="background-image: url('../resources/oempic/diskpicture/case6.png');width: 700px; height: 246px;" >
+                        <div style="float: left;"  >
+                            <div  style="position: relative;left:50px;top:102px;background-image: url('#{hardwarebean.diskStatus.disk_6_1.stateIcon}');width: 154px; height: 35px;">
+                                <div  style="display: #{hardwarebean.diskStatus.disk_6_1.tempDisplay};position: relative;left:8px;top:1px;"><image  src="#{hardwarebean.diskStatus.disk_6_1.tempIcon}" /></div>
+                            </div>
+                            <div style="position: relative;left:50px;top:104px;background-image: url('#{hardwarebean.diskStatus.disk_6_3.stateIcon}');width: 154px; height: 35px;">
+                                <div  style="display: #{hardwarebean.diskStatus.disk_6_3.tempDisplay};position: relative;left:8px;top:1px;"><image  src="#{hardwarebean.diskStatus.disk_6_3.tempIcon}" /></div>
+                            </div>
+                            <div style="position: relative;left:50px;top:106px;background-image: url('#{hardwarebean.diskStatus.disk_6_5.stateIcon}');width: 154px; height: 35px;">
+                                <div  style="display: #{hardwarebean.diskStatus.disk_6_5.tempDisplay};position: relative;left:8px;top:1px;"><image  src="#{hardwarebean.diskStatus.disk_6_5.tempIcon}" /></div>
+                            </div>
+                        </div>
+                        <div style="float: left;" >
+                            <div style="position: relative;left:70px;top:102px;background-image: url('#{hardwarebean.diskStatus.disk_6_2.stateIcon}');width: 154px; height: 35px;">
+                                <div  style="display: #{hardwarebean.diskStatus.disk_6_2.tempDisplay};position: relative;left:8px;top:1px;"><image  src="#{hardwarebean.diskStatus.disk_6_2.tempIcon}" /></div>
+                            </div>
+                            <div style="position: relative;left:70px;top:104px;background-image: url('#{hardwarebean.diskStatus.disk_6_4.stateIcon}');width: 154px; height: 35px;">
+                                <div  style="display: #{hardwarebean.diskStatus.disk_6_4.tempDisplay};position: relative;left:8px;top:1px;"><image  src="#{hardwarebean.diskStatus.disk_6_4.tempIcon}" /></div>
+                            </div>
+                            <div style="position: relative;left:70px;top:106px;background-image: url('#{hardwarebean.diskStatus.disk_6_6.stateIcon}');width: 154px; height: 35px;">
+                                <div  style="display: #{hardwarebean.diskStatus.disk_6_6.tempDisplay};position: relative;left:8px;top:1px;"><image  src="#{hardwarebean.diskStatus.disk_6_6.tempIcon}" /></div>
+                            </div>
+                        </div>
+                    </div>
+                </h:form>
+                <!-- 八盘位 -->
+                <h:form    id="disk_8" rendered="#{hardwarebean.diskStatus.isDisk8}" > 
+                    <!--<p:poll id="refreshDisk" interval="5" listener="{hardwarebean.updateDiskStatus()}" update="disk"  />-->
+                    <!--../resources/common/picture/case8.png  ../resources/common/picture/TrayBlueRed.png-->
+                    <p:poll  id="poll4"  interval="5" listener="#{hardwarebean.updateDisk_8_Status()}" update=":view:disk_8" stop="#{hardwarebean.isStopUpdateDisk}"  />
+                    <div style="background-image: url('../resources/oempic/diskpicture/case8.png');width: 700px; height: 246px;" >
+                        <div style="float: left;"  >
+                            <div style="position: relative;left:40px;top:139px;background-image: url('#{hardwarebean.diskStatus.disk_8_1.stateIcon}');width: 154px; height: 35px;">
+                                <div  style="display: #{hardwarebean.diskStatus.disk_8_1.tempDisplay};position: relative;left:8px;top:1px;"><image  src="#{hardwarebean.diskStatus.disk_8_1.tempIcon}" /></div>
+                            </div>
+                            <div style="position: relative;left:40px;top:142px;background-image: url('#{hardwarebean.diskStatus.disk_8_5.stateIcon}');width: 154px; height: 35px;">
+                                <div  style="display: #{hardwarebean.diskStatus.disk_8_5.tempDisplay};position: relative;left:8px;top:1px;"><image  src="#{hardwarebean.diskStatus.disk_8_5.tempIcon}" /></div>
+                            </div>
+                        </div>
+                        <div style="float: left;" >
+                            <div style="position: relative;left:42px;top:139px;background-image: url('#{hardwarebean.diskStatus.disk_8_2.stateIcon}');width: 154px; height: 35px;">
+                                <div  style="display: #{hardwarebean.diskStatus.disk_8_2.tempDisplay};position: relative;left:8px;top:1px;"><image  src="#{hardwarebean.diskStatus.disk_8_2.tempIcon}" /></div>
+                            </div>
+                            <div style="position: relative;left:42px;top:142px;background-image: url('#{hardwarebean.diskStatus.disk_8_6.stateIcon}');width: 154px; height: 35px;">
+                                <div  style="display: #{hardwarebean.diskStatus.disk_8_6.tempDisplay};position: relative;left:8px;top:1px;"><image  src="#{hardwarebean.diskStatus.disk_8_6.tempIcon}" /></div>
+                            </div>
+                        </div>
+                        <div style="float: left;" >
+                            <div style="position: relative;left:42px;top:139px;background-image: url('#{hardwarebean.diskStatus.disk_8_3.stateIcon}');width: 154px; height: 35px;">
+                                <div  style="display: #{hardwarebean.diskStatus.disk_8_3.tempDisplay};position: relative;left:8px;top:1px;"><image  src="#{hardwarebean.diskStatus.disk_8_3.tempIcon}" /></div>
+                            </div>
+                            <div style="position: relative;left:42px;top:142px;background-image: url('#{hardwarebean.diskStatus.disk_8_7.stateIcon}');width: 154px; height: 35px;">
+                                <div  style="display: #{hardwarebean.diskStatus.disk_8_7.tempDisplay};position: relative;left:8px;top:1px;"><image  src="#{hardwarebean.diskStatus.disk_8_7.tempIcon}" /></div>
+                            </div>
+                        </div>
+                        <div  style="float: left;" >
+                            <div style="position: relative;left:42px;top:139px;background-image: url('#{hardwarebean.diskStatus.disk_8_4.stateIcon}');width: 154px; height: 35px;">
+                                <div  style="display: #{hardwarebean.diskStatus.disk_8_4.tempDisplay};position: relative;left:8px;top:1px;"><image  src="#{hardwarebean.diskStatus.disk_8_4.tempIcon}" /></div>
+                            </div>
+                            <div style="position: relative;left:42px;top:142px;background-image: url('#{hardwarebean.diskStatus.disk_8_8.stateIcon}');width: 154px; height: 35px;">
+                                <div  style="display: #{hardwarebean.diskStatus.disk_8_8.tempDisplay};position: relative;left:8px;top:1px;"><image  src="#{hardwarebean.diskStatus.disk_8_8.tempIcon}" /></div>
+                            </div>
+                        </div>
+                    </div>
+                </h:form>
+                <!-- 十六盘位 -->
+                <h:form  id="disk_16" rendered="#{hardwarebean.diskStatus.isDisk16}" >
+                    <p:poll  id="poll5" interval="5" listener="#{hardwarebean.updateDisk_16_Status()}" update=":view:disk_16" stop="#{hardwarebean.isStopUpdateDisk}"  />
+                    <div style="background-image: url('../resources/oempic/diskpicture/case16.png');width: 700px; height: 246px;" >
+                        <div style="float: left;"  >
+                            <div style="position: relative;left:40px;top:55px;background-image: url('#{hardwarebean.diskStatus.disk_16_1.stateIcon}');width: 154px; height: 35px;">
+                                <div style="display: #{hardwarebean.diskStatus.disk_16_1.tempDisplay};position: relative;left:8px;top:1px;"><image  src="#{hardwarebean.diskStatus.disk_16_1.tempIcon}" /></div>
+                            </div>
+                            <div style="position: relative;left:40px;top:61px;background-image: url('#{hardwarebean.diskStatus.disk_16_5.stateIcon}');width: 154px; height: 35px;">
+                                <div  style="display: #{hardwarebean.diskStatus.disk_16_5.tempDisplay};position: relative;left:8px;top:1px;"><image  src="#{hardwarebean.diskStatus.disk_16_5.tempIcon}" /></div>
+                            </div>
+                            <div style="position: relative;left:40px;top:67px;background-image: url('#{hardwarebean.diskStatus.disk_16_9.stateIcon}');width: 154px; height: 35px;">
+                                <div style="display: #{hardwarebean.diskStatus.disk_16_9.tempDisplay};position: relative;left:8px;top:1px;"><image  src="#{hardwarebean.diskStatus.disk_16_9.tempIcon}" /></div>
+                            </div>
+                            <div style="position: relative;left:40px;top:73px;background-image: url('#{hardwarebean.diskStatus.disk_16_13.stateIcon}');width: 154px; height: 35px;">
+                                <div  style="display: #{hardwarebean.diskStatus.disk_16_13.tempDisplay};position: relative;left:8px;top:1px;"><image  src="#{hardwarebean.diskStatus.disk_16_13.tempIcon}" /></div>
+                            </div>
+                        </div>
+                        <div style="float: left;" >
+                            <div style="position: relative;left:40px;top:55px;background-image: url('#{hardwarebean.diskStatus.disk_16_2.stateIcon}');width: 154px; height: 35px;">
+                                <div  style="display: #{hardwarebean.diskStatus.disk_16_2.tempDisplay};position: relative;left:8px;top:1px;"><image  src="#{hardwarebean.diskStatus.disk_16_2.tempIcon}" /></div>
+                            </div>
+                            <div style="position: relative;left:40px;top:61px;background-image: url('#{hardwarebean.diskStatus.disk_16_6.stateIcon}');width: 154px; height: 35px;">
+                                <div  style="display: #{hardwarebean.diskStatus.disk_16_6.tempDisplay};position: relative;left:8px;top:1px;"><image  src="#{hardwarebean.diskStatus.disk_16_6.tempIcon}" /></div>
+                            </div>
+                            <div style="position: relative;left:40px;top:67px;background-image: url('#{hardwarebean.diskStatus.disk_16_10.stateIcon}');width: 154px; height: 35px;">
+                                <div style="display: #{hardwarebean.diskStatus.disk_16_10.tempDisplay};position: relative;left:8px;top:1px;"><image  src="#{hardwarebean.diskStatus.disk_16_10.tempIcon}" /></div>
+                            </div>
+                            <div style="position: relative;left:40px;top:73px;background-image: url('#{hardwarebean.diskStatus.disk_16_14.stateIcon}');width: 154px; height: 35px;">
+                                <div style="display: #{hardwarebean.diskStatus.disk_16_14.tempDisplay};position: relative;left:8px;top:1px;"><image  src="#{hardwarebean.diskStatus.disk_16_14.tempIcon}" /></div>
+                            </div>
+                        </div>
+                        <div style="float: left;" >
+                            <div style="position: relative;left:40px;top:55px;background-image: url('#{hardwarebean.diskStatus.disk_16_3.stateIcon}');width: 154px; height: 35px;">
+                                <div style="display: #{hardwarebean.diskStatus.disk_16_3.tempDisplay};position: relative;left:8px;top:1px;"><image  src="#{hardwarebean.diskStatus.disk_16_3.tempIcon}" /></div>
+                            </div>
+                            <div style="position: relative;left:40px;top:61px;background-image: url('#{hardwarebean.diskStatus.disk_16_7.stateIcon}');width: 154px; height: 35px;">
+                                <div  style="display: #{hardwarebean.diskStatus.disk_16_7.tempDisplay};position: relative;left:8px;top:1px;"><image  src="#{hardwarebean.diskStatus.disk_16_7.tempIcon}" /></div>
+                            </div>
+                            <div style="position: relative;left:40px;top:67px;background-image: url('#{hardwarebean.diskStatus.disk_16_11.stateIcon}');width: 154px; height: 35px;">
+                                <div  style="display: #{hardwarebean.diskStatus.disk_16_11.tempDisplay};position: relative;left:8px;top:1px;"><image  src="#{hardwarebean.diskStatus.disk_16_11.tempIcon}" /></div>
+                            </div>
+                            <div style="position: relative;left:40px;top:73px;background-image: url('#{hardwarebean.diskStatus.disk_16_15.stateIcon}');width: 154px; height: 35px;">
+                                <div  style="display: #{hardwarebean.diskStatus.disk_16_15.tempDisplay};position: relative;left:8px;top:1px;"><image  src="#{hardwarebean.diskStatus.disk_16_15.tempIcon}" /></div>
+                            </div>
+                        </div>
+                        <div   style="float: left;" >
+                            <div style="position: relative;left:40px;top:55px;background-image: url('#{hardwarebean.diskStatus.disk_16_4.stateIcon}');width: 154px; height: 35px;">
+                                <div  style="display: #{hardwarebean.diskStatus.disk_16_4.tempDisplay};position: relative;left:8px;top:1px;"><image  src="#{hardwarebean.diskStatus.disk_16_4.tempIcon}" /></div>
+                            </div>
+                            <div style="position: relative;left:40px;top:61px;background-image: url('#{hardwarebean.diskStatus.disk_16_8.stateIcon}');width: 154px; height: 35px;">
+                                <div  style="display: #{hardwarebean.diskStatus.disk_16_8.tempDisplay};position: relative;left:8px;top:1px;"><image  src="#{hardwarebean.diskStatus.disk_16_8.tempIcon}" /></div>
+                            </div>
+                            <div style="position: relative;left:40px;top:67px;background-image: url('#{hardwarebean.diskStatus.disk_16_12.stateIcon}');width: 154px; height: 35px;">
+                                <div  style="display: #{hardwarebean.diskStatus.disk_16_12.tempDisplay};position: relative;left:8px;top:1px;"><image  src="#{hardwarebean.diskStatus.disk_16_12.tempIcon}" /></div>
+                            </div>
+                            <div style="position: relative;left:40px;top:73px;background-image: url('#{hardwarebean.diskStatus.disk_16_16.stateIcon}');width: 154px; height: 35px;">
+                                <div    style="display: #{hardwarebean.diskStatus.disk_16_16.tempDisplay};position: relative;left:8px;top:1px;"><image  src="#{hardwarebean.diskStatus.disk_16_16.tempIcon}" /></div>
+                            </div>
+                        </div>
+                    </div>
+                </h:form>
+            </p:tab>  
+        </p:tabView>
+        <!--</h:form>-->
+        
+    </h:body>
+</html>
+                <!--                <h:form id="disk"> 
+                                    <p:poll id="refreshDisk" interval="5" listener="{hardwarebean.updateDiskStatus()}" update=":view:disk" stop="{hardwarebean.isStopUpdateDisk}"  />
+                                    <div style="background-image: url('../resources/common/picture/case.png');width: 660px; height: 480px;" >
+                                         六盘位 
+                                        <div style="float: left">
+                                            <div style="position: relative;left:53px;top:5px;"><image src="{hardwarebean.disk.disk_6_1}" /> </div>
+                                            <div style="position: relative;left:53px;top:1px;"><image src="../resources/common/picture/57c.png" /></div>
+                                            <div style="position: relative;left:53px;top:-2px;"><image src="../resources/common/picture/57c.png" /></div>
+                                        </div>
+                                        <div style="float: left">
+                                            <div style="position: relative;left: 72px;top:5px;"><image src="../resources/common/picture/57c.png" /></div>
+                                            <div style="position: relative;left: 72px;top:1px;"><image src="../resources/common/picture/57c.png" /></div>
+                                            <div style="position: relative;left: 72px;top:-2px;"><image src="../resources/common/picture/57c.png" /></div>
+                                        </div>
+                                        <div style="height: 185px">
+                
+                                        </div>
+                                         八盘位 
+                                        <div style="float: left">
+                                            <div style="position: relative;left:40px;top:5px;"> <image src="{hardwarebean.disk.disk_8_1}" /> </div>
+                                            <div style="position: relative;left:40px;top:2px;"><image src="../resources/common/picture/47b.png" /></div>
+                                        </div>
+                                        <div style="float: left">
+                                            <div style="position: relative;left:40px;top:5px;">  <image src="../resources/common/picture/47b.png" /> </div>
+                                            <div style="position: relative;left:40px;top:2px;"><image src="../resources/common/picture/47b.png" /></div>
+                                        </div>
+                                        <div style="float: left">
+                                            <div style="position: relative;left:40px;top:5px;"> <image src="../resources/common/picture/47b.png" /> </div>
+                                            <div style="position: relative;left:40px;top:2px;"><image src="../resources/common/picture/47b.png" /></div>
+                                        </div>
+                                        <div style="float: left">
+                                            <div style="position: relative;left:40px;top:5px;"><image src="../resources/common/picture/47b.png" /></div>
+                                            <div style="position: relative;left:40px;top:2px;"><image src="../resources/common/picture/47b.png" /></div>
+                                        </div>
+                                        <div style="height: 126px">
+                
+                                        </div>
+                                         十六盘位 
+                                        <div style="float: left">
+                                            <div style="position: relative;left:40px;top:5px;"> <image src="{hardwarebean.disk.disk_16_1}" /></div>
+                                            <div style="position: relative;left:40px;top:2px;"><image src="../resources/common/picture/15a.png" /></div>
+                                            <div style="position: relative;left:40px;top:-1px;"> <image src="../resources/common/picture/15a.png" /></div>
+                                            <div style="position: relative;left:40px;top:-4px;"><image src="../resources/common/picture/15a.png" /></div>
+                                        </div>
+                                        <div style="float: left">
+                                            <div style="position: relative;left:40px;top:5px;"> <image src="../resources/common/picture/15a.png" /></div>
+                                            <div style="position: relative;left:40px;top:2px;"><image src="../resources/common/picture/15a.png" /></div>
+                                            <div style="position: relative;left:40px;top:-1px;"> <image src="../resources/common/picture/15a.png" /></div>
+                                            <div style="position: relative;left:40px;top:-4px;"><image src="../resources/common/picture/15a.png" /></div>
+                                        </div>
+                                        <div style="float: left">
+                                            <div style="position: relative;left:40px;top:5px;"> <image src="../resources/common/picture/15a.png" /></div>
+                                            <div style="position: relative;left:40px;top:2px;"><image src="../resources/common/picture/15a.png" /></div>
+                                            <div style="position: relative;left:40px;top:-1px;"> <image src="../resources/common/picture/15a.png" /></div>
+                                            <div style="position: relative;left:40px;top:-4px;"><image src="../resources/common/picture/15a.png" /></div>
+                                        </div>
+                                        <div style="float: left">
+                                            <div style="position: relative;left:40px;top:5px;"> <image src="../resources/common/picture/15a.png" /></div>
+                                            <div style="position: relative;left:40px;top:2px;"><image src="../resources/common/picture/15a.png" /></div>
+                                            <div style="position: relative;left:40px;top:-1px;"> <image src="../resources/common/picture/15a.png" /></div>
+                                            <div style="position: relative;left:40px;top:-4px;"><image src="../resources/common/picture/15a.png" /></div>
+                                        </div>
+                                    </div>
+                                    ../resources/common/picture/case8.png  ../resources/common/picture/TrayBlueRed.png
+                                    <div style="background-image: url('../resources/common/picture/case8.png');width: 660px; height: 480px;" >
+                                        <div style="float: left;position: relative;left:40px;top:140px;background-image: url('{hardwarebean.disk.disk}');width: 154px; height: 35px;">
+                                            <div style="position: relative;left:8px;top:1px;"><image  src="{hardwarebean.disk.tmp}" /></div>
+                                        </div>
+                                    </div>
+                                </h:form>-->
+                <!-- 六盘位 -->

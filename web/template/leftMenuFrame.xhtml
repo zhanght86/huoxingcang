@@ -1,0 +1,123 @@
+<?xml version="1.0" encoding="GBK"?>
+<!--
+To change this template, choose Tools | Templates
+and open the template in the editor.
+-->
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.1//EN" "http://www.w3.org/TR/xhtml11/DTD/xhtml11.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:p="http://primefaces.org/ui">
+    <h:head>
+        <link href="#{request.contextPath}/resources/common/css/default.css" rel="stylesheet" type="text/css" /> 
+        <link href="#{request.contextPath}/resources/common/css/cssIcon.css" rel="stylesheet" type="text/css" />
+        <style type="text/css">
+            .ui-widget-content{
+                /*                 border: 1px solid #aaaaaa;*/
+                background: none!important;
+            }
+            .ui-state-active{
+                background: #F2F2F2;        
+            }
+            body{
+                padding: 0;
+                margin: 0;
+            }   
+
+            #xiao{
+                width: 16px;
+                height: 16px;
+                background:url('../picture/add.png') no-repeat !important;
+            }
+            #size{
+                width: 16px;
+                height: 16px;
+            }
+        </style>
+        <script type="text/javascript">
+            function toECD(){                
+                 window.open("../ecd/template/login.xhtml");
+            }            
+        </script>
+    </h:head>
+    <h:body class="left ui-widget">
+        <div id="left">
+            <p:accordionPanel id="accordionPanel" styleClass="left_panel" >
+                <p:ajax  event="tabChange" listener="#{tabbedView.onTabChange}"/>
+                <p:tab >
+                    <f:facet name="title">
+                        <p:graphicImage  value="/resources/common/picture/system.png" style="border: 0"/>
+                        <h:outputText value="#{res.get('SystemManage')}"/>
+                    </f:facet>
+                    <f:ajax render=":centerContentPanel">
+                        <p:tree dynamic="false" value="#{treeBean.root_sys}" styleClass="left_tree" var="node" id="tree" selectionMode="single" highlight="true" style="border: 0;width: 150px; padding-top: -15px; margin-top: -15px;margin-left: -16px; padding-left: -16px; ">
+                            <p:ajax event="select" listener="#{treeBean.onSelectNode}" />
+                            <p:treeNode id="treeNode" icon="#{node.m_IconStr}">
+                                <a href="#{node.m_URL}" target ="right_frame" class="#{node.m_strClass}">#{node}</a>
+                            </p:treeNode>
+
+                        </p:tree>
+                    </f:ajax>
+                </p:tab>
+
+                <p:tab disabled="#{notTreenode}">
+                    <f:facet name="title">
+                        <p:graphicImage value="/resources/common/picture/storage.png" style="border: 0" />
+                        <h:outputText value="#{res.get('FunctionModule')}"/>
+                    </f:facet>
+                    <f:ajax render=":centerContentPanel" >
+                        <p:tree dynamic="false" value="#{treeBean.root_fun}" var="node_fun" id="funTree" styleClass="left_tree" selectionMode="single" selection="#{treeBean.selectedNode}"  highlight="true" style="border: 0;padding-top: -15px; margin-top: -15px; margin-left: -16px; padding-left: -16px;width: 160px;text-align: left; overflow: hidden;" >
+                            <p:ajax event="select" listener="#{treeBean.onSelectNode}"/>
+                            <p:treeNode id="funTreeNode" icon="#{node_fun.m_IconStr}" >   
+                                <!--                            <a href="{node_fun.m_URL}" target ="right_frame">{node_fun}</a>-->
+                                <a href="#{node_fun.m_URL}" target ="#{node_fun.m_strTarget}">#{node_fun}</a>
+                            </p:treeNode>
+                        </p:tree>
+                    </f:ajax>
+                </p:tab>
+
+                <p:tab disabled="#{notTreenode}">
+                    <f:facet name="title">
+                        <p:graphicImage value="/resources/common/picture/backup.png" style="border: 0"/>
+                        <h:outputText value="#{res.get('BackupManage')}"/>
+                    </f:facet>
+                    <f:ajax render=":centerContentPanel" >
+                        <p:tree dynamic="false" value="#{treeBean.root_backup}" var="node_vol" id="volTree" styleClass="left_tree" selectionMode="single" highlight="true" style="border: 0;width: 150px;padding-top: -15px; margin-top: -15px;margin-left: -16px; padding-left: -16px;">
+                            <p:ajax   event="select" listener="#{treeBean.onSelectNode}" />
+                            <p:treeNode id="volTreeNode" collapsedIcon=""  icon="#{node_vol.m_IconStr}">
+                                <a href="#{node_vol.m_URL}" target ="#{node_vol.m_strTarget}" style="#{treeBean.StylehasAuthority2MBA(user.type,node_vol.m_strLabel)}">#{node_vol}</a>
+                            </p:treeNode>
+
+                        </p:tree>
+                    </f:ajax>
+                </p:tab>
+
+                <p:tab title="#{res.get('EquipManage')}" disabled="#{notTreenode}">
+                    <f:facet name="title">
+                        <p:graphicImage value="/resources/common/picture/device.png" style="border: 0"/>
+                        <h:outputText value="#{res.get('EquipManage')}"/>
+                    </f:facet>
+                    <f:ajax render=":centerContentPanel" >
+                        <p:tree dynamic="false" value="#{treeBean.root_equip}" var="node_scsi" id="scsiTree" styleClass="left_tree" selectionMode="single" highlight="true" style="border: 0;width: 150px; padding-top: -15px; margin-top: -15px;margin-left: -16px; padding-left: -16px;">
+                            <p:ajax   event="select" listener="#{treeBean.onSelectNode}" />
+                            <p:treeNode id="scsiTreeNode"  icon="#{node_scsi.m_IconStr}" >
+                                <!--                            <h:outputText value="{node_scsi}" id="scsilblNode" />-->                             
+                                <a href="#{node_scsi.m_URL}" target ="right_frame">#{node_scsi}</a> 
+                            </p:treeNode>
+
+                        </p:tree>
+                    </f:ajax>
+                </p:tab>
+
+<!--                <p:tab title="" rendered="" disabled="">                    
+                    <f:facet name="title">
+                        <p:graphicImage value="/resources/common/picture/cloudDisk.png" style="border: 0"/>
+                        <h:outputText value=""/>
+                    </f:facet>
+                </p:tab>-->
+            </p:accordionPanel>
+        </div>
+    </h:body>
+
+</ui:composition>

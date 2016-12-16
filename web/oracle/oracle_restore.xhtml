@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="GBK"?>
+<!--
+To change this template, choose Tools | Templates
+and open the template in the editor.
+-->
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.1//EN" "http://www.w3.org/TR/xhtml11/DTD/xhtml11.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:p="http://primefaces.org/ui">
+    <h:head>
+        <link href="./../resources/common/css/default.css" rel="stylesheet" type="text/css" />
+        <link href="./../resources/common/css/cssIcon.css" rel="stylesheet" type="text/css" />
+    </h:head>
+    <h:body>
+        <h:form id="form">
+            <h1 title="System Infomation" class="title ui-widget-header ui-corner-all">#{global.get('backuptitle')}${res.get('title')}</h1>  
+            <p:messages id="messages" for="messages" showDetail="true" autoUpdate="true" closable="true" /><br/> 
+            <p:panel style="border: 0">
+                
+                <h:panelGrid columns="3">
+                    <h:outputLabel value="#{res.get('job')}" />
+                <p:inputText value="#{rStrategyBean.jobName}" disabled="#{rStrategyBean.restoreControl}"/> 
+                <p:panel  style=" text-align:  right; width: 400px; height: 20px;margin: 0px; border: 0px; "  >
+                    <h:outputLabel   rendered="#{rStrategyBean.restoreControl}"  value="注:请将生成的脚本拷贝到数据库服务器上执行" style=" color: red;  text-align:  right;  margin-bottom: 5px; margin-top: -5px; "></h:outputLabel>
+                </p:panel>
+                </h:panelGrid>
+                <br/>
+                
+                
+                <p:inputTextarea title="restore"  style="width: 100%; height: 300px; overflow-x: visible; overflow-y: visible" value="#{rStrategyBean.script}" >
+
+                </p:inputTextarea>
+
+                <p:panel style=" text-align:  center;  border-color:  #ffffff">
+                    <p:commandButton value="${res.get('create')}" icon="setIcon"  action="#{rStrategyBean.createScript()}"/>
+
+                    <p:spacer width="8px"/>
+                    <p:commandButton value="${global.get('save')}" icon="saveIcon" disabled="#{rStrategyBean.restoreControl}" action="#{rStrategyBean.execute()}" />
+
+                    <p:spacer width="8px"/>
+                    <p:commandButton value="${global.get('return')}" icon="cancleIcon" immediate="true"
+                                     action="oracle_database?faces-redirect=true" />
+                </p:panel>
+            </p:panel>
+        </h:form>
+        <p:ajaxStatus style="width:64px;height:64px;position:fixed;right:5px;bottom:5px">  
+            <f:facet name="start">  
+                <p:graphicImage value="../resources/common/picture/loading.gif" />  
+            </f:facet>  
+
+            <f:facet name="complete">  
+                <h:outputText value="" />  
+            </f:facet>  
+        </p:ajaxStatus>
+    </h:body>
+</ui:composition>

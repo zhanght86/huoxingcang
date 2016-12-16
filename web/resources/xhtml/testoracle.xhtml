@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="GBK"?>
+<!--
+To change this template, choose Tools | Templates
+and open the template in the editor.
+-->
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:composite="http://java.sun.com/jsf/composite"
+      xmlns:h="http://xmlns.jcp.org/jsf/html">
+
+    <composite:interface>
+        <composite:attribute name="uid" required="true"/>
+        <composite:actionSource name="infoBox:okButton"/>
+        <composite:attribute name="action" targets="okButton" />  
+    </composite:interface>  
+
+    <!-- IMPLEMENTATION -->  
+    <composite:implementation> 
+        <p:dialog id="infoBox" header="信息" widgetVar="#{cc.attrs.uid}"
+                  width="325" modal="true">
+            <h:panelGrid columns="2" style="text-align : center;">
+                <h:outputLabel value="用户名："/>
+                <p:inputText id="username" value="#{nsnUser.user}"  />
+                <h:outputLabel value="密  码："/>
+                <p:password id="password" value="#{nsnUser.pass}" redisplay="true"/>
+            </h:panelGrid>
+            <h:panelGrid  columns="1" style="text-align : center; width: 300px"> 
+                <p:row>
+                    <p:commandButton id="okButton" value="确定"/>
+                    <p:spacer style="width: 10px; height: 5px"/>
+                    <p:commandButton id="cancelButton" value="取消" onclick="infoBox.hide();"/>
+                </p:row>
+            </h:panelGrid>
+        </p:dialog>
+    </composite:implementation> 
+</html>

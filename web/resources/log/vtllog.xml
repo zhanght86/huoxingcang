@@ -1,0 +1,418 @@
+<?xml version="1.0" encoding="gb2312" ?> 
+<MarsMSA>
+    <ResourceInfo> 
+        <Bean>
+            <Author>黄疆</Author>
+            <ResourceID>140001</ResourceID>
+            <Macro>LOG_CREATE_TAPELIBRARY_SUCCESS</Macro>
+            <Chinese>创建磁带库(名称=%1，ID=%2，磁带库类型=%3，驱动器类型=%4，驱动器数=%5，槽位数=%6，出入槽位数=%7)成功</Chinese>
+            <English>Create tape library(name=%1,ID=%2,changerType=%3,driveType=%4,driveCount=%5,slots=%6,IEports=%7) success</English>
+        </Bean>
+        <Bean>
+            <Author>黄疆</Author>
+            <ResourceID>140002</ResourceID>
+            <Macro>LOG_CREATE_TAPELIBRARY_FAILED</Macro>
+            <Chinese>创建磁带库(名称=%1，ID=%2，磁带库类型=%3，驱动器类型=%4，驱动器数=%5，槽位数=%6，出入槽位数=%7)失败，错误：%8</Chinese>
+            <English>Create tape library(name=%1,ID=%2,changerType=%3,driveType=%4,driveCount=%5,slots=%6,IEports=%7) failed. Error: %8</English>
+        </Bean>
+        <Bean>
+            <Author>黄疆</Author>
+            <ResourceID>140003</ResourceID>
+            <Macro>LOG_GET_TAPELIBRARY_INFO_FAILED</Macro>
+            <Chinese>获取磁带库(ID=%1)信息失败，错误：%2</Chinese>
+            <English>Get tape library(ID=%1) information failed. Error: %2</English>
+        </Bean>
+        <Bean>
+            <Author>黄疆</Author>
+            <ResourceID>140004</ResourceID>
+            <Macro>LOG_GET_TAPELIBRARYS_INFO_FAILED</Macro>
+            <Chinese>获取全部磁带库信息失败，错误：%1</Chinese>
+            <English>Get tape librarys information failed. Error: %1</English>
+        </Bean>
+        <Bean>
+            <Author>黄疆</Author>
+            <ResourceID>140005</ResourceID>
+            <Macro>LOG_GET_TAPELIBRARYS_COUNT_FAILED</Macro>
+            <Chinese>获取磁带库总数失败，错误：%1</Chinese>
+            <English>Get tape library count failed. Error: %1</English>
+        </Bean>
+        <Bean>
+            <Author>黄疆</Author>
+            <ResourceID>140006</ResourceID>
+            <Macro>LOG_GET_TAPELIBRARY_SLOT_COUNT_FAILED</Macro>
+            <Chinese>获取磁带库槽位总数失败，错误：%1</Chinese>
+            <English>Get total slot count failed. Error: %1</English>
+        </Bean>
+        <Bean>
+            <Author>黄疆</Author>
+            <ResourceID>140007</ResourceID>
+            <Macro>LOG_GET_TAPELIBRARYS_DRIVE_COUNT_FAILED</Macro>
+            <Chinese>获取磁带库驱动器总数失败，错误：%1</Chinese>
+            <English>Get total drive count failed. Error: %1</English>
+        </Bean>
+        <Bean>
+            <Author>黄疆</Author>
+            <ResourceID>140008</ResourceID>
+            <Macro>LOG_GET_DRIVE_INFORMATION_FAILED</Macro>
+            <Chinese>获取磁带库驱动器(ID=%1)信息失败，错误：%2</Chinese>
+            <English>Get tape library drive(ID=%1) information failed. Error: %2</English>
+        </Bean>
+        <Bean>
+            <Author>黄疆</Author>
+            <ResourceID>140009</ResourceID>
+            <Macro>LOG_GET_TAPELIBRARY_DRIVES_INFORMATION_FAILED</Macro>
+            <Chinese>获取磁带库(ID=%1)所有驱动器信息失败，错误：%2</Chinese>
+            <English>Get tape library(ID=%1) all drives information failed. Error: %2</English>
+        </Bean>
+        <Bean>
+            <Author>黄疆</Author>
+            <ResourceID>140010</ResourceID>
+            <Macro>LOG_GET_DRIVES_TYPES_FAILED</Macro>
+            <Chinese>获取系统支持的所有的驱动器类型失败，错误：%1</Chinese>
+            <English>Get drive types supported by system failed. Error: %1</English>
+        </Bean>
+        <Bean>
+            <Author>黄疆</Author>
+            <ResourceID>140011</ResourceID>
+            <Macro>LOG_GET_TAPELIBRARY_TYPES_FAILED</Macro>
+            <Chinese>获取系统支持的所有的磁带库类型失败，错误：%1</Chinese>
+            <English>Get tape library types supported by system failed. Error: %1</English>
+        </Bean>
+        <Bean>
+            <Author>黄疆</Author>
+            <ResourceID>140012</ResourceID>
+            <Macro>LOG_GET_TAPELIBRARY_TAPES_FAILED</Macro>
+            <Chinese>获取磁带库(ID=%1)所有的磁带信息失败，错误：%2</Chinese>
+            <English>Get tape library(ID=%1) all tapes information failed. Error: %2</English>
+        </Bean>
+        <Bean>
+            <Author>黄疆</Author>
+            <ResourceID>141001</ResourceID>
+            <Macro>LOG_CREATE_TAPE_SUCCESS</Macro>
+            <Chinese>创建磁带(条码=%1，容量=%2，按需分配=%3，压缩=%4，WORM=%5)成功</Chinese>
+            <English>Create tape(barcode=%1,capacity=%2,demand=%3,compress=%4,WORM=%5) success</English>
+        </Bean>
+        <Bean>
+            <Author>黄疆</Author>
+            <ResourceID>141002</ResourceID>
+            <Macro>LOG_CREATE_TAPE_FAILED</Macro>
+            <Chinese>创建磁带(条码=%1，容量=%2，按需分配=%3，压缩=%4，WORM=%5)失败，错误：%6</Chinese>
+            <English>Create tape(barcode=%1,capacity=%2,demand=%3,compress=%4,WORM=%5) failed. Error: %6</English>
+        </Bean>
+        <Bean>
+            <Author>黄疆</Author>
+            <ResourceID>140013</ResourceID>
+            <Macro>LOG_GET_TAPE_INFORMATION_FAILED</Macro>
+            <Chinese>获取磁带(ID=%1)信息失败，错误：%1</Chinese>
+            <English>Get tape(ID=%1) information failed. Error: %1</English>
+        </Bean>
+        <Bean>
+            <Author>黄疆</Author>
+            <ResourceID>140014</ResourceID>
+            <Macro>LOG_GET_VAULT_TAPES_INFORMATION_FAILED</Macro>
+            <Chinese>获取带架(ID=%1)所有磁带信息失败，错误：%2</Chinese>
+            <English>Get vault(ID=%1) tapes information failed. Error: %2</English>
+        </Bean>
+        <Bean>
+            <Author>黄疆</Author>
+            <ResourceID>140015</ResourceID>
+            <Macro>LOG_GET_ALL_TAPES_INFORMATION_FAILED</Macro>
+            <Chinese>获取所有磁带信息失败，错误：%1</Chinese>
+            <English>Get all tapes information failed. Error: %1</English>
+        </Bean>
+        <Bean>
+            <Author>黄疆</Author>
+            <ResourceID>140016</ResourceID>
+            <Macro>LOG_MODIFY_TAPELIBRARY_SLOTS_COUNT_SUCCESS</Macro>
+            <Chinese>修改磁带库(ID=%1)槽位数(%2)成功</Chinese>
+            <English>Modify tape library(ID=%1) slot count(%2) success</English>
+        </Bean>
+        <Bean>
+            <Author>黄疆</Author>
+            <ResourceID>140017</ResourceID>
+            <Macro>LOG_MODIFY_TAPELIBRARY_SLOTS_COUNT_FAILED</Macro>
+            <Chinese>修改磁带库(ID=%1)槽位数(%2)失败，错误：%3</Chinese>
+            <English>Modify tape library(ID=%1) slot count(%2) failed. Error: %3</English>
+        </Bean>
+        <Bean>
+            <Author>黄疆</Author>
+            <ResourceID>140018</ResourceID>
+            <Macro>LOG_MODIFY_TAPELIBRARY_DRIVES_COUNT_SUCCESS</Macro>
+            <Chinese>修改磁带库(ID=%1)驱动器数(%2)成功</Chinese>
+            <English>Modify tape library(ID=%1) drive count(%2) success</English>
+        </Bean>
+        <Bean>
+            <Author>黄疆</Author>
+            <ResourceID>140019</ResourceID>
+            <Macro>LOG_MODIFY_TAPELIBRARY_DRIVES_COUNT_FAILED</Macro>
+            <Chinese>修改磁带库(ID=%1)驱动器数(%2)失败，错误：%3</Chinese>
+            <English>Modify tape library(ID=%1) drive count(%2) failed. Error: %3</English>
+        </Bean>
+        <Bean>
+            <Author>黄疆</Author>
+            <ResourceID>140020</ResourceID>
+            <Macro>LOG_MODIFY_TAPELIBRARY_IEPORTS_COUNT_SUCCESS</Macro>
+            <Chinese>修改磁带库(ID=%1)出入槽位数(%2)成功</Chinese>
+            <English>Modify tape library(ID=%1) I/E port count success</English>
+        </Bean>
+        <Bean>
+            <Author>黄疆</Author>
+            <ResourceID>140021</ResourceID>
+            <Macro>LOG_MODIFY_TAPELIBRARY_IEPORTS_COUNT_FAILED</Macro>
+            <Chinese>修改磁带库(ID=%1)出入槽位数(%2)失败，错误：%3</Chinese>
+            <English>Modify tape library(ID=%1) I/E port count(%2) failed. Error: %3</English>
+        </Bean>
+        <Bean>
+            <Author>黄疆</Author>
+            <ResourceID>140022</ResourceID>
+            <Macro>LOG_DELETE_TAPE_SUCCESS</Macro>
+            <Chinese>删除磁带(ID=%1)成功</Chinese>
+            <English>Delete tape(ID=%1) success</English>
+        </Bean>
+        <Bean>
+            <Author>黄疆</Author>
+            <ResourceID>140023</ResourceID>
+            <Macro>LOG_DELETE_TAPE_FAILED</Macro>
+            <Chinese>删除磁带(ID=%1)失败，错误：%2</Chinese>
+            <English>Delete tape(ID=%1) failed. Error: %2</English>
+        </Bean>
+        <Bean>
+            <Author>黄疆</Author>
+            <ResourceID>140024</ResourceID>
+            <Macro>LOG_DELETE_TAPELIBRARY_SUCCESS</Macro>
+            <Chinese>删除磁带库(ID=%1)成功</Chinese>
+            <English>Delete tape library(ID=%1) success</English>
+        </Bean>
+        <Bean>
+            <Author>黄疆</Author>
+            <ResourceID>140025</ResourceID>
+            <Macro>LOG_DELETE_TAPELIBRARY_FAILED</Macro>
+            <Chinese>删除磁带库(ID=%1)失败，错误：%2</Chinese>
+            <English>Delete tape library(ID=%1) failed. Error: %2</English>
+        </Bean>
+        <Bean>
+            <Author>黄疆</Author>
+            <ResourceID>140026</ResourceID>
+            <Macro>LOG_RENAME_DRIVE_SUCCESS</Macro>
+            <Chinese>重命名磁带库(ID=%1)的驱动器(ID=%2)成功</Chinese>
+            <English>Rename tape library(ID=%1) drive(ID=%2) success</English>
+        </Bean>
+        <Bean>
+            <Author>黄疆</Author>
+            <ResourceID>140027</ResourceID>
+            <Macro>LOG_RENAME_DRIVE_FAILED</Macro>
+            <Chinese>重命名磁带库(ID=%1)的驱动器(ID=%2)失败，错误：%3</Chinese>
+            <English>Rename tape library(ID=%1) drive(ID=%2) failed. Error: %3</English>
+        </Bean>
+        <Bean>
+            <Author>黄疆</Author>
+            <ResourceID>140028</ResourceID>
+            <Macro>LOG_RENAME_TAPE_SUCCESS</Macro>
+            <Chinese>重命名磁带(ID=%1)成功</Chinese>
+            <English>Rename tape(ID=%1) success</English>
+        </Bean>
+        <Bean>
+            <Author>黄疆</Author>
+            <ResourceID>140029</ResourceID>
+            <Macro>LOG_RENAME_TAPE_FAILED</Macro>
+            <Chinese>重命名磁带(ID=%1)失败，错误：%2</Chinese>
+            <English>Rename tape(ID=%1) failed. Error: %2</English>
+        </Bean>
+        <Bean>
+            <Author>黄疆</Author>
+            <ResourceID>140030</ResourceID>
+            <Macro>LOG_MODIFY_TAPE_SUCCESS</Macro>
+            <Chinese>修改磁带(ID=%1)属性成功</Chinese>
+            <English>Modify tape(ID=%1) properties success</English>
+        </Bean>
+        <Bean>
+            <Author>黄疆</Author>
+            <ResourceID>140031</ResourceID>
+            <Macro>LOG_MODIFY_TAPE_FAILED</Macro>
+            <Chinese>修改磁带(ID=%1)属性失败，错误：%2</Chinese>
+            <English>Modify tape(ID=%1) properties failed. Error: %2</English>
+        </Bean>
+        <Bean>
+            <Author>黄疆</Author>
+            <ResourceID>140032</ResourceID>
+            <Macro>LOG_DISMOUNT_DRIVE_SUCCESS</Macro>
+            <Chinese>卸载磁带库(ID=%1)的驱动器(序号=%2)成功</Chinese>
+            <English>Dismount tape library(ID=%1) drive(Number=%2) success</English>
+        </Bean>
+        <Bean>
+            <Author>黄疆</Author>
+            <ResourceID>140033</ResourceID>
+            <Macro>LOG_DISMOUNT_DRIVE_FAILED</Macro>
+            <Chinese>卸载磁带库(ID=%1)的驱动器(序号=%2)失败，错误：%3</Chinese>
+            <English>Dismount tape library(ID=%1) drive(Number=%2) failed. Error: %3</English>
+        </Bean>
+        <Bean>
+            <Author>黄疆</Author>
+            <ResourceID>140034</ResourceID>
+            <Macro>LOG_CREATE_VAULT_SUCCESS</Macro>
+            <Chinese>创建磁带架'%1'成功</Chinese>
+            <English>Create vault '%1' success</English>
+        </Bean>
+        <Bean>
+            <Author>黄疆</Author>
+            <ResourceID>140035</ResourceID>
+            <Macro>LOG_CREATE_VAULT_FAILED</Macro>
+            <Chinese>创建磁带架'%1'失败，错误：%2</Chinese>
+            <English>Create vault '%1' failed. Error: %2</English>
+        </Bean>
+        <Bean>
+            <Author>黄疆</Author>
+            <ResourceID>140036</ResourceID>
+            <Macro>LOG_GET_VAULT_INFORMATION_FAILED</Macro>
+            <Chinese>获取磁带架(ID=%1)信息失败，错误：%2</Chinese>
+            <English>Get vault(ID=%1) information failed. Error: %2</English>
+        </Bean>
+        <Bean>
+            <Author>黄疆</Author>
+            <ResourceID>140037</ResourceID>
+            <Macro>LOG_GET_VAULTS_INFORMATION_FAILED</Macro>
+            <Chinese>获取所有磁带架信息失败，错误：%1</Chinese>
+            <English>Get vault information failed. Error: %1</English>
+        </Bean>
+        <Bean>
+            <Author>黄疆</Author>
+            <ResourceID>140038</ResourceID>
+            <Macro>LOG_MOVE_TAPE_TO_TAPELIBRARY_SUCCESS</Macro>
+            <Chinese>将磁带(ID=%1)入库到磁带库(ID=%2)成功</Chinese>
+            <English>Inject tape(ID=%1) to tape library(ID=%2) success</English>
+        </Bean>
+        <Bean>
+            <Author>黄疆</Author>
+            <ResourceID>140039</ResourceID>
+            <Macro>LOG_MOVE_TAPE_TO_TAPELIBRARY_FAILED</Macro>
+            <Chinese>将磁带(ID=%1)入库到磁带库(ID=%2)失败，错误：%3</Chinese>
+            <English>Inject tape(ID=%1) to tape library(ID=%2) failed. Error: %3</English>
+        </Bean>
+        <Bean>
+            <Author>黄疆</Author>
+            <ResourceID>140040</ResourceID>
+            <Macro>LOG_MOVE_TAPE_TO_VAULT_SUCCESS</Macro>
+            <Chinese>将磁带(ID=%1)放入到磁带架(ID=%2)成功</Chinese>
+            <English>Eject tape(ID=%1) to vault(ID=%2) success</English>
+        </Bean>
+        <Bean>
+            <Author>黄疆</Author>
+            <ResourceID>140041</ResourceID>
+            <Macro>LOG_MOVE_TAPE_TO_VAULT_FAILED</Macro>
+            <Chinese>将磁带(ID=%1)放入到磁带架(ID=%2)失败，错误：%3</Chinese>
+            <English>Eject tape(ID=%1) to vault(ID=%2) failed. Error: %3</English>
+        </Bean>
+        <Bean>
+            <Author>黄疆</Author>
+            <ResourceID>140042</ResourceID>
+            <Macro>LOG_DELETE_VAULT_SUCCESS</Macro>
+            <Chinese>删除磁带架(ID=%1)成功</Chinese>
+            <English>Delete vault(ID=%1) success</English>
+        </Bean>
+        <Bean>
+            <Author>黄疆</Author>
+            <ResourceID>140043</ResourceID>
+            <Macro>LOG_DELETE_VAULT_FAILED</Macro>
+            <Chinese>删除磁带架(ID=%1)失败，错误：%2</Chinese>
+            <English>Delete vault(ID=%1) failed. Error: %2</English>
+        </Bean>
+        <Bean>
+            <Author>黄疆</Author>
+            <ResourceID>140044</ResourceID>
+            <Macro>LOG_GET_SLOT_INFORMATION_FAILED</Macro>
+            <Chinese>获取磁带库(ID=%1)槽位%2信息失败，错误：%3</Chinese>
+            <English>Get tape library(ID=%1) slot%2 information failed. Error: %3</English>
+        </Bean>
+        <Bean>
+            <Author>黄疆</Author>
+            <ResourceID>140045</ResourceID>
+            <Macro>LOG_GET_IEPORT_INFORMATION_FAILED</Macro>
+            <Chinese>获取磁带库(ID=%1)出入槽位%2信息失败，错误：%3</Chinese>
+            <English>Get tape library(ID=%1) I/E port%2 information failed. Error: %3</English>
+        </Bean>
+        <Bean>
+            <Author>黄疆</Author>
+            <ResourceID>140046</ResourceID>
+            <Macro>LOG_GET_TAPELIBRARY_DRIVE_INFORMATION_FAILED</Macro>
+            <Chinese>获取磁带库(ID=%1)驱动器%2信息失败，错误：%3</Chinese>
+            <English>Get tape library(ID=%1) drive%2 information failed. Error: %3</English>
+        </Bean>
+        <Bean>
+            <Author>田文博</Author>
+            <ResourceID>140047</ResourceID>
+            <Macro>LOG_CREATE_TAPE_FILE_FAILED</Macro>
+            <Chinese>扩展磁带文件'%1'失败，错误：%2</Chinese>
+            <English>Expand tape file '%1' failed. Error: %2</English>
+        </Bean> 
+        <Bean>
+            <Author>田文博</Author>
+            <ResourceID>140048</ResourceID>
+            <Macro>LOG_CREATE_TAPE_FILE_SUCCESS</Macro>
+            <Chinese>扩展磁带文件'%1'成功</Chinese>
+            <English>Expand tape file '%1' success</English>
+        </Bean>
+        <Bean>
+            <Author>田文博</Author>
+            <ResourceID>140049</ResourceID>
+            <Macro>LOG_CREATE_TAPE_FILE_BEGIN</Macro>
+            <Chinese>开始扩展磁带文件'%1'</Chinese>
+            <English>Begin expand tape file '%1'</English>
+        </Bean>
+        <Bean>
+            <Author>田文博</Author>
+            <ResourceID>140050</ResourceID>
+            <Macro>LOG_EXPORT_TAPE_FAILED</Macro>
+            <Chinese>导出磁带（ID=%1，磁带名=%2，条码=%3）失败，错误：%4</Chinese>
+            <English>Export tape(id=%1, name=%2, barcode=%3) failed, reason: %4</English>
+        </Bean>
+        <Bean>
+            <Author>田文博</Author>
+            <ResourceID>140051</ResourceID>
+            <Macro>LOG_EXPORT_TAPE_SUCCESS</Macro>
+            <Chinese>导出磁带（ID=%1，磁带名=%2，条码=%3）成功</Chinese>
+            <English>Export tape(id=%1, name=%2, barcode=%3) success</English>
+        </Bean>
+        <Bean>
+            <Author>田文博</Author>
+            <ResourceID>140052</ResourceID>
+            <Macro>LOG_IMPORT_TAPE_FAILED</Macro>
+            <Chinese>导入磁带（%1）失败，错误：%2</Chinese>
+            <English>Import tape(%1) failed, reason: %2</English>
+        </Bean>
+        <Bean>
+            <Author>田文博</Author>
+            <ResourceID>140053</ResourceID>
+            <Macro>LOG_IMPORT_TAPE_SUCCESS</Macro>
+            <Chinese>导入磁带（%1）成功</Chinese>
+            <English>Import tape(%1) success</English>
+        </Bean>
+        <Bean>
+            <Author>田文博</Author>
+            <ResourceID>140054</ResourceID>
+            <Macro>LOG_MOUNT_TAPE_SUCCESS</Macro>
+            <Chinese>上线存储空间（%1）成功</Chinese>
+            <English>Mount zfs (%1) success</English>
+        </Bean>
+        <Bean>
+            <Author>田文博</Author>
+            <ResourceID>140055</ResourceID>
+            <Macro>LOG_MOUNT_TAPE_FAILED</Macro>
+            <Chinese>上线存储空间（%1）失败，错误：%2</Chinese>
+            <English>Mount zfs (%1) failed, reason: %2</English>
+             </Bean>
+             <Bean>
+            <Author>田文博</Author>
+            <ResourceID>140056</ResourceID>
+            <Macro>LOG_UMOUNT_TAPE_SUCCESS</Macro>
+            <Chinese>离线存储空间（%1）成功</Chinese>
+            <English>Umount zfs (%1) success</English>
+        </Bean>
+        <Bean>
+            <Author>田文博</Author>
+            <ResourceID>140057</ResourceID>
+            <Macro>LOG_UMOUNT_TAPE_FAILED</Macro>
+            <Chinese>离线存储空间（%1）失败，错误：%2</Chinese>
+            <English>Umount zfs (%1) failed, reason: %2</English>
+        </Bean>
+    </ResourceInfo>      
+</MarsMSA>

@@ -1,0 +1,80 @@
+<?xml version="1.0" encoding="GBK"?>
+<!--
+To change this template, choose Tools | Templates
+and open the template in the editor.
+-->
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.1//EN" "http://www.w3.org/TR/xhtml11/DTD/xhtml11.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:p="http://primefaces.org/ui"
+      template="../template/framework.xhtml">
+    <h:head>
+        <link href="./../resources/common/css/cssIcon.css" rel="stylesheet" type="text/css" />
+        <link href="./../resources/common/css/default.css" rel="stylesheet" type="text/css" />
+    </h:head>
+    <h:body>
+        <h:form id="form1" >
+            <h1  class="title ui-widget-header ui-corner-all">#{copyPlanBean.title}</h1>
+            <p:messages  showSummary="true" showDetail="false" autoUpdate="true" closable="true" />
+            <h:panelGrid id="status" columns="2" cellpadding="5" >  
+                <h:outputLabel value="${global.get('dg')}"/> 
+                <h:outputLabel value="#{copyPlanBean.dg}" />
+            </h:panelGrid>
+            <p:panel style="border-color: transparent;;width: 650px;text-align: left" >
+                <br/>
+                <p:selectOneRadio id="radio" value="#{copyPlanBean.radioValue}" layout="custom">  
+                    <f:selectItem itemLabel="" itemValue="1" ></f:selectItem>
+                    <f:selectItem itemLabel="" itemValue="2" />  
+                    <p:ajax listener="#{copyPlanBean.listen()}" update=":form1" /> 
+                </p:selectOneRadio> 
+                <h:panelGrid columns="7" >
+                    <h:outputLabel value="#{res.get('plan')}" />
+                    <p:spacer width="20" />
+                    <p:radioButton id="opt1" for="radio" itemIndex="0" >
+                    </p:radioButton>
+                    <h:outputLabel  value="#{res.get('actualTime')}" />  
+                    <p:spacer width="30" />
+                    <p:radioButton id="opt2" for="radio" itemIndex="1" >
+                    </p:radioButton>
+                    <h:outputLabel  value="#{res.get('fixedTime')}" />
+                </h:panelGrid>
+                <br/>
+                <h:panelGrid  columns="4" rendered="#{copyPlanBean.timeRendered}" >
+                    <h:panelGrid>
+                        <h:outputLabel  value="#{res.get('chooseTime')}" />
+                    </h:panelGrid>
+                    <p:selectOneMenu style="min-width: 80px" value="#{copyPlanBean.startTime}" >
+                        <f:selectItems value="#{copyPlanBean.startTimeList}" />
+                    </p:selectOneMenu>
+                    #{res.get('to')}
+                    <p:selectOneMenu style="min-width: 80px" value="#{copyPlanBean.endTime}"  >
+                        <f:selectItems value="#{copyPlanBean.endtimeList}" />
+                    </p:selectOneMenu>
+                </h:panelGrid>
+
+                <!--                <p:message for="pwd2" />
+                                <br/>
+                                <br/>-->
+            </p:panel>
+            <p:panel style="border-color: transparent;width: 350px;text-align: center" >
+                <!--                <p:spacer width="135" height="10" />-->
+                <p:commandButton  value="#{global.get('save')}" icon="saveIcon"  action="#{copyPlanBean.save()}"  >
+                </p:commandButton>  
+                <p:spacer width="5" height="10" />
+                <p:commandButton  value="#{global.get('return')}" icon="cancleIcon" immediate="true" action="#{copyPlanBean.goBack()}" /> 
+            </p:panel>
+            <!--            </p:panel>-->
+        </h:form>
+        <p:ajaxStatus style="width:64px;height:64px;position:fixed;right:5px;bottom:5px">  
+            <f:facet name="start">  
+                <p:graphicImage value="../resources/common/picture/loading.gif" />  
+            </f:facet>  
+
+            <f:facet name="complete">  
+                <h:outputText value="" />  
+            </f:facet>  
+        </p:ajaxStatus>
+    </h:body>
+</html>

@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="GBK"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"  
+      xmlns:h="http://java.sun.com/jsf/html"  
+      xmlns:composite="http://java.sun.com/jsf/composite"
+      xmlns:p="http://primefaces.org/ui">  
+    <!-- INTERFACE -->  
+    <composite:interface>
+        <composite:attribute name="uid" required="true"/>
+        <composite:attribute name="mess" targets="s" />
+        <composite:actionSource name="infoBox:cancelButton"/>
+        <composite:attribute name="action" targets="cancelButton"/>
+    </composite:interface>  
+
+    <!-- IMPLEMENTATION -->  
+    <composite:implementation> 
+        <p:dialog id="infoBox" header="信息" widgetVar="#{cc.attrs.uid}"
+                  width="325" modal="true" resizable="false">
+            <h:panelGrid columns="3" style="text-align : center;">
+                <h:graphicImage value="../resources/common/picture/info.png" style="width: 32px; height: 32px;vertical-align:middle"/>
+                <p:spacer width="10px"/>
+                <h:outputText value="#{cc.attrs.mess}" />
+            </h:panelGrid>
+            <h:panelGrid  columns="1" style="text-align : center; width: 300px"> 
+                <p:row>
+                    <p:commandButton id="cancelButton" value="确定" oncomplete="#{cc.attrs.uid}.hide();"/>
+                </p:row>
+            </h:panelGrid>
+        </p:dialog>
+    </composite:implementation>  
+</html>
+

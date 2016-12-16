@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="GBK"?>
+<!--
+To change this template, choose Tools | Templates
+and open the template in the editor.
+-->
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.1//EN" "http://www.w3.org/TR/xhtml11/DTD/xhtml11.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:p="http://primefaces.org/ui">
+    <!--template="../template/framework.xhtml"-->
+
+    <!--    <ui:define name="content">-->
+    <h:head>
+        <link href="./../resources/common/css/default.css" rel="stylesheet" type="text/css" />
+    </h:head>
+    <h:body>
+        <h:form id="form">
+
+            <h1 title="VM List Infomation" style="width: 690px" class="title ui-widget-header ui-corner-all">概要信息</h1>             
+            <h:panelGrid style="width: 695px; text-align: right">
+                <p:row>
+                    <p:commandButton id="return" icon="ui-icon-arrowreturn-1-w" value="返回" action="vtl_sub_VTL?faces-redirect=true"/> 
+                </p:row>
+            </h:panelGrid>
+            <p:panelGrid id ="DriveInformation" columns="2" style="width: 690px">                            
+                <h:outputText value="磁带ID" />
+                <h:outputText id="id" value="#{tape_Information.tapeBean.id}" />
+
+                <h:outputText value="磁带名"/>
+                <h:outputText id="name" value="#{tape_Information.tapeBean.name}" />
+
+                <h:outputText value="磁带容量"/>
+                <h:outputText id="tapeSize" value="#{tape_Information.tapeBean.tapeSize}" />       
+
+                <h:outputText value="已用大小" />
+                <h:outputText id="usedSize" value="#{tape_Information.tapeBean.usedSize}" />
+
+                <h:outputText value="已写数据大小"/>
+                <h:outputText id="writtenSize" value="#{tape_Information.tapeBean.writtenSize}" />
+
+                <h:outputText value="路径"/>
+                <h:outputText id="path" value="#{tape_Information.tapeBean.path}" />   
+
+                <h:outputText value="文件大小" />
+                <h:outputText id="fileSize" value="#{tape_Information.tapeBean.fileSize}" />
+
+                <h:outputText value="压缩比"/>
+                <h:outputText id="elementNumber" value="#{tape_Information.tapeBean.elementNumber}" />
+
+                <h:outputText value="条码"/>
+                <h:outputText id="barcode" value="#{tape_Information.tapeBean.barcode}" />
+
+                <h:outputText value="按需分配"/>
+                <h:outputText id="worm" value="#{tape_Information.tapeBean.worm}" />   
+
+                <h:outputText value="写保护" />
+                <h:outputText id="writeProtect" value="#{tape_Information.tapeBean.writeProtect}" />
+
+                <h:outputText value="压缩"/>
+                <h:outputText id="enableCompression" value="#{tape_Information.tapeBean.enableCompression}" />
+
+                <h:outputText value="状态"/>
+                <h:outputText id="state" value="#{tape_Information.tapeBean.state}" />
+            </p:panelGrid>
+        </h:form>
+    </h:body>
+</ui:composition>

@@ -1,0 +1,48 @@
+<?xml version='1.0' encoding='UTF-8'?>
+
+<!-- =========== FULL CONFIGURATION FILE ================================== -->
+
+<faces-config version="2.1"
+              xmlns="http://java.sun.com/xml/ns/javaee"
+              xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+              xsi:schemaLocation="http://java.sun.com/xml/ns/javaee http://java.sun.com/xml/ns/javaee/web-facesconfig_2_1.xsd">
+
+    <application> <!-- 国际化-->
+        <resource-bundle>
+            <base-name>com.marstor.msa.common.resources.messages</base-name>
+            <var>msgs</var>
+        </resource-bundle>
+    </application>
+    <application> <!-- 国际化-->
+        <resource-bundle>
+            <base-name>com.marstor.msa.common.resources.common_network</base-name>
+            <var>common_network</var>
+        </resource-bundle>
+    </application>
+    <converter>
+        <converter-id>vtl</converter-id>
+        <converter-class>com.marstor.msa.bean.TapeLibraryInformation</converter-class>
+    </converter>
+    <converter>
+        <converter-id>bootSequen</converter-id>
+        <converter-class>com.marstor.msa.vm.model.BootSequenConverter</converter-class>
+    </converter>
+    <converter>
+        <converter-id>item</converter-id>
+        <converter-class>com.marstor.msa.util.SelectOneItemConverter</converter-class>
+    </converter>
+    
+    <validator>
+        <validator-id>codeValidator</validator-id>
+        <validator-class>com.marstor.msa.common.validator.CodeValidator</validator-class>
+    </validator>
+    <validator>
+        <validator-id>codeNotNull</validator-id>
+        <validator-class>com.marstor.msa.common.validator.CodeNotNull</validator-class>
+    </validator>
+    <managed-bean>
+        <managed-bean-name>checkSnapBean</managed-bean-name>
+        <managed-bean-class>com.marstor.msa.cdp.managedbean.CheckSnapBean</managed-bean-class>
+        <managed-bean-scope>view</managed-bean-scope>
+    </managed-bean>
+</faces-config>

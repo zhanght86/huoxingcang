@@ -1,0 +1,105 @@
+<?xml version="1.0" encoding="GBK"?>
+<!--
+To change this template, choose Tools | Templates
+and open the template in the editor.
+-->
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.1//EN" "http://www.w3.org/TR/xhtml11/DTD/xhtml11.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:p="http://primefaces.org/ui"                
+                xmlns:util="http://java.sun.com/jsf/composite/xhtml">
+
+    <h:head>
+        <link href="./../resources/common/css/default.css" rel="stylesheet" type="text/css" />
+        <link href="./../resources/common/css/cssIcon.css" rel="stylesheet" type="text/css" />
+    </h:head>
+    <h:body>
+        <h:form id="form">
+            <h1 class="title ui-widget-header ui-corner-all" >#{global.get('cdp')}#{res.get('title')}</h1>
+            <p:messages id="messages" showDetail="true" autoUpdate="true" closable="true" />
+            <p:outputPanel id="output" deferred="true">
+                <br></br>
+                <div style="overflow-x: auto; width:100%;padding-bottom: 2px !important; padding-bottom: 14px;">
+                    <p:dataTable id="dgs" var="diskGroup" value="#{cdpBean.diskGroups}" emptyMessage="#{global.get('emptyMessage')}" >
+                        <p:ajax event="rowToggle" listener="#{cdpBean.getExpansions(diskGroup)}"/>
+                        <p:column style="width:2%">
+                            <p:rowToggler />
+                        </p:column>
+                        <p:column headerText="#{res.get('header1')}" width="200" >  
+                            <h:outputText value="#{diskGroup.diskGroupName}" />  
+                        </p:column>
+                        <p:column headerText="#{res.get('header2')}" width="50" style="text-align:center; white-space: nowrap">  
+                            <h:outputText value="#{cdpBean.getsMount(diskGroup)}" />
+                        </p:column>  
+                        <p:column headerText="#{res.get('header3')}" width="50" style="text-align:center; white-space: nowrap">  
+                            <h:outputText value="#{cdpBean.getsCDP(diskGroup)}" />
+                        </p:column>  
+                        <p:column headerText="#{res.get('header4')}" width="50" style="text-align:center; white-space: nowrap">  
+                            <h:outputText value="#{cdpBean.getsCDPLevel(diskGroup)}" />
+                        </p:column> 
+                        <p:column headerText="#{global.get('operation')}" style="white-space: nowrap">                        
+                            <p:graphicImage value="../resources/vm/picture/disk.png"  width="16" height="16" style=" vertical-align:middle;"/>
+                            <p:commandLink id="cdpLevel" value="#{res.get('operation1')}" disabled="#{user.type!=2 or cdpBean.isCopy(diskGroup.diskGroupName) or cdpBean.getOffline(diskGroup.getiMount()) or cdpBean.getDisableO(diskGroup)}"
+                                           action="#{cdpBean.cdpLevel()}" style="vertical-align:middle;">
+                                <f:setPropertyActionListener value="#{diskGroup}" target="#{cdpBean.selectedDG}" />
+                            </p:commandLink>
+                            <p:spacer width="10"/>
+                            <p:graphicImage value="../resources/common/picture/start.png"  
+                                            rendered="#{cdpBean.getRenderStart(diskGroup)}" width="16" height="16" style="vertical-align:middle"/>
+                            <p:graphicImage value="../resources/common/picture/stop.png"  
+                                            rendered="#{!cdpBean.getRenderStart(diskGroup)}" width="16" height="16" style="vertical-align:middle"/>
+                            <p:commandLink id="CDP" value="#{cdpBean.getStartStopCDP(diskGroup)}" update="dgs" action="#{cdpBean.CDPAction()}" 
+                                           style="vertical-align:middle" disabled="#{user.type!=2 or diskGroup.protectType == 0 or diskGroup.diskCount == 0 or cdpBean.isRollbacked(diskGroup) or cdpBean.isRollbacking(diskGroup)
+                                                                                     or cdpBean.isCopy(diskGroup.diskGroupName)or cdpBean.getOffline(diskGroup.getiMount()) or cdpBean.getDisableO(diskGroup)}">
+                                <f:setPropertyActionListener value="#{diskGroup}" target="#{cdpBean.selectedDG}" />
+                            </p:commandLink>
+                            <p:spacer width="10"/>
+                            <p:graphicImage value="../resources/common/picture/lun.png"  width="16" height="16" style=" vertical-align:middle;"/>
+                            <p:commandLink id="snapshot" value="#{res.get('operation2')}"
+                                           disabled="#{user.type!=2 or (diskGroup.protectType == 1 and  cdpBean.isCopy(diskGroup.diskGroupName))
+                                                       or diskGroup.protectType == 0 or (diskGroup.protectType == 2 and cdpBean.getOffline(diskGroup.getiMount()))}" 
+                                           action="#{cdpBean.snapshot()}" style=" vertical-align:middle;">
+                                <f:setPropertyActionListener value="#{diskGroup}" target="#{cdpBean.selectedDG}" />
+                            </p:commandLink>
+                            <p:spacer width="10"/>
+                            <p:graphicImage value="../resources/common/picture/snap.png"  width="16" height="16" style=" vertical-align:middle;"/>
+                            <p:commandLink id="copy" value="#{res.get('operation3')}"
+                                           disabled="#{user.type!=2 or cdpBean.isCopy(diskGroup.diskGroupName) or diskGroup.protectType == 0}"
+                                           action="#{cdpBean.copy()}" style=" vertical-align:middle;" >
+                                <f:setPropertyActionListener value="#{diskGroup}" target="#{cdpBean.selectedDG}" />
+                            </p:commandLink>                        
+                        </p:column>
+
+                        <p:rowExpansion >
+                            <p:dataTable var="detailBean" value="#{cdpBean.dgInfo}" id="detail" style=" margin-top: 10px;margin-bottom: 6px; margin-right: 0px !important;margin-right: -70px;">  
+                                <p:column headerText="名称" style=" width: 50%;">  
+                                    <h:outputText value="#{detailBean.name}" />  
+                                </p:column> 
+                                <p:column headerText="值"  style=" width: 50%;">
+                                    <h:outputText value="#{detailBean.value}"/>  
+                                </p:column>                      
+                            </p:dataTable>
+                        </p:rowExpansion>
+                    </p:dataTable> 
+                </div>   
+                <p:panel id="c" style=" border: none;">
+                    <util:confirm  uid="stopCDPBox" mess="#{res.get('confirm0')}#{global.get('what')}" action="#{cdpBean.stopCDP()}" update=":form:output">
+                    </util:confirm>
+                    <util:confirm  uid="startCDPBox" mess="#{res.get('confirm1')}#{global.get('what')}" action="#{cdpBean.startCDP()}" update=":form:output">
+                    </util:confirm>
+                </p:panel>
+            </p:outputPanel>
+        </h:form>
+        <p:ajaxStatus style="width:64px;height:64px;position:fixed;right:5px;bottom:5px">  
+            <f:facet name="start">
+                <p:graphicImage value="../resources/common/picture/loading.gif" />  
+            </f:facet>  
+
+            <f:facet name="complete">  
+                <h:outputText value="" />
+            </f:facet>  
+        </p:ajaxStatus>
+    </h:body>
+</ui:composition>

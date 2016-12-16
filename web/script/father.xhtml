@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="GBK"?>
+<!--
+To change this template, choose Tools | Templates
+and open the template in the editor.
+-->
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.1//EN" "http://www.w3.org/TR/xhtml11/DTD/xhtml11.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+    <head>
+        <title>将值返回父页面</title>
+        <script type="text/javascript">
+            function acceptValueFromSon()
+            {          
+window.open("son.xhtml", null, "height=270px, width=510px, top=250px, left=300px,status=no,scrollbars=no");
+//                window.open ("son.html",null,"status=no,scrollbars=no,top=20,
+//
+//                left=110,width=420,height=165);
+            }
+
+        </script>
+
+
+    </head>
+    <body>
+        <input type="text" name="elementName" id="elementName"/>
+        <input type="button" value="跳到子页面" onclick="acceptValueFromSon();"/>
+
+    </body>
+</html>

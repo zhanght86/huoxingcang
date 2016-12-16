@@ -1,0 +1,309 @@
+<?xml version="1.0" encoding="GBK"?>
+<!--
+To change this template, choose Tools | Templates
+and open the template in the editor.
+-->
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.1//EN" "http://www.w3.org/TR/xhtml11/DTD/xhtml11.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:p="http://primefaces.org/ui"
+                xmlns:util="http://java.sun.com/jsf/composite/xhtml">
+    <!--template="../template/framework.xhtml"-->
+
+    <!--    <ui:define name="content">-->
+    <h:head>
+        <link href="./../resources/common/css/default.css" rel="stylesheet" type="text/css" />
+    </h:head>
+    <h:body>
+        <h:form id="form">
+            <!--
+                        <h:panelGrid style="width: 700px; text-align: right;">
+                            <p:row>                         
+                                <p:commandButton id="return" icon="ui-icon-arrowreturn-1-w" value="返回" action="vtl_sub?faces-redirect=true"/> 
+                            </p:row>
+                        </h:panelGrid>
+            -->
+            <p:accordionPanel  dynamic="true" style="width: 700px" cache="true" activeIndex="#{vtl_Information.tabIndex}">                 
+                <p:tab title="概要信息" >
+                    <p:panelGrid id ="VTLInformation" style="width: 650px"> 
+                        <p:row>
+                            <p:column>
+                                <h:outputText value="磁带库ID" />
+                            </p:column>
+                            <p:column>
+                                <h:outputText id="id" value="#{vtl_Information.vtlBean.id}" />
+                            </p:column>
+                        </p:row>
+                        <p:row>
+                            <p:column>
+                                <h:outputText value="磁带库名称"/>
+                            </p:column>
+                            <p:column>
+                                <h:outputText id="name" value="#{vtl_Information.vtlBean.name}" />
+                            </p:column>
+                        </p:row>
+                        <p:row>
+                            <p:column>
+                                <h:outputText value="厂商"/>
+                            </p:column>
+                            <p:column>
+                                <h:outputText id="vendorID" value="#{vtl_Information.vtlBean.vendorID}" />   
+                            </p:column>
+                        </p:row>
+                        <p:row>
+                            <p:column>
+                                <h:outputText value="产品名" />
+                            </p:column>
+                            <p:column>
+                                <h:outputText id="productID" value="#{vtl_Information.vtlBean.productID}" />
+                            </p:column>
+                        </p:row>
+                        <p:row>
+                            <p:column>
+                                <h:outputText value="产品版本号"/>
+                            </p:column>
+                            <p:column>
+                                <h:outputText id="revision" value="#{vtl_Information.vtlBean.revision}" />
+                            </p:column>
+                        </p:row>
+                        <p:row>
+                            <p:column>
+                                <h:outputText value="磁带库槽位数"/>
+                            </p:column>
+                            <p:column>
+                                <h:outputText id="numberOfSlots" value="#{vtl_Information.vtlBean.numberOfSlots}" />   
+                            </p:column>
+                        </p:row>
+                        <p:row>
+                            <p:column>
+                                <h:outputText value="磁带库出入槽位数" />
+                            </p:column>
+                            <p:column>
+                                <h:outputText id="numberOfPorts" value="#{vtl_Information.vtlBean.numberOfPorts}" />
+                            </p:column>
+                        </p:row>
+                        <p:row>
+                            <p:column>
+                                <h:outputText value="磁带库驱动器数"/>
+                            </p:column>
+                            <p:column>
+                                <h:outputText id="numberOfDrives" value="#{vtl_Information.vtlBean.numberOfDrives}" />
+                            </p:column>
+                        </p:row>
+                        <p:row>
+                            <p:column>
+                                <h:outputText value="磁带库磁带数"/>
+                            </p:column>
+                            <p:column>
+                                <h:outputText id="numberOfTapes" value="#{vtl_Information.vtlBean.numberOfTapes}" />       
+                            </p:column>
+                        </p:row>
+                        <p:row>
+                            <p:column>
+                                <h:outputText value="序列号" />
+                            </p:column>
+                            <p:column>
+                                <h:outputText id="serialNumber" value="#{vtl_Information.vtlBean.serialNumber}" />
+                            </p:column>
+                        </p:row>
+                        <p:row>
+                            <p:column>
+                                <h:outputText value="GUID"/>
+                            </p:column>
+                            <p:column>
+                                <h:outputText id="GUID" value="#{vtl_Information.vtlBean.GUID}" />
+                            </p:column>
+                        </p:row>
+                    </p:panelGrid>
+                </p:tab> 
+
+                <p:tab title="驱动器信息">
+                    <h:panelGrid style="width: 650px; text-align: right;">
+                        <p:row>
+                            <p:commandButton id="addDrive" icon="ui-icon-plus" value="添加" onclick="addDriveBox.show();" update="DriveInformationList" type="button"/> 
+                            <!--
+                                                       <p:commandButton id="unloadTape" icon="ui-icon-cancel" value="卸载磁带" onclick="unloadTapeBox.show();" update="DriveInformationList"/> 
+                                                       <p:commandButton id="deleteDrive" icon="ui-icon-close" value="删除" onclick="delDriveBox.show();" update="DriveInformationList"/> 
+                            -->                        
+                        </p:row>
+                    </h:panelGrid>
+
+                    <p:dataTable id="DriveInformationList" var="driveBean" value="#{vtl_Information.driveList}"  editable="true" rowKey="#{vtlBean.name}" style="width: 650px">                              
+                        <p:column headerText="驱动器名称" style="text-align: center">
+                            <p:cellEditor>  
+                                <f:facet name="output">  
+                                    <h:outputText value="#{driveBean.name}" />  
+                                </f:facet>  
+                                <f:facet name="input">  
+                                    <p:inputText value="#{driveBean.name}" style="width:100%"/>  
+                                </f:facet>  
+                            </p:cellEditor>
+                        </p:column>     
+                        <p:column headerText="厂商" style="text-align: center">  
+                            <p:cellEditor>  
+                                <f:facet name="output">  
+                                    <h:outputText value="#{driveBean.vendorID}" />  
+                                </f:facet>  
+                                <f:facet name="input">  
+                                    <p:inputText value="#{driveBean.vendorID}" style="width:100%"/>  
+                                </f:facet>  
+                            </p:cellEditor>
+                        </p:column>  
+                        <p:column headerText="产品名" style="text-align: center"> 
+                            <p:cellEditor>  
+                                <f:facet name="output">  
+                                    <h:outputText value="#{driveBean.productID}" />  
+                                </f:facet>  
+                                <f:facet name="input">  
+                                    <p:inputText value="#{driveBean.productID}" style="width:100%"/>  
+                                </f:facet>  
+                            </p:cellEditor>  
+                        </p:column>
+                        <p:column headerText="版本" style="text-align: center">  
+                            <p:cellEditor>
+                                <f:facet name="output"> 
+                                    <h:outputText value="#{driveBean.revision}" />  
+                                </f:facet>
+                                <f:facet name="input">  
+                                    <p:inputText value="#{driveBean.revision}" style="width:100%"/>  
+                                </f:facet>
+                            </p:cellEditor>
+                        </p:column>             
+                        <p:column headerText="操作" style="text-align:center"> 
+                            <p:commandLink id="checkDrive" value="查看" action="vtl_sub_Drive?faces-redirect=true" style="width: 20px; height: 20px">
+                                <f:setPropertyActionListener value="#{driveBean}" target="#{drive_Information.driveBean}" />                                    
+                            </p:commandLink>  
+                            <p:spacer width="10"/>
+                            <p:commandLink id="renameButton" value="重命名" onclick="renameDriveBox.show();">
+                                <f:setPropertyActionListener value="#{driveBean}" target="#{drive_Information.driveBean}" />
+                            </p:commandLink>                                    
+                            <p:spacer width="10"/>
+                            <p:commandLink id="unloadButton" value="卸载" onclick="infoBox.show();"/>
+                        </p:column> 
+
+                    </p:dataTable>
+                </p:tab> 
+
+
+                <p:tab title="磁带信息">
+                    <!--                        <h:panelGrid style="width: 700px; text-align: right;">
+                                                <p:row>
+                                                    <p:commandButton id="tapeInLibrary" icon="ui-icon-arrowreturn-1-s" value="入库" action="vtl_sub_creatVTL?faces-redirect=true" update="DriveInformationList"/> 
+                                                    <p:commandButton id="tapeOutLibrary" icon="ui-icon-arrowreturn-1-n" value="出库" action="vtl_sub_creatVTL?faces-redirect=true" update="DriveInformationList"/>                                
+                                                </p:row>
+                                            </h:panelGrid>
+                    -->
+                    <p:dataTable id="TapeInformation" var="tapeBean" value="#{vtl_InformationList.tapeList}"  editable="true" rowKey="#{tapeBean.name}" style="width: 650px"> 
+                        <p:column headerText="名称" style="text-align: center">
+                            <p:cellEditor>  
+                                <f:facet name="output">  
+                                    <h:outputText value="#{tapeBean.name}" />  
+                                </f:facet>  
+                                <f:facet name="input">  
+                                    <p:inputText value="#{tapeBean.name}" style="width:100%"/>  
+                                </f:facet>  
+                            </p:cellEditor>
+                        </p:column>     
+                        <p:column headerText="条码"  style="text-align: center">  
+                            <p:cellEditor>  
+                                <f:facet name="output">  
+                                    <h:outputText value="#{tapeBean.barcode}" />  
+                                </f:facet>  
+                                <f:facet name="input">
+                                    <p:inputText value="#{tapeBean.barcode}" style="width:100%"/>  
+                                </f:facet>  
+                            </p:cellEditor>
+                        </p:column>  
+                        <p:column headerText="容量" style="text-align: center"> 
+                            <p:cellEditor>  
+                                <f:facet name="output">  
+                                    <h:outputText value="#{tapeBean.tapeSize}" />  
+                                </f:facet>
+                                <f:facet name="input">  
+                                    <p:inputText value="#{tapeBean.tapeSize}" style="width:100%"/>  
+                                </f:facet>  
+                            </p:cellEditor>  
+                        </p:column>
+                        <p:column headerText="已用大小" style="text-align: center">  
+                            <p:cellEditor>  
+                                <f:facet name="output">
+                                    <h:outputText value="#{tapeBean.usedSize}" />  
+                                </f:facet>  
+                                <f:facet name="input">  
+                                    <p:inputText value="#{tapeBean.usedSize}" style="width:100%"/>  
+                                </f:facet>
+                            </p:cellEditor>
+                        </p:column>
+                        <p:column headerText="位置" style="text-align: center">  
+                            <p:cellEditor>  
+                                <f:facet name="output">  
+                                    <h:outputText value="#{tapeBean.locationID}" />  
+                                </f:facet>  
+                                <f:facet name="input">  
+                                    <p:inputText value="#{tapeBean.locationID}" style="width:100%"/>  
+                                </f:facet>  
+                            </p:cellEditor>
+                        </p:column>
+                        <p:column headerText="操作" style="text-align:center"> 
+                            <p:commandLink id="checkDrive" value="查看" update="TapeInformation" action="vtl_sub_Tape?faces-redirect=true" style="width: 20px; height: 20px">
+                                <f:setPropertyActionListener value="#{tapeBean}" target="#{tape_Information.tapeBean}" />                                        
+                            </p:commandLink>                               
+                        </p:column> 
+                    </p:dataTable>      
+                </p:tab>
+            </p:accordionPanel>
+            <util:info  uid="" mess="驱动器中没有磁带"/>
+            <p:dialog id="addDriveDialog" header="添加驱动器" widgetVar="addDriveBox" position="200,200"
+                      modal="true" width="320" >   
+                <h:panelGrid columns="2">
+                    <h:outputLabel for="driveAmount" value="数量：" />
+                    <h:inputText id="driveAmount" value="#{vtl_Information.addedDriveAmount}"/>                            
+                </h:panelGrid>
+                <h:panelGrid columns="1" style="text-align : center;width: 300px"> 
+                    <p:row>
+                        <p:commandButton value="确定" actionListener="vtl_Information.addDrive();" oncomplete="addDriveBox.hide()"/>
+                        <p:spacer style="width: 10px; height: 5px"/>
+                        <p:commandButton value="取消" onclick="addDriveBox.hide();"/>
+                    </p:row>
+                </h:panelGrid>
+            </p:dialog>
+            <p:dialog id="deleteDriveDialog" header="删除驱动器" widgetVar="delDriveBox" rendered="false">  
+                <h:outputLabel value="一共2个驱动器，在文本框中填入你要删除的个数" /> 
+                <h:panelGrid columns="2">
+                    <h:outputLabel for="driveAmount" value="删除数量：" /> 
+                    <h:inputText id="deleteDriveAmount" value="#{vtl_Information.deletedDriveAmount}"/>                            
+                </h:panelGrid>
+                <h:panelGrid columns="1" style="text-align : center;width: 300px"> 
+                    <p:row>
+                        <p:commandButton value="确定" actionListener="vtl_Information.deleteDrive();" oncomplete="delDriveBox.hide()"/>
+                        <p:spacer style="width: 10px; height: 5px"/>
+                        <p:commandButton value="取消" onclick="delDriveBox.hide()"/>
+                    </p:row>
+                </h:panelGrid>
+            </p:dialog>
+            <p:confirmDialog message="确定要卸载所有驱动器上的磁带吗？" rendered="false"
+                             header="确认" severity="alert"
+                             widgetVar="unloadTapeBox">
+                <p:commandButton value="是" actionListener="vtl_Information.unloadTape();" 
+                                 oncomplete="unloadTapeBox.hide();"/>
+                <p:commandButton value="否" onclick="unloadTapeBox.hide();" type="button" />
+            </p:confirmDialog>
+            <p:dialog id="renameDriveBox" header="重命名" width="350" position="200,200"
+                      widgetVar="renameDriveBox" modal="true" >  
+                <h:panelGrid columns="2" style="width: 300px;">
+                    <h:outputLabel for="driveName" value="驱动器名称：" /> 
+                    <h:inputText id="driveName" value="#{drive_Information.driveBean.name}"/>                            
+                </h:panelGrid>
+                <h:panelGrid columns="1" style="text-align : center; width: 325px; border-style: none"> 
+                    <p:row>
+                        <p:commandButton value="确定" actionListener="vtl_Information.renameDrive();" oncomplete="renameDriveBox.hide()"/>
+                        <p:spacer style="width: 10px; height: 5px"/>
+                        <p:commandButton value="取消" onclick="renameDriveBox.hide()"/>
+                    </p:row>
+                </h:panelGrid>
+            </p:dialog>
+        </h:form>
+    </h:body>
+</ui:composition>

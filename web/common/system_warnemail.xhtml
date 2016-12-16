@@ -1,0 +1,133 @@
+<?xml version="1.0" encoding="GBK"?>
+<!--
+To change this template, choose Tools | Templates
+and open the template in the editor.
+-->
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.1//EN" "http://www.w3.org/TR/xhtml11/DTD/xhtml11.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:f="http://java.sun.com/jsf/core">
+    <h:head>
+        <link href="./../resources/common/css/default.css" rel="stylesheet" type="text/css" />
+        <link href="./../resources/common/css/cssIcon.css" rel="stylesheet" type="text/css" />
+        <script type="text/javascript">    
+            function isStartEmail(){ 
+                var value = document.getElementById("form:startEmail").checked;
+                if(value) {
+                    document.getElementById("setdiv").disabled= false; 
+                    document.getElementById("setdiv").readOnly = false;  
+                    
+                }else{  
+                    document.getElementById("setdiv").disabled= "none"; 
+                    document.getElementById("setdiv").readOnly = true;    //设置只读
+                    //                     alert("2");  
+                    
+                }
+                
+            } 
+            function check() {
+                
+                var value = document.getElementById("form:enable").checked;
+                if(value) {
+                    document.getElementById("form:accountStr").disabled = false ;
+                    document.getElementById("form:account").disabled = false;
+                    document.getElementById("form:passwordStr").disabled = false;
+                    document.getElementById("form:password").disabled = false;
+                    
+                } else {
+                    document.getElementById("form:accountStr").disabled = "disabled";
+                  
+                    document.getElementById("form:account").disabled = "disabled";
+                    document.getElementById("form:passwordStr").disabled = true;
+                    document.getElementById("form:password").disabled = true;    
+                }
+            }   
+        </script> 
+    </h:head>
+    <h:body>
+        <h:form id="form">
+            <h1 class="title ui-widget-header ui-corner-all">${res.get('title')}</h1>
+            <p:messages id="messages" showDetail="true" autoUpdate="true" closable="true" />
+            <br/>
+            <h:panelGroup>
+                <h:selectBooleanCheckbox id="startEmail" value="#{warnEmaiBean.isStart}" label="check">
+                    <p:ajax listener="#{warnEmaiBean.changeBooleanCheckbox_isStart}" update="sendEmail smtp port enable account password receiveEmail addReceive receiveList deleteReceive" />
+                </h:selectBooleanCheckbox>
+                ${res.get('mail-enabled')}
+            </h:panelGroup>
+            <p:spacer width="1px"/>
+            <div id="setdiv" >
+                <h:panelGrid columns="2" >
+                    <p:fieldset legend="${res.get('sendemail')}" style="width: 325px;">
+                        <div style="margin-left: -10px;margin-right:  -10px;">
+                            <h:panelGrid columns="1" cellpadding="5" >
+                                <h:panelGrid columns="2" cellpadding="5">
+                                    <h:outputLabel value="${res.get('emailadress')}"/>
+                                    <p:inputText id="sendEmail" disabled="#{warnEmaiBean.notStartUse}" value="#{warnEmaiBean.sendEmail}"/>
+                                    <h:outputLabel value="${res.get('smtpserver')}" style="width: 120px;"/>
+                                    <p:inputText id="smtp" disabled="#{warnEmaiBean.notStartUse}" value="#{warnEmaiBean.smtp}"/>
+                                    <h:outputLabel value="${res.get('port')}"/>
+                                    <p:inputText id="port" disabled="#{warnEmaiBean.notStartUse}" value="#{warnEmaiBean.port}"/>
+                                </h:panelGrid>
+                                <h:panelGroup>
+                                    <h:selectBooleanCheckbox id="enable" disabled="#{warnEmaiBean.notStartUse}" value="#{warnEmaiBean.isEnable}" label="check">
+                                        <p:ajax  listener="#{warnEmaiBean.changeBooleanCheckbox_isEnable}" update="account password" />
+                                    </h:selectBooleanCheckbox>
+                                    ${res.get('smtpauthentication')}
+                                </h:panelGroup>
+                                <h:panelGrid columns="2" cellpadding="5">
+                                    <h:panelGroup>  
+                                        <h:outputLabel value="${res.get('accounts')}" id="accountStr" style=" display: false;"/>
+                                        <p:inputText value="#{warnEmaiBean.account}" id="account" disabled="#{warnEmaiBean.notEnableUse}"/>
+                                    </h:panelGroup>
+                                    <p:spacer width="5"/>
+                                    <h:panelGroup>
+                                        <h:outputLabel value="${res.get('password')}" id="passwordStr" style=" display: false;"/>
+                                        <p:password value="#{warnEmaiBean.password}" id="password" disabled="#{warnEmaiBean.notEnableUse}" redisplay="true"/>
+                                    </h:panelGroup>
+                                    <p:spacer width="5"/>
+                                </h:panelGrid>
+
+                            </h:panelGrid>
+                        </div>
+                    </p:fieldset>
+                    <p:fieldset legend="${res.get('receiveemail')}" style="height: 305px!important;height: 303px;width: 325px!important;width: 320px;" >
+                        <h:panelGrid  columns="1" >
+                            <p:spacer height="5"/>
+                            <h:outputLabel value="${res.get('emailadresslist')}"/>
+                            <h:panelGrid columns="2" cellpadding="4">
+                                <p:inputText id="receiveEmail" disabled="#{warnEmaiBean.notStartUse}" value="#{warnEmaiBean.receiveEmail}" style="width: 200px;"/>
+                                <p:commandButton id="addReceive" disabled="#{warnEmaiBean.notStartUse}" value="${res.get('add')}" icon="addIcon" actionListener="#{warnEmaiBean.addReceiveEmail(warnEmaiBean.receiveEmail)}" update="receiveEmail receiveList messages deleteReceive" style="width: 85px;"/>
+
+                                <p:selectOneListbox id="receiveList" value="#{warnEmaiBean.selectReceiveEmail}"  style="overflow-y:auto;height:144px;width: 202px!important; width: 200px;">
+                                    <f:selectItems value="#{warnEmaiBean.receiveEmails}" var="receive" itemLabel="#{receive}" itemValue="#{receive}" />
+                                </p:selectOneListbox>
+                                
+                                <p:commandButton id="deleteReceive" disabled="#{warnEmaiBean.notdelete}" value="${global.get('delete')}" icon="deleteIcon" actionListener="#{warnEmaiBean.deleteReceiveEmail(warnEmaiBean.selectReceiveEmail)}" update="receiveList messages deleteReceive" style="position:absolute; margin-top: -72px; "/>
+                            </h:panelGrid>
+                        </h:panelGrid>
+                    </p:fieldset>
+                </h:panelGrid>
+            </div>
+<!--              <p:blockUI block="setdiv" widgetVar="bui"/>-->
+            <br/>
+            <p:spacer style="width: 280px!important;width: 216px; height: 5px"/>
+            <p:commandButton value="${res.get('test')}" disabled="#{user.type!=2}" icon="testIcon" actionListener="#{warnEmaiBean.testEmail}" id="btnTest"/>
+            <p:spacer style="width: 8px; height: 5px"/>
+            <p:commandButton value="${global.get('save')}" disabled="#{user.type!=2}" icon="saveIcon" actionListener="#{warnEmaiBean.save}" />
+<!--            <p:spacer style="width: 8px; height: 5px"/>
+            <p:commandButton value="{global.get('return')}" disabled="{user.type!=2}" icon="cancleIcon" action="system_network?faces-redirect=true" id="btnCancle" update="form messages"/> 
+      -->
+        </h:form>
+           <p:ajaxStatus style="width:64px;height:64px;position:fixed;right:5px;bottom:5px">  
+            <f:facet name="start">  
+                <p:graphicImage value="../resources/common/picture/loading.gif" />  
+            </f:facet>  
+                
+            <f:facet name="complete">  
+                <h:outputText value="" />  
+            </f:facet>  
+        </p:ajaxStatus>
+    </h:body>
+</html>

@@ -1,0 +1,188 @@
+<?xml version="1.0" encoding="GBK"?>
+<!--
+To change this template, choose Tools | Templates
+and open the template in the editor.
+-->
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.1//EN" "http://www.w3.org/TR/xhtml11/DTD/xhtml11.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:util="http://java.sun.com/jsf/composite/xhtml">
+    <h:head>
+
+        <link href="./../resources/common/css/default.css" rel="stylesheet" type="text/css" />
+        <link href="./../resources/common/css/cssIcon.css" rel="stylesheet" type="text/css" />
+        <script type="text/javascript">
+            $(document).ready(function () {
+                $("#tab\\:form2\\:down_button").blur(function () {
+                    location.href = "monitor.xhtml?activeIndex=2";
+                });
+            });
+            
+            function toECD(){                
+                 window.open("../ecd/template/login.xhtml");
+            }        
+        </script>
+    </h:head>
+    <h:body>
+        <h1 title="System Infomation" class="title ui-widget-header ui-corner-all">#{res.get('title')}</h1>
+        <p:messages autoUpdate="true" redisplay="true" showDetail="true" closable="true" /><br/>
+        <p:tabView style="border: 0;" activeIndex="#{system_sysInfoListBean.activeIndex}" id="tab">
+            <p:tab title="#{res.get('overlook')}">
+                <h:form >
+                    <div style="overflow-x:auto; width: 100%;padding-bottom: 2px !important; padding-bottom: 14px;">
+                        <p:dataTable var="sysInfo" value="#{system_sysInfoListBean.sysInfoList}" emptyMessage="#{global.get('emptyMessage')}" >  
+                            <p:column headerText="">  
+                                <h:outputText value="#{sysInfo.property}" />  
+                            </p:column>     
+                            <p:column headerText="">  
+                                <h:outputText value="#{sysInfo.value}" />  
+                            </p:column>  
+                        </p:dataTable> 
+                    </div>
+                </h:form>
+            </p:tab>
+            <p:tab title="#{res.get('host')}" disabled="#{notMonitor}">
+                <h:form>
+                    <p:panelGrid style="width: 500px">
+                        <f:facet name="header">  
+                            <p:row>  
+                                <p:column >#{res.get('name')}</p:column>  
+                                <p:column style="white-space: nowrap" >#{res.get('operation')}</p:column>  
+                            </p:row>  
+                        </f:facet>  
+                        <p:row>  
+                            <p:column >#{res.get('hostname')}#{system_sysInfoListBean.strHost}</p:column>  
+                            <p:column style="white-space: nowrap" >
+                                <p:graphicImage value="../resources/common/picture/edit.png" style=" vertical-align:middle;"/>
+                                <p:commandLink value="#{res.get('modify')}" disabled="#{user.type!=2}" action="monitor_host?faces-redirect=true"/>
+                            </p:column>  
+                        </p:row>  
+                        <p:row>  
+                            <p:column >#{res.get('port')}#{system_sysInfoListBean.strPort}</p:column>  
+                            <p:column style="white-space: nowrap" >
+                                <p:graphicImage value="../resources/common/picture/edit.png" style=" vertical-align:middle;"/>
+                                <p:commandLink value="#{res.get('modify')}" disabled="#{user.type!=2}" action="monitor_port?faces-redirect=true"/>
+                            </p:column>  
+                        </p:row>  
+                           <p:row>  
+                               <p:column >#{res.get('memoryControl')}#{system_sysInfoListBean.strMemoryControl}</p:column>  
+                            <p:column style="white-space: nowrap" >
+                                <p:graphicImage value="../resources/common/picture/edit.png" style=" vertical-align:middle;"/>
+                                <p:commandLink value="#{res.get('modify')}" disabled="#{user.type!=2}" action="monitor_memory?faces-redirect=true"/>
+                            </p:column>  
+                        </p:row> 
+                        <p:row>  
+                            <p:column>#{res.get('version')}#{system_sysInfoListBean.strVersion}</p:column>
+                            <p:column style="white-space: nowrap" >
+                                <p:graphicImage value="../resources/common/picture/online.png" style=" vertical-align:middle; height: 16px; width: 16px "/>
+                                <p:commandLink value="#{res.get('update')}" disabled="#{user.type!=2}" action="monitor_update?faces-redirect=true" />
+                                <p:spacer  width="10" />
+                                <p:graphicImage value="../resources/common/picture/rollback.png" style=" vertical-align:middle; height: 16px; width: 16px "/>
+                                <p:commandLink value="#{res.get('resetfactory')}" disabled="#{(user.type!=2) or (!system_sysInfoListBean.isFactorySnapshotExist)}" action="#{system_sysInfoListBean.autoNetQuestion()}"/>
+                            </p:column>  
+                        </p:row>  
+                    </p:panelGrid><br/>
+
+                    <p:spacer width="150px" height="0"/>
+                    <p:commandButton value="#{res.get('restart')}" icon="cancleIcon"  onclick="rebootQ.show();" />
+                    <p:spacer width="10px" height="0"/>
+                    <p:commandButton value="#{res.get('shutdown')}" icon="shutdownIcon"  onclick="shutdown.show();"/>
+                </h:form>
+
+            </p:tab>
+            <p:tab title="#{res.get('config')}" id="tab2" disabled="#{notTreenode}">
+                <h:form id="form2">
+                    <p:panelGrid style="width: 500px">
+                        <f:facet name="header">
+                            <p:row>
+                                <p:column >#{res.get('lastTime')}</p:column>  
+                                <p:column >#{res.get('lastUser')}</p:column>  
+                            </p:row>
+                        </f:facet>
+                        <p:row >  
+                            <p:column rowspan="2" style="text-align: center" >#{sysConf.exDate}</p:column>  
+                            <p:column rowspan="2" style="text-align: center" >#{sysConf.exUser}</p:column>  
+                        </p:row>  
+                    </p:panelGrid><br/>
+                    <p:spacer width="150px" height="0"/>
+                    <p:commandButton value="#{res.get('import')}" icon="uploadIcon" disabled="#{user.type!=2}" onclick="impor.show();" />
+                    <p:spacer width="10px" height="0"/>
+                    <p:commandButton value="#{res.get('export')}" id="down_button" icon="downloadIcon" disabled="#{user.type!=2}" ajax="false"   >
+                        <p:fileDownload id="download" value="#{sysConf.configFile}"  />
+                    </p:commandButton>
+                </h:form>
+            </p:tab>
+<!--            <p:tab title="7">
+                <h:form id="form">
+                    <p:growl id="msgs" showDetail="true" />
+                    <p:accordionPanel>
+                        <p:ajax event="tabChange" listener="" update=":tab:form:msgs" />
+                        <p:tab title="0"></p:tab>
+                        <p:tab title="1"></p:tab>
+                        <p:tab title="2"></p:tab>
+                        <p:tab title="3"></p:tab>
+                    </p:accordionPanel>
+                </h:form>
+            </p:tab>-->
+        </p:tabView>
+        <h:form  id="update_confirm">
+            <util:confirm uid="updateC" id="updateC" mess="#{res.get('ifUpdate')}" action="monitor_update?faces-redirect=true" />
+        </h:form>
+        <h:form  id="reboot_question">
+            <util:question1 uid="rebootQ" id="rebootQ" mess="#{res.get('ifInit')}" action="#{systemEquip.rebootQ1()}" cancelAction="#{systemEquip.rebootQ0()}"/>
+        </h:form>
+        <h:form  id="reboot_confirm1">
+            <util:confirm uid="reboot1" id="reboot1" mess="#{res.get('ifRestart')}" action="#{systemEquip.reboot1()}"  />
+        </h:form>
+        <h:form  id="reboot_confirm0">
+            <util:confirm uid="reboot0" id="reboot0" mess="#{res.get('ifRestart')}" action="#{systemEquip.reboot0()}"  />
+        </h:form>
+        <h:form  id="shutdown_confirm">
+            <util:confirm uid="shutdown" id="shutdown" mess="#{res.get('ifShutdown')}" action="#{systemEquip.shutdown()}"  />
+        </h:form>
+        <h:form  id="import_confirm">
+            <util:confirm uid="impor" id="impor" mess="#{res.get('importConfirm')}" action="monitor_import?faces-redirect=true"   />
+        </h:form>
+        <h:form>
+            <util:confirm uid="resetfactory1" mess="#{res.get('resetfactoryConfirm1')}" action="#{system_sysInfoListBean.resetfactory()}" />
+        </h:form>
+        <h:form>
+            <util:confirm uid="resetfactory0" mess="#{res.get('resetfactoryConfirm0')}" action="#{system_sysInfoListBean.resetfactory()}" />
+        </h:form>
+        <h:form>
+            <util:question1  uid="autoNet" mess="${res.get('autoNetQuestion')}" action="#{system_sysInfoListBean.resetfactoryConfirm1()}"  cancelAction="#{system_sysInfoListBean.resetfactoryConfirm0()}" >
+
+            </util:question1>
+        </h:form>
+        <h:form>
+            <p:dialog visible="#{sysvolstate!=1}"  id="confirmBox"  header="#{global.get('info')}" widgetVar="confirmBox"  modal="true" width="350"
+                      resizable="false"   >       
+
+                <h:panelGrid columns="3" style="width: 310px">
+                    <h:graphicImage value="../resources/common/picture/confirm.png" style="width: 32px; height: 32px;vertical-align:middle"/>
+                    <p:spacer style="width: 10px; height: 5px"/>
+                    <h:outputText value="#{res.get('importVol')}" />
+                </h:panelGrid>
+                <p:spacer style="width: 10px; height: 15px"/>   
+                <p:spacer style="width: 10px; height: 15px"/> 
+                <div align="center" style="width:300px"  >         
+                    <p:commandButton id="okButton" value="#{global.get('ok')}" action="/volume/volumegroup_createsysvol?faces-redirect=true" oncomplete="confirmBox.hide();" />
+                    <p:spacer style="width: 10px; height: 5px"/>
+                    <p:commandButton id="cancelButton" value="#{global.get('cancel')}" oncomplete="confirmBox.hide();"/>
+                </div>   
+            </p:dialog>
+        </h:form>
+        <p:ajaxStatus style="width:64px;height:64px;position:fixed;right:5px;bottom:5px">  
+            <f:facet name="start">  
+                <p:graphicImage value="../resources/common/picture/loading.gif" />  
+            </f:facet>  
+
+            <f:facet name="complete">  
+                <h:outputText value="" />  
+            </f:facet>  
+        </p:ajaxStatus>
+    </h:body>
+</html>

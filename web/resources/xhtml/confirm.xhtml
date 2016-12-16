@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="GBK"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"  
+      xmlns:h="http://java.sun.com/jsf/html"  
+      xmlns:composite="http://java.sun.com/jsf/composite"
+      xmlns:p="http://primefaces.org/ui">
+
+
+
+    <!-- INTERFACE -->  
+    <composite:interface>
+        <composite:attribute name="uid" required="true"/>
+        <composite:attribute name="mess" required="true"/>
+        <composite:attribute name="action" targets="okButton"/>
+        <composite:attribute name="actionListener" targets="okButton"/>
+        <composite:attribute name="update" />
+        <composite:editableValueHolder name="input" targets="input"/>
+        <composite:actionSource name="ok" targets="okButton"/>
+        <composite:actionSource name="cancel" targets="cancelButton"/>
+    </composite:interface>  
+
+
+    <!-- IMPLEMENTATION -->  
+    <composite:implementation>  
+        <h:outputScript id="confirmjs" library="xhtml" target="head" name="confirm.js"/>
+        <p:dialog  header="信息" onShow="generateCode('#{cc.attrs.uid}');" id="confirmBox"  widgetVar="#{cc.attrs.uid}"  modal="true"  
+                  resizable="false">       
+
+            <h:panelGrid columns="3" style="text-align : left;width: 300px">
+                <h:graphicImage value="../resources/common/picture/confirm.png" style="width: 32px; height: 32px;vertical-align:middle"/>
+                <p:spacer style="width: 0px; height: 5px"/>
+                <h:outputText value="#{cc.attrs.mess}" />
+            </h:panelGrid>
+            <h:panelGrid columns="2"  style="margin-left: 70px; text-align : center; height: 20px;" > 
+
+                <input type="checkbox" name="#{cc.attrs.uid}Input" id="#{cc.attrs.uid}Input"  style=" border: 0px; margin: 0px; margin-left: 0px; width:15px;height: 15px;" onkeydown="enterEvent(this);"/>     
+                <h:outputLabel value="确认执行" style="margin-left: 5px"/>
+
+
+            </h:panelGrid>
+            <div id="#{cc.attrs.uid}Message" class="ui-messages ui-widget" aria-live="polite">
+            </div >
+            <p:spacer style="width: 10px; height: 15px"/>
+            <div align="center" style="width:300px"  >         
+                <p:commandButton   id="okButton" value="#{global.get('ok')}" immediate="true" onstart="return checkCode('#{cc.attrs.uid}',&#39;#{global.get('confirm_dialog_input_null')} &#39;,&#39;#{global.get('confirm_dialog_input_error')}&#39;);" oncomplete="#{cc.attrs.uid}.hide();" update="#{cc.attrs.update}"  type="submit"/>
+                <p:spacer style="width: 10px; height: 5px"/>
+                <p:commandButton id="cancelButton" value="#{global.get('cancel')}" oncomplete="#{cc.attrs.uid}.hide();" immediate="true"/>
+            </div>   
+        </p:dialog>
+    </composite:implementation>
+
+
+</html>

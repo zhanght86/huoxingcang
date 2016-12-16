@@ -1,0 +1,784 @@
+<?xml version="1.0" encoding="gb2312" ?> 
+<MarsMSA>
+    <ResourceInfo> 
+        <Bean>
+            <Author>田文博</Author>
+            <ResourceID>192011</ResourceID>
+            <Macro>LOG_ADD_HOST_SUCCESS</Macro>
+            <Chinese>添加主机（ip=%1，port=%2）成功</Chinese>
+            <English>Add host (ip=%1, port=%2) success</English>
+        </Bean>         
+        <Bean>
+            <Author>田文博</Author>
+            <ResourceID>192012</ResourceID>
+            <Macro>LOG_ADD_HOST_FAILED</Macro>
+            <Chinese>添加主机（ip=%1，port=%2）失败，错误：%3</Chinese>
+            <English>Add host (ip=%1, port=%2) failed, Error: %3</English>
+        </Bean> 
+        <Bean>
+            <Author>田文博</Author>
+            <ResourceID>192031</ResourceID>
+            <Macro>LOG_DELETE_HOST_SUCCESS</Macro>
+            <Chinese>删除主机（ip=%1）成功</Chinese>
+            <English>Delete host (ip=%1) success</English>
+        </Bean>         
+        <Bean>
+            <Author>田文博</Author>
+            <ResourceID>192032</ResourceID>
+            <Macro>LOG_DELETE_HOST_FAILED</Macro>
+            <Chinese>删除主机（ip=%1）失败</Chinese>
+            <English>Delete host (ip=%1) failed, Error: %2</English>
+        </Bean>
+        <Bean>
+            <Author>田文博</Author>
+            <ResourceID>192051</ResourceID>
+            <Macro>LOG_MODIFY_HOST_SUCCESS</Macro>
+            <Chinese>修改主机（ip=%1，port=%2）成功</Chinese>
+            <English>Modify host (ip=%1, port=%2) success</English>
+        </Bean>         
+        <Bean>
+            <Author>田文博</Author>
+            <ResourceID>192052</ResourceID>
+            <Macro>LOG_MODIFY_HOST_FAILED</Macro>
+            <Chinese>修改主机（ip=%1，port=%2）失败，错误：%3</Chinese>
+            <English>Modify host (ip=%1, port=%2) failed, Error: %3</English>
+        </Bean>
+        <Bean>
+            <Author>王麒</Author>
+            <ResourceID>190011</ResourceID>
+            <Macro>LOG_CREATE_DISK_GROUP_SUCCESS</Macro>
+            <Chinese>在卷组'%1'上创建磁盘组'%2'成功</Chinese>
+            <English>Create disk group '%1' on volume '%2'success</English>
+        </Bean>         
+        <Bean>
+            <Author>王麒</Author>
+            <ResourceID>190012</ResourceID>
+            <Macro>LOG_CREATE_DISK_GROUP_FAILED</Macro>
+            <Chinese>在卷组'%1'上创建磁盘组'%2'失败，错误：%3</Chinese>
+            <English>Create disk group '%1' on volume '%2' failed, Error: %3</English>
+        </Bean> 
+        <Bean>
+            <Author>王麒</Author>
+            <ResourceID>190031</ResourceID>
+            <Macro>LOG_DELETE_DISK_GROUP_SUCCESS</Macro>
+            <Chinese>删除磁盘组'%1'成功</Chinese>
+            <English>Delete disk group '%1',success</English>
+        </Bean>         
+        <Bean>
+            <Author>王麒</Author>
+            <ResourceID>190032</ResourceID>
+            <Macro>LOG_DELETE_DISK_GROUP_FAILED</Macro>
+            <Chinese>删除磁盘组'%1'失败，错误：%2</Chinese>
+            <English>Delete disk group '%1' failed, Error: %2</English>
+        </Bean> 
+		<!--
+        <Bean>
+            <Author>王麒</Author>
+            <ResourceID>190051</ResourceID>
+            <Macro>LOG_GET_DISK_GROUP_SUCCESS</Macro>
+            <Chinese>获取磁盘组成功</Chinese>
+            <English>Get disk group success</English>
+        </Bean>
+		-->		
+        <Bean>
+            <Author>王麒</Author>
+            <ResourceID>190052</ResourceID>
+            <Macro>LOG_GET_DISK_GROUP_FAILED</Macro>
+            <Chinese>获取磁盘组失败，错误：%1</Chinese>
+            <English>Get disk group failed, Error: %1</English>
+        </Bean> 
+	<Bean>
+            <Author>王麒</Author>
+            <ResourceID>190071</ResourceID>
+            <Macro>LOG_CREATE_DEMAND_DISK_JOIN_GROUP_SUCCESS</Macro>
+            <Chinese>创建容量为'%1'GB的按需分配磁盘加入磁盘组'%2'成功</Chinese>
+            <English>Create '%1'GB demand assignment disk join diks group '%2' success</English>
+        </Bean>         
+        <Bean>
+            <Author>王麒</Author>
+            <ResourceID>190072</ResourceID>
+            <Macro>LOG_CREATE_DEMAND_DISK_JOIN_GROUP_FAILED</Macro>
+            <Chinese>创建容量为'%1'GB的按需分配磁盘加入磁盘组'%2'失败，错误：%3</Chinese>
+            <English>Create '%1'GB demand assignment disk join diks group '%2' failed, Error: %3</English>
+        </Bean>
+	<Bean>
+            <Author>王麒</Author>
+            <ResourceID>190073</ResourceID>
+            <Macro>LOG_CREATE_NOT_DEMAND_DISK_JOIN_GROUP_SUCCESS</Macro>
+            <Chinese>创建容量为'%1'GB的非按需分配磁盘加入磁盘组'%2'成功</Chinese>
+            <English>Create '%1'GB not demand assignment disk join diks group '%2' success</English>
+        </Bean>         
+        <Bean>
+            <Author>王麒</Author>
+            <ResourceID>190074</ResourceID>
+            <Macro>LOG_CREATE_NOT_DEMAND_DISK_JOIN_GROUP_FAILED</Macro>
+            <Chinese>创建容量为'%1'GB的非按需分配磁盘加入磁盘组'%2'失败，错误：%3</Chinese>
+            <English>Create '%1'GB not demand assignment disk join diks group '%2' failed, Error: %3</English>
+        </Bean> 	
+        <Bean>
+            <Author>王麒</Author>
+            <ResourceID>190091</ResourceID>
+            <Macro>LOG_DELETE_DISK_SUCCESS</Macro>
+            <Chinese>磁盘组'%1'删除磁盘'%2'成功</Chinese>
+            <English>From disk group '%1' delete disk '%2',success</English>
+        </Bean>         
+        <Bean>
+            <Author>王麒</Author>
+            <ResourceID>190092</ResourceID>
+            <Macro>LOG_DELETE_DISK_FAILED</Macro>
+            <Chinese>磁盘组'%1'删除磁盘'%2'失败，错误：%3</Chinese>
+            <English>From disk group '%1' delete disk '%2', Error: %3</English>
+        </Bean> 
+        <!--<Bean>
+            <Author>王麒</Author>
+            <ResourceID>190111</ResourceID>
+            <Macro>LOG_GET_ALL_DISK_INFO_SUCCESS</Macro>
+            <Chinese>获取磁盘组'%1'中全部磁盘信息成功</Chinese>
+            <English>Get disk info from group '%1',success</English>
+        </Bean>-->         
+        <Bean>
+            <Author>王麒</Author>
+            <ResourceID>190112</ResourceID>
+            <Macro>LOG_GET_ALL_DISK_INFO_FAILED</Macro>
+            <Chinese>获取磁盘组中全部磁盘信息，磁盘组:'%1'失败，错误：%2</Chinese>
+            <English>Get disk info from group '%1' failed, Error: %2</English>
+        </Bean> 
+        <Bean>
+            <Author>王麒</Author>
+            <ResourceID>190131</ResourceID>
+            <Macro>LOG_START_CDP_SUCCESS</Macro>
+            <Chinese>磁盘组'%1'清除原有CDP记录并开启CDP成功</Chinese>
+            <English>Disk group '%1' start cdp success</English>
+        </Bean>         
+        <Bean>
+            <Author>王麒</Author>
+            <ResourceID>190132</ResourceID>
+            <Macro>LOG_START_CDP_FAILED</Macro>
+            <Chinese>磁盘组'%1'清除原有CDP记录并开启CDP失败，错误：%2</Chinese>
+            <English>Disk group '%1' start cdp failed, Error: %2</English>
+        </Bean>
+	<Bean>
+            <Author>王麒</Author>
+            <ResourceID>190133</ResourceID>
+            <Macro>LOG_START_CDP_KEEP_LOG_SUCCESS</Macro>
+            <Chinese>磁盘组'%1'保留原有CDP记录并开启CDP成功，</Chinese>
+            <English>Disk group '%1' start cdp success</English>
+        </Bean>         
+        <Bean>
+            <Author>王麒</Author>
+            <ResourceID>190134</ResourceID>
+            <Macro>LOG_START_CDP_KEEP_LOG_FAILED</Macro>
+            <Chinese>磁盘组'%1'保留原有CDP记录并开启CDP失败，错误：%2</Chinese>
+            <English>Disk group '%1' start cdp failed, Error: %2</English>
+        </Bean>
+        <Bean>
+            <Author>王麒</Author>
+            <ResourceID>190151</ResourceID>
+            <Macro>LOG_CLOSE_CDP_SUCCESS</Macro>
+            <Chinese>磁盘组'%1'关闭CDP成功</Chinese>
+            <English>Disk group '%1' start cdp success</English>
+        </Bean>         
+        <Bean>
+            <Author>王麒</Author>
+            <ResourceID>190152</ResourceID>
+            <Macro>LOG_CLOSE_CDP_FAILED</Macro>
+            <Chinese>磁盘组'%1'关闭CDP失败，错误：%2</Chinese>
+            <English>Disk group '%1' start cdp failed, Error: %2</English>
+        </Bean>         
+        <Bean>
+            <Author>王麒</Author>
+            <ResourceID>190192</ResourceID>
+            <Macro>LOG_QUERY_SNAPSHOT_FAILED</Macro>
+            <Chinese>磁盘组'%1'查询CDP快照失败，错误：'%2'</Chinese>
+            <English>Query cdp snapshot failed, Error: %2</English>
+        </Bean>
+        <Bean>
+            <Author>王麒</Author>
+            <ResourceID>190252</ResourceID>
+            <Macro>LOG_QUERY_RECORD_FAILED</Macro>
+            <Chinese>磁盘组'%1'查询CDP记录失败，错误：'%2'</Chinese>
+            <English>Query cdp record failed, Error: %2</English>
+        </Bean>  	
+        <Bean>
+            <Author>王麒</Author>
+            <ResourceID>190291</ResourceID>
+            <Macro>LOG_SET_LOG_POLICY_AUTOCYCLE_SUCCESS</Macro>
+            <Chinese>磁盘组'%1'设置记录容量'%2'GB、保存时间'%3'小时、记录写满后自动循环成功</Chinese>
+            <English>Set disk group '%1' log size '%2' keep time '%3' log full option is autocycle success</English>
+        </Bean>         
+        <Bean>
+            <Author>王麒</Author>
+            <ResourceID>190292</ResourceID>
+            <Macro>LOG_SET_LOG_POLICY_AUTOCYCLE_FAILED</Macro>
+            <Chinese>磁盘组'%1'设置记录容量'%2'GB、保存时间'%3'小时、记录写满后自动循环失败，错误：%4</Chinese>
+            <English>Set disk group '%1' log size '%2' keep time '%3' log full option is autocycle failed, Error: %4</English>
+        </Bean>	
+        <Bean>
+            <Author>王麒</Author>
+            <ResourceID>190293</ResourceID>
+            <Macro>LOG_SET_LOG_POLICY_STOP_PROTECT_SUCCESS</Macro>
+            <Chinese>磁盘组'%1'设置记录容量'%2'GB、保存时间'%3'小时、记录写满后停止保护成功</Chinese>
+            <English>Set disk group '%1' log size '%2' keep time '%3' log full option is stop protect success</English>
+        </Bean>         
+        <Bean>
+            <Author>王麒</Author>
+            <ResourceID>190294</ResourceID>
+            <Macro>LOG_SET_LOG_POLICY_STOP_PROTECT_FAILED</Macro>
+            <Chinese>磁盘组'%1'设置记录容量'%2'GB、保存时间'%3'小时、记录写满后停止保护失败，错误：%4</Chinese>
+            <English>Set disk group '%1' log size '%2' keep time '%3' log full option is protect failed, Error: %4</English>
+        </Bean>	
+        <Bean>
+            <Author>王麒</Author>
+            <ResourceID>190295</ResourceID>
+            <Macro>LOG_SET_LOG_POLICY_WRITE_PROTECT_SUCCESS</Macro>
+            <Chinese>磁盘组'%1'设置记录容量'%2'GB、保存时间'%3'小时、记录写满后磁盘组写保护成功</Chinese>
+            <English>Set disk group '%1' log size '%2' keep time '%3' log full option is stop protect success</English>
+        </Bean>         
+        <Bean>
+            <Author>王麒</Author>
+            <ResourceID>190296</ResourceID>
+            <Macro>LOG_SET_LOG_POLICY_WRITE_PROTECT_FAILED</Macro>
+            <Chinese>磁盘组'%1'设置记录容量'%2'GB、保存时间'%3'小时、记录写满后磁盘组写保护失败，错误：%4</Chinese>
+            <English>Set disk group '%1' log size '%2' keep time '%3' log full option is protect failed, Error: %4</English>
+        </Bean>
+        <Bean>
+            <Author>王麒</Author>
+            <ResourceID>190297</ResourceID>
+            <Macro>LOG_SET_LOG_POLICY_AUTOCYCLE_LOG_FULL_STOP_SUCCESS</Macro>
+            <Chinese>磁盘组'%1'设置记录容量'%2'GB、保存时间记录存满为止、记录写满后自动循环成功</Chinese>
+            <English>Set disk group '%1' log size '%2' keep time 'log full stop' log full option is autocycle success</English>
+        </Bean>         
+        <Bean>
+            <Author>王麒</Author>
+            <ResourceID>190298</ResourceID>
+            <Macro>LOG_SET_LOG_POLICY_AUTOCYCLE_LOG_FULL_STOP_FAILED</Macro>
+            <Chinese>磁盘组'%1'设置记录容量'%2'GB、保存时间记录存满为止、记录写满后自动循环失败，错误：%3</Chinese>
+            <English>Set disk group '%1' log size '%2' keep time 'log full stop' log full option is autocycle failed, Error: %3</English>
+        </Bean>	
+        <Bean>
+            <Author>王麒</Author>
+            <ResourceID>190299</ResourceID>
+            <Macro>LOG_SET_LOG_POLICY_STOP_PROTECT_LOG_FULL_STOP_SUCCESS</Macro>
+            <Chinese>磁盘组'%1'设置记录容量'%2'GB、保存时间记录存满为止、记录写满后停止保护成功</Chinese>
+            <English>Set disk group '%1' log size '%2' keep time 'log full stop' log full option is stop protect success</English>
+        </Bean>         
+        <Bean>
+            <Author>王麒</Author>
+            <ResourceID>1902910</ResourceID>
+            <Macro>LOG_SET_LOG_POLICY_STOP_PROTECT_LOG_FULL_STOP_FAILED</Macro>
+            <Chinese>磁盘组'%1'设置记录容量'%2'GB、保存时间记录存满为止、记录写满后停止保护失败，错误：%3</Chinese>
+            <English>Set disk group '%1' log size '%2' keep time 'log full stop' log full option is protect failed, Error: %3</English>
+        </Bean>	
+        <Bean>
+            <Author>王麒</Author>
+            <ResourceID>1902911</ResourceID>
+            <Macro>LOG_SET_LOG_POLICY_WRITE_PROTECT_LOG_FULL_STOP_SUCCESS</Macro>
+            <Chinese>磁盘组'%1'设置记录容量'%2'GB、保存时间记录存满为止、记录写满后磁盘组写保护成功</Chinese>
+            <English>Set disk group '%1' log size '%2' keep time 'log full stop' log full option is stop protect success</English>
+        </Bean>         
+        <Bean>
+            <Author>王麒</Author>
+            <ResourceID>1902912</ResourceID>
+            <Macro>LOG_SET_LOG_POLICY_WRITE_PROTECT_LOG_FULL_STOP_FAILED</Macro>
+            <Chinese>磁盘组'%1'设置记录容量'%2'GB、保存时间记录存满为止、记录写满后磁盘组写保护失败，错误：%3</Chinese>
+            <English>Set disk group '%1' log size '%2' keep time 'log full stop' log full option is protect failed, Error: %3</English>
+        </Bean>					
+        <Bean>
+            <Author>王麒</Author>
+            <ResourceID>190312</ResourceID>
+            <Macro>LOG_GET_APPOINTED_TIME_SNAPSHOT_ID_FAILED</Macro>
+            <Chinese>磁盘组'%1'获取指定时间'%2'的快照ID失败，错误：%3</Chinese>
+            <English>Disk group '%1' get Appointed Time '%2' Snapshot ID failed, Error: %3</English>
+        </Bean>	
+	<Bean>
+            <Author>王麒</Author>
+            <ResourceID>190331</ResourceID>
+            <Macro>LOG_ONLINE_SUCCESS</Macro>
+            <Chinese>磁盘组'%1'上线成功</Chinese>
+            <English>Online disk group '%1',success</English>
+        </Bean>         
+        <Bean>
+            <Author>王麒</Author>
+            <ResourceID>190332</ResourceID>
+            <Macro>LOG_ONLINE_FAILED</Macro>
+            <Chinese>磁盘组'%1'上线失败，错误：%2</Chinese>
+            <English>Online disk group '%1' failed, Error: %2</English>
+        </Bean> 
+	<Bean>
+            <Author>王麒</Author>
+            <ResourceID>190351</ResourceID>
+            <Macro>LOG_OFFLINE_SUCCESS</Macro>
+            <Chinese>磁盘组'%1'离线成功</Chinese>
+            <English>Online disk group '%1',success</English>
+        </Bean>         
+        <Bean>
+            <Author>王麒</Author>
+            <ResourceID>190352</ResourceID>
+            <Macro>LOG_OFFLINE_FAILED</Macro>
+            <Chinese>磁盘组'%1'离线失败，错误：%2</Chinese>
+            <English>Online disk group '%1' failed, Error: %2</English>
+        </Bean>
+        <Bean>
+            <Author>王麒</Author>
+            <ResourceID>190492</ResourceID>
+            <Macro>LOG_GET_ROLLBACK_INFO_FAILED</Macro>
+            <Chinese>磁盘组'%1'获取回滚信息失败，错误：%2</Chinese>
+            <English>Get Rollback info on group '%1' failed, Error: %2</English>
+        </Bean>  
+	<Bean>
+            <Author>王麒</Author> 
+            <ResourceID>191011</ResourceID> 
+            <Macro>LOG_SET_SYNC_HOST_SUCCESS</Macro> 
+            <Chinese>磁盘组'%1'配置远程复制参数，目标主机IP:'%2'，目标主机端口:'%3'，目标主机文件系统:'%4'，压缩级别:'%5'成功</Chinese> 
+            <English>On disk group '%1'configure cloning,IP:'%2',Port:'%3',Target ZFS:'%4',GzipLevel:'%5' success</English> 
+        </Bean>
+	<Bean>
+            <Author>王麒</Author> 
+            <ResourceID>191012</ResourceID> 
+            <Macro>LOG_SET_SYNC_HOST_FAILED</Macro> 
+            <Chinese>磁盘组'%1'配置远程复制参数，目标主机IP:'%2'，目标主机端口:'%3'，目标主机文件系统:'%4'，压缩级别:'%5'失败，错误：'%6'</Chinese> 
+            <English>On disk group '%1'configure cloning,IP:'%2',Port:'%3',Target ZFS:'%4',GzipLevel:'%5' failed, Error: %6</English> 
+        </Bean>
+	<Bean>
+            <Author>王麒</Author>
+            <ResourceID>191032</ResourceID>
+            <Macro>LOG_GET_TARGET_HOST_FAILED</Macro>
+            <Chinese>获取目标主机'%1'卷组失败，错误：%2</Chinese>
+            <English>Get '%1' volume failed, Error: %2</English>
+        </Bean> 
+	<Bean>
+            <Author>王麒</Author>
+            <ResourceID>191052</ResourceID>
+            <Macro>LOG_GET_SYNC_MAPPING_FAILED</Macro>
+            <Chinese>获取磁盘组'%1'复制映射失败，错误：%2</Chinese>
+            <English>Get disk group '%1' cloning mapping failed, Error: %2</English>
+        </Bean>
+	<Bean>
+            <Author>王麒</Author>
+            <ResourceID>191071</ResourceID>
+            <Macro>LOG_CLOSE_CLONING_SUCCESS</Macro>
+            <Chinese>磁盘组'%1'删除复制到'%2'映射成功</Chinese>
+            <English>Delete cloning disk group '%1'to '%2',success</English>
+        </Bean>         
+        <Bean>
+            <Author>王麒</Author>
+            <ResourceID>191072</ResourceID>
+            <Macro>LOG_CLOSE_CLONING_FAILED</Macro>
+            <Chinese>磁盘组'%1'删除复制到'%2'映射失败，错误：%3</Chinese>
+            <English>Delete cloning disk group '%1' to '%2'failed, Error: %3</English>
+        </Bean> 		
+	<Bean>
+            <Author>王麒</Author>
+            <ResourceID>191091</ResourceID>
+            <Macro>LOG_START_CLONING_SUCCESS</Macro>
+            <Chinese>磁盘组'%1'开启复制到'%2'成功</Chinese>
+            <English>Start cloning disk group '%1'to '%2',success</English>
+        </Bean>         
+        <Bean>
+            <Author>王麒</Author>
+            <ResourceID>191092</ResourceID>
+            <Macro>LOG_START_CLONING_FAILED</Macro>
+            <Chinese>磁盘组'%1'开启复制到'%2'失败，错误：%3</Chinese>
+            <English>Start cloning disk group '%1' to '%2'failed, Error: %3</English>
+        </Bean> 
+        <Bean>
+            <Author>王麒</Author> 
+            <ResourceID>191131</ResourceID> 
+            <Macro>LOG_SET_LOCAL_SYNC_HOST_SUCCESS</Macro> 
+            <Chinese>磁盘组'%1'配置本地复制参数,目标磁盘组:'%2'成功</Chinese> 
+            <English>On disk group '%1'configure cloning,target disk group:'%2' success</English> 
+        </Bean>
+	<Bean>
+            <Author>王麒</Author> 
+            <ResourceID>191132</ResourceID> 
+            <Macro>LOG_SET_LOCAL_SYNC_HOST_FAILED</Macro> 
+            <Chinese>磁盘组'%1'配置本地复制参数,目标磁盘组:'%2'失败，失败错误：'%3'</Chinese> 
+            <English>On disk group '%1'configure cloning,target disk group:'%2' failed, Error: %3</English> 
+        </Bean>
+        <Bean>
+            <Author>王麒</Author>
+            <ResourceID>191151</ResourceID>
+            <Macro>LOG_SUSPEND_CLONING_SUCCESS</Macro>
+            <Chinese>磁盘组'%1'暂停复制'%2'成功</Chinese>
+            <English>Suspend cloning disk group '%1' to '%2'success</English>
+        </Bean>         
+        <Bean>
+            <Author>王麒</Author>
+            <ResourceID>191152</ResourceID>
+            <Macro>LOG_SUSPEND_CLONING_FAILED</Macro>
+            <Chinese>磁盘组'%1'暂停复制'%2'失败，错误：%2</Chinese>
+            <English>Suspend cloning disk group '%1' to '%2'failed, Error: %3</English>
+        </Bean> 
+	<Bean>
+            <Author>王麒</Author>
+            <ResourceID>191171</ResourceID>
+            <Macro>LOG_RESTORE_CLONING_SUCCESS</Macro>
+            <Chinese>磁盘组'%1'恢复复制'%2'成功</Chinese>
+            <English>Suspend cloning disk group '%1' success</English>
+        </Bean>         
+        <Bean>
+            <Author>王麒</Author>
+            <ResourceID>191172</ResourceID>
+            <Macro>LOG_RESTORE_CLONING_FAILED</Macro>
+            <Chinese>磁盘组'%1'恢复复制'%2'失败，错误：%3</Chinese>
+            <English>Suspend cloning disk group '%1' to '%2'failed, Error: %3</English>
+        </Bean>         
+        <Bean>
+            <Author>王麒</Author>
+            <ResourceID>191192</ResourceID>
+            <Macro>LOG_SET_TARGET_HOST_FILE_SYSTEM_IS_CLONLING_TARGET_FAILED</Macro>
+            <Chinese>设置目标主机文件系统'%1'为复制目标失败，错误：%2</Chinese>
+            <English>Set host file system is cloning target failed,Error: %2</English>
+        </Bean> 
+	<Bean>
+            <Author>王麒</Author>
+            <ResourceID>191211</ResourceID>
+            <Macro>LOG_ROLLBACK_SUCCESS</Macro>
+            <Chinese>磁盘组'%1'回滚到时间点'%2'任务提交成功</Chinese>
+            <English>Rollback disk group '%1' rollback time '%2' success</English>
+        </Bean>         
+        <Bean>
+            <Author>王麒</Author>
+            <ResourceID>191212</ResourceID>
+            <Macro>LOG_ROLLBACK_FAILED</Macro>
+            <Chinese>磁盘组'%1'回滚到时间点'%2'任务提交失败，错误：%2</Chinese>
+            <English>Rollback disk group '%1' rollback time '%2' failed, Error: %3</English>
+        </Bean> 
+	<Bean>
+            <Author>王麒</Author>
+            <ResourceID>191232</ResourceID>
+            <Macro>LOG_JUDGE_FILE_SYSTEM_IS_TARGET_FAILED</Macro>
+            <Chinese>判断目标主机文件系统'%1'是否为复制目标失败，错误：%2</Chinese>
+            <English>Judge host file system is cloning target failed,Error: %2</English>
+        </Bean> 
+	<Bean>
+            <Author>王麒</Author>
+            <ResourceID>191252</ResourceID>
+            <Macro>LOG_CANCAL_TARGET_HOST_FILE_SYSTEM_IS_CLONLING_TARGET_FAILED</Macro>
+            <Chinese>取消目标主机文件系统'%1'为复制目标失败，错误：%2</Chinese>
+            <English>Cancal host file system is cloning target failed,Error: %2</English>
+        </Bean> 
+	<Bean>
+            <Author>王麒</Author>
+            <ResourceID>191271</ResourceID>
+            <Macro>LOG_ROLLBACK_ZFS_SUCCESS</Macro>
+            <Chinese>磁盘组'%1'恢复到回滚前状态成功</Chinese>
+            <English>Rollback disk group '%1' old status '%2' success</English>
+        </Bean>         
+        <Bean>
+            <Author>王麒</Author>
+            <ResourceID>191272</ResourceID>
+            <Macro>LOG_ROLLBACK_ZFS_FAILED</Macro>
+            <Chinese>磁盘组'%1'恢复到回滚前状态失败，错误：%2</Chinese>
+            <English>Rollback disk group '%1' old status rollback failed, Error: %2</English>
+        </Bean> 
+	<Bean>
+            <Author>王麒</Author>
+            <ResourceID>191292</ResourceID>
+            <Macro>LOG_SET_TARGET_HOST_FILE_SYSTEM_IS_SYSPEND_FAILED</Macro>
+            <Chinese>设置目标主机文件系统'%1'为复制暂停状态失败，错误：%2</Chinese>
+            <English>Set host file system is cloning target is syspend failed,Error: %2</English>
+        </Bean> 
+	<Bean>
+            <Author>王麒</Author>
+            <ResourceID>191312</ResourceID>
+            <Macro>LOG_SET_TARGET_HOST_FILE_SYSTEM_IS_RESTORE_FAILED</Macro>
+            <Chinese>设置目标主机文件系统'%1'为复制恢复状态失败，错误：%2</Chinese>
+            <English>Set host file system is cloning target is restore failed,Error: %2</English>
+        </Bean>
+	<Bean>
+            <Author>王麒</Author>
+            <ResourceID>191332</ResourceID>
+            <Macro>LOG_DESTORY_TARGET_HOST_SNAPSHOT_FAILED</Macro>
+            <Chinese>删除目标主机文件系统快照'%1'失败，错误：%2</Chinese>
+            <English>Delete target host file system snapshot '%1'failed,Error: %2</English>
+        </Bean> 
+	<Bean>
+            <Author>王麒</Author>
+            <ResourceID>191351</ResourceID>
+            <Macro>LOG_SOTP_CLONING_SUCCESS</Macro>
+            <Chinese>磁盘组'%1'中止复制成功</Chinese>
+            <English>File system stop cloning success</English>
+        </Bean>
+        <Bean>
+            <Author>王麒</Author>
+            <ResourceID>191352</ResourceID>
+            <Macro>LOG_SOTP_CLONING_FAILED</Macro>
+            <Chinese>磁盘组'%1'中止复制失败，错误：%2</Chinese>
+            <English>File system stop cloning failed, Error: %2</English>
+        </Bean>
+	<Bean>
+            <Author>王麒</Author>
+            <ResourceID>191372</ResourceID>
+            <Macro>LOG_SET_TARGET_HOST_FILE_SYSTEM_IS_OFFLINE_FAILED</Macro>
+            <Chinese>设置目标主机文件系统'%1'离线，错误：%2</Chinese>
+            <English>Set host file system offine failed,Error: %2</English>
+        </Bean> 
+	<Bean>
+            <Author>王麒</Author>
+            <ResourceID>191391</ResourceID>
+            <Macro>LOG_SAVE_STATUS_SUCCESS</Macro>
+            <Chinese>磁盘组'%1'保存当前状态成功</Chinese>
+            <English>Save status disk group '%1' success</English>
+        </Bean>         
+        <Bean>
+            <Author>王麒</Author>
+            <ResourceID>191392</ResourceID>
+            <Macro>LOG_SAVE_STATUS_FAILED</Macro>
+            <Chinese>磁盘组'%1'保存当前状态失败，错误：%2</Chinese>
+            <English>Save status disk group '%1' failed, Error: %2</English>
+        </Bean> 
+        <Bean>
+            <Author>王麒</Author>
+            <ResourceID>191412</ResourceID>
+            <Macro>LOG_GET_REMOTE_HOST_VOLUME_FAILED</Macro>
+            <Chinese>获取远程主机'%1'卷组失败，错误：%2</Chinese>
+            <English>Get remote host '%1' volume failed, Error: %2</English>
+        </Bean>
+        <Bean>
+            <Author>王麒</Author>
+            <ResourceID>191432</ResourceID>
+            <Macro>LOG_GET_REMOTE_HOST_FILE_SYSTEM_STATUS_FAILED</Macro>
+            <Chinese>获取远程主机'%1'文件系统状态失败，错误：%2</Chinese>
+            <English>Get remote host '%1' file system status failed, Error: %2</English>
+        </Bean>				
+		<Bean>
+            <Author>王麒</Author>
+            <ResourceID>191452</ResourceID>
+            <Macro>LOG_GET_LOCAL_HOST_VOLUME_FAILED</Macro>
+            <Chinese>获取本地主机卷组失败，错误：%1</Chinese>
+            <English>Get local host volumefailed, Error: %1</English>
+        </Bean> 
+	<Bean>
+            <Author>王麒</Author>
+            <ResourceID>191472</ResourceID>
+            <Macro>LOG_GET_LOCAL_HOST_FILE_SYSTEM_STATUS_FAILED</Macro>
+            <Chinese>获取本地主机'%1'文件系统状态失败，错误：%2</Chinese>
+            <English>Get local host file system '%1' status failed, Error: %2</English>
+        </Bean> 
+	<Bean>
+            <Author>王麒</Author>
+            <ResourceID>191491</ResourceID>
+            <Macro>LOG_CLOSE_NOT_REMOVE_CLONING_SUCCESS</Macro>
+            <Chinese>磁盘组'%1'关闭复制成功</Chinese>
+            <English>Close cloning disk group '%1',success</English>
+        </Bean>         
+        <Bean>
+            <Author>王麒</Author>
+            <ResourceID>191492</ResourceID>
+            <Macro>LOG_CLOSE_NOT_REMOVE_CLONING_FAILED</Macro>
+            <Chinese>磁盘组'%1'关闭复制失败，错误：%2</Chinese>
+            <English>Close cloning disk group '%1' failed, Error: %2</English>
+        </Bean> 
+	<Bean>
+            <Author>王麒</Author>
+            <ResourceID>190431</ResourceID>
+            <Macro>LOG_LU_ONLINE_SUCCESS</Macro>
+            <Chinese>磁盘组'%1'LUN上线成功</Chinese>
+            <English>Online disk group lun  '%1',success</English>
+        </Bean>         
+        <Bean>
+            <Author>王麒</Author>
+            <ResourceID>190432</ResourceID>
+            <Macro>LOG_LU_ONLINE_FAILED</Macro>
+            <Chinese>磁盘组'%1'LUN上线失败，错误：%2</Chinese>
+            <English>Online disk group lun  '%1' failed, Error: %2</English>
+        </Bean> 
+	<Bean>
+            <Author>王麒</Author>
+            <ResourceID>190451</ResourceID>
+            <Macro>LOG_LU_OFFLINE_SUCCESS</Macro>
+            <Chinese>磁盘组'%1'LUN离线成功</Chinese>
+            <English>Online disk group lun  '%1',success</English>
+        </Bean>         
+        <Bean>
+            <Author>王麒</Author>
+            <ResourceID>190452</ResourceID>
+            <Macro>LOG_LU_OFFLINE_FAILED</Macro>
+            <Chinese>磁盘组'%1'LUN离线失败，错误：%2</Chinese>
+            <English>Online disk group lun '%1' failed, Error: %2</English>
+        </Bean>
+        <Bean>
+            <Author>王麒</Author>
+            <ResourceID>190412</ResourceID>
+            <Macro>LOG_AGENT_CREATE_SNAPSHOT_FAILED</Macro>
+            <Chinese>CDP代理在磁盘组'%1'时间点'%2'创建快照失败，错误：%3</Chinese>
+            <English>Agent on disk group '%1' at time point'%2' create snapshot failed, Error: %3</English>
+        </Bean>
+        <Bean>
+            <Author>王麒</Author>
+            <ResourceID>199901</ResourceID>
+            <Macro>LOG_CLONE_FAILED</Macro>
+            <Chinese>磁盘组'%1'复制到磁盘组'%2'失败，错误：%3</Chinese>
+            <English>Clone disk group from '%1' to '%2' failed, Error: %3</English>
+        </Bean> 
+	<Bean>
+            <Author>王麒</Author>
+            <ResourceID>199902</ResourceID>
+            <Macro>LOG_CLONE_FAILED_FILE_SYSTEM_NOT_EXIST</Macro>
+            <Chinese>复制源磁盘组'%1'不存在，复制失败</Chinese>
+            <English>Source disk '%1' not exist, clone failed</English>
+        </Bean> 
+        <Bean>
+            <Author>王麒</Author>
+            <ResourceID>199903</ResourceID>
+            <Macro>LOG_RECORD_FULL_CREATE_SNAPSHOT_SUCCESS</Macro>
+            <Chinese>磁盘组'%1'记录即将写满创建磁盘组快照成功</Chinese>
+            <English>Disk group '%1'log full create disk group snapshot sucess</English>
+        </Bean> 
+        <Bean>
+            <Author>王麒</Author>
+            <ResourceID>199904</ResourceID>
+            <Macro>LOG_RECORD_FULL_CREATE_SNAPSHOT_FAILED</Macro>
+            <Chinese>磁盘组'%1'记录即将写满创建磁盘组快照失败，错误：%2</Chinese>
+            <English>Disk group '%1'log full create disk group snapshot failed,error:%2</English>
+        </Bean>
+        <Bean>
+            <Author>王麒</Author>
+            <ResourceID>199905</ResourceID>
+            <Macro>LOG_RECORD_FULL_WAIT_EVENT_SUCCESS</Macro>
+            <Chinese>磁盘组'%1'记录即将写满，停止保护</Chinese>
+            <English>Disk group '%1'log full wait event sucess</English>
+        </Bean> 
+        <Bean>
+            <Author>王麒</Author>
+            <ResourceID>199906</ResourceID>
+            <Macro>LOG_RECORD_FULL_WAIT_EVENT_FAILED</Macro>
+            <Chinese>磁盘组'%1'等待日志写满事件失败，错误：%2</Chinese>
+            <English>Disk group '%1'log full wait event failed,error:%2</English>
+        </Bean>
+        <Bean>
+            <Author>王麒</Author>
+            <ResourceID>199907</ResourceID>
+            <Macro>LOG_RECORD_FULL_SET_EVENT_SUCCESS</Macro>
+            <Chinese>磁盘组'%1'记录即将写满，等待进程设置成功</Chinese>
+            <English>Disk group '%1'log full set event sucess</English>
+        </Bean> 
+        <Bean>
+            <Author>王麒</Author>
+            <ResourceID>199908</ResourceID>
+            <Macro>LOG_RECORD_FULL_SET_EVENT_FAILED</Macro>
+            <Chinese>磁盘组'%1'记录即将写满，等待进程设置失败，错误：%2</Chinese>
+            <English>Disk group '%1'log full set event failed,error:%2</English>
+        </Bean>
+        <Bean>
+            <Author>王麒</Author>
+            <ResourceID>199909</ResourceID>
+            <Macro>LOG_RECORD_FULL_WAIT_EVENT_WRITE_PROTECT_SUCCESS</Macro>
+            <Chinese>磁盘组'%1'记录即将写满，写保护</Chinese>
+            <English>Disk group '%1'log full wait event sucess</English>
+        </Bean> 
+        <Bean>
+            <Author>王麒</Author>
+            <ResourceID>199910</ResourceID>
+            <Macro>LOG_RECORD_FULL_WAIT_EVENT_WRITE_PROTECT_FAILED</Macro>
+            <Chinese>磁盘组'%1'等待日志写满事件失败，错误：%2</Chinese>
+            <English>Disk group '%1'log full wait event failed,error:%2</English>
+        </Bean>
+        <Bean>
+            <Author>王麒</Author>
+            <ResourceID>199911</ResourceID>
+            <Macro>LOG_CREATE_FILE_BEGIN</Macro>
+            <Chinese>非按需分配磁盘'%1'开始创建</Chinese>
+            <English>Disk '%1' start create</English>
+        </Bean>	
+        <Bean>
+            <Author>王麒</Author>
+            <ResourceID>199912</ResourceID>
+            <Macro>LOG_CREATE_FILE_SUCCESS</Macro>
+            <Chinese>非按需分配磁盘'%1'创建成功</Chinese>
+            <English>Disk '%1'create success</English>
+        </Bean>	
+        <Bean>
+            <Author>王麒</Author>
+            <ResourceID>199913</ResourceID>
+            <Macro>LOG_CREATE_FILE_FAILED</Macro>
+            <Chinese>非按需分配磁盘'%1'创建失败，错误：%2</Chinese>
+            <English>Disk '%1'create failed,error:%2</English>
+        </Bean>			
+        <Bean>
+            <Author>袁熙</Author>
+            <ResourceID>210001</ResourceID>
+            <Macro>LOG_ORACLE_ERROR_GET_CDP_TIME_FAILED</Macro>
+            <Chinese>数据库为Oracle，一致性组ID为%1，IP=%2，Port=%3，实例 %4，错误：%5。</Chinese>
+            <English>Database is Oracle, GroupID is %1,IP is %2,Port is %3,Instance is %4,Error:%5</English>
+        </Bean>
+        <Bean>
+            <Author>王胤</Author>
+            <ResourceID>220001</ResourceID>
+            <Macro>LOG_SQLSERVER_CONNECTION_FAILED</Macro>
+            <Chinese>一致性组%1IP地址%2实例名%3数据库%4错误：%5</Chinese>
+            <English>GroupID%1 IP address %2 instance %3 database %4 error: %5</English>
+        </Bean>
+        <Bean>
+            <Author>王麒</Author>
+            <ResourceID>190510</ResourceID>
+            <Macro>LOG_SETPROTECT_FAILED</Macro>
+            <Chinese>磁盘组'%1'设置保护级别失败</Chinese>
+            <English>Disk group '%1'set protect level falied error: %2</English>
+        </Bean>
+        <Bean>
+            <Author>王麒</Author>
+            <ResourceID>190511</ResourceID>
+            <Macro>LOG_UNPORTECT_SUCCESS</Macro>
+            <Chinese>磁盘组'%1'设置无保护成功</Chinese>
+            <English>Disk group '%1'set none protect success</English>
+        </Bean>
+        <Bean>
+            <Author>王麒</Author>
+            <ResourceID>190512</ResourceID>
+            <Macro>LOG_SNAPSHOT_PORTECT_SUCCESS</Macro>
+            <Chinese>磁盘组'%1'设置快照保护成功</Chinese>
+            <English>Disk group '%1'set snapshot level protect success</English>
+        </Bean>
+        <Bean>
+            <Author>王麒</Author>
+            <ResourceID>190513</ResourceID>
+            <Macro>LOG_CDP_PORTECT_SUCCESS</Macro>
+            <Chinese>磁盘组'%1'设置记录保护成功</Chinese>
+            <English>Disk group '%1'set record level protect success</English>
+        </Bean>
+        <Bean>
+            <Author>王麒</Author>
+            <ResourceID>190515</ResourceID>
+            <Macro>LOG_RESTORE_DISK_SIGNATURE_SUCCESS</Macro>
+            <Chinese>磁盘'%1'恢复签名成功</Chinese>
+            <English>Restore disk '%1'signature success</English>
+        </Bean>         
+        <Bean>
+            <Author>王麒</Author>
+            <ResourceID>190514</ResourceID>
+            <Macro>LOG_RESTORE_DISK_SIGNATURE_FAILED</Macro>
+            <Chinese>磁盘'%1'恢复签名失败，错误：%2</Chinese>
+            <English>Restore disk '%1'signature failed, Error: %2</English>
+        </Bean> 
+        <Bean>
+            <Author>王麒</Author>
+            <ResourceID>190517</ResourceID>
+            <Macro>LOG_CONVERT_VMDK_DISK_SUCCESS</Macro>
+            <Chinese>磁盘'%1'转换虚拟磁盘'%2'成功</Chinese>
+            <English>Convert disk '%1' to VMDK disk '%2'success</English>
+        </Bean>         
+        <Bean>
+            <Author>王麒</Author>
+            <ResourceID>190516</ResourceID>
+            <Macro>LOG_CONVERT_VMDK_DISK_FAILED</Macro>
+            <Chinese>磁盘'%1'转换虚拟磁盘'%2'成功失败，错误：%3</Chinese>
+            <English>Convert disk '%1' to VMDK disk '%2' failed, Error: %3</English>
+        </Bean> 
+        <Bean>
+            <Author>王麒</Author>
+            <ResourceID>190518</ResourceID>
+            <Macro>LOG_MODIFY_DISK_FAILED</Macro>
+            <Chinese>磁盘'%1'扩容为'%2'GB失败，错误'%3'</Chinese>
+            <English>Modify disk '%1' size to '%2' GB　failed, Error: %3</English>
+        </Bean>         
+        <Bean>
+            <Author>王麒</Author>
+            <ResourceID>190519</ResourceID>
+            <Macro>LOG_MODIFY_DISK_SUCCESS</Macro>
+            <Chinese>磁盘'%1'扩容为'%2'GB成功</Chinese>
+            <English>Modify disk '%1' size to '%2' GB　successed</English>
+        </Bean> 
+    </ResourceInfo>
+</MarsMSA>	

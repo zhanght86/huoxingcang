@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="GBK"?>
+<!--
+To change this template, choose Tools | Templates
+and open the template in the editor.
+-->
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.1//EN" "http://www.w3.org/TR/xhtml11/DTD/xhtml11.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:p="http://primefaces.org/ui">
+    <!--template="../template/framework.xhtml"-->
+    <!--    <ui:define name="head">-->
+    <h:head>
+        <link href="./../resources/common/css/default.css" rel="stylesheet" type="text/css" />
+    </h:head>
+    <h:body>
+        <h:form id="form">             
+            <h1 title="VM List Infomation" class="title ui-widget-header ui-corner-all">VTL>磁带库>修改</h1>                
+
+            <h:panelGrid columns="2" style="margin-bottom:10px" cellpadding="5">  
+                <h:outputLabel for="name" value="磁带库名："/>
+                <p:inputText id="name" disabled="true" value="#{creatVTL.name}" />
+
+                <h:outputLabel for="numberOfSlots" value="出入槽位数："/>
+                <p:inputText id="numberOfSlots" value="#{creatVTL.numberOfSlots}" />
+
+                <h:outputLabel for="numberOfPorts" value="槽位数："/>
+                <p:inputText id="numberOfPorts" value="#{creatVTL.numberOfPorts}" />
+
+                <h:outputLabel value="磁带数："/>
+                <h:outputLabel value="#{creatVTL.numberOfTapes}(槽位数不可小于磁带数量)"/>
+            </h:panelGrid>
+            <h:panelGrid columns="1" style="text-align : center;width: 300px"> 
+                <p:row>
+                    <p:commandButton value="提交" action="#{creatVTL.createVTLAction}"/>
+                    <p:spacer style="width: 10px; height: 5px"/>
+                    <p:commandButton value="返回" action="vtl_sub.xhtml" id="btnCancle"/>
+                </p:row>
+            </h:panelGrid>
+        </h:form>
+    </h:body>
+</ui:composition>

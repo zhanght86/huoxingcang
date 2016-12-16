@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="GBK"?>
+<!--
+To change this template, choose Tools | Templates
+and open the template in the editor.
+-->
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.1//EN" "http://www.w3.org/TR/xhtml11/DTD/xhtml11.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:p="http://primefaces.org/ui"
+                xmlns:util="http://java.sun.com/jsf/composite/xhtml">
+
+    <h:head>
+        <link href="./../resources/common/css/default.css" rel="stylesheet" type="text/css" />
+        <link href="./../resources/common/css/cssIcon.css" rel="stylesheet" type="text/css" />
+
+    </h:head>
+    <h:body>
+        <h:form id="form">
+            <h1 class="title ui-widget-header ui-corner-all">#{global.get('cdp')}#{res.get('title')}</h1>
+            <p:messages id="messages" showDetail="true" autoUpdate="true" closable="true" />
+            <br/>
+            <h:panelGrid columns="2" cellpadding="5">
+                <h:panelGrid columns="1" >
+                    <h:outputLabel value="#{res.get('label1')}" />
+                </h:panelGrid>
+                <h:panelGrid columns="1" >
+                    <h:outputLabel value="#{toVDBean.srcPath}"/> 
+                </h:panelGrid>
+            </h:panelGrid> 
+            <br/>
+            <p:toolbar>
+                <p:toolbarGroup align="right">                    
+                    <p:commandButton icon="addIcon" value="添加任务" immediate="true" action="#{toVDBean.addTask()}"/>
+                    <p:commandButton icon="deleteIcon" value="清空已完成" immediate="true" action="#{toVDBean.clearFinished()}" update=":form:tasks"/>
+                </p:toolbarGroup>
+            </p:toolbar>
+            <p:dataTable id="tasks" emptyMessage="#{global.get('emptyMessage')}"  var="task" value="#{toVDBean.tasks}" >  
+                <p:column headerText="目标磁盘"  style="width: 30%;" >  
+                    <h:outputText value="#{task.descDisk}"/>
+                </p:column> 
+                <p:column headerText="文件大小"  style="width: 20%;" >  
+                    <h:outputText value="#{util.getSizeString(task.diskSize)} GB"/>
+                </p:column> 
+                <p:column headerText="转换进度" style="width: 50%;" >  
+                    <p:progressBar  style=" width: 100%; color: #006666;" id="process" value="#{toVDBean.getProgress(task)}" labelTemplate="#{task.percent}" styleClass="animated"/>  
+                </p:column>
+            </p:dataTable> 
+            <br/>
+            <p:poll  autoStart="#{toVDBean.unfinished.size()!=0}" stop="#{toVDBean.unfinished.size()==0}" widgetVar="refresh" listener="#{toVDBean.initTasks()}" interval="5" update="tasks" />
+            <p:panel style="text-align: center;border: none;">
+                <p:commandButton icon="cancleIcon" value="#{global.get('return')}"  immediate="true"  action="#{toVDBean.cancel()}"/>                    
+            </p:panel>
+        </h:form>
+
+        <p:ajaxStatus style="width:64px;height:64px;position:fixed;right:5px;bottom:5px">  
+            <f:facet name="start">  
+                <p:graphicImage value="../resources/common/picture/loading.gif" />  
+            </f:facet>  
+
+            <f:facet name="complete">  
+                <h:outputText value="" />
+            </f:facet>  
+        </p:ajaxStatus>
+    </h:body>
+</ui:composition>

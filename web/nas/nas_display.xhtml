@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="GBK"?>
+<!--
+To change this template, choose Tools | Templates
+and open the template in the editor.
+-->
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.1//EN" "http://www.w3.org/TR/xhtml11/DTD/xhtml11.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+
+    <h:head>
+        <link href="./../resources/common/css/default.css" rel="stylesheet" type="text/css" />
+    </h:head>
+
+    <!--    <ui:define name="content">-->
+    <h:body>
+
+
+        <script type="text/javascript">
+            function init() {
+                var value = document.getElementById("form:bool_input").checked;
+                //alert(value);
+                if (value) {
+                    document.getElementById("form:testshare").disabled = false;
+
+                }
+                if (!value) {
+                    document.getElementById("form:testshare").setAttribute("disabled", "true");
+
+                    //document.getElementById("form:testshare").focus();
+                }
+                //document.getElementById("form:testshare").value = "";
+                //document.getElementById("form:testshare").focus();
+            }
+
+        </script>
+        <h:form id="form">
+            <h1  class="title ui-widget-header ui-corner-all">#{res.get('title')}</h1>
+            <!--            <p:tabView>
+                            <p:tab title="CIFS用户" >-->
+            <!--            <p:panel >-->
+            <br/>
+            <p:dataTable emptyMessage="#{global.get('emptyMessage')}" value="#{sharelistbean.list}" var="share" >
+                <p:column headerText="#{res.get('path')}" style="white-space: nowrap"  >
+                    #{share.path}
+                </p:column>
+                <p:column headerText="NFS" style="white-space: nowrap"  >
+                    <h:outputLabel rendered="#{share.nfsOnOrOff}" value="#{res.get('opened')}"/>
+                    <h:outputLabel rendered="#{not share.nfsOnOrOff}" value="#{res.get('notOpened')}"/>
+                </p:column>
+                <p:column headerText="CIFS"  >
+                    <h:outputLabel rendered="#{share.cifsOnOrOff}" value="#{share.shareName}"/>
+                    <h:outputLabel rendered="#{not share.cifsOnOrOff}" value="#{res.get('notOpened')}"/>
+                </p:column>
+                <p:column headerText="#{res.get('status')}" style="white-space: nowrap"  >
+                    <h:outputLabel rendered="#{share.mountedOrNot}" value="#{res.get('online')}"/>
+                    <h:outputLabel rendered="#{not share.mountedOrNot}" value="#{res.get('offline')}"/> 
+                </p:column>
+            </p:dataTable> 
+            <!--            </p:panel>-->
+
+            <!--                </p:tab>-->
+            <!--                <p:tab title="CIFS用户组" >-->
+
+            <!--                </p:tab>
+                        </p:tabView>-->
+        </h:form>
+        <!--    </ui:define>-->
+    </h:body>
+</html>
+

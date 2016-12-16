@@ -1,0 +1,94 @@
+<?xml version="1.0" encoding="GBK"?>
+<!--
+To change this template, choose Tools | Templates
+and open the template in the editor.
+-->
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.1//EN" "http://www.w3.org/TR/xhtml11/DTD/xhtml11.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:f="http://java.sun.com/jsf/core">
+    <h:head>
+        <link href="./../resources/common/css/default.css" rel="stylesheet" type="text/css" />
+        <link href="./../resources/common/css/cssIcon.css" rel="stylesheet" type="text/css" />
+    </h:head>  
+    <h:body>
+        <h:form id="form">
+            <h1 class="title ui-widget-header ui-corner-all">#{global.get('backuptitle')}#{res.get('title')}</h1>
+            <p:messages id="message" for="message" autoUpdate="true" redisplay="true" showDetail="true" closable="true" /><br/>
+            <p:panel style="border: 0">
+                <h:panelGroup>
+                    <h:panelGrid  columns="3" >
+                        <h:selectBooleanCheckbox value="#{backupBean.isDB}" >
+                            <p:ajax listener="#{backupBean.isDBListener()}" update="isTable"/>
+                        </h:selectBooleanCheckbox>
+                        #{res.get('database')}
+                        <p:selectOneRadio id="isTable" value="#{backupBean.DBType}" disabled="#{backupBean.DBSelecter}">
+                            <p:ajax listener="#{backupBean.isTablesListener()}"/>
+                            <f:selectItem   itemLabel="#{res.get('alldb')}" itemValue="1" />
+                            <f:selectItem   itemLabel="#{res.get('tablespace')}" itemValue="2"/>
+                        </p:selectOneRadio> 
+                    </h:panelGrid>
+
+                    <p:dataTable id="dbTable"   var="dbTable" value="#{backupBean.dataModel}" scrollHeight="300" scrollable="true" 
+                                 selection="#{backupBean.selectedData}" style="width: 500px" emptyMessage="#{golbal.get('emptyMessage')}">
+                        <p:column selectionMode="multiple"  style="width:8%" />  
+                        <p:column  disabledSelection="true" >  
+                            <h:outputText value="#{dbTable}"/>  
+                        </p:column>   
+                    </p:dataTable>
+                    <p:blockUI block="dbTable"  blocked="true" id="bui" widgetVar="bui"/><br/>
+
+                    <h:panelGrid columns="5" >
+                        <h:selectBooleanCheckbox   value="#{backupBean.BSPfile}"/>
+                        #{res.get('spfile')} 
+                        <p:spacer width="150px" height="0"/>
+                        <h:selectBooleanCheckbox   value="#{backupBean.BLog}">
+                            <p:ajax listener="#{backupBean.logListener()}" update="days text_days" />
+                        </h:selectBooleanCheckbox>
+                        <h:outputLabel value="#{res.get('archivelog')}"  style="position: relative; left: -195px;" />
+
+                        <h:selectBooleanCheckbox  value="#{backupBean.BControlFile}"/>
+                        #{res.get('controlfile')}
+                        <p:spacer width="50px" height="0"/>
+                        <h:panelGrid  columns="3">
+                            <p:selectOneRadio id="days" layout="pageDirection" disabled="#{backupBean.BDaysType}" 
+                                              value="#{backupBean.IDaysType}" style="position: relative;top:12px; left: -5px">
+                                <p:ajax listener="#{backupBean.daysListener()}" update="text_days" />
+                                <f:selectItem   itemLabel="#{res.get('delete')}" itemValue="1"/>
+                                <f:selectItem   itemLabel="#{res.get('delete')}" itemValue="2"/>
+                            </p:selectOneRadio> 
+                            <p:inputText id="text_days" disabled="#{backupBean.BDays}" style="position: relative;
+                                         top:30px; width: 100px" value="#{backupBean.IDays}"/>
+                            <h:outputLabel value="#{res.get('days')}"  style="position: relative; top:28px;"/>
+                        </h:panelGrid>
+                    </h:panelGrid><br/>
+                    <h:outputLabel value="#{res.get('backuplvl')}" />
+                    <p:selectOneRadio value="#{backupBean.ILevel}">
+                        <f:selectItem   itemLabel="#{res.get('completebackup')}" itemValue="1"/>
+                        <f:selectItem   itemLabel="#{res.get('incremental0')}" itemValue="2"/>
+                        <f:selectItem   itemLabel="#{res.get('differentiallv1')}" itemValue="3"/>
+                        <f:selectItem   itemLabel="#{res.get('cumulativelv1')}" itemValue="4"/>                   
+                    </p:selectOneRadio> <br/>
+
+                </h:panelGroup> 
+
+                <p:spacer width="160px" height="40px"/>
+                <p:commandButton value="${global.get('save')}" icon="saveIcon" update="form" 
+                                 action="#{backupBean.backupScript()}"/>
+
+                <p:spacer width="10px"/>
+                <p:commandButton value="${global.get('return')}" icon="cancleIcon" immediate="true" action="#{backupBean.goBack()}"/>
+            </p:panel>
+        </h:form>
+        <p:ajaxStatus style="width:64px;height:64px;position:fixed;right:5px;bottom:5px">  
+            <f:facet name="start">  
+                <p:graphicImage value="../resources/common/picture/loading.gif" />  
+            </f:facet>  
+
+            <f:facet name="complete">  
+                <h:outputText value="" />  
+            </f:facet>  
+        </p:ajaxStatus>
+    </h:body>
+</html>

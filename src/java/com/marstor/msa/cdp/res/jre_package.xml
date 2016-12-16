@@ -1,0 +1,77 @@
+<?xml  version="1.0" encoding="GB18030" standalone="no" ?>
+<JRE>
+  <Setup>
+<!--    <SetupItem>
+      <OS>Windows</OS>
+      <Platform>x86</Platform>
+      <FileName>Windows/jre-6u45-windows-i586.exe</FileName>
+      <Description>Windows x86 jre6</Description>
+    </SetupItem>-->
+<!--    <SetupItem>
+      <OS>Windows</OS>
+      <Platform>x64</Platform>
+      <FileName>Windows/jre-6u45-windows-x64.exe</FileName>
+      <Description>Windows x64 jre6</Description>
+    </SetupItem>-->
+    <SetupItem>
+      <OS>Linux</OS>
+      <Platform>x86</Platform>
+      <FileName>Linux/jre-6u45-linux-i586.bin</FileName>
+      <Description>JRE6</Description>
+    </SetupItem>
+    <SetupItem>
+      <OS>Linux</OS>
+      <Platform>x64</Platform>
+      <FileName>Linux/jre-6u45-linux-x64.bin</FileName>
+      <Description>JRE6</Description>
+    </SetupItem>
+<!--    <SetupItem>
+      <OS>Solaris</OS>
+      <Platform>x86</Platform>
+      <FileName>Solaris/jre-6u45-solaris-i586.sh</FileName>
+      <Description>Solaris x86 jre6</Description>
+    </SetupItem>-->
+    <SetupItem>
+      <OS>Solaris</OS>
+      <Platform>x64</Platform>
+      <FileName>Solaris/jre-6u45-solaris-x64.sh</FileName>
+      <Description>JRE6</Description>
+    </SetupItem>
+<!--    <SetupItem>
+      <OS>Solaris</OS>
+      <Platform>Sparc</Platform>
+      <FileName>Solaris/jre-6u45-solaris-sparc.sh</FileName>
+      <Description>Solaris Sparc jre6</Description>
+    </SetupItem>-->
+    <SetupItem>
+      <OS>Solaris</OS>
+      <Platform>Sparc v9</Platform>
+      <FileName>Solaris/jre-6u45-solaris-sparcv9.sh</FileName>
+      <Description>JRE6</Description>
+    </SetupItem>
+<!--    <SetupItem>
+      <OS>AIX</OS>
+      <Platform>32</Platform>
+      <FileName>IBM AIX/jre632redist.6.0.0.480.bin</FileName>
+      <Description>AIX 32 jre6</Description>
+    </SetupItem>-->
+    <SetupItem>
+      <OS>AIX</OS>
+      <Platform>64</Platform>
+      <FileName>IBM AIX/jre664redist.6.0.0.480.bin</FileName>
+      <Description>JRE6</Description>
+    </SetupItem>
+<!--    <SetupItem>
+      <OS>HP-UX</OS>
+      <Platform>PA-RISC</Platform>
+      <FileName>HP-UX/PA_RISC_JRE_tar_6.0.25_Feb_2015_Z7550-63263_jre6_16025_pa.tar.Z</FileName>
+      <Description>HP-UX PA-RISC jre6</Description>
+    </SetupItem>-->
+    <SetupItem>
+      <OS>HP-UX</OS>
+      <Platform>Itanium</Platform>
+      <FileName>HP-UX/Itanium_JRE_tar_6.0.25_Feb_2015_Z7550-63259_jre6_16025_ia.tar.Z</FileName>
+      <Description>JRE6</Description>
+    </SetupItem>
+  </Setup>
+</JRE>

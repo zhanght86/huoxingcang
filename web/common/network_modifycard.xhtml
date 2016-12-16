@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="GBK"?>
+<!--
+To change this template, choose Tools | Templates
+and open the template in the editor.
+-->
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.1//EN" "http://www.w3.org/TR/xhtml11/DTD/xhtml11.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:util="http://java.sun.com/jsf/composite/xhtml">
+    <h:head>
+
+        <link href="./../resources/common/css/default.css" rel="stylesheet" type="text/css" />
+        <link href="./../resources/common/css/cssIcon.css" rel="stylesheet" type="text/css" />
+       
+    </h:head>
+    <h:body>
+        <h:form id="form">
+            <h1 title="VM List Infomation" class="title ui-widget-header ui-corner-all">${res.get('title')}</h1>
+            <p:messages id="messages" showDetail="true" autoUpdate="true" closable="true"  />
+            <br/>
+            <h:panelGrid columns="2" cellpadding="5">
+                <h:outputLabel value="${res.get('network')}" />
+                <h:outputLabel value="#{modifyCardBean.name}"/>
+                <!--            <h:outputLabel value="{createAggregateBean.name}"/>-->
+                <br/>
+                <h:selectOneRadio id="state" value="#{modifyCardBean.state}">  
+                    <f:selectItem itemLabel="${res.get('dynamic')}" itemValue="0" />  
+                    <f:selectItem itemLabel="${res.get('static')}" itemValue="1" />  
+                    <f:selectItem itemLabel="${res.get('disable')}" itemValue="2" />  
+                    <p:ajax update="ip subnet gateway defaultgateway" listener="#{modifyCardBean.changeBooleanCheckbox()}" />
+                </h:selectOneRadio>
+
+                <h:outputLabel value="${res.get('ip')}" id="ipStr"/>
+                <p:inputText value="#{modifyCardBean.ip}" id="ip" disabled="#{modifyCardBean.notIP}"/>
+
+                <h:outputLabel value="${res.get('subnet')}" id="subnetStr"  />
+                <p:inputText value="#{modifyCardBean.subnet}" id="subnet" disabled="#{modifyCardBean.notSubnet}"/>
+            
+                <h:outputLabel value="${res.get('gateway')}" id="gatewayStr"  />
+                <h:panelGroup>
+                    <p:inputText value="#{modifyCardBean.gateway}" id="gateway" disabled="#{modifyCardBean.notGameway}"/>
+                    <h:selectBooleanCheckbox  id="defaultgateway" value="#{modifyCardBean.defaultgateway}" disabled="#{modifyCardBean.notdefault}">
+                     <p:ajax listener="#{modifyCardBean.changeBooleanCheckbox(modifyCardBean.defaultgateway)}" update="gateway" />
+                    </h:selectBooleanCheckbox>
+                    ${res.get('default')}
+                </h:panelGroup>
+                
+            </h:panelGrid>
+            <p:spacer width="6px" height="20px"/>
+            <h:outputLabel value="#{modifyCardBean.tip}" id="tip" />
+            <br></br>
+            <br></br>
+<!--            <p:spacer width="50" height="6" />-->
+            <p:spacer style="width: 62px; height: 5px"/>
+            <p:commandButton id="modifybt" value="${global.get('save')}" icon="saveIcon" action="#{modifyCardBean.save()}" />
+            <p:spacer style="width: 8px; height: 5px"/>
+            <p:commandButton value="${global.get('return')}" icon="cancleIcon" action="system_network?faces-redirect=true&amp;accordionActive1=0" id="btnCancle"/> 
+
+        </h:form>
+        <p:ajaxStatus style="width:64px;height:64px;position:fixed;right:5px;bottom:5px">  
+            <f:facet name="start">  
+                <p:graphicImage value="../resources/common/picture/loading.gif" />  
+            </f:facet>  
+
+            <f:facet name="complete">  
+                <h:outputText value="" />  
+            </f:facet>  
+        </p:ajaxStatus>
+    </h:body>
+</html>

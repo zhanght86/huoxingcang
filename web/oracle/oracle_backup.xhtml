@@ -1,0 +1,209 @@
+<?xml version="1.0" encoding="GBK"?>
+<!--
+To change this template, choose Tools | Templates
+and open the template in the editor.
+-->
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.1//EN" "http://www.w3.org/TR/xhtml11/DTD/xhtml11.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:f="http://java.sun.com/jsf/core"      
+                xmlns:p="http://primefaces.org/ui"
+                xmlns:util="http://java.sun.com/jsf/composite/xhtml">
+    <h:head>
+        <link href="./../resources/common/css/default.css" rel="stylesheet" type="text/css" />
+        <link href="./../resources/common/css/cssIcon.css" rel="stylesheet" type="text/css" />
+        <script type="text/javascript">
+            PrimeFaces.locales['cn'] = {
+                closeText: '确定',
+                prevText: '上',
+                nextText: '下',
+                monthNames: ['1月', '2月', '3月', '4月', '5月', '6月', '7月', '8月', '9月', '10月', '11月', '12月'],
+                monthNamesShort: ['1月', '2月', '3月', '4月', '5月', '6月', '7月', '8月', '9月', '10月', '11月', '12月'],
+                dayNames: ['日', '一', '二', '三', '四', '五', '六'],
+                dayNamesShort: ['日', '一', '二', '三', '四', '五', '六'],
+                dayNamesMin: ['日', '一', '二', '三', '四', '五', '六'],
+                weekHeader: 'Woche',
+                FirstDay: 1,
+                isRTL: false,
+                showMonthAfterYear: false,
+                yearSuffix: '',
+                timeOnlyTitle: 'Nur Zeit',
+                timeText: '时间',
+                hourText: '时',
+                minuteText: '分',
+                secondText: '秒',
+                currentText: '当前时间',
+                ampm: false,
+                month: 'Monat',
+                week: 'Woche',
+                day: 'Tag',
+                allDayText: 'Ganzer Tag'
+            };
+
+            $(document).ready(function() {
+                $("#form\\:button").click(function() {
+                    $("#img").show();
+                });
+            });
+        </script>
+        <style type="text/css"> 
+
+            .ui-priority-primary{
+                font-weight: normal !important;
+            }
+            .ui-priority-secondary{
+                filter: normal !important;
+                font-weight: normal !important;
+            }
+        </style>
+    </h:head>
+    <h:body>
+        <h1 title="System Infomation" class="title ui-widget-header ui-corner-all">#{global.get('backuptitle')}#{res.get('title')}</h1>
+        <p:messages id="message" showDetail="true" autoUpdate="true" closable="true" /><br/> 
+        <h:form id="form">
+            <p:tabView style="border:none; ">
+                <p:tab title="${res.get('backupscript')}">
+                    <h:outputLabel value="#{res.get('jobname')}"/>
+                    <p:inputText value="#{bStrategyBean.jobName}"/><br/><br/>
+
+                    <p:inputTextarea title="#{res.get('backupscript')}" style="width: 100%; height: 300px; overflow: auto " 
+                                     scrollHeight="300"  value="#{bStrategyBean.backupScript}">
+
+                    </p:inputTextarea>
+                </p:tab>
+                <p:tab title="${res.get('strategy')}" >
+                    <p:selectOneRadio id="select_type" value="#{bStrategyBean.strategyType}">
+                        <p:ajax listener="#{bStrategyBean.typeListener()}" update="date1 noend date2 cylce type week month"/>
+                        <f:selectItem itemValue="1" itemLabel="#{res.get('immediately')}" /><p:spacer width="10px"/>
+                        <f:selectItem itemValue="2" itemLabel="#{res.get('once')}" /><p:spacer width="10px"/>
+                        <f:selectItem itemValue="3" itemLabel="#{res.get('repeat')}" />
+                    </p:selectOneRadio>  
+
+                    <h:panelGrid columns="2" >
+                        <p:fieldset legend="#{res.get('begin')}" style="width: 220px;height: 80px" >
+                            <p:calendar locale="cn" pattern="yyyy-MM-dd HH:mm:ss" showButtonPanel="true" navigator="true" 
+                                        id="date1" value="#{bStrategyBean.beginDate}"  disabled="#{bStrategyBean.BBeginDate}" /> 
+                        </p:fieldset>
+                        <p:fieldset legend="#{res.get('end')}" style="width: 370px; height: 80px" >
+                            <h:panelGrid columns="3" >
+                                <h:selectBooleanCheckbox id="noend" value="#{bStrategyBean.isNoEnd}" disabled="#{bStrategyBean.BNoEnd}" >
+                                    <p:ajax listener="#{bStrategyBean.endTimeListener()}" update="date2"/>
+                                </h:selectBooleanCheckbox>
+                                <h:outputLabel  value="#{res.get('noend')}"/>
+                                <p:calendar locale="cn" pattern="yyyy-MM-dd HH:mm:ss" showButtonPanel="true" navigator="true"
+                                            id="date2" value="#{bStrategyBean.endDate}" disabled="#{bStrategyBean.BEndDate}" /> 
+                            </h:panelGrid>
+                        </p:fieldset>
+                        <p:fieldset legend="#{res.get('cycle')}" style="width: 220px; height: 346px">
+                            <h:panelGrid columns="3" cellpadding="5" >
+                                <h:outputLabel  value="#{res.get('every')}" style="position: relative; top: -55px;"/>
+                                <p:spinner id="cylce" disabled="#{bStrategyBean.BCycle}" value="#{bStrategyBean.ICycle}" size="4" maxlength="8"  min="1" style="position: relative; top: -55px;"/>  
+                                <p:selectOneRadio id="type" disabled="#{bStrategyBean.BCycle}" value="#{bStrategyBean.IType}" layout="pageDirection" >
+                                    <p:ajax listener="#{bStrategyBean.cycleListener()}" update="week month" />
+                                    <f:selectItem itemValue="1" itemLabel="#{res.get('minute')}" />
+                                    <f:selectItem itemValue="2" itemLabel="#{res.get('hour')}" />
+                                    <f:selectItem itemValue="3" itemLabel="#{res.get('day')}" />
+                                    <f:selectItem itemValue="4" itemLabel="#{res.get('week')}" />
+                                    <f:selectItem itemValue="5" itemLabel="#{res.get('month')}" />
+                                </p:selectOneRadio>
+                            </h:panelGrid>
+
+                        </p:fieldset> 
+
+                        <h:panelGrid columns="1" style="position: relative; " >                       
+                            <p:fieldset id="week" legend="#{res.get('dateweek')}" style="width: 370px;" >
+                                <p:spacer width="30px" height="0"/>
+                                <h:selectBooleanCheckbox id="week1" value="#{bStrategyBean.week1}" disabled="#{bStrategyBean.BWeek}"/>
+                                #{res.get('monday')}
+                                <h:selectBooleanCheckbox id="week2" value="#{bStrategyBean.week2}" disabled="#{bStrategyBean.BWeek}"/>
+
+                                #{res.get('tuesday')}
+                                <h:selectBooleanCheckbox id="week3" value="#{bStrategyBean.week3}" disabled="#{bStrategyBean.BWeek}"/>
+                                #{res.get('wednesday')}
+                                <h:selectBooleanCheckbox id="week4" value="#{bStrategyBean.week4}" disabled="#{bStrategyBean.BWeek}"/>
+                                #{res.get('thursday')}<br/><p:spacer width="30px" height="0"/>
+                                <h:selectBooleanCheckbox id="week5" value="#{bStrategyBean.week5}" disabled="#{bStrategyBean.BWeek}"/>
+                                #{res.get('friday')}
+                                <h:selectBooleanCheckbox id="week6" value="#{bStrategyBean.week6}" disabled="#{bStrategyBean.BWeek}"/>
+                                #{res.get('saturday')}
+                                <h:selectBooleanCheckbox id="week7" value="#{bStrategyBean.week7}" disabled="#{bStrategyBean.BWeek}"/>
+                                #{res.get('sunday')}<br/><br/>
+                                <p:spacer width="50px" height="0"/>
+                                <p:commandButton id="week11" value="#{res.get('allselected')}" update="week" action="#{bStrategyBean.weekAllSelect()}" disabled="#{bStrategyBean.BWeek}"/>
+                                <p:spacer width="50px" height="0"/>
+                                <p:commandButton id="week12" value="#{res.get('allcancel')}"  update="week" action="#{bStrategyBean.weekAllCancle()}" disabled="#{bStrategyBean.BWeek}"/>
+
+                            </p:fieldset>
+                            <p:fieldset id="month" legend="#{res.get('datemonth')}" style="width: 370px;">
+                                <p:spacer width="30px" height="0"/>
+                                <h:selectBooleanCheckbox id="month1" value="#{bStrategyBean.month1}" disabled="#{bStrategyBean.BMonth}"/>01
+                                <h:selectBooleanCheckbox id="month2" value="#{bStrategyBean.month2}" disabled="#{bStrategyBean.BMonth}"/>02
+                                <h:selectBooleanCheckbox id="month3" value="#{bStrategyBean.month3}" disabled="#{bStrategyBean.BMonth}"/>03
+                                <h:selectBooleanCheckbox id="month4" value="#{bStrategyBean.month4}" disabled="#{bStrategyBean.BMonth}"/>04
+                                <h:selectBooleanCheckbox id="month5" value="#{bStrategyBean.month5}" disabled="#{bStrategyBean.BMonth}"/>05
+                                <h:selectBooleanCheckbox id="month6" value="#{bStrategyBean.month6}" disabled="#{bStrategyBean.BMonth}"/>06
+                                <h:selectBooleanCheckbox id="month7" value="#{bStrategyBean.month7}" disabled="#{bStrategyBean.BMonth}"/>07<br/>
+                                <p:spacer width="30px" height="0"/>
+                                <h:selectBooleanCheckbox id="month8" value="#{bStrategyBean.month8}" disabled="#{bStrategyBean.BMonth}"/>08
+                                <h:selectBooleanCheckbox id="month9" value="#{bStrategyBean.month9}" disabled="#{bStrategyBean.BMonth}"/>09
+                                <h:selectBooleanCheckbox id="month10" value="#{bStrategyBean.month10}" disabled="#{bStrategyBean.BMonth}"/>10
+                                <h:selectBooleanCheckbox id="month11" value="#{bStrategyBean.month11}" disabled="#{bStrategyBean.BMonth}"/>11
+                                <h:selectBooleanCheckbox id="month12" value="#{bStrategyBean.month12}" disabled="#{bStrategyBean.BMonth}"/>12
+                                <h:selectBooleanCheckbox id="month13" value="#{bStrategyBean.month13}" disabled="#{bStrategyBean.BMonth}"/>13
+                                <h:selectBooleanCheckbox id="month14" value="#{bStrategyBean.month14}" disabled="#{bStrategyBean.BMonth}"/>14<br/>
+                                <p:spacer width="30px" height="0"/>
+                                <h:selectBooleanCheckbox id="month15" value="#{bStrategyBean.month15}" disabled="#{bStrategyBean.BMonth}"/>15
+                                <h:selectBooleanCheckbox id="month16" value="#{bStrategyBean.month16}" disabled="#{bStrategyBean.BMonth}"/>16
+                                <h:selectBooleanCheckbox id="month17" value="#{bStrategyBean.month17}" disabled="#{bStrategyBean.BMonth}"/>17
+                                <h:selectBooleanCheckbox id="month18" value="#{bStrategyBean.month18}" disabled="#{bStrategyBean.BMonth}"/>18
+                                <h:selectBooleanCheckbox id="month19" value="#{bStrategyBean.month19}" disabled="#{bStrategyBean.BMonth}"/>19
+                                <h:selectBooleanCheckbox id="month20" value="#{bStrategyBean.month20}" disabled="#{bStrategyBean.BMonth}"/>20
+                                <h:selectBooleanCheckbox id="month21" value="#{bStrategyBean.month21}" disabled="#{bStrategyBean.BMonth}"/>21<br/>
+                                <p:spacer width="30px" height="0"/>
+                                <h:selectBooleanCheckbox id="month22" value="#{bStrategyBean.month22}" disabled="#{bStrategyBean.BMonth}"/>22
+                                <h:selectBooleanCheckbox id="month23" value="#{bStrategyBean.month23}" disabled="#{bStrategyBean.BMonth}"/>23
+                                <h:selectBooleanCheckbox id="month24" value="#{bStrategyBean.month24}" disabled="#{bStrategyBean.BMonth}"/>24
+                                <h:selectBooleanCheckbox id="month25" value="#{bStrategyBean.month25}" disabled="#{bStrategyBean.BMonth}"/>25
+                                <h:selectBooleanCheckbox id="month26" value="#{bStrategyBean.month26}" disabled="#{bStrategyBean.BMonth}"/>26
+                                <h:selectBooleanCheckbox id="month27" value="#{bStrategyBean.month27}" disabled="#{bStrategyBean.BMonth}"/>27
+                                <h:selectBooleanCheckbox id="month28" value="#{bStrategyBean.month28}" disabled="#{bStrategyBean.BMonth}"/>28<br/>
+                                <p:spacer width="30px" height="0"/>
+                                <h:selectBooleanCheckbox id="month29" value="#{bStrategyBean.month29}" disabled="#{bStrategyBean.BMonth}"/>29
+                                <h:selectBooleanCheckbox id="month30" value="#{bStrategyBean.month30}" disabled="#{bStrategyBean.BMonth}"/>30
+                                <h:selectBooleanCheckbox id="month31" value="#{bStrategyBean.month31}" disabled="#{bStrategyBean.BMonth}"/>31
+                                <h:selectBooleanCheckbox id="month32" value="#{bStrategyBean.month32}" disabled="#{bStrategyBean.BMonth}"/>#{res.get('endday')}<br/><br/>
+                                <p:spacer width="50px" height="0"/>
+                                <p:commandButton id="month_1" update="month" action="#{bStrategyBean.monthAllSelect()}" value="#{res.get('allselected')}" disabled="#{bStrategyBean.BMonth}"/>
+                                <p:spacer width="50px" height="0"/>
+                                <p:commandButton id="month_2" update="month" action="#{bStrategyBean.monthAllCancle()}" value="#{res.get('allcancel')}" disabled="#{bStrategyBean.BMonth}"/>
+                            </p:fieldset>
+                        </h:panelGrid>
+                    </h:panelGrid>
+                </p:tab>
+            </p:tabView>
+            <p:panel style=" text-align:  center;  border-color:  #ffffff">
+            <p:commandButton id="button" value="#{res.get('create')}"  icon="setIcon" action="#{bStrategyBean.createScript()}" />
+
+            <p:spacer width="8px"/>
+            <p:commandButton value="#{global.get('save')}" icon="saveIcon" action="#{bStrategyBean.check()}"  />
+
+            <p:spacer width="8px"/>
+            <p:commandButton value="${global.get('return')}" icon="cancleIcon" action="oracle_database?faces-redirect=true" />
+            </p:panel>
+            <img id="img" style="width:64px;height:64px;position:fixed;right:5px;bottom:5px;display: none" src="../resources/common/picture/loading.gif"/><br/>
+        </h:form>
+        <h:form id="form0">
+            <util:confirm uid="confirm" mess="#{res.get('confirm')}" action="#{bStrategyBean.sendJob()}" />
+        </h:form>
+        <p:ajaxStatus style="width:64px;height:64px;position:fixed;right:5px;bottom:5px">  
+            <f:facet name="start">  
+                <p:graphicImage value="../resources/common/picture/loading.gif" />  
+            </f:facet>  
+
+            <f:facet name="complete">  
+                <h:outputText value="" />  
+            </f:facet>  
+        </p:ajaxStatus>
+    </h:body>
+</ui:composition>

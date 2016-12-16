@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="GBK"?>
+<!--
+To change this template, choose Tools | Templates
+and open the template in the editor.
+-->
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.1//EN" "http://www.w3.org/TR/xhtml11/DTD/xhtml11.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:p="http://primefaces.org/ui">
+    <!--template="../template/framework.xhtml"-->
+    <!--    <ui:define name="head">-->
+    <h:head>
+        <link href="./../resources/common/css/default.css" rel="stylesheet" type="text/css" />
+        <link href="./../resources/common/css/cssIcon.css" rel="stylesheet" type="text/css" />
+
+    </h:head>
+    <h:body>
+        <h:form id="form">             
+            <h1 title="VM List Infomation" class="title ui-widget-header ui-corner-all">${global.get('moduletitle')}${res.get('title')}</h1>                
+             <p:messages id="messages" showDetail="true" autoUpdate="true" closable="true" />
+            <br></br>
+            <h:panelGrid columns="2" cellpadding="5">  
+                <h:outputLabel for="name" value="${res.get('libname')}"/>
+                <p:inputText id="name" value="#{creatVTL.name}" style="width: 220px;"/>                            
+
+                <h:outputText value="${res.get('libstyle')}" />
+                <p:selectOneMenu value="#{creatVTL.vendorID}" style="min-width: 229px; max-width:229px ">  
+                    <f:selectItems  value="#{creatVTL.libTypeList}" />
+                </p:selectOneMenu>
+
+                <h:outputText value="${res.get('driverstyle')}" />  
+                <p:selectOneMenu value="#{creatVTL.productID}" style="min-width: 229px; max-width:229px">  
+                    <f:selectItems value="#{creatVTL.driveTypeList}"/>
+                </p:selectOneMenu>
+
+                <h:outputLabel for="numberOfDrives" value="${res.get('numberOfDrives')}"/>
+                <h:panelGroup>
+                    <p:spinner  value="#{creatVTL.numberOfDrives}" id="numberOfDrives" size="3" min="1"/>
+                    （1-255）
+                </h:panelGroup>
+
+                <h:outputLabel for="numberOfPorts" value="${res.get('numberOfPorts')}"/>
+                <h:panelGroup>
+                    <p:spinner  value="#{creatVTL.numberOfPorts}" id="numberOfPorts" size="3" min="1"/>
+                    （1-128）
+                </h:panelGroup>
+
+                <h:outputLabel for="numberOfSlots" value="${res.get('numberOfSlots')}"/>
+                <h:panelGroup>
+                    <p:spinner  value="#{creatVTL.numberOfSlots}" id="numberOfSlots"  size="4" min="1"/>
+                    （1-1000）
+                </h:panelGroup>
+            </h:panelGrid>
+            <h:panelGrid columns="1" style="text-align : center;width: 354px"> 
+                <p:row>
+                    <p:commandButton id="addButton" icon="saveIcon" value="${global.get('save')}"  action="#{creatVTL.createVTLAction}"/>  
+                    <p:spacer width="8"/>
+                    <p:commandButton id="closeButton" icon="cancleIcon" value="${global.get('return')}"  immediate="true" onclick="javascript: window.history.go(-1);"/>  
+                </p:row>
+            </h:panelGrid>
+        </h:form>
+        <p:ajaxStatus style="width:64px;height:64px;position:fixed;right:5px;bottom:5px">  
+            <f:facet name="start">  
+                <p:graphicImage value="../resources/common/picture/loading.gif" />  
+            </f:facet>  
+
+            <f:facet name="complete">  
+                <h:outputText value="" />
+            </f:facet>  
+        </p:ajaxStatus>
+    </h:body>
+</ui:composition>

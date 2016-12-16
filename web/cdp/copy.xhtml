@@ -1,0 +1,164 @@
+<?xml version="1.0" encoding="GBK"?>
+<!--
+To change this template, choose Tools | Templates
+and open the template in the editor.
+-->
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.1//EN" "http://www.w3.org/TR/xhtml11/DTD/xhtml11.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:p="http://primefaces.org/ui"
+      template="../template/framework.xhtml"
+      xmlns:util="http://java.sun.com/jsf/composite/xhtml">
+    <h:head>
+        <script type="text/javascript">
+
+        </script>
+        <link href="./../resources/common/css/default.css" rel="stylesheet" type="text/css" />
+        <link href="./../resources/common/css/cssIcon.css" rel="stylesheet" type="text/css" />
+    </h:head>
+
+    <h:body>            
+        <h:form id="form2">
+            <h1 class="title ui-widget-header ui-corner-all">#{global.get('cdp')}#{res.get('title')}</h1>
+            <p:messages showSummary="true" showDetail="false" autoUpdate="true" closable="true" />
+            <h:panelGrid id="status" columns="2" cellpadding="5" >  
+                <h:outputLabel value="${global.get('dg')}"/> 
+                <h:outputLabel value="#{copyBean.dg}" />
+            </h:panelGrid>
+            <h:panelGrid  rendered="#{copyBean.globalStatus.syncTargetOrNot}" columns="3" >
+                <h:outputLabel  value="#{res.get('copied')}" />
+                <p:spacer width="10"  rendered="#{!copyBean.globalStatus.isLocalDest}"   height="10" />
+                <p:commandButton icon="stopIcon" rendered="#{!copyBean.globalStatus.isLocalDest}"  value="#{res.get('stopCopy')}" disabled="#{user.type!=2 or copyBean.globalStatus.isRollbacking}"   onclick="stopsync.show();" />
+            </h:panelGrid>
+            <br/>
+            <p:fieldset legend="#{res.get('remoteSync')}" style=" width:95%;">
+                    <br/>
+                    <p:toolbar >
+                        <p:toolbarGroup align="right">
+                            <p:commandButton disabled="#{user.type!=2  or copyBean.globalStatus.addRemoteSyncDisable }" immediate="true"  value="#{global.get('add')}" icon="addIcon"  action="#{copyBean.addRemoteSync()}"  />
+                        </p:toolbarGroup>  
+                    </p:toolbar>
+
+                    <p:dataTable emptyMessage="#{global.get('emptyMessage')}" id="remotesynctable" value="#{copyBean.remoteSyncList}" var="sync" >
+
+                        <p:column headerText="#{res.get('targetPath')}" style="white-space: nowrap" >
+                            #{sync.targetFileSystem}
+                        </p:column>
+                        <p:column headerText="#{res.get('targetHost')}" style="white-space: nowrap"  >
+                            #{sync.targetIP} 
+                        </p:column>
+                        <p:column  headerText="#{res.get('lastSnap')}"  style="white-space: nowrap"   >
+                            #{sync.lastSnapTime} 
+                        </p:column>
+                        <p:column headerText="#{res.get('status')}" style="white-space: nowrap" >
+                            #{sync.status}
+                        </p:column>
+                        <p:column headerText="#{global.get('operation')}" style="white-space: nowrap"  >
+                            <p:graphicImage height="16" width="16" style="border-color: transparent;vertical-align: middle" value="../resources/common/picture/plan.png" />
+                            <p:commandLink  style="vertical-align: middle"   disabled="#{user.type!=2 }" value="#{res.get('plan')}" action="#{copyBean.configSyncPlan(sync)}"  >
+                            </p:commandLink>
+                            <p:spacer height="10"  rendered="#{sync.stop}"   width="10" />
+                            <p:graphicImage rendered="#{sync.stop}"    height="17"  width="17" style="border-color: transparent;vertical-align: middle"   value="../resources/common/picture/stop.png" />  
+                            <p:commandLink  style="vertical-align: middle" rendered="#{sync.stop}"   disabled="#{user.type!=2 or copyBean.globalStatus.stopSyncDisable }" value="#{res.get('stop')}"   onclick="sourcestopsync.show();" >
+                                <f:setPropertyActionListener value="#{sync}"  target="#{copyBean.selectSync}" />                    
+                            </p:commandLink>
+                            <p:spacer height="10"  rendered="#{sync.suspend}"   width="10" />
+                            <p:graphicImage rendered="#{sync.suspend}"    height="16"  width="16" style="border-color: transparent;vertical-align: middle"   value="../resources/common/picture/pause.png" />  
+                            <p:commandLink  style="vertical-align: middle" rendered="#{sync.suspend}"  disabled="#{user.type!=2 or sync.suspendDisabled or copyBean.globalStatus.suspendSyncDisable }" value="#{res.get('pause')}" onclick="suspendsync.show();" >
+                                <f:setPropertyActionListener value="#{sync}"  target="#{copyBean.selectSync}" />                    
+                            </p:commandLink>
+                            <p:spacer height="10"  rendered="#{sync.resume}"   width="10" />
+                            <p:graphicImage rendered="#{sync.resume}"    height="16"  width="16" style="border-color: transparent;vertical-align: middle"   value="../resources/common/picture/start.png" />  
+                            <p:commandLink  style="vertical-align: middle" rendered="#{sync.resume}"   disabled="#{user.type!=2 or copyBean.globalStatus.resumeSyncDisable }" value="#{res.get('restore')}"  actionListener="#{copyBean.checkBeforeResumeSync(sync)}" >
+                                <f:setPropertyActionListener value="#{sync}"  target="#{copyBean.selectSync}" />                    
+                            </p:commandLink>
+                        </p:column>
+                    </p:dataTable>
+
+                </p:fieldset>
+            <br/>            
+            <p:fieldset legend="#{res.get('localSync')}"  style=" width:95%;">
+                <br/>
+                <p:toolbar >
+                    <p:toolbarGroup align="right">
+                        <p:commandButton disabled="#{user.type!=2  or copyBean.globalStatus.addLocalSyncDisable}"   value="#{global.get('add')}" icon="addIcon" action="#{copyBean.addLocalSync()}"  />
+                    </p:toolbarGroup>  
+                </p:toolbar>
+                <p:dataTable emptyMessage="#{global.get('emptyMessage')}" id="localsynctable"  value="#{copyBean.localSyncList}" var="sync" >
+                    <p:column headerText="#{res.get('targetPath')}" style="white-space: nowrap" >
+                        #{sync.targetFileSystem}
+                    </p:column>
+                    <p:column  headerText="#{res.get('lastSnap')}"  style="white-space: nowrap"  >
+                        #{sync.lastSnapTime} 
+                    </p:column>
+                    <p:column headerText="#{res.get('status')}" style="white-space: nowrap"  >
+                        #{sync.status}
+                    </p:column>
+                    <p:column headerText="#{global.get('operation')}" style="white-space: nowrap"  >
+                        <p:graphicImage height="16" width="16" style="border-color: transparent;vertical-align: middle" value="../resources/common/picture/plan.png" />
+                        <p:commandLink  style="vertical-align: middle"   disabled="#{user.type!=2 }" value="#{res.get('plan')}" action="#{copyBean.configSyncPlan(sync)}"  >
+                        </p:commandLink>
+                        <p:spacer height="10"  rendered="#{sync.stop}"  width="10" />
+                        <p:graphicImage rendered="#{sync.stop}"    height="17"  width="17" style="border-color: transparent;vertical-align: middle"   value="../resources/common/picture/stop.png" />  
+                        <p:commandLink  style="vertical-align: middle" rendered="#{sync.stop}"   disabled="#{user.type!=2 or copyBean.globalStatus.stopSyncDisable }" value="#{res.get('stop')}"   onclick="sourcestopsync.show();" >
+                            <f:setPropertyActionListener value="#{sync}"  target="#{copyBean.selectSync}" />                    
+                        </p:commandLink>
+                        <p:spacer height="10" rendered="#{sync.suspend}"   width="10" />
+                        <p:graphicImage rendered="#{sync.suspend}"    height="16"  width="16" style="border-color: transparent;vertical-align: middle"   value="../resources/common/picture/pause.png" />  
+                        <p:commandLink  style="vertical-align: middle" rendered="#{sync.suspend}"  disabled="#{user.type!=2 or sync.suspendDisabled or copyBean.globalStatus.suspendSyncDisable }" value="#{res.get('pause')}" onclick="suspendsync.show();" >
+                            <f:setPropertyActionListener value="#{sync}"  target="#{copyBean.selectSync}" />                    
+                        </p:commandLink>
+                        <p:spacer height="10" width="10" rendered="#{sync.resume}"   />
+                        <p:graphicImage rendered="#{sync.resume}"    height="16"  width="16" style="border-color: transparent;vertical-align: middle"   value="../resources/common/picture/start.png" />  
+                        <p:commandLink  style="vertical-align: middle" rendered="#{sync.resume}"   disabled="#{user.type!=2 or copyBean.globalStatus.resumeSyncDisable }" value="#{res.get('restore')}"  actionListener="#{copyBean.checkBeforeResumeSync(sync)}" >
+                            <f:setPropertyActionListener value="#{sync}"  target="#{copyBean.selectSync}" />                    
+                        </p:commandLink>
+                    </p:column>
+                </p:dataTable>
+            </p:fieldset>
+            <br></br>
+            <p:panel  style="width: 95%;text-align: center;border-color: transparent" >
+                <p:commandButton value="#{global.get('update')}" icon="updateIcon" actionListener="#{copyBean.updateSnapAndSync()}" update=":form2" />
+                <p:spacer width="8" height="6" />
+                <p:commandButton value="#{global.get('return')}" icon="cancleIcon"  onclick="javascript: window.location.href = 'cdp.xhtml';"  />
+            </p:panel>
+        </h:form>
+        <h:form>
+            <util:confirm  uid="startsync" mess="#{res.get('startSync')}" action="#{copyBean.startSYNC()}" update=":form2"  >
+            </util:confirm>
+        </h:form>
+        <h:form>
+            <util:confirm  uid="suspendsync" mess="#{res.get('confirmSuspendCopy')}" action="#{copyBean.suspendSYNC()}" update=":form2"  >
+            </util:confirm>
+        </h:form>
+        <h:form>
+            <util:confirm  uid="stopsync" mess="#{res.get('confirmStopCopy')}" action="#{copyBean.stopTargetSync()}" update=":form2"  >
+            </util:confirm>
+        </h:form>
+        <h:form>
+            <util:confirm  uid="deletesync" mess="#{res.get('confirmDelCopy')}" action="#{copyBean.deleteSYNC()}" update=":form2"  >
+            </util:confirm>
+        </h:form>
+        <h:form>
+            <util:confirm  uid="sourcestopsync" mess="#{res.get('confirmStopCopy')}" action="#{copyBean.stopSourceSync()}" update=":form2"  >
+            </util:confirm>
+        </h:form>
+        <h:form>
+            <util:confirm  uid="resumesync" mess="#{res.get('confirmRestoreCopy')}" action="#{copyBean.resumeSync()}" update=":form2"  >
+            </util:confirm>
+        </h:form>
+        <h:form>
+            <util:info uid="finishCreateCopy" mess="#{res.get('finishCreateCopy')}"  />
+        </h:form>
+        <p:ajaxStatus style="width:64px;height:64px;position:fixed;right:5px;bottom:5px">  
+            <f:facet name="start">  
+                <p:graphicImage value="../resources/common/picture/loading.gif" />  
+            </f:facet>  
+
+            <f:facet name="complete">  
+                <h:outputText value="" />  
+            </f:facet>  
+        </p:ajaxStatus>
+    </h:body>
+</html>

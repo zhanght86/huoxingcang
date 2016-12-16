@@ -1,0 +1,131 @@
+<?xml version="1.0" encoding="GBK"?>
+<!--
+To change this template, choose Tools | Templates
+and open the template in the editor.
+-->
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.1//EN" "http://www.w3.org/TR/xhtml11/DTD/xhtml11.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:p="http://primefaces.org/ui">
+    <h:head>
+        <script language="javascript" type="text/javascript">
+            if (window !== top) {
+                top.location.href = location.href;
+            }
+            var n = 1;
+
+            $.networkDetection = function(url, interval) {
+                var url = url;
+                var interval = interval;
+                online = false;
+                this.StartPolling = function() {
+                    this.StopPolling();
+                    this.timer = setInterval(poll, interval);
+                };
+                this.StopPolling = function() {
+                    clearInterval(this.timer);
+                };
+                this.setPollInterval = function(i) {
+                    interval = i;
+                };
+                this.getOnlineStatus = function() {
+                    return online;
+                };
+                function poll() {
+                    ping(url);
+                }
+                ;
+            };
+
+            function ping(ip) {
+
+                var img = new Image();
+                var start = new Date().getTime();
+                var flag = false;
+                var isCloseWifi = true;
+                var hasFinish = false;
+
+                img.onload = function() {
+                    if (!hasFinish) {
+                        flag = true;
+                        hasFinish = true;
+                        img.src = 'X:\\';
+                        window.parent.location = "http://" + ip + "/template/login.xhtml";
+                    }
+                };
+
+                img.onerror = function() {
+                    if (!hasFinish) {
+                        if (!isCloseWifi) {
+                            flag = true;
+                            img.src = 'X:\\';
+                            window.parent.location = "http://" + ip + "/template/login.xhtml";
+                        } else {
+                        }
+                        hasFinish = true;
+                    }
+                };
+
+                setTimeout(function() {
+                    isCloseWifi = false;
+                }, 2);
+
+                img.src = 'http://' + ip + '/' + start;
+                var timer = setTimeout(function() {
+                    if (!flag) {
+                        hasFinish = true;
+                        img.src = 'X://';
+                        flag = false;
+//                        alert(4);
+                        console.log('Ping ' + ip + ' fail. ');
+                    }
+                }, 1500);
+            }
+            ;
+
+            function GetRequest() {
+                var url = location.search;
+                var theRequest = new Object();
+                if (url.indexOf("?") !== -1) {
+                    var str = url.substr(1);
+//                    alert(str);
+                    theRequest[str.split("=")[0]] = unescape(str.split("=")[1]);
+ //                   alert(theRequest['autoNet']);
+                }
+                return theRequest;
+            }
+            ;
+
+            var Request = new Object();
+            Request = GetRequest();
+            var autoNet;
+            autoNet = Request['autoNet'];
+//            alert(autoNet);
+            var network;
+            if (autoNet === "1") {
+                network = new $.networkDetection(location.hostname + ":" + location.port, 120000);
+            } else {
+                network = new $.networkDetection("192.168.100.1:" + location.port, 120000);
+            }
+            network.StartPolling();
+//            $(document).bind("status.networkDetection", function(e, status) {
+//                alert(status);
+//            });
+
+        </script>  
+
+        <LINK REL="SHORTCUT ICON" HREF="#{request.contextPath}/resources/oempic/favicon.ico"/>
+        <link href="./../resources/common/css/default.css" rel="stylesheet" type="text/css" />
+        <link href="./../resources/common/css/cssIcon.css" rel="stylesheet" type="text/css" />
+
+    </h:head>
+
+    <h:body>
+        <h:form id="form">
+            <p:messages id="messages" showDetail="true" autoUpdate="true" closable="true" />
+            <br/>
+            <h:outputLabel value="${factoryResetBean.name}"   />
+            <p:commandButton rendered="false" action="192.168.100.1"></p:commandButton>
+        </h:form>
+    </h:body>
+</html>

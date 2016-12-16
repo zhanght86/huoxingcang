@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="GBK"?>
+<!--
+To change this template, choose Tools | Templates
+and open the template in the editor.
+-->
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.1//EN" "http://www.w3.org/TR/xhtml11/DTD/xhtml11.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:p="http://primefaces.org/ui" 
+                xmlns:util="http://java.sun.com/jsf/composite/xhtml">
+    <!--    template="../template/framework.xhtml"-->
+    <!--         <ui:define name="head_login">
+                    <ui:include src="login.xhtml"/>
+            </ui:define>-->
+    <h:head>
+        <link href="./../resources/common/css/default.css" rel="stylesheet" type="text/css" />      
+    </h:head>
+    <h:body style="width: auto;height:auto;">
+        <h:form >
+            <!--        <ui:define name="content">-->
+            <h1 title="System Infomation" class="title ui-widget-header ui-corner-all">${res.get('title')}</h1>
+            <br/>
+            <div style="overflow-x:auto; width: 100%;padding-bottom: 2px !important; padding-bottom: 14px;">
+                <p:dataTable var="sysInfo" value="#{system_sysInfoListBean.sysInfoList}" emptyMessage="#{global.get('emptyMessage')}" >  
+                    <p:column headerText="">  
+                        <h:outputText value="#{sysInfo.property}" />  
+                    </p:column>     
+                    <p:column headerText="">  
+                        <h:outputText value="#{sysInfo.value}" />  
+                    </p:column>  
+                </p:dataTable> 
+            </div>
+            <!--    </ui:define>-->
+
+        </h:form>
+        <h:form>
+            <p:dialog visible="#{sysvolstate!=1}"  id="confirmBox"  header="#{global.get('ok')}" widgetVar="confirmBox"  modal="true" width="350"
+                  resizable="false"   >       
+           
+                <h:panelGrid columns="3" style="width: 310px">
+                    <h:graphicImage value="../resources/common/picture/confirm.png" style="width: 32px; height: 32px;vertical-align:middle"/>
+                    <p:spacer style="width: 10px; height: 5px"/>
+                    <h:outputText value="没有系统卷，立刻创建或导入系统卷?" />
+                </h:panelGrid>
+                <p:spacer style="width: 10px; height: 15px"/>   
+                <p:spacer style="width: 10px; height: 15px"/> 
+                <div align="center" style="width:300px"  >         
+                    <p:commandButton id="okButton" value="#{global.get('ok')}" action="/volume/volumegroup_createsysvol?faces-redirect=true" oncomplete="confirmBox.hide();" />
+                    <p:spacer style="width: 10px; height: 5px"/>
+                    <p:commandButton id="cancelButton" value="#{global.get('cancel')}" oncomplete="confirmBox.hide();"/>
+              </div>   
+        </p:dialog>
+        </h:form>
+    </h:body>
+
+</ui:composition>

@@ -1,0 +1,109 @@
+<?xml version="1.0" encoding="GBK"?>
+<!--
+To change this template, choose Tools | Templates
+and open the template in the editor.
+-->
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.1//EN" "http://www.w3.org/TR/xhtml11/DTD/xhtml11.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:p="http://primefaces.org/ui">
+    <!--                template="../template/framework.xhtml">-->
+
+    <!--    <ui:define name="left">
+            <ui:include src="../panel/leftMenu.xhtml"/>
+        </ui:define>-->
+
+    <!--    <ui:define name="content">-->
+    <h:head>
+        <link href="./../resources/common/css/default.css" rel="stylesheet" type="text/css" />
+    </h:head>
+    <h:body>
+        <script type="text/javascript">
+                            function init() {
+                                var  value = document.getElementById("form:bool_input").checked;
+                                //alert(value);
+                                if(value){
+                                    document.getElementById("form:testshare").disabled = false;
+                                   
+                                }
+                                if(!value) {
+                                    document.getElementById("form:testshare").setAttribute("disabled", "true");
+                                    
+                                    //document.getElementById("form:testshare").focus();
+                                }
+                                  //document.getElementById("form:testshare").value = "";
+                                  //document.getElementById("form:testshare").focus();
+                            }
+                      
+        </script>
+        <h:form id="form">
+            <h1 style="width: 740px" title="Share Path Infomation" class="title ui-widget-header ui-corner-all">全局CIFS信息</h1>
+            <br/>
+            <!--           style="border-color: transparent"-->
+            <p:tabView style="background-color: transparent;border-color: transparent"  >
+                <p:tab  title="CIFS用户" >
+                    <!--                   rowKey="{cifsuser.name}" selectionMode="single"-->
+                    <p:dataTable emptyMessage="#{global.get('emptyMessage')}" style="width: 680px" value="#{userGroupData.allUserList}" var="cifsuser"  >
+                        <p:column headerText="用户"  style="text-align: center" >
+                            #{cifsuser.name}
+                        </p:column>
+                        <p:column headerText="用户所属组"  style="text-align: center" >
+                            #{cifsuser.attributeGroups}
+                        </p:column>
+                    </p:dataTable> 
+                    <!-- 使用列表框显示用户所属组                     -->
+                    <!--                    <h:panelGrid columns="1" >
+                                            <h:panelGrid columns="2" >
+                                                <p:spacer width="60" height="10" />
+                                                <h:outputLabel value="用户" />
+                                            </h:panelGrid>
+                                            <h:panelGrid columns="2">
+                                                <p:spacer width="20" height="10" />
+                                                <p:selectOneListbox value="{userGroupData.selectedUserName}" var="user" style="height:200px;width: 100px"  >
+                                                    <f:selectItems value="{userGroupData.userModel.userNames}" >
+                                                    </f:selectItems>
+                                                    <p:ajax event="change" listener="{userGroupData.viewUserListen}" update="groupAttributeUser" />
+                                                    <p:column>
+                                                        {user}
+                                                    </p:column>
+                                                </p:selectOneListbox>
+                                            </h:panelGrid>
+                                        </h:panelGrid>
+                                        <h:panelGrid columns="1" >
+                                            <h:panelGrid columns="2" >
+                                                <p:spacer width="60" height="10" />
+                                                <h:outputLabel value="用户所属组" />
+                                            </h:panelGrid>
+                                            <h:panelGrid columns="2">
+                                                <p:spacer width="20" height="10" />
+                                                <p:selectOneListbox id="groupAttributeUser" value="{userGroupData.selectedGroupName}" var="group" style="height:200px;width: 100px"  >
+                                                    <f:selectItems value="{userGroupData.userForView.inGroups}" >
+                                                    </f:selectItems>
+                                                    <p:column>
+                                                        {group}
+                                                    </p:column>
+                                                </p:selectOneListbox>
+                                            </h:panelGrid>
+                                        </h:panelGrid>-->
+                </p:tab>
+                <p:tab title="CIFS用户组" >
+                    <!--                    rowKey="{group.name}" selectionMode="single" -->
+                    <p:dataTable emptyMessage="#{global.get('emptyMessage')}" style="width: 680px" value="#{userGroupData.groupModel.groupData}" var="group" >
+                        <p:column headerText="用户组" style="text-align: center" >
+                            #{group.name}
+                        </p:column>
+                        <p:column headerText="组内用户"  style="text-align: center" >
+                            #{group.userNamesStr}
+                        </p:column>
+                    </p:dataTable> 
+                </p:tab>
+            </p:tabView>
+        </h:form>
+        <!--    </ui:define>-->
+    </h:body>
+
+
+</html>
+

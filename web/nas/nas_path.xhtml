@@ -1,0 +1,332 @@
+<?xml version="1.0" encoding="GBK"?>
+<!--
+To change this template, choose Tools | Templates
+and open the template in the editor.
+-->
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.1//EN" "http://www.w3.org/TR/xhtml11/DTD/xhtml11.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:util="http://java.sun.com/jsf/composite/xhtml">
+    <!--                template="../template/framework.xhtml">-->
+
+    <!--    <ui:define name="left">
+            <ui:include src="../panel/leftMenu.xhtml"/>
+        </ui:define>
+        <ui:define name="content">-->
+    <h:head>
+        <link href="./../resources/common/css/default.css" rel="stylesheet" type="text/css" />
+        <link href="./../resources/common/css/cssIcon.css" rel="stylesheet" type="text/css" />
+    </h:head>
+    <h:body>
+        <script type="text/javascript">
+            function clickConfirm(xhr, status, args) {
+                var r = args.result;
+                if (r === "failed") {
+                    alert("请关闭共享功能！");
+                    return  false;
+                }
+                if (r === "on") {
+                    return  false;
+                }
+
+                return  true;
+            }
+            function clickSave(xhr, status, args) {
+
+                var r = args.result;
+                alert(r);
+
+
+            }
+            function clickDelete(xhr, status, args) {
+
+                var r = args.result;
+                if (r === "on") {
+                    alert("请关闭共享功能！");
+                    return  false;
+                } else {
+                    return  true;
+                }
+                //alert(r);
+
+
+            }
+            function test(xhr, status, args) {
+                var status = args.status;
+                if (status === "on") {
+                    // confirm("确定要开启CIFS吗？");
+                    return  true;
+                } else {
+                    //confirm("确定要关闭CIFS吗？");
+                    return  false;
+                }
+                // confirm("确定要开启CIFS吗？");
+//                    var  value = document.getElementById("form:cifs_input").checked;
+//                         alert(value);
+
+            }
+            function clickOffline(xhr, status, args) {
+                var status = args.result;
+                if (status === "opened") {
+                    // confirm("确定要开启CIFS吗？");
+                    return  true;
+                } else {
+                    //confirm("确定要关闭CIFS吗？");
+                    return  false;
+                }
+                // confirm("确定要开启CIFS吗？");
+//                    var  value = document.getElementById("form:cifs_input").checked;
+//                         alert(value);
+
+            }
+            function init() {
+                //document.getElementById("form:duplicate_input").disabled = true;
+
+                var value = document.getElementById("form:duplicate_input").checked;
+                //alert(value);
+                if (!value) {
+                    // document.getElementById("form:check_input").checked = true;
+                    document.getElementById("form:check_input").setAttribute("disabled", "true");
+                } else {
+                    document.getElementById("form:check_input").setAttribute("disabled", "false");
+
+                }
+//                         var  value = document.getElementById("form:check_input").disabled;
+//                         alert(value);
+                var value = document.getElementById("form:quota_input").checked;
+                if (value) {
+                    document.getElementById("form:maxSpace").disabled = false;
+                } else {
+                    document.getElementById("form:maxSpace").disabled = true;
+                }
+            }
+            function initFirstConfigShareDialog() {
+                document.getElementById("form:firstsharename").focus();
+            }
+            function initConfigShareDialog() {
+//                         //document.getElementById("form:shareerror").style.display = "none";
+                document.getElementById("form:sharename").focus();
+            }
+            function confirmConfigCIFS(xhr, status, args) {
+                var result = args.result;
+                if (result === "failed") {
+                    return  false;
+                } else {
+                    return  true;
+                }
+
+            }
+            function addShare(xhr, status, args) {
+
+                var r = args.result;
+                if (r !== "success") {
+                    //alert(r);
+                    return  false;
+                }
+
+                return  true;
+            }
+            function  displayAddRW() {
+                document.getElementById("form:pathname").value = "";
+                //document.getElementById("form:m1").style.display = "none";
+                //document.getElementById("form:m1").display = "none";
+                document.getElementById("form:pathname").focus();
+
+
+            }
+
+
+        </script>
+        <h:form id="form">
+            <h1 title="Share Path Infomation" class="title ui-widget-header ui-corner-all">存储功能>NAS网络存储>#{res.get('sharepath')}</h1>
+            <p:messages showSummary="true" showDetail="false" autoUpdate="true" closable="true" />
+            <!--            <br/>-->
+            <!--<p:panel style="border-color: transparent" >-->
+            <p:outputPanel id="output" deferred="true">
+                <br></br>
+                <p:toolbar >
+                    <p:toolbarGroup align="right">
+                        <p:commandButton disabled="#{user.type!=2}"  id="add" value="#{res.get('create')}" icon="addIcon" action="#{sharelistbean.skipToCreateShare}"   />
+                    </p:toolbarGroup>  
+                </p:toolbar>
+                <div style="overflow-x: auto; width: 100%; padding-bottom: 14px;">
+                    <p:dataTable emptyMessage="#{global.get('emptyMessage')}" id="paths"  var="share" value="#{sharelistbean.list}" rowKey="#{share.path}"   >
+                        <p:ajax event="rowToggle" listener="#{sharelistbean.onRowToggle}" update="rowexpan" />
+                        <!--                    <f:facet name="header" >
+                                                <div style=" text-align: right; margin-right: 20px;">
+                                                    <p:commandButton disabled="{user.type!=2}"  id="add" value="创建共享目录" icon="addIcon" action="{sharelistbean.skipToCreateShare}"   />
+                                                </div>
+                                            </f:facet>-->
+                        <!--<p:ajax event="rowSelect" listener="{sharelistbean.rowSelectListen}" update=":form" />-->
+                        <p:column style="width:2%">  
+                            <p:rowToggler />  
+                        </p:column>
+                        <p:column   headerText="#{res.get('path')}" style="white-space: nowrap;"  >
+                            <h:outputLabel   value="/#{share.path}"  /> 
+                        </p:column>
+                        <p:column headerText="#{res.get('usedspace')}" style="white-space: nowrap;text-align:center"  >
+                            #{share.used}
+                        </p:column><!--
+                        -->                                 
+                        <p:column headerText="#{res.get('unusedspace')}" style="white-space: nowrap;text-align:center" >
+                            #{share.available}
+                        </p:column>
+                        <p:column headerText="#{res.get('type')}" style="white-space: nowrap;text-align:center" >
+                            #{share.type}
+                        </p:column>
+                        <p:column headerText="CIFS" style="white-space: nowrap"   >
+                            <!--                        <p:spacer width="5" height="10" /> 
+                                                    <p:selectBooleanCheckbox style="vertical-align: middle" id="cifs" value="{share.cifs.cifsOnOrOff}"  >
+                                                        <f:param name="path"  value="{share.path}" />
+                                                        <p:ajax event="change" listener="{sharelistbean.cifsListen}" update=":form:configCIFS" oncomplete="if(test(xhr, status, args)) confirmONCIFS.show(); else confirmOFFCIFS.show();"  />
+                                                    </p:selectBooleanCheckbox>-->
+                            <h:outputLabel rendered="#{share.cifsOnOrOff}" value="#{res.get('opened')}"/>
+                            <h:outputLabel rendered="#{not share.cifsOnOrOff}" value="#{res.get('notOpened')}"/>
+                        </p:column>
+                        <p:column headerText="NFS" style="white-space: nowrap"  >
+                            <!--                            <p:spacer width="4" height="10" />
+                                                        <p:selectBooleanCheckbox style="text-align: center;vertical-align: middle;" value ="{share.nfs.status}" >
+                                                            <f:param name="path"  value="{share.path}" />
+                                                            <p:ajax event="change" listener="{sharelistbean.nfsListen(share)}" oncomplete="if(test(xhr, status, args)) confirmONNFS.show(); else confirmOFFNFS.show();" />
+                                                        </p:selectBooleanCheckbox>-->
+                            <h:outputLabel rendered="#{share.nfsOnOrOff}" value="#{res.get('opened')}"/>
+                            <h:outputLabel rendered="#{not share.nfsOnOrOff}" value="#{res.get('notOpened')}"/>
+                        </p:column>
+                        <p:column headerText="#{res.get('status')}" style="white-space: nowrap"  >
+                            <h:outputLabel rendered="#{share.mountedOrNot}" value="#{res.get('onLining')}" />
+                            <h:outputLabel rendered="#{not share.mountedOrNot}" value="#{res.get('offline')}" />
+                        </p:column>
+                        <p:column headerText="#{res.get('operation')}"  style="white-space: nowrap"   >
+                            <p:graphicImage value="../resources/common/picture/authority.png" style="vertical-align: middle" height="16" width="16" />
+                            <!--<p:spacer height="10" width="3" />-->
+                            <!--disabled="{sharelistbean.authorityButtonStatus}"-->
+                            <p:commandLink disabled="#{(user.type!=2)or (share.buttonEnable)}" id="authority" value="#{res.get('authority')}"   action="#{sharelistbean.doBeforeConfigAuthority(share)}" style="vertical-align: middle" > 
+                                <f:param name="path" value="#{share.path}" /><!--                         style="text-decoration: underline;padding-bottom: 1px;border-bottom: 1px;font-size: 13px" -->  
+                            </p:commandLink>
+                            <!--                            <p:spacer height="10" width="10" />
+                                                        <p:graphicImage value="../resources/common/picture/set.png" style="vertical-align: middle" height="15" />
+                                                        <p:spacer height="10" width="3" />
+                                                        <p:commandLink disabled="{user.type!=2}"  value="{res.get('param')}"  style="vertical-align: middle" >
+                                                            <f:param name="path" value="{share.path}" />
+                                                        </p:commandLink>-->
+                            <p:spacer height="10" width="8" />
+                            <p:graphicImage style="vertical-align: middle"  value="../resources/common/picture/share.png" height="16" width="16" />
+                            <p:spacer   height="10" width="3" />
+                            <!--update=":form:configCIFS" oncomplete="configCIFSDialog.show()" disabled="{share.cifs.configButtonStatus}"--> 
+                            <p:commandLink disabled="#{(user.type!=2)or (share.buttonEnable) or (share.cifsDisable)}"   style="font-weight: normal;vertical-align: middle"  value="CIFS" action="#{sharelistbean.doBeforeConfigCIFS(share)}"  >
+                                <!--<f:param name="path" value="{share.path}" />                                                       style="text-decoration: underline;padding-bottom: 1px;border-bottom: 1px;font-size: 13px" -->
+                            </p:commandLink>
+                            <p:spacer width="10" />
+                            <p:graphicImage value="../resources/common/picture/share.png" style="vertical-align: middle" height="16" width="16" />
+                            <p:spacer height="10" width="3" />
+                            <p:commandLink disabled="#{(user.type!=2)or (share.buttonEnable) or (share.nfsDisable)}" value="NFS"   style="vertical-align: middle"  action="#{sharelistbean.doBeforeConfigNFS(share)}"  >
+                            </p:commandLink>
+
+                            <p:spacer height="10" width="10" />
+                            <p:graphicImage rendered="#{share.mountedOrNot}" value="../resources/common/picture/offline.png" style="vertical-align: middle" height="15" />
+                            <p:graphicImage rendered="#{not share.mountedOrNot}" value="../resources/common/picture/online.png" style="vertical-align: middle" height="15" /> 
+                            <p:commandLink disabled="#{user.type!=2}" rendered="#{share.mountedOrNot}" value="#{res.get('offline')}"   style="vertical-align: middle" action="#{sharelistbean.doBeforeOffLine(share)}" update=":form1 :form2 :form3 :form6" >        
+                                <f:setPropertyActionListener value="#{share}" target="#{sharelistbean.selectedShareBean}" />                        
+                            </p:commandLink>
+                            <p:commandLink disabled="#{user.type!=2  }" rendered="#{not share.mountedOrNot }"  value="#{res.get('online')}" style="vertical-align: middle" actionListener="#{sharelistbean.onLine(share)}" update="paths" >        
+                            </p:commandLink> 
+                            <p:spacer height="10" width="10" />
+                            <p:graphicImage height="16"  width="16" style="border-color: transparent;vertical-align: middle"  value="../resources/common/picture/snap.png" />  
+                            <p:commandLink disabled="#{user.type!=2 or share.protectDisable }" value="#{res.get('snapAndSync')}" style="vertical-align: middle" action="#{sharelistbean.configSnapSync(share)}" >
+                            </p:commandLink>             
+                            <p:spacer height="10" width="5" />
+                            <p:graphicImage value="../resources/common/picture/edit.png" style=" vertical-align:middle;"/>
+                            <p:commandLink  id="setButton" value="#{global.get('set')}" disabled="#{user.type!=2}" action="#{sharelistbean.configFileSys(share)}"  style=" vertical-align:middle;"> 
+                            </p:commandLink>
+                            <p:spacer height="10" width="8" />
+                            <p:graphicImage height="16"  width="16" style="border-color: transparent;vertical-align: middle"   value="../resources/common/picture/delete.png" />  
+                            <p:spacer height="10" width="3" />
+                            <p:commandLink style="vertical-align: middle" disabled="#{(user.type!=2) or (share.deleteDisable) }" value="#{res.get('delete')}" action="#{sharelistbean.removeSharePath(share)}" update=":form7 :form4 :form8 :form9"  >
+                                <f:setPropertyActionListener value="#{share}"  target="#{sharelistbean.selectedShareBean}" />                    
+                            </p:commandLink><!--                            <f:param name="path" value="{share.path}" />-->
+                        </p:column>
+                        <p:rowExpansion id="rowexpan" >
+                            <p:tabView >
+                                <p:tab title="NFS" >
+                                    <p:dataTable id="nfstable"  emptyMessage="#{global.get('emptyMessage')}" value="#{share.nfsProperties}" var="nfs" style="width: 650px" >
+                                        <p:column headerText="#{global.get('name')}" width="150" >
+                                            #{nfs.name}
+                                        </p:column>
+                                        <p:column headerText="#{global.get('value')}" >
+                                            #{nfs.value}
+                                        </p:column>
+                                    </p:dataTable>
+                                </p:tab>
+                                <p:tab title="CIFS" >
+                                    <p:dataTable id="nastable"  emptyMessage="#{global.get('emptyMessage')}" value="#{share.cifsProperties}" var="cifs" style="width: 650px"  >
+                                        <p:column headerText="#{global.get('name')}" width="150"  >
+                                            #{cifs.name}
+                                        </p:column>
+                                        <p:column headerText="#{global.get('value')}" >
+                                            #{cifs.value}
+                                        </p:column>
+                                    </p:dataTable>
+                                </p:tab>
+                            </p:tabView>
+                        </p:rowExpansion>
+                    </p:dataTable>
+                </div>
+            </p:outputPanel>
+            <!--</p:panel>-->
+        </h:form>
+        <h:form id="form1" >
+            <util:confirm  uid="offlineConfirm" mess="#{res.get('confirmOffline')} #{global.get('lquote')}#{sharelistbean.selectedShareBean.path}#{global.get('rquote')} #{global.get('what')}" action="#{sharelistbean.offLine()}" update=":form:paths"  >
+            </util:confirm>
+        </h:form>
+        <h:form id="form2">
+            <util:confirm  uid="offlineConfirmCloseSnap" mess="#{res.get('offline')}#{global.get('lquote')}#{sharelistbean.selectedShareBean.path}#{global.get('rquote')}#{res.get('confirmCloseSnap')}" action="#{sharelistbean.closeSnapBeforeOffline()}" update=":form:paths"  >
+            </util:confirm>
+        </h:form>
+        <h:form id="form3">
+            <util:confirm uid="closeShare" mess="#{res.get('offline')} #{global.get('lquote')}#{sharelistbean.selectedShareBean.path}#{global.get('rquote')} #{res.get('closeShare')}" action="#{sharelistbean.closeShareBeforeOffline()}"  update=":form:paths" >
+            </util:confirm>
+        </h:form>
+        <h:form id="form7">
+            <util:confirm uid="deleteCopy" mess="#{res.get('delete')} #{global.get('lquote')}#{sharelistbean.selectedShareBean.path}#{global.get('rquote')} #{res.get('confirmDelCopy')}" action="#{sharelistbean.remveCloneBeforeDeletePath()}"  update=":form:paths" >
+            </util:confirm>
+        </h:form>
+        <h:form id="form6">
+            <util:confirm  uid="confirmCloseSnapAndShare" mess="#{res.get('offline')}#{global.get('lquote')}#{sharelistbean.selectedShareBean.path}#{global.get('rquote')}#{res.get('closeShareAndSnap')}" action="#{sharelistbean.closeSnapAndShareBeforeOffline()}" update=":form:paths"  >
+            </util:confirm>
+        </h:form>
+        <h:form id="form4" >
+            <util:confirm  uid="deletePath" mess="#{global.get('confirmDel')} #{global.get('lquote')}/#{sharelistbean.selectedShareBean.path}#{global.get('rquote')} #{global.get('what')}" action="#{sharelistbean.deletePath()}" update=":form:paths"  >
+            </util:confirm>
+        </h:form>
+        <h:form id="form5" >
+            <util:info uid="syncing" mess="#{res.get('sync')}" >
+            </util:info>
+        </h:form>
+        <h:form id="form8">
+            <util:confirm uid="deletePathConfirmCloseShare" mess="#{res.get('delete')} #{global.get('lquote')}#{sharelistbean.selectedShareBean.path}#{global.get('rquote')} #{res.get('closeShare')}" action="#{sharelistbean.closeShareBeforeDeletePath()}"  update=":form:paths" >
+            </util:confirm>
+        </h:form>
+        <h:form id="form9">
+            <util:confirm uid="delPathConfirmCloseShareDelCopy" mess="#{res.get('delete')} #{global.get('lquote')}#{sharelistbean.selectedShareBean.path}#{global.get('rquote')} #{res.get('closeShareDelCopy')}" action="#{sharelistbean.closeShareAndDelCopyBeforeDeletePath()}"  update=":form:paths" >
+            </util:confirm>
+        </h:form>
+        <p:ajaxStatus style="width:64px;height:64px;position:fixed;right:5px;bottom:5px">  
+            <f:facet name="start">  
+                <p:graphicImage value="../resources/common/picture/loading.gif" />  
+            </f:facet>  
+
+            <f:facet name="complete">  
+                <h:outputText value="" />  
+            </f:facet>  
+        </p:ajaxStatus>
+        <!--        <h:form id="form1">   
+                   
+                </h:form>      -->
+    </h:body>
+
+    <!--    </ui:define>-->
+
+</html>

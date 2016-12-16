@@ -1,0 +1,95 @@
+<?xml version="1.0" encoding="GBK"?>
+<!--
+To change this template, choose Tools | Templates
+and open the template in the editor.
+-->
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.1//EN" "http://www.w3.org/TR/xhtml11/DTD/xhtml11.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:util="http://java.sun.com/jsf/composite/xhtml">     
+    <h:head>
+        <link href="./../resources/common/css/default.css" rel="stylesheet" type="text/css" />
+        <link href="./../resources/common/css/cssIcon.css" rel="stylesheet" type="text/css" />
+        <script type="text/javascript">
+            PrimeFaces.locales['cn'] = {
+                closeText: '确定',
+                prevText: '上',
+                nextText: '下',
+                monthNames: ['1月', '2月', '3月', '4月', '5月', '6月', '7月', '8月', '9月', '10月', '11月', '12月'],
+                monthNamesShort: ['1月', '2月', '3月', '4月', '5月', '6月', '7月', '8月', '9月', '10月', '11月', '12月'],
+                dayNames: ['日', '一', '二', '三', '四', '五', '六'],
+                dayNamesShort: ['日', '一', '二', '三', '四', '五', '六'],
+                dayNamesMin: ['日', '一', '二', '三', '四', '五', '六'],
+                weekHeader: 'Woche',
+                FirstDay: 1,
+                isRTL: false,
+                showMonthAfterYear: false,
+                yearSuffix: '',
+                timeOnlyTitle: 'Nur Zeit',
+                timeText: '时间',
+                hourText: '时',
+                minuteText: '分',
+                secondText: '秒',
+                currentText: '当前时间',
+                ampm: false,
+                month: 'Monat',
+                week: 'Woche',
+                day: 'Tag',
+                allDayText: 'Ganzer Tag'
+            };
+
+            $(document).ready(function () {
+                $("#form\\:button").click(function () {
+                    $("#img").show();
+                });
+            });
+        </script>
+        <style type="text/css"> 
+
+            .ui-priority-primary{
+                font-weight: normal !important;
+            }
+            .ui-priority-secondary{
+                filter: normal !important;
+                font-weight: normal !important;
+            }
+        </style>
+    </h:head>
+    <h:body>
+        <h:form id="form">
+            <h1 title="System Infomation" class="title ui-widget-header ui-corner-all">#{global.get('backuptitle')}#{res.get('summaryInfo')}</h1>
+            <p:messages id="message" showDetail="true" autoUpdate="true" closable="true" />
+            <br/>
+            <div style="overflow-x:auto; width: 100%; padding-bottom: 14px; ">
+                <p:dataTable id="oracleInfo" value="#{oracle.list}" var="oracleInfo" >
+                    <p:column  >  
+                        <h:outputText value="#{oracleInfo.item}"/>  
+                    </p:column>   
+                    <p:column headerText="#{res.get('amount')}"  >  
+                        <h:outputText value="#{oracleInfo.number}"/>  
+                    </p:column>  
+                </p:dataTable>
+            </div>
+            开启自动清理功能: <p:selectBooleanCheckbox value="#{oracle.hasCleanServer}">
+                <p:ajax listener="#{oracle.ChangeState()}"      update=":form"></p:ajax>
+            </p:selectBooleanCheckbox><br></br>
+            <p:fieldset   legend="自动清理策略" rendered="#{oracle.hasCleanServer}" >
+                <h:panelGrid  columns="3"  >
+                    <h:outputLabel value=" 时间间隔："></h:outputLabel>
+                    <p:inputText id="text_days"   value="#{oracle.tnSconfig.period}"></p:inputText>
+                    <p:selectOneMenu id="console" value="#{oracle.selectTimeUnit}" style="width:125px">
+                        <f:selectItems   value="#{oracle.timemap.keySet()}"/>
+                    </p:selectOneMenu>
+                    <h:outputLabel value="开始时间："></h:outputLabel>
+                    <p:calendar locale="cn" pattern="yyyy-MM-dd HH:mm:ss" showButtonPanel="true" navigator="true"
+                                value="#{oracle.tnSconfig.startCleanTime}"     id="date2"  /> 
+                </h:panelGrid>
+
+            </p:fieldset>
+                
+            <p:commandButton value="保存配置" action="#{oracle.save()}" update=":form"></p:commandButton>
+        </h:form>
+    </h:body>
+</html>

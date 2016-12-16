@@ -1,0 +1,89 @@
+<?xml  version="1.0" encoding="GB18030" standalone="no" ?>
+<MBA>
+  <Setup>
+    <SetupItem>
+      <OS>Windows</OS>
+      <Platform>x86</Platform>
+      <FileName>Windows.zip</FileName>
+      <Description>x86 Windows代理</Description>
+    </SetupItem>
+    <SetupItem>
+      <OS>Windows</OS>
+      <Platform>x64</Platform>
+      <FileName>Windows64.zip</FileName>
+      <Description>x64 Windows代理</Description>
+    </SetupItem>
+    <SetupItem>
+      <OS>Linux</OS>
+      <Platform>x86</Platform>
+      <FileName>Linux.tar</FileName>
+      <Description>x86 Linux代理</Description>
+    </SetupItem>
+    <SetupItem>
+      <OS>Linux</OS>
+      <Platform>x64</Platform>
+      <FileName>Linux_X64.tar</FileName>
+      <Description>x64 Linux代理</Description>
+    </SetupItem>
+    <SetupItem>
+      <OS>AIX</OS>
+      <Platform>32</Platform>
+      <FileName>AIX32.tar</FileName>
+      <Description>32位AIX代理</Description>
+    </SetupItem>
+    <SetupItem>
+      <OS>AIX</OS>
+      <Platform>64</Platform>
+      <FileName>AIX64.tar</FileName>
+      <Description>64位AIX代理</Description>
+    </SetupItem>
+    <SetupItem>
+      <OS>HP-UX</OS>
+      <Platform>IA32</Platform>
+      <FileName>HP_IA32.tar</FileName>
+      <Description>IA32 HP-UX代理</Description>
+    </SetupItem>
+    <SetupItem>
+      <OS>HP-UX</OS>
+      <Platform>IA64</Platform>
+      <FileName>HP_IA64.tar</FileName>
+      <Description>IA64 HP-UX代理</Description>
+    </SetupItem>
+    <SetupItem>
+      <OS>HP-UX</OS>
+      <Platform>PA32</Platform>
+      <FileName>HP_PA32.tar</FileName>
+      <Description>PA32 HP-UX代理</Description>
+    </SetupItem>
+    <SetupItem>
+      <OS>HP-UX</OS>
+      <Platform>PA64</Platform>
+      <FileName>HP_PA64.tar</FileName>
+      <Description>PA64 HP-UX代理</Description>
+    </SetupItem>
+    <SetupItem>
+      <OS>Solaris</OS>
+      <Platform>Sparc 32</Platform>
+      <FileName>SunOSSparc32.tar</FileName>
+      <Description>32位Sparc Solaris代理</Description>
+    </SetupItem>
+    <SetupItem>
+      <OS>Solaris</OS>
+      <Platform>Sparc 64</Platform>
+      <FileName>SunOSSparc64.tar</FileName>
+      <Description>64位Sparc Solaris代理</Description>
+    </SetupItem>
+    <SetupItem>
+      <OS>Windows</OS>
+      <Platform>x64</Platform>
+      <FileName>WinPE.iso</FileName>
+      <Description>x64 Windows系统恢复光盘</Description>
+    </SetupItem>
+    <SetupItem>
+      <OS>Linux</OS>
+      <Platform>x64</Platform>
+      <FileName>LiveCD.iso</FileName>
+      <Description>x64 Linux系统恢复光盘</Description>
+    </SetupItem>
+  </Setup>
+</MBA>

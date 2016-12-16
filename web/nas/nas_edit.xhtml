@@ -1,0 +1,99 @@
+<?xml version="1.0" encoding="GBK"?>
+<!--
+To change this template, choose Tools | Templates
+and open the template in the editor.
+-->
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.1//EN" "http://www.w3.org/TR/xhtml11/DTD/xhtml11.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:p="http://primefaces.org/ui"
+                template="../template/framework.xhtml">
+
+    <ui:insert name="head">
+        <!--         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+                <link href="./../resources/common/css/default.css" rel="stylesheet" type="text/css" />
+                <link href="./../resources/common/css/cssLayout.css" rel="stylesheet" type="text/css" />
+                <title>Facelets Template</title>-->
+    </ui:insert>
+    <ui:define name="left">
+        <ui:include src="../panel/leftMenu.xhtml"/>
+    </ui:define>
+
+    <ui:define name="content" >
+        <h:body onload="testbox()" >
+
+            <ui:insert name="head">
+                <!--                <f:verbatim>-->
+                <script type="text/javascript">
+                    function test1(xhr, status, args){
+                    alert("设置"+args.sl);
+                    }
+                    
+                    //                function  mytest(){
+                    //                 window.document.all.item("myform:t1").disabled = true;
+                    //                 return false;
+                    //                }
+                    function testbox() {
+                    // var value= document.getElementById("form:check");
+                    var value = document.getElementById("form:check").checked;
+                    //window.alert(value);
+                    if(value) {
+                    document.getElementById("form:share").disabled = false;
+                    // window.document.all.item("form:share").disabled = false;
+                    //alert("hello!");
+                    // return  true;
+                    } else {
+                    // alert("hello!world!!");
+                    // return  true;
+                    document.getElementById("form:share").disabled = true;
+                    //window.document.all.item("form:share").disabled = true;
+                    }
+                    // return false;
+                    // document.getElementById("myform:t1").disabled = false;
+                    //alert(window.document.all.item("myform:t2"));
+                    //   window.alert("hello!");
+                    }
+
+                </script>
+                <!--            </f:verbatim>-->
+            </ui:insert>
+
+            <script type="javascript" >
+                function() {
+                
+            </script>
+
+            <h:form id="form">
+                <h1 title="Share Path Infomation" class="title ui-widget-header ui-corner-all">CIFS设置</h1>
+                <h:panelGrid id="display" columns="5" cellpadding="6">
+<!--                    <h:outputLabel for="cifs" value="共享名称" />
+                    <h:inputText id="share"  value="{editlink.shareNameEdit}"  >
+                        <f:validator  validatorId="ShareNameValidator" ></f:validator>
+                        <f:validateLength minimum="3" maximum="6" />
+                    </h:inputText>
+                   <h:message for="share" ></h:message>-->
+
+                    <p:selectBooleanCheckbox id="bool" value="#{editlink.cifsOnOrOff}" >
+                        <p:ajax  listener="#{editlink.change}" update="testshare" /> 
+                    </p:selectBooleanCheckbox>
+                    <h:outputText value="开启CIFS" />
+                    <h:outputLabel for="pathname" value="目录名称" />
+                    <p:inputText id="testshare" binding="#{editlink.shareText}" required="true"/>
+<!--                    <p:commandButton id="abc" value="nnn" binding="{editlink.button}" />-->
+                    <!--                <h:message for="share" />-->
+                    <!--                <h:inputText id="share" value="{editlink.shareText}" required="true"/>-->
+
+                    <br/>
+                </h:panelGrid>
+                <p:commandButton value="保存"  actionListener ="#{editlink.save}" />
+                <p:commandButton value="放弃" immediate="true" action="#{editlink.backOut}" />
+
+            </h:form>
+<!--            <h:outputLabel value="abc" />-->
+        </h:body>
+        
+    </ui:define>
+
+</html>

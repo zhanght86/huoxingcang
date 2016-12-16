@@ -1,0 +1,126 @@
+<?xml version="1.0" encoding="GBK"?>
+<!--
+To change this template, choose Tools | Templates
+and open the template in the editor.
+-->
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.1//EN" "http://www.w3.org/TR/xhtml11/DTD/xhtml11.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:p="http://primefaces.org/ui"                
+                xmlns:util="http://java.sun.com/jsf/composite/xhtml">
+    <h:head>
+        <link href="./../resources/common/css/default.css" rel="stylesheet" type="text/css" />
+        <link href="./../resources/common/css/cssIcon.css" rel="stylesheet" type="text/css" />
+    </h:head>
+    <h:body>
+        <h:form id="form">
+            <h1 class="title ui-widget-header ui-corner-all">#{global.get('cdp')}#{res.get('title')}</h1>
+            <p:messages id="messages" showDetail="true" autoUpdate="true" closable="true" />
+            <br></br>
+            <p:tabView id="tabView" dynamic="true" cache="true" style="border: none;">
+                <p:tab id="tab1" title="#{res.get('tab1')}"> 
+                    <p:toolbar>  
+                        <p:toolbarGroup align="right">                            
+                            <p:commandButton id="addLink" icon="addIcon" value="#{global.get('add')}" disabled="#{user.type!=2}"  action="add_client?faces-redirect=true" update="clients" /> 
+                        </p:toolbarGroup> 
+                    </p:toolbar>
+                    <div style="overflow-x: auto; width:100%;padding-bottom: 2px !important; padding-bottom: 14px;">
+                        <p:dataTable id="clients" var="client" value="#{clientsBean.clients}"  emptyMessage="#{global.get('emptyMessage')}">  
+                            <p:column headerText="#{res.get('header1')}" width="200" style="text-align:center" >
+                                <h:outputLabel id="hostname" value="#{client.hostname}"/>
+                            </p:column>
+                            <p:column headerText="#{res.get('header2')}" width="200" style="text-align:center" >
+                                <h:outputLabel id="port" value="#{client.port}"/>                            
+                            </p:column>
+                            <p:column headerText="#{res.get('header3')}" width="200" style="text-align:center" >  
+                                <h:outputLabel id="os" value="#{ccc.getOSTypeFromInt(client.getOStype())}"/>                            
+                            </p:column>
+                            <p:column headerText="#{global.get('operation')}" style="text-align:center; white-space: nowrap">                     
+                                <p:graphicImage value="../resources/common/picture/reconnect.png"  width="16" height="16" style="vertical-align:middle"/>
+                                <p:commandLink id="connect" disabled="#{user.type!=2}" value="#{res.get('o1')}" immediate="true"  style="vertical-align:middle" action="#{clientsBean.connect()}" >
+                                    <f:setPropertyActionListener value="#{client}" target="#{clientsBean.selected}" />
+                                </p:commandLink>
+                                <p:spacer width="10"/>
+                                <p:graphicImage value="../resources/common/picture/edit.png" width="16" height="16" style="vertical-align:middle" />  
+                                <p:commandLink id="modify"  disabled="#{user.type!=2}"  value="#{global.get('modify')}" immediate="true" update="clients" action="#{clientsBean.modifyClient()}" style="vertical-align:middle">
+                                    <f:setPropertyActionListener value="#{client}" target="#{clientsBean.selected}" />
+                                </p:commandLink>
+                                <p:spacer width="10"/>
+                                <p:graphicImage value="../resources/common/picture/delete.png" width="16" height="16" style="vertical-align:middle"/>
+                                <p:commandLink id="delete"  disabled="#{user.type!=2}" value="#{global.get('delete')}" update="clients" onclick="deleteClient.show();" style="vertical-align:middle">
+                                    <f:setPropertyActionListener value="#{client}" target="#{clientsBean.selected}" />
+                                </p:commandLink>                 
+                            </p:column> 
+                        </p:dataTable> 
+                    </div>
+                </p:tab>
+                <p:tab id="tab2" title="#{res.get('tab2')}">
+                    <div style="overflow-x: auto;">
+                        <p:dataTable id="service" var="service" value="#{clientsBean.agentList}" style="white-space: nowrap" emptyMessage="#{global.get('emptyMessage')}" >
+                            <p:column headerText="#{res.get('serial')}"  style="text-align:center" >  
+                                <h:outputText value="#{service.serial}"/>  
+                            </p:column>   
+                            <p:column headerText="#{res.get('system')}"  style="text-align:center" >  
+                                <h:outputText value="#{service.strAgentOS}"/>  
+                            </p:column>   
+                            <p:column headerText="#{res.get('platform')}"  style="text-align:center" >  
+                                <h:outputText value="#{service.strAgentPlatform}"/>  
+                            </p:column>   
+                            <p:column headerText="#{res.get('filename')}"  style="text-align:center" >  
+                                <h:outputText value="#{service.strDescription}"/>  
+                            </p:column>   
+                            <p:column headerText="#{res.get('date')}"  style="text-align:center" >  
+                                <h:outputText value="#{service.strAgentDate}"/>  
+                            </p:column>   
+                            <p:column headerText="#{res.get('update')}"  style="text-align:center" >  
+                                <h:outputText value="#{service.strAgentModifyDate}"/>  
+                            </p:column>   
+                            <p:column headerText="#{global.get('operation')}">
+                                <p:graphicImage value="../resources/common/picture/download.png" style=" vertical-align:middle; width: 16px; height: 16px;"/>
+                                <p:commandLink id="download" disabled="#{user.type!=2}" value="${res.get('download')}"  style=" vertical-align:middle;" ajax="false" >
+                                    <f:setPropertyActionListener value="#{service}" target="#{clientsBean.selectedAgent}"/>
+                                    <p:fileDownload value="#{clientsBean.agentFile}" />
+                                </p:commandLink>
+                            </p:column>
+                        </p:dataTable>   <br/>                   
+                    </div>
+                </p:tab>
+                <p:tab id="tab3" title="#{res.get('tab3')}">
+                    <div style="overflow-x: auto;">
+                        <p:dataTable id="jre" var="jre" value="#{clientsBean.jreList}" style="white-space: nowrap" emptyMessage="#{global.get('emptyMessage')}" >
+                            <p:column headerText="#{res.get('serial')}"  style="text-align:center" >  
+                                <h:outputText value="#{jre.serial}"/>  
+                            </p:column> 
+                            <p:column headerText="#{res.get('platform')}"  style="text-align:center" >  
+                                <h:outputText value="#{jre.strAgentOS} #{jre.strAgentPlatform}"/>  
+                            </p:column>
+                            <p:column headerText="#{res.get('version')}"  style="text-align:center" >  
+                                <h:outputText value="#{jre.strDescription}"/>  
+                            </p:column>
+                            <p:column headerText="#{global.get('operation')}">
+                                <p:graphicImage value="../resources/common/picture/download.png" style=" vertical-align:middle; width: 16px; height: 16px;"/>
+                                <p:commandLink id="downloadJRE" disabled="#{user.type!=2}" value="${res.get('download')}"  style=" vertical-align:middle;" ajax="false" >
+                                    <f:setPropertyActionListener value="#{jre}" target="#{clientsBean.selectedJre}"/>
+                                    <p:fileDownload value="#{clientsBean.jreFile}" />
+                                </p:commandLink>
+                            </p:column>
+                        </p:dataTable>   <br/>                   
+                    </div>
+                </p:tab>
+            </p:tabView>
+            <util:confirm  uid="deleteClient" mess="#{res.get('confirm')}" action="#{clientsBean.deleteClient()}" update=":form:tabView:clients">
+            </util:confirm>
+        </h:form>
+        <p:ajaxStatus style="width:64px;height:64px;position:fixed;right:5px;bottom:5px">  
+            <f:facet name="start">  
+                <p:graphicImage value="../resources/common/picture/loading.gif" />  
+            </f:facet>  
+
+            <f:facet name="complete">  
+                <h:outputText value="" />
+            </f:facet>  
+        </p:ajaxStatus>
+    </h:body>
+</ui:composition>

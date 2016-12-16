@@ -1,0 +1,96 @@
+<?xml version="1.0" encoding="GBK"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.1//EN" "http://www.w3.org/TR/xhtml11/DTD/xhtml11.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:p="http://primefaces.org/ui"
+                xmlns:util="http://java.sun.com/jsf/composite/xhtml">
+    <h:head>     
+        <link href="./../resources/common/css/default.css" rel="stylesheet" type="text/css" />
+        <link href="./../resources/common/css/cssIcon.css" rel="stylesheet" type="text/css" />
+    </h:head>
+    <h:body>      
+        <h:form id="form"> 
+            <h1 title="System Infomation" class="title ui-widget-header ui-corner-all">#{global.get('backuptitle')}#{res.get('title')}</h1>
+            <p:messages id="message" autoUpdate="true" showDetail="true" closable="true" /><br/>
+            <p:toolbar>  
+                <p:toolbarGroup align="right">  
+                    <p:commandButton id="addLink" value="#{global.get('add')}" disabled="#{user.type!=2}" update="NSNameInfo"
+                                     icon="addIcon" action="#{createNSNameBean.jumpToCreate()}" /> 
+                </p:toolbarGroup> 
+            </p:toolbar>
+            <p:dataTable id="NSNameInfo" var="NSNameInfo" value="#{NSNameBean.netServiceName}" emptyMessage="#{global.get('emptyMessage')}" >
+                <p:column style="width:2%">  
+                    <p:rowToggler />  
+                </p:column> 
+                <p:column headerText="#{res.get('netServiceName')}"  >  
+                    <h:outputText value="#{NSNameInfo.netServiceName}"/>  
+                </p:column>   
+                <p:column headerText="#{res.get('databaseServiceName')}"  >  
+                    <h:outputText value="#{NSNameInfo.DBServiceName}"/>  
+                </p:column> 
+                <p:column headerText="#{res.get('operation')}" >
+                    <p:graphicImage value="../resources/common/picture/select.png" style=" vertical-align:middle;"/>
+                    <p:commandLink id="testNSName" value="#{res.get('test')}" disabled="#{user.type!=2}"
+                                   onclick="dlg.show();" >
+                        <f:setPropertyActionListener value="#{NSNameInfo}" target="#{NSNameBean.selectedNSName}" />
+                    </p:commandLink>    
+
+                    <p:spacer width="10"/>
+                    <p:graphicImage value="../resources/common/picture/delete.png" style=" vertical-align:middle;"/>
+                    <p:commandLink id="deleteButton" value="${global.get('delete')}" action="#{NSNameBean.deleteConfirm()}"
+                                   disabled="#{user.type!=2}"  update=":form1">
+                        <f:setPropertyActionListener value="#{NSNameInfo}" target="#{NSNameBean.selectedNSName}" />
+                    </p:commandLink>
+                </p:column>
+                <p:rowExpansion>
+                    <div style="overflow-x:auto; width: 100%;padding-bottom: 0px!important;padding-bottom: 6px;">
+                        <p:dataTable var="addressInfo" value="#{NSNameInfo.list}" id="addressInfo" style=" margin-top: 10px;margin-bottom: 6px; margin-right: 0px !important;margin-right: -70px;">  
+                            <p:column headerText="#{res.get('address')}" >  
+                                <h:outputText value="#{addressInfo.IP}" />  
+                            </p:column> 
+                            <p:column headerText="#{res.get('port')}" >  
+                                <h:outputText value="#{addressInfo.port}" />  
+                            </p:column>                              
+                        </p:dataTable>
+                    </div>
+                </p:rowExpansion>
+            </p:dataTable>
+        </h:form>
+
+        <h:form id="form0">
+            <p:dialog  id="dialog" header="#{res.get('test')}" widgetVar="dlg" style="min-width: 300px; max-width: 320px;" resizable="false" modal="true">  
+                <h:panelGrid columns="2" cellpadding="5">  
+                    <h:outputLabel for="username" value="#{res.get('username')}" />  
+                    <p:inputText value="#{NSNameBean.user}" widgetVar="user"  id="username"   label="username" />  
+
+                    <h:outputLabel for="password" value="#{res.get('password')}" />  
+                    <p:password value="#{NSNameBean.pass}"  redisplay="true" widgetVar="pass"   id="password"   />  
+
+                    <f:facet name="footer">  
+                        <p:spacer width="60" height="0"/>
+                        <p:commandButton id="loginButton" value="#{global.get('ok')}" update="dialog" 
+                                         action="#{NSNameBean.testConnect()}"/>
+                        <p:spacer width="10px"/>
+                        <p:commandButton id="cancelButton" value="#{global.get('cancel') }" action="#{NSNameBean.closeDialog()}"/>  
+                    </f:facet>  
+                </h:panelGrid>  
+            </p:dialog> 
+        </h:form>
+
+        <h:form id="form1">
+            <util:confirm id="deletecomfirm"  uid="deletecomfirm" mess="#{res.get('confirm')}#{NSNameBean.selectedNSName.netServiceName}#{res.get('confirmend')}"  action="#{NSNameBean.deleteNSName()}" update=":form:NSNameInfo">
+            </util:confirm>
+        </h:form>
+        <p:ajaxStatus style="width:64px;height:64px;position:fixed;right:5px;bottom:5px">  
+            <f:facet name="start">  
+                <p:graphicImage value="../resources/common/picture/loading.gif" />  
+            </f:facet>  
+
+            <f:facet name="complete">  
+                <h:outputText value="" />  
+            </f:facet>  
+        </p:ajaxStatus>
+    </h:body>
+</ui:composition>

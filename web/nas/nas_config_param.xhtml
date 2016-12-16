@@ -1,0 +1,127 @@
+<?xml version="1.0" encoding="GBK"?>
+<!--
+To change this template, choose Tools | Templates
+and open the template in the editor.
+-->
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.1//EN" "http://www.w3.org/TR/xhtml11/DTD/xhtml11.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:p="http://primefaces.org/ui"
+      template="../template/framework.xhtml">
+    <h:head>
+        <link href="./../resources/common/css/cssIcon.css" rel="stylesheet" type="text/css" />
+        <link href="./../resources/common/css/default.css" rel="stylesheet" type="text/css" />
+    </h:head>
+    <h:body>
+        <h:form id="form1" >
+            <h1 title="Share Path Infomation" style="width: 720px" class="title ui-widget-header ui-corner-all">存储功能>NAS网络存储>存储空间>设置#{configFileSystem.fileSystemName}</h1>
+             <p:messages showSummary="true" showDetail="false" autoUpdate="true" closable="true" />
+            <p:panel style="border-color: transparent" >
+                <br/>
+<!--                <h:panelGrid columns="1" >-->
+                    <h:panelGrid columns="2" >
+                        <h:panelGrid columns="2"  >
+                            <h:panelGrid columns="1"  >
+                                <p:selectBooleanCheckbox style="vertical-align: middle" id="duplicate"  value="#{configFileSystem.isSetDedup}" >
+                                    <p:ajax  listener="#{configFileSystem.changDuplicate}" update="check" /> 
+                                </p:selectBooleanCheckbox>
+                            </h:panelGrid>
+                            <h:panelGrid columns="1" >
+                                <h:outputLabel style="vertical-align: middle" value="启用重复数据删除"  />
+                            </h:panelGrid>
+                        </h:panelGrid>
+                        <h:panelGrid columns="2" >
+                            <h:panelGrid columns="1" >
+                                <p:selectBooleanCheckbox style="vertical-align: middle" id="check" value="#{configFileSystem.isVerify}" disabled="#{configFileSystem.notVerify}"  >
+                                </p:selectBooleanCheckbox>
+                            </h:panelGrid>
+                            <h:panelGrid columns="1" >
+                                <h:outputLabel style="vertical-align: middle" value="启用数据校验" />
+                            </h:panelGrid>
+                        </h:panelGrid>
+                    </h:panelGrid>
+                    <h:panelGrid columns="2" >
+                        <h:panelGrid columns="2" >
+                            <h:panelGrid columns="1" style="line-height: 8px">
+                                <p:selectBooleanCheckbox style="vertical-align: middle"  value="#{configFileSystem.isCompress}" >
+                                    <p:ajax  listener="#{configFileSystem.changeCompress}" update="pannelSpin" /> 
+                                </p:selectBooleanCheckbox>
+                            </h:panelGrid>
+                            <h:panelGrid columns="1" >
+                                <h:outputLabel style="vertical-align: middle;" value="启用数据压缩"  />
+                            </h:panelGrid>
+                        </h:panelGrid>
+                        <h:panelGrid columns="2"   >
+                            <h:panelGrid columns="1" >
+                                <p:spinner id="pannelSpin" size="2" disabled="#{configFileSystem.notCompress}"  value="#{configFileSystem.compress}" min="1" max="9"/>  
+                            </h:panelGrid>
+                            <h:panelGrid columns="1" >
+                                <h:outputLabel value="（级别1-9）" />
+                            </h:panelGrid>
+                        </h:panelGrid>
+                    </h:panelGrid>
+                    <!--                </h:panelGrid>-->
+                    <h:panelGrid columns="2" >
+                        <h:panelGrid columns="1"  style="line-height: 5px" >
+<!--                            <p:spacer width="0.0.5" height="8" />-->
+                            <p:selectBooleanCheckbox  style="vertical-align: middle" id="quota"  value="#{configFileSystem.isSetQuota}" >
+                                <p:ajax  listener="#{configFileSystem.changeQuota}" update="maxSpace" /> 
+                            </p:selectBooleanCheckbox>
+                        </h:panelGrid>
+                        <h:panelGrid columns="1" >
+                            <h:outputLabel style="vertical-align: middle" value="启用配额管理" />
+                        </h:panelGrid>
+                    </h:panelGrid>
+<!--                </h:panelGrid>-->
+
+                <!--                <h:outputLabel for="minmax" value="Min/Max: " />  -->
+
+                <h:panelGrid columns="2" >
+                    <h:panelGrid columns="1"  >
+                        <h:outputLabel value="最大分配空间：" />
+                    </h:panelGrid>
+                    <h:panelGrid columns="3">
+                        <p:spacer width="4px"/>
+                        <p:inputText id="maxSpace" value="#{configFileSystem.quotaValue}" disabled ="#{configFileSystem.notQuota}" style="width: 80px"  />
+                        <h:outputLabel value="GB （不得少于#{configFileSystem.minQuotaValue}GB）" />
+                    </h:panelGrid>
+                </h:panelGrid>
+                <h:panelGrid columns="2">
+                    <h:panelGrid columns="1">
+                        <h:outputLabel value="块大小：" />
+                    </h:panelGrid>
+                    <h:panelGrid columns="2">
+                         <p:spacer width="52px"/>
+                        <p:selectOneMenu value="#{configFileSystem.recordsize}"  style="width: 90px"  >
+                            <f:selectItems value="#{configFileSystem.blockSize}" />
+                        </p:selectOneMenu>
+                    </h:panelGrid>
+                </h:panelGrid>
+                    
+                <!--</h:panelGrid>-->
+                <br/>
+                <p:spacer width="65" height="6" />
+
+                <p:commandButton value="保存" icon="saveIcon"  action="#{configFileSystem.save()}"  >
+                    <!--                        <f:attribute name="folder" value="{sharepath.folder}" />
+                                            <f:attribute name="volume" value="{volumes.selectedName}" />-->
+                </p:commandButton>  
+                <p:spacer width="8" height="6" />
+                <p:commandButton value="返回" icon="cancleIcon" immediate="true" action="nas_storage_space?faces-redirect=true" />  
+                </p:panel>
+            <br/>
+<!--            </p:panel>-->
+        </h:form>
+        <p:ajaxStatus style="width:64px;height:64px;position:fixed;right:5px;bottom:5px">  
+            <f:facet name="start">  
+                <p:graphicImage value="../resources/common/picture/loading.gif" />  
+            </f:facet>  
+
+            <f:facet name="complete">  
+                <h:outputText value="" />  
+            </f:facet>  
+        </p:ajaxStatus>
+    </h:body>
+</html>

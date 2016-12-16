@@ -1,0 +1,126 @@
+<?xml version="1.0" encoding="GBK"?>
+<!--
+To change this template, choose Tools | Templates
+and open the template in the editor.
+-->
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.1//EN" "http://www.w3.org/TR/xhtml11/DTD/xhtml11.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:p="http://primefaces.org/ui">
+
+    <!--template="../template/framework.xhtml"-->
+    <!--    <ui:define name="head">-->
+
+    <h:head>
+        <script type="text/javascript">
+            function check() {
+
+                var selCreatDisk = form['form:disk'][0].checked;
+                var selExistDisk = form['form:disk'][1].checked;
+                var selNoDisk = form['form:disk'][2].checked;
+
+                if (selCreatDisk) {
+                    document.getElementById("form:virDisk").disabled = true;
+                    document.getElementById("form:virDiskName").disabled = false;
+
+                    document.getElementById("form:diskType").disabled = false;
+                    document.getElementById("form:virDiskSize").disabled = false;
+                    //                    alert("1");         
+                } else if (selExistDisk) {
+                    document.getElementById("form:virDisk").disabled = false;
+                    document.getElementById("form:virDiskName").disabled = true;
+                    document.getElementById("form:diskType").disabled = true;
+                    document.getElementById("form:virDiskSize").disabled = true;
+                    //                    alert("2"); 
+                } 
+
+
+            }
+        </script>
+        <link href="./../resources/common/css/default.css" rel="stylesheet" type="text/css" />
+        <link href="./../resources/common/css/cssIcon.css" rel="stylesheet" type="text/css" />
+    </h:head>
+
+    <h:body>
+        <h:form id="form">
+            <h1 class="title ui-widget-header ui-corner-all">${global.get('moduletitle')}${res.get('title')}</h1>
+            <p:messages id="messages" showDetail="true" autoUpdate="true" closable="true" />
+            <br></br>
+            <h:panelGrid columns="2" cellpadding="5">
+                <h:outputLabel value="${res.get('vmname')}"/>
+                <h:outputLabel value="#{creatDisk.vmName}"/>
+                <h:outputLabel value="${res.get('controname')}"/>
+                <h:outputLabel value="#{creatDisk.controName}"/>
+
+            </h:panelGrid>
+            <h:panelGrid columns="1" cellpadding="5">
+                <h:selectOneRadio id="disk" value="#{creatDisk.createDiskType}">  
+                    <f:selectItem itemLabel="${res.get('createdisktype_creat')}" itemValue="0" />  
+                    <f:selectItem itemLabel="${res.get('createdisktype_exit')}" itemValue="1" />  
+                    <p:ajax update="virDisk virDiskButt virDiskName diskType virDiskSize" listener="#{creatDisk.changeBooleanCheckbox()}" />
+                </h:selectOneRadio>
+                
+                <h:panelGroup>
+                    ${res.get('selectdiskname')}
+                    <p:inputText id="virDisk" style="width: 165px" value="#{creatDisk.selectDiskName}" disabled="#{creatDisk.notFile}"/>
+                    <p:spacer width="5px;"/>
+                    <p:commandButton id="virDiskButt" value="${res.get('browse')}" icon="browseIcon" action="#{creatDisk.clickButton()}" disabled="#{creatDisk.notFile}"/>
+                </h:panelGroup>
+                
+                <h:panelGroup>
+                    ${res.get('diskname')}
+                    <p:inputText id="virDiskName" style="width: 165px" value="#{creatDisk.diskName}" disabled="#{creatDisk.notName}"/>
+                </h:panelGroup>
+
+                <h:selectOneRadio id="diskType" value="#{creatDisk.diskType}" disabled="#{creatDisk.notName}">  
+                    <f:selectItem itemLabel="${res.get('disktype_auto')}" itemValue="0" />  
+                    <f:selectItem itemLabel="${res.get('disktype_fix')}" itemValue="1" />
+                </h:selectOneRadio> 
+                 ${res.get('disktype_fixtip')} 
+
+                <h:panelGroup>
+                    ${res.get('disksizen')}
+                    <p:inputText id="virDiskSize" style="width: 165px" value="#{creatDisk.diskSizen}" disabled="#{creatDisk.notName}"/>GB #{creatDisk.virDiskSizetip}
+                </h:panelGroup>
+            </h:panelGrid>
+            <br/>
+            <p:spacer width="140" height="15"/>
+            <p:commandButton icon="saveIcon" value="${global.get('save')}" action="#{creatDisk.createDisk_byController}" />
+            <p:spacer style="width: 10px; height: 5px"/>
+            <p:commandButton icon="cancleIcon" value="${global.get('return')}" action="#{creatDisk.cancleButton}" id="btnCancle"/>
+
+            <p:dialog id="dialog" header="${res.get('dialogtitle')}"  widgetVar="dlg" maximizable="328" width="260" height="320" style="overflow-x: hidden;" resizable="false" modal="true">  
+           
+                <p:dataTable id="virtual" style="width: 220px;" var="virtualDiskName" value="#{creatDisk.vdsModel}" rowKey="#{virtualDiskName.name}"  
+                             selection="#{creatDisk.selectedVirDisk}" emptyMessage="#{global.get('emptyMessage')}" >  
+                    <p:column selectionMode="single" width="20" style="text-align:center"/> 
+                    <p:column headerText="${res.get('name')}">  
+                            #{virtualDiskName.name}   
+                    </p:column>  
+                </p:dataTable>   
+                <f:facet name="footer">
+                   
+                    <p:commandButton id="loginButton" value="${global.get('save')}" icon="saveIcon" action="#{creatDisk.okDialog()}"
+                                     update="dialog form:virDisk" style="position: relative; left: 22px" />
+                    <p:spacer width="10px"/>
+                    <p:commandButton id="cancelButton" value="${global.get('cancel')}" icon="cancleIcon" action="#{creatDisk.closeDialog()}"
+                                     style="position: relative; left: 22px" update="dialog"/>  
+               </f:facet>
+                <br/>
+         
+            </p:dialog> 
+
+        </h:form>
+        <p:ajaxStatus style="width:64px;height:64px;position:fixed;right:5px;bottom:5px">  
+            <f:facet name="start">  
+                <p:graphicImage value="../resources/common/picture/loading.gif" />  
+            </f:facet>  
+
+            <f:facet name="complete">  
+                <h:outputText value="" />  
+            </f:facet>  
+        </p:ajaxStatus>
+    </h:body>
+</ui:composition>

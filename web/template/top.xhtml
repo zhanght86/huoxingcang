@@ -1,0 +1,83 @@
+<?xml version="1.0" encoding="GBK"?>
+<!--
+To change this template, choose Tools | Templates
+and open the template in the editor.
+-->
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.1//EN" "http://www.w3.org/TR/xhtml11/DTD/xhtml11.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:p="http://primefaces.org/ui">
+
+    <h:head>
+        <link href="#{request.contextPath}/resources/common/css/default.css" rel="stylesheet" type="text/css" /> 
+        <style type="text/css">
+              body{
+                  padding: 0;
+                  margin: 0;
+              }
+        </style>
+        <script type="text/javascript">
+              function showabout()
+            {
+               var isChrome = window.navigator.userAgent.indexOf("Chrome")
+                    if(isChrome=== -1 )
+                    {
+                window.showModalDialog('../template/about.xhtml',window,'dialogWidth=530px;dialogHeight=285px,scroll=false'); 
+                    }
+                    else
+                    {
+               window.open("../template/about.xhtml", "弹出窗口", "width=" + 530 + ", height=" + 276 + ",top=" + 0 + ",left=" + 0 + ",toolbar=no, menubar=no, scrollbars=no, resizable=no,location=no, status=no,alwaysRaised=yes,depended=yes")
+                    }
+            }
+        </script>
+    </h:head>
+    <h:body style="text-align: center;border: none;"> 
+        <h:form>
+        <div id="header" class="ui-widget ui-widget-header">
+            <div id="top_logo" class="ui-widget">
+                <img src="#{request.contextPath}/resources/oempic/logo.png" width="180px" alt="Logo" />
+            </div>
+           
+<!--            <div id="top_label" class="ui-widget">
+              <h:outputLabel style="padding-right: 20px" value="{res.get('user')}{user}"/>
+              <h:outputLabel value="{res.get('time')}{time}"/>
+            </div>-->
+            <div id="top_menu" class="ui-widget">
+                <ul id="main">
+                    <li class="current_page_item"><a href="../template/framework.xhtml" target="_top">${res.get('framework')}</a></li>
+                    <li><a href="../common/register_info.xhtml" target="_top">${res.get('register')}</a></li>
+                    <li class="current_page_item"><a href="javascript:showabout()">${res.get('about')}</a></li>
+                    <li><a href="../resources/help.pdf" target="_blank">${res.get('help')}</a></li>
+                    <li class="current_page_item">
+                        <a href="../template/logout.xhtml" target="_top">${res.get('logout')}</a>                       
+                    </li>
+                </ul>
+            </div>
+
+        </div>
+            </h:form>
+    </h:body>
+    <!--    <h:body class="ui-widget ui-widget-header" style="margin: 0px 0px 0px 0px;"> 
+            <h:panelGrid      cellpadding="0px" columns="8">
+                <p:spacer width="20px"/>
+                <p:graphicImage width="180px" id="top_logo" value="../resources/oempic/logo.png" />
+                <p:spacer width="80px"/>
+                <h:panelGroup>
+                    <h:outputLabel value="用户名："/>
+                    <h:outputLabel value="{loginBean.username}"/>                
+                </h:panelGroup>
+                <p:spacer width="80px"/>
+                <h:panelGroup>
+                    <h:outputLabel value="登陆时间："/>
+                    <h:outputLabel value="2013-05-03 12:00:00"/>                
+                </h:panelGroup>     
+                <p:spacer width="80px"/>
+                <h:panelGroup   id="top_about" > 
+                    <a> <h:link value="关于"></h:link></a> 
+                    <a> <h:link value="支持"></h:link> </a>   
+                    <a> <h:link value="帮助"></h:link>  </a> 
+                    <a> <h:link value="注销"></h:link>  </a> 
+                </h:panelGroup> 
+            </h:panelGrid>
+             </h:body>-->
+</html>

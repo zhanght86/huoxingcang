@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="GBK"?>
+<!--
+To change this template, choose Tools | Templates
+and open the template in the editor.
+-->
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.1//EN" "http://www.w3.org/TR/xhtml11/DTD/xhtml11.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:p="http://primefaces.org/ui"
+                xmlns:util="http://java.sun.com/jsf/composite/xhtml">
+    <h:head>
+
+        <link href="./../resources/common/css/default.css" rel="stylesheet" type="text/css" />
+        <link href="./../resources/common/css/cssIcon.css" rel="stylesheet" type="text/css" />
+
+    </h:head>
+    <h:body>
+        <h1 title="System Infomation" class="title ui-widget-header ui-corner-all">#{res.get('title')}</h1>
+        <p:messages autoUpdate="true" redisplay="true" showDetail="true" closable="true" /><br/>
+        <h:form >
+            <p:panel style="border: 0px">
+                <h:panelGrid columns="3">
+                <h:outputText value="#{res.get('newname')}"/>
+                <p:inputText value="#{modifyMemory.strName}" />
+                <h:outputText value="#{modifyMemory.tip}"/>
+               </h:panelGrid>
+                <br/><br/>
+                <p:spacer width="80px" height="0px"/>
+                <p:commandButton value="#{res.get('modify')}" icon="modifyIcon" actionListener="#{modifyMemory.clickModify()}" /><p:spacer width="10px" height="0"/>
+                <p:commandButton value="#{global.get('return')}" icon="cancleIcon"  action="monitor?faces-redirect=trueactiveIndex=1" />
+            </p:panel>
+        </h:form>
+
+        <h:form>
+            <util:question uid="modify" action="#{modifyMemory.modify()}" mess="#{res.get('mess')}" />
+        </h:form>
+    </h:body>
+</ui:composition>

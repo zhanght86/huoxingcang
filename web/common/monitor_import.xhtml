@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="GBK"?>
+<!--
+To change this template, choose Tools | Templates
+and open the template in the editor.
+-->
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.1//EN" "http://www.w3.org/TR/xhtml11/DTD/xhtml11.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:p="http://primefaces.org/ui"
+                xmlns:util="http://java.sun.com/jsf/composite/xhtml">
+    <h:head>
+        <link href="./../resources/common/css/default.css" rel="stylesheet" type="text/css" />
+        <link href="./../resources/common/css/cssIcon.css" rel="stylesheet" type="text/css" />
+        <script type="text/javascript">
+            $(document).ready(function() {
+                $("#form0\\:upload").change(function() {
+                    $("#img").hide();
+                    var str = document.getElementById("form0:upload").value.toString();
+                    var len = str.length;
+                    var last = str.lastIndexOf("\\");
+                    var filename;
+                    if (-1 === last) {
+                        filename = str;
+                    } else {
+                        filename = str.substring(last + 1, len);
+                    }
+                    var name = /^msaconfiguration.tar.gz$/i;
+                    var result = name.test(filename);
+                    if (result !== true) {
+                        $("#form0")[0].reset();
+                        remind.show();
+                    }
+                });
+            });
+            $(document).ready(function() {
+                $("#form0\\:button").click(function() {
+                    $("#img").show();
+                });
+            });
+        </script>
+    </h:head>
+    <h:body>
+        <h1 title="System Infomation" class="title ui-widget-header ui-corner-all">#{res.get('title')}</h1>
+        <p:messages autoUpdate="true" redisplay="true" showDetail="true" closable="true" /><br/>
+        <h:form id="form0" enctype="multipart/form-data">
+            <h:outputLabel  value="#{res.get('UploadConfig')}"/><br/>
+            <p:fileUpload  id="upload" mode="simple" value="#{sysConf.file}" disabled="#{user.type!=2}" />
+            <p:spacer height="0" width="20"/>
+            <p:commandButton id="button" value="#{res.get('upload')}" ajax="false" icon="uploadIcon" disabled="#{user.type!=2}"
+                             actionListener="#{sysConf.uploadFile()}" /><br/><br/>
+            <p:spacer width="130px" height="0"/>
+            <p:commandButton icon="cancleIcon" value="#{global.get('return')}" action="monitor?faces-redirect=trueactiveIndex=2" />
+            <img id="img" style="width:64px;height:64px;position:fixed;right:5px;bottom:5px;display: none" src="../resources/common/picture/loading.gif"/><br/>
+        </h:form>
+        <h:form id="form1">
+            <util:info id="remind"  uid="remind" mess="#{res.get('ErrorFileName')}"  />
+        </h:form>
+    </h:body>
+</ui:composition>

@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="GBK"?>
+<!--
+To change this template, choose Tools | Templates
+and open the template in the editor.
+-->
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.1//EN" "http://www.w3.org/TR/xhtml11/DTD/xhtml11.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:p="http://primefaces.org/ui"
+      template="../template/framework.xhtml">
+    <h:head>
+<!--        <style type="text/css">
+            .ui-picklist-target,
+            .ui-picklist-item { 
+                width: 600px;
+            }
+        </style>-->
+        <link href="./../resources/common/css/cssIcon.css" rel="stylesheet" type="text/css" />
+        <link href="./../resources/common/css/default.css" rel="stylesheet" type="text/css" />
+    </h:head>
+    <h:body>
+        <h:form id="form1" >
+            <h1  class="title ui-widget-header ui-corner-all">#{res.get('title')}</h1>
+            <p:messages  showSummary="true" showDetail="false" autoUpdate="true" closable="true" />
+            <p:panel style="border-color: transparent;text-align: center;width: 500px" >
+                <br/>
+                <!--<br/>-->
+                <!--                    <h:outputText value="{editGroupOfUser.name}" />-->
+                <!--                   <h:outputText value="{editGroupOfUser.selectedUser.name}"></h:outputText>-->
+                <p:pickList style="width: 460px"  id="pick"  value="#{modifyUserGroup.model}" var="group" itemLabel="#{group}" itemValue="#{group}" addLabel="" addAllLabel="" removeLabel="" removeAllLabel=""   >
+                    <f:facet name="targetCaption">#{res.get('group')}</f:facet>
+                    <f:facet name="sourceCaption">#{res.get('user')}#{modifyUserGroup.userName}#{res.get('attributeGroup')}</f:facet> 
+                    <p:column style="text-align: left;width: 1000px " width="1000" >
+                        #{group}
+                    </p:column>
+                </p:pickList>
+                <!--                <br/>
+                                <p:spacer width="150" height="6" />-->
+                <br/>
+                <p:commandButton value="#{global.get('save')}" icon="saveIcon" update="pick"  action="#{modifyUserGroup.save()}"  />
+                <p:spacer width="10" height="6" />
+                <p:commandButton value="#{global.get('return')}" icon="cancleIcon" action="nas_domain_config?faces-redirect=true&amp;tabViewActive=1"   />
+            </p:panel>
+            <!--            </p:panel>-->
+        </h:form>
+        <p:ajaxStatus style="width:64px;height:64px;position:fixed;right:5px;bottom:5px">  
+            <f:facet name="start">  
+                <p:graphicImage value="../resources/common/picture/loading.gif" />  
+            </f:facet>  
+
+            <f:facet name="complete">  
+                <h:outputText value="" />  
+            </f:facet>  
+        </p:ajaxStatus>
+    </h:body>
+</html>

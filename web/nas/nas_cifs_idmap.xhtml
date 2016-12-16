@@ -1,0 +1,163 @@
+<?xml version="1.0" encoding="GBK"?>
+<!--
+To change this template, choose Tools | Templates
+and open the template in the editor.
+-->
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.1//EN" "http://www.w3.org/TR/xhtml11/DTD/xhtml11.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:p="http://primefaces.org/ui">
+    <!--                template="../template/framework.xhtml">-->
+
+    <!--    <ui:define name="left">
+            <ui:include src="../panel/leftMenu.xhtml"/>
+        </ui:define>-->
+    <h:head>
+        <link href="./../resources/common/css/default.css" rel="stylesheet" type="text/css" />
+    </h:head>
+    <!--    <ui:define name="content">-->
+    <h:body>
+
+
+        <script language="JavaScript">
+                    function clickConfirm(xhr, status, args) {
+                      //document.getElementById("form:myaddDialog").shide();
+                      // window.close();
+        //              var  name = document.getElementById("form:username").value;
+        //              if(name=="") {
+        //                   alert("用户名不能为空！");
+        //              }
+        //              alert(name);
+                       var r = args.result;
+                       if(r!="success") {
+                           alert(r);
+                           return  false;
+                       }
+               
+                      return  true;
+                    }
+                    function  clickAdd(xhr, status, args) {
+                        var r = args.result;
+                        if(r!="success") {
+                           alert(r);
+                   
+                       }
+                    }
+                    
+            
+        </script>
+
+        <h1 title="Share Path Infomation" class="title ui-widget-header ui-corner-all">存储功能>NAS网络存储>全局CIFS设置>ID映射设置</h1>
+
+        <!--        <p:layout style="min-width:100px;min-height:500px;max-width: 900px;max-height: 2000px; border-bottom-color: chartreuse" id="layout"  >-->
+        <!--            <p:layoutUnit size="150px"   position="center"   >-->
+        <p:messages showSummary="true" showDetail="false" autoUpdate="true" closable="true" />
+
+        <h:form id="form" >
+            <!--            <p:panel >-->
+            <br/>
+            <h:panelGrid columns="6" >
+                <h:panelGrid  >
+                    <p:selectOneMenu    id="winType" value="#{IDMapBean().selectedWinType}" >
+                        <p:ajax event="change" listener="#{IDMapBean().changeWinTypeValue}" update="unixType winName unixName" />
+                        <f:selectItems value="#{IDMapBean().winTypes}" />
+                    </p:selectOneMenu>
+                </h:panelGrid>
+                <h:panelGrid  >
+                    <p:selectOneMenu  style="width: 190px;height: 28px" editable="true"  label="Windows域用户或用户组名称"   required="true"   id="winName" value="#{IDMapBean().selectedWinName}"   >
+                        <!--<f:validator validatorId="WindowsNameValidate"  />-->
+                        <f:selectItems value="#{IDMapBean().winNames}" />
+                    </p:selectOneMenu>
+                </h:panelGrid>
+                =>
+                <h:panelGrid  >
+                    <!--                    style="width: 120px;height: 26px"-->
+                    <p:selectOneMenu  id="unixType" style="width: 100px" value="#{IDMapBean().selectedUnixType}" >
+                        <p:ajax event="change" listener="#{IDMapBean().changeUnixTypeValue}" update="winType unixName winName" />
+                        <f:selectItems value="#{IDMapBean().unixTypes}" />
+                    </p:selectOneMenu>
+                </h:panelGrid>
+                <h:panelGrid >
+                    <!--                    style="width: 120px;height: 26px"-->
+                    <p:selectOneMenu  id="unixName" style="width: 90px" value="#{IDMapBean().selectedUnixName}" effect="fold"  >
+                        <f:selectItems value="#{IDMapBean().unixNames}" />
+                    </p:selectOneMenu>
+                </h:panelGrid>
+                <h:panelGrid  >
+                    <p:commandButton  value="添加"  actionListener="#{IDMapBean().addIDMap}" update="idmaptable"  />
+                </h:panelGrid>
+            </h:panelGrid>
+
+            <br/>
+            <!--            <p:message id="errorWin" for="winName"  />-->
+            <h:outputLabel value="规则" />
+            <br/>
+            <p:separator style="width: 700px" />
+            <br/>
+            <!--                <h:panelGrid columns="2" >-->
+            <!--                    <h:panelGrid columns="1" >-->
+            <!--paginator="true" rows ="5"-->
+<!--            selectionMode="single" selection="{iDMapDataTable.selectedMap}"-->
+            <p:dataTable emptyMessage="#{global.get('emptyMessage')}" id="idmaptable" value="#{IDMapBean().dataModel.maps}" var="map"  rowKey="#{map.winName}" >
+                <p:column headerText="Windows" style="text-align: center"  >
+                    #{map.winNameStr}
+                </p:column>
+                <p:column headerText="NAS"  style="text-align: center"  >
+                    #{map.unixNameStr}
+                </p:column>
+                <p:column headerText="操作" style="text-align: center">
+                    <p:spacer width="20" height="10" />
+                    <p:graphicImage height="18" style="border-color: transparent;text-align: center;vertical-align: middle"   value="../resources/nas/picture/delete.png" />    
+                    <p:spacer width="5" height="10" />
+                    <p:commandLink disabled="#{user.type!=2}" value="删除" style="text-align: center"  actionListener="#{IDMapBean().doBeforeRemoveIDMap}" oncomplete="confirmDeleteMap.show()" >
+                      <f:param name="index" value="#{map.index}" /> 
+                    </p:commandLink>
+                </p:column>
+<!--                <p:column headerText="删除"  style="text-align: center"  >
+                    <h:panelGrid style="text-align: center;border-color: transparent" >
+                        <p:commandLink disabled="{user.type!=2}" style="text-align: center"  actionListener="{iDMapDataTable.doBeforeRemoveIDMap}" oncomplete="confirmDeleteMap.show()" >
+                            <f:param name="index" value="{map.index}" />
+                            <p:graphicImage height="18" style="border-color: transparent;text-align: center"   value="../resources/nas/picture/remove.png" />    
+                        </p:commandLink> 
+                    </h:panelGrid>
+
+                </p:column>-->
+            </p:dataTable>  
+            <!--                    </h:panelGrid>-->
+            <!--                </h:panelGrid>-->
+            <!--                <h:panelGrid columns="1" >
+                                    <p:commandButton value="删除" oncomplete="confirmDeleteMap.show()"  />
+                                </h:panelGrid>-->
+            <br/>
+            <br/>
+            <!--            </p:panel>-->
+
+            <p:dialog modal="true" resizable="false"  position="240,150" width="300" id="confirmGroupDialog"  header="确认"  widgetVar="confirmDeleteMap" >  
+                <!--                <p:panel style="text-align:center;border-color:transparent" >-->
+                <!--                 message="确定删除此映射？"-->
+                <!--               <br/>-->
+                <p:graphicImage  value="../resources/nas/picture/Question.gif" /> 
+                <p:spacer width="10" height="10" />
+                <h:outputLabel value="确定删除此映射？" />
+                <br/>
+                <br/>
+
+                <!--                <h:panelGrid columns="4">-->
+                <p:spacer width="48" height="10" />
+                <p:commandButton  value="确定" immediate="true" update="idmaptable" oncomplete="confirmDeleteMap.hide()"  actionListener="#{IDMapBean().removeIDMap}" />
+                <p:spacer width="5" height="10" />
+                <p:commandButton  value="返回" oncomplete="confirmDeleteMap.hide()"  />    
+                <!--                    <p:spacer width="20" height="10" />-->
+                <!--                </h:panelGrid>-->
+
+                <!--                </p:panel>-->
+            </p:dialog>
+            
+        </h:form>
+
+    </h:body>
+
+</html>
+

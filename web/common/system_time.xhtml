@@ -1,0 +1,355 @@
+<?xml version="1.0" encoding="GBK"?>
+<!--
+To change this template, choose Tools | Templates
+and open the template in the editor.
+-->
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.1//EN" "http://www.w3.org/TR/xhtml11/DTD/xhtml11.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:p="http://primefaces.org/ui"
+                xmlns:util="http://java.sun.com/jsf/composite/xhtml">
+    <!--       template="../template/framework.xhtml"-->
+
+    <!--    <ui:define name="head">-->
+    <h:head>
+        <script type="text/javascript">
+            PrimeFaces.locales['cn'] = {
+                closeText: '确定',
+                prevText: '上',
+                nextText: '下',
+                monthNames: ['1', '2', '3', '4', '5', '6', '7', '8', '9', '10', '11', '12'],
+                monthNamesShort: ['1', '2', '3', '4', '5', '6', '7', '8', '9', '10', '11', '12'],
+                dayNames: ['日', '一', '二', '三', '四', '五', '六'],
+                dayNamesShort: ['日', '一', '二', '三', '四', '五', '六'],
+                dayNamesMin: ['日', '一', '二', '三', '四', '五', '六'],
+                weekHeader: 'Woche',
+                FirstDay: 1,
+                isRTL: false,
+                showMonthAfterYear: false,
+                yearSuffix: '',
+                timeOnlyTitle: 'Nur Zeit',
+                timeText: '时间',
+                hourText: '时',
+                minuteText: '分',
+                secondText: '秒',
+                currentText: '当前时间',
+                ampm: false,
+                month: 'Monat',
+                week: 'Woche',
+                day: 'Tag',
+                allDayText: 'Ganzer Tag'
+            };
+
+
+            //   setInterval("time2.innerHTML=(new Date().toLocaleString().replace(/年|月/g,'-')).replace(/日/g,'');", 1000);
+//            d = new Date();
+//            localTime = d.getTime();
+//            localOffset = d.getTimezoneOffset() * 60000;
+//            utc = localTime + localOffset;
+//            offset = 5.5;
+//            bombay = utc + (3600000*offset);
+//            nd = new Date(bombay); 
+//            document.writeln("Bombay time is " + nd.toLocaleString());
+//获得本地时区
+//var tzo=(new Date().getTimezoneOffset()/60)*(-1); 
+
+
+
+            var myDate = new Date();
+            myDate.setTime(#{system_time_setTimeBean.dateTime});
+            
+            
+            localTime = myDate.getTime();
+            localOffset = myDate.getTimezoneOffset() * 60000;
+            utc = localTime + localOffset;
+            offset = #{system_time_setTimeBean.time};
+//            bombay = utc + (3600000*offset);
+            bombay = utc + offset;
+            myDate = new Date(bombay); 
+//            alert("1");
+            function changetime(xhr, status, args) {
+                if(args.istrue){
+                  var tmpDate = new Date();
+//                alert("2");
+                  tmpDate.setTime(args.dateTime);  
+                  myDate = tmpDate;
+//                alert(myDate.toLocaleString());
+                }
+   
+            }
+            function changeDate()
+            {
+                var tmpDate = new Date();
+                tmpDate.setTime(myDate.getTime() + 1000);
+                myDate = tmpDate;
+                var month =(myDate.getMonth() + 1);
+                if(month===0){
+                    month = "00";
+                }else if(month===1){
+                    month = "01";
+                }else if(month===2){
+                    month = "02";
+                }else if(month===3){
+                    month = "03";
+                }else if(month===4){
+                    month = "04";
+                }else if(month===5){
+                    month = "05";
+                }else if(month===6){
+                    month = "06";
+                }else if(month===7){
+                    month = "07";
+                }else if(month===8){
+                    month = "08";
+                }else if(month===9){
+                    month = "09";
+                }
+                var day =myDate.getDate();
+                if(day===0){
+                    day = "00";
+                }else if(day===1){
+                    day = "01";
+                }else if(day===2){
+                    day = "02";
+                }else if(day===3){
+                    day = "03";
+                }else if(day===4){
+                    day = "04";
+                }else if(day===5){
+                    day = "05";
+                }else if(day===6){
+                    day = "06";
+                }else if(day===7){
+                    day = "07";
+                }else if(day===8){
+                    day = "08";
+                }else if(day===9){
+                    day = "09";
+                }
+                
+                var hour =myDate.getHours();
+                if(hour===0){
+                    hour = "00";
+                }else if(hour===1){
+                    hour = "01";
+                }else if(hour===2){
+                    hour = "02";
+                }else if(hour===3){
+                    hour = "03";
+                }else if(hour===4){
+                    hour = "04";
+                }else if(hour===5){
+                    hour = "05";
+                }else if(hour===6){
+                    hour = "06";
+                }else if(hour===7){
+                    hour = "07";
+                }else if(hour===8){
+                    hour = "08";
+                }else if(hour===9){
+                    hour = "09";
+                }
+                
+                var minute =myDate.getMinutes();
+                if(minute===0){
+                    minute = "00";
+                }else if(minute===1){
+                   minute = "01";
+                }else if(minute===2){
+                    minute = "02";
+                }else if(minute===3){
+                    minute = "03";
+                }else if(minute===4){
+                    minute = "04";
+                }else if(minute===5){
+                    minute = "05";
+                }else if(minute===6){
+                    minute = "06";
+                }else if(minute===7){
+                    minute = "07";
+                }else if(minute===8){
+                    minute = "08";
+                }else if(minute===9){
+                    minute = "09";
+                }
+                
+                var second =myDate.getSeconds();
+                if(second===0){
+                    second = "00";
+                }else if(second===1){
+                    second = "01";
+                }else if(second===2){
+                    second = "02";
+                }else if(second===3){
+                    second = "03";
+                }else if(second===4){
+                    second = "04";
+                }else if(second===5){
+                    second = "05";
+                }else if(second===6){
+                    second = "06";
+                }else if(second===7){
+                    second = "07";
+                }else if(second===8){
+                    second = "08";
+                }else if(second===9){
+                    second = "09";
+                }
+                document.getElementById("tab1:form1:time2").innerHTML = myDate.getFullYear() + "-" + month + "-" + day + " " + hour + ":" + minute + ":" + second;
+
+            }
+            setInterval("changeDate()", 1000);
+
+
+
+            function startNTP() {
+                var value = document.getElementById("tab1:form:isStart").checked;
+                if (value) {
+                    document.getElementById("tab1:form:addNTPstr").disabled = false;  //设置可修改
+                    document.getElementById("tab1:form:addNTPstr").readOnly = false;
+                    document.getElementById("tab1:form:addDNS").disabled = false;
+                    document.getElementById("tab1:form:addDNS").readOnly = false;
+
+                    document.getElementById("tab1:form:testDNS").disabled = false;
+                    document.getElementById("tab1:form:testDNS").readOnly = false;
+
+                    document.getElementById("tab1:form:customList").disabled = false;
+                    document.getElementById("tab1:form:customList").readOnly = false;
+
+                    document.getElementById("tab1:form:btnDelete").disabled = false;
+                    document.getElementById("tab1:form:btnDelete").readOnly = false;
+
+                } else {
+
+                    document.getElementById("tab1:form:addNTPstr").disabled = "none";
+                    document.getElementById("tab1:form:addNTPstr").readOnly = true;    //
+                    document.getElementById("tab1:form:addDNS").disabled = "none";
+                    document.getElementById("tab1:form:addDNS").readOnly = true;    //设置只读  
+
+                    document.getElementById("tab1:form:testDNS").disabled = "none";
+                    document.getElementById("tab1:form:testDNS").readOnly = true;    //设置只读 
+
+                    document.getElementById("tab1:form:customList").disabled = "none";
+                    document.getElementById("tab1:form:customList").readOnly = true;    //设置只读 
+
+                    document.getElementById("tab1:form:btnDelete").disabled = "none";
+                    document.getElementById("tab1:form:btnDelete").readOnly = true;    //设置只读 
+                }
+
+            }
+
+
+        </script> 
+          <style type="text/css"> 
+                    
+              .ui-priority-primary{
+                  font-weight: normal !important;
+              }
+              .ui-priority-secondary{
+                  filter: normal !important;
+                  font-weight: normal !important;
+              }
+        </style>
+        <link href="./../resources/common/css/default.css" rel="stylesheet" type="text/css" />
+        <link href="./../resources/common/css/cssIcon.css" rel="stylesheet" type="text/css" />
+    </h:head>
+
+    <!--    </ui:define>-->
+
+    <!--    <ui:define name="content">-->
+
+    <h:body>
+
+        <h1 title="System Infomation" class="title ui-widget-header ui-corner-all">${res.get('title')}</h1>
+        <p:messages id="messages" showDetail="true" autoUpdate="true" closable="true" />
+        <br/> 
+         <h:form>
+             <util:question1 uid="reboottip" mess="${res.get('reboottip')}" action="#{system_time_timeZoneBean.reboot()}" cancelAction="#{system_time_timeZoneBean.cancle()}"  >
+            </util:question1>
+        </h:form>
+        <p:tabView style="border:none; " id="tab1" activeIndex="#{system_time_timeZoneBean.accordionActive1}">
+            <p:tab title="${res.get('settime_title')}">
+                <h:form id="form1">
+
+                    <h:panelGrid columns="1" cellpadding="5">  
+                        <h:panelGroup>
+                            <h:outputLabel value="${res.get('settime_systemtime')}"/>  
+                            <h:outputLabel  id="time2"  value="#{system_time_setTimeBean.dateString}" >  
+                            </h:outputLabel>
+                        </h:panelGroup>
+                        <h:panelGroup>
+                            <h:outputLabel value="${res.get('settime_settime')}"/>  
+                            <p:spacer width="25"/>
+                            <p:calendar locale="cn" pattern="yyyy-MM-dd HH:mm:ss" showButtonPanel="true" navigator="true" id="customCal" value="#{system_time_setTimeBean.date}" /> 
+                        </h:panelGroup>
+
+                    </h:panelGrid>
+                    <br/>
+                    <p:spacer width="118" height="6" />
+                    <p:commandButton id="btnTime" disabled="#{user.type!=2}" value="${global.get('save')}" icon="saveIcon" action="#{system_time_setTimeBean.saveTime(system_time_setTimeBean.date)}" oncomplete="changetime(xhr, status, args)" update="time2"/>
+                </h:form>
+            </p:tab>
+            <p:tab title="${res.get('settimezone_title')}">
+                <h:form id="form2">
+                    <!--                    <p:messages id="messages2" showDetail="true" autoUpdate="true" closable="true"/>-->
+                    <h:panelGrid columns="2" style="margin-bottom:10px;width: 390px;" cellpadding="5">  
+                        <h:outputText value="${res.get('settimezone_serverzone')} "/> 
+                        <p:selectOneMenu id="timeZoneSele" value="#{system_time_timeZoneBean.zoneName}" style="width: 240px; background-attachment: fixed; background-position-y: 1px;">  
+                            <f:selectItems value="#{system_time_timeZoneBean.zoneList}" />  
+                        </p:selectOneMenu> 
+                    </h:panelGrid>
+                    <p:spacer width="5" height="20" />
+                    <h:outputLabel value="${res.get('timezone_tip')}"/>
+                    <br/>
+                    <br/>
+                    <p:spacer width="60" height="6" />
+                    <p:commandButton id="btnZone" disabled="#{user.type!=2}" value="${global.get('save')}" icon="saveIcon" action="#{system_time_timeZoneBean.saveTimeZone(system_time_timeZoneBean.zoneName)}"  update="timeZoneSele" onclick="this.blur()" />
+                </h:form>
+
+            </p:tab>
+            <p:tab title="${res.get('setntp_title')}">
+                <h:form id="form">
+                    <!--                    <p:messages id="messages3" showDetail="true" autoUpdate="true" closable="true"/>-->
+                    <h:panelGrid columns="2" cellpadding="5">
+                        <h:panelGroup>
+                            <h:selectBooleanCheckbox  id="isStart" value="#{system_time_NTPListBean.isStart}">
+                                <p:ajax listener="#{system_time_NTPListBean.changeBooleanCheckbox(system_time_NTPListBean.isStart)}" update="addNTPstr addDNS testDNS customList btnDelete" />
+                            </h:selectBooleanCheckbox>
+                            ${res.get('isstarttip')}
+                        </h:panelGroup> 
+                        <p:spacer width="10"/>
+                        <h:panelGrid columns="2" cellpadding="5" id="ntpEnable">
+                            <p:inputText id="addNTPstr" disabled="#{system_time_NTPListBean.notuse}" value="#{system_time_NTPListBean.addNTP}" style="width: 180px!important;width: 180px;" /> 
+                            <h:panelGroup>
+                                <p:commandButton id="addDNS" disabled="#{system_time_NTPListBean.notuse}" value="${global.get('add')}" icon="addIcon" actionListener="#{system_time_NTPListBean.addNTPServer(system_time_NTPListBean.addNTP)}" update="addNTPstr customList :messages btnDelete"/>  
+                                <p:spacer height="3px"/>
+                                <p:commandButton id="testDNS" disabled="#{system_time_NTPListBean.notuse}" value="${res.get('setntp_test')}" icon="testIcon"  actionListener="#{system_time_NTPListBean.testNTPServer(system_time_NTPListBean.addNTP)}"/>
+                            </h:panelGroup>
+
+                            <p:selectOneListbox id="customList" disabled="#{system_time_NTPListBean.notuse}" value="#{system_time_NTPListBean.selectNTP}" style="overflow-y:auto;height:100px; width: 184px;">
+                                <f:selectItems value="#{system_time_NTPListBean.ntpList}" var="ntp" itemLabel="#{ntp}" itemValue="#{ntp}" />
+                            </p:selectOneListbox>
+                            <p:commandButton id="btnDelete" disabled="#{system_time_NTPListBean.notdelete}" value="${global.get('delete')}" icon="deleteIcon" style="position: absolute;margin-top: -52px;" action="#{system_time_NTPListBean.deleteNTPServer(system_time_NTPListBean.selectNTP)}" update="customList :messages btnDelete" />
+                        </h:panelGrid>
+                    </h:panelGrid>
+                    <br/>
+                    <p:spacer width="115px" height="6" />
+                    <p:commandButton id="btnSave" disabled="#{user.type!=2}" value="${global.get('save')}" icon="saveIcon" action="#{system_time_NTPListBean.saveNTPServer()}" update="isStart addNTPstr customList" />
+                </h:form>
+
+            </p:tab>
+        </p:tabView>
+        <p:ajaxStatus style="width:64px;height:64px;position:fixed;right:5px;bottom:5px; " >  
+            <f:facet name="start" >  
+                <p:graphicImage value="../resources/common/picture/loading.gif" />  
+            </f:facet>  
+
+            <f:facet name="complete">  
+                <h:outputText value="" />  
+            </f:facet>  
+        </p:ajaxStatus>
+
+    </h:body>
+</ui:composition>

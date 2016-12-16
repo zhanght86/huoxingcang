@@ -1,0 +1,389 @@
+<?xml version="1.0" encoding="GBK"?>
+<!--
+To change this template, choose Tools | Templates
+and open the template in the editor.
+-->
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.1//EN" "http://www.w3.org/TR/xhtml11/DTD/xhtml11.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:p="http://primefaces.org/ui"
+      template="../template/framework.xhtml"
+      xmlns:util="http://java.sun.com/jsf/composite/xhtml">
+    <h:head>
+        <script type="text/javascript">
+            PrimeFaces.locales['cn'] = {
+                closeText: '确定',
+                prevText: '上',
+                nextText: '下',
+                monthNames: ['1', '2', '3', '4', '5', '6', '7', '8', '9', '10', '11', '12'],
+                monthNamesShort: ['1', '2', '3', '4', '5', '6', '7', '8', '9', '10', '11', '12'],
+                dayNames: ['日', '一', '二', '三', '四', '五', '六'],
+                dayNamesShort: ['日', '一', '二', '三', '四', '五', '六'],
+                dayNamesMin: ['日', '一', '二', '三', '四', '五', '六'],
+                weekHeader: 'Woche',
+                FirstDay: 1,
+                isRTL: false,
+                showMonthAfterYear: false,
+                yearSuffix: '',
+                timeOnlyTitle: 'Nur Zeit',
+                timeText: '时间',
+                hourText: '时',
+                minuteText: '分',
+                secondText: '秒',
+                currentText: '当前时间',
+                ampm: false,
+                month: 'Monat',
+                week: 'Woche',
+                day: 'Tag',
+                allDayText: 'Ganzer Tag'
+            };
+
+            var myDate = new Date();
+            myDate.setTime(#{system_time_setTimeBean.dateTime});
+
+
+            localTime = myDate.getTime();
+            localOffset = myDate.getTimezoneOffset() * 60000;
+            utc = localTime + localOffset;
+            offset = #{system_time_setTimeBean.time};
+            bombay = utc + offset;
+            myDate = new Date(bombay);
+            function changetime(xhr, status, args) {
+                if (args.istrue) {
+                    var tmpDate = new Date();
+                    tmpDate.setTime(args.dateTime);
+                    myDate = tmpDate;
+                }
+            }
+            function changeDate()
+            {
+                var tmpDate = new Date();
+                tmpDate.setTime(myDate.getTime() + 1000);
+                myDate = tmpDate;
+                var month = (myDate.getMonth() + 1);
+                if (month === 0) {
+                    month = "00";
+                } else if (month === 1) {
+                    month = "01";
+                } else if (month === 2) {
+                    month = "02";
+                } else if (month === 3) {
+                    month = "03";
+                } else if (month === 4) {
+                    month = "04";
+                } else if (month === 5) {
+                    month = "05";
+                } else if (month === 6) {
+                    month = "06";
+                } else if (month === 7) {
+                    month = "07";
+                } else if (month === 8) {
+                    month = "08";
+                } else if (month === 9) {
+                    month = "09";
+                }
+                var day = myDate.getDate();
+                if (day === 0) {
+                    day = "00";
+                } else if (day === 1) {
+                    day = "01";
+                } else if (day === 2) {
+                    day = "02";
+                } else if (day === 3) {
+                    day = "03";
+                } else if (day === 4) {
+                    day = "04";
+                } else if (day === 5) {
+                    day = "05";
+                } else if (day === 6) {
+                    day = "06";
+                } else if (day === 7) {
+                    day = "07";
+                } else if (day === 8) {
+                    day = "08";
+                } else if (day === 9) {
+                    day = "09";
+                }
+
+                var hour = myDate.getHours();
+                if (hour === 0) {
+                    hour = "00";
+                } else if (hour === 1) {
+                    hour = "01";
+                } else if (hour === 2) {
+                    hour = "02";
+                } else if (hour === 3) {
+                    hour = "03";
+                } else if (hour === 4) {
+                    hour = "04";
+                } else if (hour === 5) {
+                    hour = "05";
+                } else if (hour === 6) {
+                    hour = "06";
+                } else if (hour === 7) {
+                    hour = "07";
+                } else if (hour === 8) {
+                    hour = "08";
+                } else if (hour === 9) {
+                    hour = "09";
+                }
+
+                var minute = myDate.getMinutes();
+                if (minute === 0) {
+                    minute = "00";
+                } else if (minute === 1) {
+                    minute = "01";
+                } else if (minute === 2) {
+                    minute = "02";
+                } else if (minute === 3) {
+                    minute = "03";
+                } else if (minute === 4) {
+                    minute = "04";
+                } else if (minute === 5) {
+                    minute = "05";
+                } else if (minute === 6) {
+                    minute = "06";
+                } else if (minute === 7) {
+                    minute = "07";
+                } else if (minute === 8) {
+                    minute = "08";
+                } else if (minute === 9) {
+                    minute = "09";
+                }
+
+                var second = myDate.getSeconds();
+                if (second === 0) {
+                    second = "00";
+                } else if (second === 1) {
+                    second = "01";
+                } else if (second === 2) {
+                    second = "02";
+                } else if (second === 3) {
+                    second = "03";
+                } else if (second === 4) {
+                    second = "04";
+                } else if (second === 5) {
+                    second = "05";
+                } else if (second === 6) {
+                    second = "06";
+                } else if (second === 7) {
+                    second = "07";
+                } else if (second === 8) {
+                    second = "08";
+                } else if (second === 9) {
+                    second = "09";
+                }
+
+            }
+            setInterval("changeDate()", 1000);
+        </script> 
+        <link href="./../resources/common/css/default.css" rel="stylesheet" type="text/css" />
+        <link href="./../resources/common/css/cssIcon.css" rel="stylesheet" type="text/css" />
+    </h:head>
+
+    <h:body>
+
+        <h:form id="form">
+            <h1 class="title ui-widget-header ui-corner-all">#{global.get('cdp')}#{res.get('title')}</h1>
+            <p:messages showSummary="true" showDetail="false" autoUpdate="true" closable="true" />
+            <p:outputPanel deferred="true">
+                <h:panelGrid id="status" columns="2" cellpadding="5" >  
+                    <h:outputLabel value="${global.get('dg')}"/> 
+                    <h:outputLabel value="#{snapshotBean.dg}" />
+                </h:panelGrid>
+                <p:panel id="levelS" rendered="#{snapshotBean.isLevelS}" style=" border: none; margin-left: -21px;">
+                    <h:panelGrid columns="2" >
+                        <h:outputLabel id="label" rendered="#{snapshotBean.globalStatus.isRollbacking}" value="#{res.get('rolling')}" />
+                        <p:ajaxStatus   id="rollingstatus" rendered="#{snapshotBean.globalStatus.rollingRender}" style="width:16px;height:16px;" >  
+                            <f:facet name="start">
+                                <p:graphicImage value="../resources/common/picture/ajaxloadingbar.gif" />  
+                            </f:facet>
+                            <f:facet name="complete">
+                                <p:graphicImage value="../resources/common/picture/ajaxloadingbar.gif" />  
+                            </f:facet>
+                        </p:ajaxStatus>
+                    </h:panelGrid>
+                    <p:poll  autoStart="#{snapshotBean.globalStatus.pollAutoStart}" widgetVar="rollbackpoll" listener="#{snapshotBean.checkRollbacking()}"   interval="3" update=":form" />
+                    <p:toolbar >
+                        <p:toolbarGroup align="right">
+                            <p:commandButton disabled="#{user.type!=2 or snapshotBean.globalStatus.addSnapDisabled }"  id="add_msnap" value="#{res.get('addManualSnap')}" icon="addIcon" action="#{snapshotBean.doBeforeAddMSnap()}"   />
+                            <p:spacer height="10" width="8"/>
+                            <p:commandButton disabled="#{user.type!=2 or snapshotBean.deleteAllDis or snapshotBean.globalStatus.deleteSnapDisabled}" value="#{res.get('delAllSnap')}" icon="deleteIcon" action="#{snapshotBean.beforeDeleteAllMSnap()}"/>
+                        </p:toolbarGroup>  
+                    </p:toolbar>
+                    <div style="overflow-x: auto; width:100%;padding-bottom: 2px !important; padding-bottom: 14px;">
+                        <p:dataTable emptyMessage="#{global.get('emptyMessage')}" id="snaps" value="#{snapshotBean.snaps}"  var="snap" paginator="true" rows="10" >
+                            <p:column headerText="#{res.get('type')}">
+                                <h:outputText value="#{snap.type}"/>  
+                            </p:column>
+                            <p:column headerText="#{res.get('createTime')}"  style="white-space: nowrap" >  
+                                <h:outputText value="#{snap.createdTime}"/>  
+                            </p:column>
+                            <p:column headerText="#{res.get('size')}" style="white-space: nowrap" >
+                                <h:outputText value="#{snap.strUsed}B" />
+                            </p:column>
+                            <p:column headerText="#{global.get('operation')}" style="white-space: nowrap"  >
+                                <p:graphicImage value="../resources/common/picture/rollback.png" rendered="#{snap.rollRender}"  style=" vertical-align:middle;" height="16" width="16" />
+                                <p:spacer height="10" width="3" rendered="#{snap.rollRender}"  />
+                                <p:commandLink  id="setButton" value="#{res.get('rollback')}" update=":s" rendered="#{snap.rollRender}" disabled="#{user.type!=2   or snapshotBean.globalStatus.rollDisabled}" immediate="true" style=" vertical-align:middle;" action="#{snapshotBean.beforeRollback()}"> 
+                                    <f:setPropertyActionListener value="#{snap}"  target="#{snapshotBean.selectSnap}" /> 
+                                </p:commandLink>
+                                <p:spacer height="10" width="8" rendered="#{snap.saveRollRender and snap.rollRender }"/>
+                                <p:graphicImage value="../resources/common/picture/save.png" rendered="#{snap.saveRollRender}"  style=" vertical-align:middle;" height="16" width="16" />
+                                <p:spacer height="10" width="3"  rendered="#{snap.saveRollRender}" />
+                                <p:commandLink  value="#{res.get('saveRollback')}"  rendered="#{snap.saveRollRender}" disabled="#{user.type!=2  or snapshotBean.globalStatus.saveRollDisabled}" immediate="true" style=" vertical-align:middle;" onclick="saveRoll.show();"> 
+                                    <f:setPropertyActionListener value="#{snap}"  target="#{snapshotBean.selectSnap}" /> 
+                                </p:commandLink>
+                                <p:spacer height="10" width="8" rendered="#{snap.cancelRollRender}"  />
+                                <p:graphicImage value="../resources/common/picture/cancle.png" rendered="#{snap.cancelRollRender}"  style=" vertical-align:middle;" height="16" width="16" />
+                                <p:spacer height="10" width="3" rendered="#{snap.cancelRollRender}" />
+                                <p:commandLink  value="#{res.get('cancelRollBack')}" rendered="#{snap.cancelRollRender}" disabled="#{user.type!=2 or snapshotBean.globalStatus.cancelRollDisabled}" immediate="true" style=" vertical-align:middle;" onclick="cancelRoll.show();"> 
+                                    <f:setPropertyActionListener value="#{snap}"  target="#{snapshotBean.selectSnap}" /> 
+                                </p:commandLink>
+                                <p:spacer height="10" width="8" />
+                                <p:graphicImage value="../resources/common/picture/copy.png"   style=" vertical-align:middle;" height="16" width="16" />
+                                <p:spacer height="10" width="3"   />
+                                <p:commandLink  value="#{res.get('createCopy')}" update=":c" disabled="#{user.type!=2 or snapshotBean.globalStatus.createCopyDisabled}" immediate="true" style=" vertical-align:middle;" onclick="createCopy.show();" > 
+                                    <f:setPropertyActionListener value="#{snap}"  target="#{snapshotBean.selectSnap}" /> 
+                                </p:commandLink>
+                                <p:spacer height="10" width="8" />
+                                <p:graphicImage rendered="#{snap.deleteRender}"   height="16"  width="16" style="border-color: transparent;vertical-align: middle"   value="../resources/common/picture/delete.png" />  
+                                <p:spacer height="10" width="3" />
+                                <p:commandLink style="vertical-align: middle" rendered="#{snap.deleteRender}"  disabled="#{(user.type!=2) or (snapshotBean.globalStatus.deleteSnapDisabled) }" value="#{global.get('delete')}" action="#{snapshotBean.beforeDeleteMSnap()}">
+                                    <f:setPropertyActionListener value="#{snap}"  target="#{snapshotBean.selectSnap}" />                    
+                                </p:commandLink>
+                            </p:column>
+                        </p:dataTable>
+                    </div>
+                </p:panel>
+
+                <p:outputPanel id="pb">
+                    <p:progressBar  style=" border: none; width: 748px;" id="process" widgetVar="pbAjax" ajax="true" value="#{snapshotBean.progress}" rendered="#{!snapshotBean.isLevelS and snapshotBean.rolling}" labelTemplate="回滚中，进度{value}%" styleClass="animated">  
+                        <p:ajax event="complete" listener="#{snapshotBean.onComplete}" update=":form:pb :form:toolbar :form:snapshots"/>  
+                    </p:progressBar>
+                </p:outputPanel>
+                <p:toolbar id="toolbar" rendered="#{!snapshotBean.isLevelS}" style=" border: none; width: 743px;">
+                    <p:toolbarGroup align="left">
+                        <h:outputLabel value="${res.get('bar')}"/>
+                        <p:calendar locale="cn"  value="#{snapshotBean.date}" immediate="true" id="popupCal"  showButtonPanel="true" navigator="true"  pattern="yyyy-MM-dd HH:mm:ss">
+                            <p:ajax event="dateSelect" listener="#{snapshotBean.change()}"/>
+                        </p:calendar>
+                        <p:commandButton value="${res.get('locate')}" immediate="true" action="#{snapshotBean.seekTime()}" update="snapshots" />
+
+                        <p:spacer width="60" height="2"/>        
+                        <p:commandButton icon="ui-icon-seek-prev" immediate="true" action="#{snapshotBean.seekRev()}" update="snapshots" />
+                        <p:commandButton icon="ui-icon-seek-next" immediate="true" action="#{snapshotBean.seekNext()}" update="snapshots"/>
+                        <p:spacer width="5" />
+                        <p:commandButton id="cancelRollback" icon="cancleIcon" immediate="true" value="${res.get('cancleRollback')}" update=":form"  onclick="cancelRollback.show();"  widgetVar="startButton1" disabled="#{snapshotBean.disableCancel}"/>  
+                        <p:spacer width="5" />
+                        <p:commandButton disabled="#{user.type!=2 or (snapshotBean.globalStatus.deleteSnapDisabled or snapshotBean.getRecordDeleteAllDis()) }"  value="#{res.get('delAllSnap')}"  icon="deleteIcon"  action="#{snapshotBean.preDeleteAllSnap()}"  />
+                    </p:toolbarGroup>  
+                </p:toolbar>
+                <div  rendered="#{!snapshotBean.isLevelS}" style="overflow-x: auto; width:748px;padding-bottom: 2px !important; padding-bottom: 14px;">
+                    <p:dataTable id="snapshots" var="snapshot" value="#{snapshotBean.snapshotInfos}" rows="#{snapshotBean.count}"   rendered="#{!snapshotBean.isLevelS}"
+                                 emptyMessage="#{global.get('emptyMessage')}" >
+                        <p:column headerText="#{res.get('hd2')}"  style=" white-space: nowrap">  
+                            <h:outputText value="#{u.dateToStringLocalMS(snapshot.snapshotTime)}"/>  
+                        </p:column>
+                        <p:column headerText="#{res.get('hd3')}" disabledSelection="true" style=" white-space: nowrap">  
+                            <h:outputText value="#{snapshot.snapshotSize}"/>
+                        </p:column>
+                        <p:column headerText="#{res.get('hd5')}" disabledSelection="true" style=" white-space: nowrap">  
+                            <h:outputText value="#{snapshotBean.getAgentString(snapshot.agentID)}"/>  
+                        </p:column>
+                        <p:column headerText="#{global.get('operation')}" disabledSelection="true"  style=" white-space: nowrap">  
+                            <p:graphicImage value="../resources/common/picture/rollback.png" width="16" height="16" style="vertical-align:middle;"/>
+                            <p:commandLink id="rollbackL" disabled="#{user.type!=2 or snapshotBean.rolling  or snapshotBean.globalStatus.rollDisabled}" immediate="true" value="${res.get('op2')}" action="#{snapshotBean.preRollback()}" style="vertical-align:middle;">
+                                <f:setPropertyActionListener value="#{snapshot}" target="#{snapshotBean.selected}" />
+                            </p:commandLink>
+                            <p:spacer width="10"/>
+                            <p:graphicImage value="../resources/common/picture/edit.png" width="16" height="16" style="vertical-align:middle;"/>
+                            <p:commandLink id="recordL" disabled="#{user.type!=2 or snapshotBean.rolling}" value="${res.get('o2')}" immediate="true" action="#{snapshotBean.record()}" style="vertical-align:middle;">
+                                <f:setPropertyActionListener value="#{snapshot.snapshotID}" target="#{snapshotBean.SID}" />
+                            </p:commandLink>
+                            <p:spacer width="10"/>
+                            <p:graphicImage  value="../resources/common/picture/copy.png"  width="16" height="16" style=" vertical-align:middle;"/>
+                            <p:commandLink id="cloneL" disabled="#{snapshotBean.rolling or snapshotBean.isCopy()}" value="${res.get('op1')}" immediate="true"  action="#{snapshotBean.preClone()}" update=":c" style=" vertical-align:middle;">
+                                <f:setPropertyActionListener value="#{snapshot}" target="#{snapshotBean.selected}" />
+                            </p:commandLink>
+                            <p:spacer height="10" width="8" />
+                            <p:graphicImage  height="16"  width="16" style="border-color: transparent;vertical-align: middle"   value="../resources/common/picture/delete.png" />  
+                            <p:commandLink style="vertical-align: middle"   disabled="#{(user.type!=2) or snapshotBean.globalStatus.deleteSnapDisabled or  snapshotBean.isCopy()}" value="#{global.get('delete')}" immediate="true"   action="#{snapshotBean.preDeleteSnap()}"> >
+                                <f:setPropertyActionListener value="#{snapshot}"  target="#{snapshotBean.selected}" />
+                            </p:commandLink>
+                        </p:column>
+                    </p:dataTable>
+                </div>
+                <br></br>
+                <div style="text-align: center;">
+                    <p:commandButton value="#{global.get('update')}" icon="updateIcon" immediate="true"  action="#{snapshotBean.updateSnapAndSync()}" update=":form" />
+                    <p:spacer width="8" height="6" />
+                    <p:commandButton id="closeBut" icon="cancleIcon" value="${global.get('return')}" immediate="true" onclick="javascript: window.location.href = 'cdp.xhtml?faces-redirect=true';"/>  
+                </div>
+
+            </p:outputPanel>
+        </h:form>
+        <h:form id="s" style=" border: none;">
+            <util:confirm  uid="createCopy" mess="#{res.get('confirmCreateCopy')}" action="#{snapshotBean.createCopy()}" update=":form:levelS :c">
+            </util:confirm>
+            <util:info uid="finishCreateCopy" mess="#{res.get('finishCreateCopy')}"  />
+            <util:confirm  uid="delMSnap" mess="#{res.get('confirmDelSnap')}" action="#{snapshotBean.deleteMSnap()}" update=":form"  >
+            </util:confirm>
+            <util:confirm  uid="delAllMSnap" mess="#{res.get('confirmDelAllSnap')}" action="#{snapshotBean.deleteAllMSnap()}" update=":form "  >
+            </util:confirm>
+            <util:confirm  uid="rollBack" mess="#{res.get('rollBackOperation')}" action="#{snapshotBean.rollBackSnap()}" update=":form"  >
+            </util:confirm>
+            <util:confirm  uid="saveRoll" mess="#{res.get('saveRollOperation')}" action="#{snapshotBean.saveRoll()}" update=":form"  >
+            </util:confirm>
+            <util:confirm  uid="cancelRoll" mess="#{res.get('cancelRollBackOperation')}" action="#{snapshotBean.cancelRoll()}" update=":form"  >
+            </util:confirm>
+            <util:confirm  uid="deleteDGBoxXX" mess="#{res.get('confirm')}#{global.get('lquote')}#{snapshotBean.selectSnap.strName}#{global.get('rquote')}#{global.get('what')}" action="#{snapshotBean.rollBackSnap()}" update=":form">
+            </util:confirm>
+            <util:confirm  uid="disLUNDelXX" mess="#{res.get('confirm2')}#{global.get('lquote')}#{snapshotBean.selectSnap.strName}#{global.get('rquote')}#{global.get('what')}" action="#{snapshotBean.rollBackSnap()}"  update=":form">
+            </util:confirm >
+            <util:confirm  uid="SdeleteDGBoxXX" mess="#{res.get('confirm4')}#{global.get('lquote')}#{snapshotBean.selectSnap.strName}#{global.get('rquote')}#{global.get('what')}" action="#{snapshotBean.rollBackSnap()}" update=":form">
+            </util:confirm>
+            <util:confirm  uid="SdisLUNDelXX" mess="#{res.get('confirm5')}#{global.get('lquote')}#{snapshotBean.selectSnap.strName}#{global.get('rquote')}#{global.get('what')}" action="#{snapshotBean.rollBackSnap()}"  update=":form">
+            </util:confirm>
+        </h:form>
+        <h:form id="c" style=" border: none;">
+            <util:confirm  uid="clone" mess="#{res.get('confirmCreateCopy')}" action="#{snapshotBean.cloneSnap()}" update=":form:process :form:toolbar :form:snapshots :c">
+            </util:confirm>
+            <util:question1  uid="dgs" mess="#{res.get('createCopy')}#{global.get('lquote')}#{snapshotBean.copyName}#{global.get('rquote')}#{global.get('success')}，#{res.get('q0')}" action="#{snapshotBean.toDGs()}" cancelAction="#{snapshotBean.cancelQ()}" >
+            </util:question1>
+            <util:confirm  uid="delSnap" mess="#{res.get('confirmDelSnap')}" action="#{snapshotBean.deleteSnap()}" update=":form"  >
+            </util:confirm>
+            <util:confirm  uid="deleteDGBox" mess="#{res.get('confirm')}#{global.get('what')}" action="#{snapshotBean.rollback()}" update=":form:pb"  >
+            </util:confirm>
+            <util:confirm  uid="disLUNDel" mess="#{res.get('confirm2')}#{global.get('what')}" action="#{snapshotBean.rollback()}"  update=":form:pb"  >
+            </util:confirm >
+            <util:confirm  uid="SdeleteDGBox" mess="#{res.get('confirm4')}#{global.get('what')}" action="#{snapshotBean.rollback()}" update=":form:pb"  >
+            </util:confirm>
+            <util:confirm  uid="SdisLUNDel" mess="#{res.get('confirm5')}#{global.get('what')}" action="#{snapshotBean.rollback()}" update=":form:pb"  >
+            </util:confirm>
+            <util:confirm  uid="cancelRollback" mess="#{res.get('cancelRollBackOperation')}" action="#{snapshotBean.cancelRollback()}" update=" :form:toolbar :form:snapshots"  >
+            </util:confirm>
+        </h:form> 
+        <h:form>
+            <util:confirm  uid="delAllSnaps" mess="#{res.get('confirmDelAllSnap')}" action="#{snapshotBean.deleteAllSnap()}" update=":form "  >
+            </util:confirm>
+        </h:form>
+        <h:form style=" border: none;">
+            <util:confirm  uid="saveRollback" mess="#{res.get('saveRollOperation')}" action="#{snapshotBean.saveRollback()}" update=":form"  >
+            </util:confirm>
+        </h:form>
+        <h:form style=" border: none;">
+
+        </h:form>
+        <p:ajaxStatus style="width:64px;height:64px;position:fixed;right:5px;bottom:5px">  
+            <f:facet name="start">  
+                <p:graphicImage value="../resources/common/picture/loading.gif" />  
+            </f:facet>  
+
+            <f:facet name="complete">  
+                <h:outputText value="" />  
+            </f:facet>  
+        </p:ajaxStatus>
+    </h:body>
+</html>

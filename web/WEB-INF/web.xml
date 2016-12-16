@@ -1,0 +1,128 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<web-app version="2.5" xmlns="http://java.sun.com/xml/ns/javaee" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://java.sun.com/xml/ns/javaee http://java.sun.com/xml/ns/javaee/web-app_2_5.xsd">
+    <context-param>
+        <param-name>javax.faces.PROJECT_STAGE</param-name>
+        <param-value>Production</param-value>
+    </context-param>    
+    <context-param>    
+        <param-name>primefaces.THEME</param-name>    
+        <param-value>marstor</param-value>    
+    </context-param> 
+    <context-param>       
+        <param-name>com.sun.faces.expressionFactory</param-name>
+        <param-value>com.sun.el.ExpressionFactoryImpl</param-value>
+    </context-param> 
+    <context-param>
+        <param-name>javax.faces.STATE_SAVING_METHOD</param-name>
+        <param-value>server</param-value>
+    </context-param>    
+  
+    <filter>  
+        <filter-name>PrimeFaces FileUpload Filter</filter-name>          
+        <filter-class>org.primefaces.webapp.filter.FileUploadFilter</filter-class>             
+    </filter>      
+    <filter-mapping>          
+        <filter-name>PrimeFaces FileUpload Filter</filter-name>          
+        <servlet-name>Faces Servlet</servlet-name>
+    </filter-mapping>
+    <context-param>
+        <param-name>primefaces.UPLOADER</param-name>
+        <param-value>commons</param-value>
+    </context-param>
+    
+    <filter>   
+        <filter-name>LoginFilter</filter-name>   
+        <filter-class>com.marstor.msa.filter.LoginFilter</filter-class>   
+    </filter>   
+    <filter-mapping>   
+        <filter-name>LoginFilter</filter-name> 
+        <servlet-name>Faces servlet</servlet-name>
+        <url-pattern>*.xhtml</url-pattern>
+        <url-pattern>*.jsf</url-pattern>
+    </filter-mapping>
+    
+    <servlet>
+        <servlet-name>Faces Servlet</servlet-name>
+        <servlet-class>javax.faces.webapp.FacesServlet</servlet-class>
+        <load-on-startup>1</load-on-startup>
+    </servlet> 
+    <servlet-mapping>
+        <servlet-name>Faces Servlet</servlet-name>
+        <url-pattern>*.jsf</url-pattern>
+        <url-pattern>*.xhtml</url-pattern>
+    </servlet-mapping>
+    
+    <servlet>
+        <servlet-name>MSAServerServlet</servlet-name>
+        <servlet-class>com.marstor.msa.servlet.MSAServerServlet</servlet-class>
+        <load-on-startup>3</load-on-startup>
+    </servlet>
+    
+    <servlet>
+        <servlet-name>JerseyWebApplication</servlet-name>
+        <servlet-class>org.glassfish.jersey.servlet.ServletContainer</servlet-class>
+        <init-param>
+            <param-name>jersey.config.server.provider.packages</param-name>
+            <param-value>com.marstor.msa.restful.resources</param-value>
+        </init-param>
+    </servlet>
+    
+    <servlet>
+        <servlet-name>CloudRest</servlet-name>
+        <servlet-class>org.glassfish.jersey.servlet.ServletContainer</servlet-class>
+        <init-param>
+            <param-name>jersey.config.server.provider.packages</param-name>
+            <param-value>com.marstor.msa.restful.cloudresources</param-value>
+        </init-param>
+    </servlet>
+    
+    
+    <servlet>
+        <display-name>Apache-Axis Servlet</display-name>
+        <servlet-name>AxisServlet</servlet-name>
+        <servlet-class>org.apache.axis2.transport.http.AxisServlet</servlet-class>
+        <load-on-startup>100</load-on-startup>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>AxisServlet</servlet-name>
+        <url-pattern>/servlet/AxisServlet</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>AxisServlet</servlet-name>
+        <url-pattern>*.jws</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>AxisServlet</servlet-name>
+        <url-pattern>/services/*</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>JerseyWebApplication</servlet-name>
+        <url-pattern>/v1/*</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>CloudRest</servlet-name>
+        <url-pattern>/cdpcloud/*</url-pattern>
+        <url-pattern>/nascloud/*</url-pattern>
+    </servlet-mapping>    
+    <!--    <servlet>
+        <display-name>Apache-Axis Admin Servlet Web Admin</display-name>
+        <servlet-name>AxisAdminServlet</servlet-name>
+        <servlet-class>org.apache.axis2.transport.http.AxisAdminServlet</servlet-class>
+        <load-on-startup>100</load-on-startup>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>AxisAdminServlet</servlet-name>
+        <url-pattern>/axis2-admin/*</url-pattern>
+    </servlet-mapping>-->
+    <listener>
+        <listener-class>com.marstor.msa.servlet.MSASessionLisener</listener-class>
+    </listener>
+
+    <session-config>
+        <session-timeout>30</session-timeout>
+    </session-config>
+    
+    <welcome-file-list>
+        <welcome-file>template/login.xhtml</welcome-file>
+    </welcome-file-list>
+</web-app>

@@ -1,0 +1,85 @@
+<?xml version="1.0" encoding="GBK"?>
+<!--
+To change this template, choose Tools | Templates
+and open the template in the editor.
+-->
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.1//EN" "http://www.w3.org/TR/xhtml11/DTD/xhtml11.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:p="http://primefaces.org/ui">
+    
+    <head>
+        <link href="./../resources/common/css/default.css" rel="stylesheet" type="text/css" />
+        <style type="text/css">
+            .postion{
+                margin-left: -21px;
+                padding-left: -21px;
+/*                margin-right: 12px;
+                padding-right: 12px;*/
+            }
+        </style>
+    </head>
+    <body>
+        <h:form id="form">
+            <h1 class="title ui-widget-header ui-corner-all">卷组管理</h1>
+            <br/>
+            <p:tabView id="tabView" dynamic="true" cache="true" style="border: none; "> 
+                
+                <p:tab id="tab1" title="卷组信息">
+                    <div style="overflow: auto; width:100%;" class="postion">
+                        <p:dataTable id="volumeInfo" var="volumesInfo" value="#{volumesInfoBean.volumeList}" rowIndexVar="row" emptyMessage="#{global.get('emptyMessage')}" >   
+                            <p:column headerText="卷组名"  style="text-align:center" >  
+                                <h:outputText value="#{volumesInfo.name}"/>  
+                            </p:column>     
+                            <p:column headerText="已用大小" style="text-align:center">  
+                                <h:outputText value="#{volumesInfo.usedSize}" />  
+                            </p:column> 
+                            <p:column headerText="未用大小" style="text-align:center">  
+                                <h:outputText value="#{volumesInfo.unusedSize}" />  
+                            </p:column> 
+                        </p:dataTable>  
+                    </div>
+                </p:tab>   
+
+                <p:tab id="tab2" title="磁盘信息"> 
+                    <div style="overflow: auto; width:100%;" class="postion">
+                        <p:dataTable id="diskList" var="disk" value="#{diskBean.diskList}" rowIndexVar="row" emptyMessage="#{global.get('emptyMessage')}" >  
+                            
+                            <p:column headerText="位置" disabledSelection="true" style="text-align:center">  
+                                <h:outputText value="#{disk.position}"/>  
+                            </p:column>
+                            <p:column headerText="序号" disabledSelection="true" style="white-space: nowrap;text-align:center">  
+                                <h:outputText value="#{disk.num}"/>  
+                            </p:column>
+                            <p:column headerText="大小（GB）" disabledSelection="true" style="text-align:center">  
+                                <h:outputText value="#{disk.size}"/>  
+                            </p:column>
+                            <p:column headerText="类型" disabledSelection="true" style="text-align:center">  
+                                <h:outputText value="#{disk.type}"/>  
+                            </p:column>
+                            <p:column headerText="状态" disabledSelection="true" style="text-align:center">  
+                                <h:outputText value="#{disk.state}"/>  
+                            </p:column>
+                            <p:column headerText="磁盘名" disabledSelection="true" style="text-align:center">  
+                                <h:outputText value="#{disk.diskName}"/>  
+                            </p:column>
+                        </p:dataTable>   
+                    </div>
+                </p:tab>
+
+                <p:tab id="tab3" title="统计">  
+                    <div style="overflow: auto; width:100%;" class="postion">
+                        <p:dataTable id="countList" var="countBean" value="#{countImpl.countList}" emptyMessage="#{global.get('emptyMessage')}" >  
+                            <p:column disabledSelection="true" style="text-align:center">  
+                                <h:outputText value="#{countBean.property}"/>  
+                            </p:column>
+                            <p:column disabledSelection="true" style="text-align:center">  
+                                <h:outputText value="#{countBean.count}"/>  
+                            </p:column>
+                        </p:dataTable> 
+                    </div>
+                </p:tab>    
+            </p:tabView>
+        </h:form>
+    </body>
+</html>

@@ -1,0 +1,373 @@
+<?xml version="1.0" encoding="GBK"?>
+<!--
+To change this template, choose Tools | Templates
+and open the template in the editor.
+-->
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.1//EN" "http://www.w3.org/TR/xhtml11/DTD/xhtml11.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:p="http://primefaces.org/ui"
+      template="../template/framework.xhtml"
+      xmlns:util="http://java.sun.com/jsf/composite/xhtml">
+    <h:head>
+        <link href="./../resources/common/css/default.css" rel="stylesheet" type="text/css" />
+        <link href="./../resources/common/css/cssIcon.css" rel="stylesheet" type="text/css" />
+    </h:head>
+    <h:body id="mybody">          
+        <script type="text/javascript">
+            navigateToTab = function() {
+                if (window.location.hash) {
+                    jQuery('ul.ui-tabs-nav li a').each(function(i, el) {
+                        if (jQuery(el).text() === window.location.hash.replace('#', '')) {
+                            jQuery(el).click();
+                            return;
+                        }
+                    })
+                }
+            };
+
+            jQuery().ready(navigateToTab);
+            jQuery(window).bind('hashchange', navigateToTab);
+            setupTabFragmentLinks = function() {
+                jQuery('ul.ui-tabs-nav li a').each(function(i, el) {
+                    el.onclick = function() {
+                        window.location = '#' + jQuery(el).text()
+                    };
+                })
+            };
+            jQuery().ready(setupTabFragmentLinks);
+        </script>
+        <h1 class="title ui-widget-header ui-corner-all">#{protect.title}</h1>
+        <!--<p:messages showSummary="true" showDetail="false" autoUpdate="true" closable="true" />-->
+        <p:messages showSummary="true" showDetail="false" autoUpdate="true" closable="true" />
+        <br/>
+        <!--<p:panel style="text-align: left;border-color: transparent;" >rendered="{snapshotlist.rollingRender}" -->
+        <h:outputLabel value="#{global.get('shareName')}"  rendered="#{protect.moduleID == 1}" />
+        <h:outputLabel value="#{global.get('storeName')}"  rendered="#{protect.moduleID == 2}" />
+        <h:outputLabel value="/"  rendered="#{protect.moduleID == 1}" />
+        <h:outputLabel value="#{protect.path}" />
+        <br/><br/>
+        <p:tabView id="view"  style="border:none;" activeIndex="#{protect.activeIndex}">
+            <p:tab   title="#{res.get('snap')}">
+                <h:form id="form1" >
+                    <h:panelGrid columns="2" >
+                        <h:outputLabel id="label" rendered="#{protect.globalStatus.isRollbacking}" value="#{res.get('rolling')}" />
+                        <p:ajaxStatus   id="rollingstatus" rendered="#{protect.globalStatus.rollingRender}" style="width:16px;height:16px;" >  
+                            <f:facet name="start">
+                                <p:graphicImage value="../resources/common/picture/ajaxloadingbar.gif" />  
+                            </f:facet>
+                            <f:facet name="complete">  
+                                <p:graphicImage value="../resources/common/picture/ajaxloadingbar.gif" />  
+                            </f:facet>
+                        </p:ajaxStatus>
+                    </h:panelGrid>
+                    <p:poll  autoStart="#{protect.globalStatus.pollAutoStart}" widgetVar="rollbackpoll" listener="#{protect.checkRollbacking()}"   interval="3" update="form1 :view:form2 " />
+                  
+                    <p:toolbar >
+                        <p:toolbarGroup align="right">
+                            <p:commandButton disabled="#{user.type!=2 or protect.globalStatus.addSnapDisabled }"  id="add" value="#{res.get('addManualSnap')}" icon="addIcon" action="#{protect.snapShotListBean.doBeforeAddSnap()}"   />
+                            <p:spacer width="5" />
+                            <p:commandButton disabled="#{user.type!=2 or protect.globalStatus.autoConfigDisabled }"  value="#{res.get('autoSnapConfig')}" icon="setIcon" action="#{protect.snapShotListBean.doBeforeConfigAutoSnap()}"   />
+                            <p:spacer width="5" />
+                            <p:commandButton disabled="#{user.type!=2 or protect.globalStatus.deleteSnapDisabled }"  value="#{res.get('delAllSnap')}"  icon="deleteIcon"  onclick="delAllSnaps.show();"   />
+                        </p:toolbarGroup>  
+                    </p:toolbar>
+                    <div style="overflow-x: auto; width: 100%; padding-bottom: 14px;">
+                        <p:dataTable emptyMessage="#{global.get('emptyMessage')}" id="snaps" value="#{protect.snapShotListBean.snaps}"  var="snap" paginator="true" rows="10"
+                                     paginatorTemplate="{FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"   selection="#{protect.snapShotListBean.selectSnap}"
+                         selectionMode="single" lazy="true">
+<!--                            <p:column headerText="{res.get('name')}"   >  
+                                <h:outputText value="{snap.strName}"/>  
+                            </p:column>-->
+                            <p:column headerText="#{res.get('description')}" >  
+                                <h:outputText value="#{res.get('auto')}" rendered="#{snap.bAuto}"/>  
+                                <h:outputText value="#{snap.alias}" rendered="#{!snap.bAuto}"/>  
+                            </p:column>
+                            <p:column headerText="#{res.get('createTime')}"  style="white-space: nowrap" >  
+                                <h:outputText value="#{snap.createdTime}"/>  
+                            </p:column>
+                            <p:column headerText="#{res.get('size')}" style="white-space: nowrap" >
+                                <h:outputText value="#{snap.strUsed}B" />
+                            </p:column>
+                            <p:column headerText="#{global.get('operation')}" style="white-space: nowrap"  >
+                                <p:graphicImage value="../resources/common/picture/rollback.png" rendered="#{snap.rollRender}"  style=" vertical-align:middle;" height="16" width="16" />
+                                <p:spacer height="10" width="3" rendered="#{snap.rollRender}"  />
+                                <p:commandLink  id="setButton" value="#{res.get('rollback')}"  rendered="#{snap.rollRender}" disabled="#{user.type!=2   or protect.globalStatus.rollDisabled }" immediate="true" style=" vertical-align:middle;" onclick="rollBack.show();"> 
+                                    <f:setPropertyActionListener value="#{snap}"  target="#{protect.snapShotListBean.selectSnap}" /> 
+                                </p:commandLink>
+                                <p:spacer height="10" width="8" rendered="#{snap.saveRollRender and snap.rollRender }"/><!--rendered="{snap.type == 手工 }"-->
+                                <p:graphicImage value="../resources/common/picture/save.png" rendered="#{snap.saveRollRender}"  style=" vertical-align:middle;" height="16" width="16" />
+                                <p:spacer height="10" width="3"  rendered="#{snap.saveRollRender}" />
+                                <p:commandLink  value="#{res.get('saveRollBack')}" rendered="#{snap.saveRollRender}" disabled="#{user.type!=2  or protect.globalStatus.saveRollDisabled}" immediate="true" style=" vertical-align:middle;" onclick="saveRoll.show();"> 
+                                    <f:setPropertyActionListener value="#{snap}"  target="#{protect.snapShotListBean.selectSnap}" /> 
+                                </p:commandLink>
+                                <p:spacer height="10" width="8" rendered="#{snap.cancelRollRender}"  /><!--rendered="{snap.type == 手工 }rendered="{snap.type == res.get('manual')  } " "-->
+                                <p:graphicImage value="../resources/common/picture/cancle.png" rendered="#{snap.cancelRollRender}"  style=" vertical-align:middle;" height="16" width="16" />
+                                <p:spacer height="10" width="3" rendered="#{snap.cancelRollRender}" />
+                                <p:commandLink  value="#{res.get('cancelRollBack')}" rendered="#{snap.cancelRollRender}" disabled="#{user.type!=2 or protect.globalStatus.cancelRollDisabled}" immediate="true" style=" vertical-align:middle;" onclick="cancelRoll.show();"> 
+                                    <f:setPropertyActionListener value="#{snap}"  target="#{protect.snapShotListBean.selectSnap}" /> 
+                                </p:commandLink>
+                                <p:spacer rendered="#{protect.createCopyRender}" height="10" width="8" />  <!--rendered="{protect.globalStatus.createCopyRender or snap.createCopyRender}" onclick="createCopy.show();"-->
+                                <p:graphicImage rendered="#{protect.createCopyRender}"  value="../resources/common/picture/copy.png"   style=" vertical-align:middle;" height="16" width="16" />
+                                <p:spacer rendered="#{protect.createCopyRender}"  height="10" width="3"   />
+                                <p:commandLink rendered="#{protect.createCopyRender}"  value="#{res.get('createCopy')}"  disabled="#{user.type!=2 or protect.globalStatus.createCopyDisabled}" immediate="true" style=" vertical-align:middle;" actionListener="#{protect.clickCreateCopy(snap)}" > 
+                                    <f:setPropertyActionListener value="#{snap}"  target="#{protect.snapShotListBean.selectSnap}" /> 
+                                </p:commandLink>
+                                <p:spacer height="10" width="8" />
+                                <p:graphicImage rendered="#{snap.deleteRender }"   height="16"  width="16" style="border-color: transparent;vertical-align: middle"   value="../resources/common/picture/delete.png" />  
+                                <p:spacer height="10" width="3" /><!--snap.type == res.get('manual') and--> 
+                                <p:commandLink style="vertical-align: middle" rendered="#{snap.deleteRender}"  disabled="#{(user.type!=2) or (protect.globalStatus.deleteSnapDisabled) }" value="#{global.get('delete')}" actionListener="#{protect.clickDelSnap(snap)}"    >
+                                    <f:setPropertyActionListener value="#{snap}"  target="#{protect.snapShotListBean.selectSnap}" />                    
+                                </p:commandLink>
+                            </p:column>
+
+                        </p:dataTable>
+                    </div>
+
+                    <!--</p:panel>-->
+
+                    <!--        localtable remotetable    </p:panel>-->
+                    <p:ajaxStatus id="globalstatus" rendered="#{protect.globalStatus.loadingRender}" style="width:64px;height:64px;position:fixed;right:5px;bottom:5px">  
+                        <f:facet name="start">  
+                            <p:graphicImage value="../resources/common/picture/loading.gif" />  
+                        </f:facet>  
+
+                        <f:facet name="complete">  
+                            <h:outputText value="" />  
+                        </f:facet>  
+                    </p:ajaxStatus>
+                </h:form>
+            </p:tab>
+            <p:tab id="sync"   title="#{res.get('copy')}">
+                <h:form id="form2" >
+                    <!--                    <h:panelGrid columns="3" >
+                                            <h:outputLabel  value="复制类型："   />  
+                                            <p:spacer width="5" />
+                                            <p:selectOneMenu id="style" value="{synclist.selectType}" style="min-width: 120px" >
+                                                <p:ajax event="change" listener="{synclist.listen()}" update="synctable" />
+                                                <f:selectItem itemLabel="本地复制" itemValue="1" />
+                                                <f:selectItem itemLabel="远程复制" itemValue="2" />
+                                            </p:selectOneMenu> 
+                                        </h:panelGrid>-->
+                    <!--rendered="{!protect.globalStatus.syncLocalTargetOrNot and protect.globalStatus.syncTargetOrNot}"<h:panelGrid id="data" width="710" > rendered="{synclist.syncTargetOrNot}"      -->
+                    <h:panelGrid   columns="3" >
+                        <h:outputLabel rendered="#{protect.globalStatus.syncTargetOrNot}"  value="#{res.get('copied')}" />
+                        <p:spacer  rendered="#{!protect.globalStatus.syncLocalTargetOrNot and protect.globalStatus.syncTargetOrNot}" width="10" height="10" />
+                        <p:commandButton  rendered="#{!protect.globalStatus.syncLocalTargetOrNot and protect.globalStatus.syncTargetOrNot}" icon="stopIcon" value="#{res.get('stopCopy')}" disabled="#{user.type!=2 or protect.globalStatus.isRollbacking}"   onclick="stopsync.show();" />
+                    </h:panelGrid>
+                    <!--<p:commandButton icon="stopIcon" value="test"  />-->
+                    <br/>
+                    <p:fieldset legend="#{res.get('remoteSync')}" >
+                        <br/>
+                        <p:toolbar >
+                            <p:toolbarGroup align="right">
+                                <!--                            <p:commandButton disabled="{user.type!=2  or protect.globalStatus.addLocalSyncDisable}"   value="{res.get('addLocalTarget')}" icon="addIcon" action="{protect.sync.addLocalSync()}"  />
+                                                            <p:spacer width="5" />-->
+                                <p:commandButton disabled="#{user.type!=2  or protect.globalStatus.addRemoteSyncDisable }"  value="#{global.get('add')}" icon="addIcon"  action="#{protect.syncListBean.addRemoteSync()}"  />
+                            </p:toolbarGroup>  
+                        </p:toolbar>
+                        <div style="overflow-x: auto;padding-bottom: 14px;">
+                        <!--<div style="overflow-x: auto; width:100%;padding-bottom: 2px !important; padding-bottom: 14px;" >-->
+                            <p:dataTable emptyMessage="#{global.get('emptyMessage')}" id="remotesynctable" value="#{protect.syncListBean.remoteSyncList}" var="sync" >
+
+                                <p:column headerText="#{protect.headText}" style="white-space: nowrap" >
+                                    #{sync.targetFileSystem}
+                                </p:column>
+                                <p:column headerText="#{res.get('targetHost')}" style="white-space: nowrap"  >
+                                    #{sync.targetIP} 
+                                </p:column>
+                                <p:column  headerText="#{res.get('lastSnap')}" style="white-space: nowrap" >
+                                    #{sync.lastSnapTime} 
+                                </p:column>
+                                <p:column headerText="#{res.get('status')}" style="white-space: nowrap" >
+                                    #{sync.status}
+                                </p:column>
+                                <p:column headerText="#{global.get('operation')}" style="white-space: nowrap"  >
+                                    <!--                                <p:graphicImage height="16" width="16" style="border-color: transparent;vertical-align: middle" value="../resources/common/picture/plan.png" />
+                                                                    <p:commandLink  style="vertical-align: middle"   disabled="{user.type!=2 }" value="{res.get('plan')}"  >
+                                                                    </p:commandLink>-->
+                                    <p:graphicImage height="16" width="16" style="border-color: transparent;vertical-align: middle" value="../resources/common/picture/plan.png" />
+                                    <p:commandLink  style="vertical-align: middle"   disabled="#{user.type!=2 }" value="#{res.get('plan')}" action="#{protect.syncListBean.configSyncPlan(sync)}"  >
+                                    </p:commandLink>
+                                    <p:spacer height="10" width="10" />
+                                    <p:graphicImage rendered="#{sync.start}"    height="16"  width="16" style="border-color: transparent;vertical-align: middle"   value="../resources/common/picture/start.png" />  
+                                    <!--<p:spacer height="10" width="1" /> onclick="startsync.show();" -->
+                                    <p:commandLink  style="vertical-align: middle" rendered="#{sync.start}"   disabled="#{user.type!=2 or protect.globalStatus.startSyncDisable or sync.startDisabled}" value="#{res.get('start')}" actionListener="#{protect.syncListBean.checkBeforeStartSync(sync)}"   >
+                                        <f:setPropertyActionListener value="#{sync}"  target="#{protect.syncListBean.selectSync}" />                    
+                                    </p:commandLink>
+                                    <p:graphicImage rendered="#{sync.stop}"    height="17"  width="17" style="border-color: transparent;vertical-align: middle"   value="../resources/common/picture/stop.png" />  
+                                    <!--<p:spacer height="10" width="1" /> onclick="startsync.show();" -->
+                                    <p:commandLink  style="vertical-align: middle" rendered="#{sync.stop}"   disabled="#{user.type!=2 or protect.globalStatus.stopSyncDisable or sync.stopDisabled }" value="#{res.get('stop')}"   onclick="sourcestopsync.show();" >
+                                        <f:setPropertyActionListener value="#{sync}"  target="#{protect.syncListBean.selectSync}" />                    
+                                    </p:commandLink>
+                                    <p:spacer height="10" width="10" />
+                                    <p:graphicImage rendered="#{sync.suspend}"    height="16"  width="16" style="border-color: transparent;vertical-align: middle"   value="../resources/common/picture/pause.png" />  
+                                    <!--<p:spacer height="10" width="3" />-->
+                                    <p:commandLink  style="vertical-align: middle" rendered="#{sync.suspend}"  disabled="#{user.type!=2 or sync.suspendDisabled or protect.globalStatus.suspendSyncDisable }" value="#{res.get('pause')}" onclick="suspendsync.show()" >
+                                        <f:setPropertyActionListener value="#{sync}"  target="#{protect.syncListBean.selectSync}" />                    
+                                    </p:commandLink>
+                                    <!--<p:spacer height="10" width="10" />-->
+                                    <p:graphicImage rendered="#{sync.resume}"    height="16"  width="16" style="border-color: transparent;vertical-align: middle"   value="../resources/common/picture/start.png" />  
+                                    <!--<p:spacer height="10" width="1" /> onclick="startsync.show();" -->
+                                    <p:commandLink  style="vertical-align: middle" rendered="#{sync.resume}"   disabled="#{user.type!=2 or protect.globalStatus.resumeSyncDisable or sync.resumeDisabled }" value="#{res.get('restore')}"  actionListener="#{protect.syncListBean.checkBeforeResumeSync(sync)}" >
+                                        <f:setPropertyActionListener value="#{sync}"  target="#{protect.syncListBean.selectSync}" />                    
+                                    </p:commandLink>
+                                    <p:spacer height="10" width="10" />
+<!--                                    <p:graphicImage   height="16"  width="16" style="border-color: transparent;vertical-align: middle"   value="../resources/common/picture/delete.png" />  
+                                    <p:spacer height="10" width="3" />
+                                    <p:commandLink  style="vertical-align: middle"   disabled="{user.type!=2 or sync.deleteDisabled or protect.globalStatus.deleteSyncDisable }" value="{global.get('delete')}" onclick="deletesync.show();"   >
+                                        <f:setPropertyActionListener value="{sync}"  target="{protect.syncListBean.selectSync}" />                    
+                                    </p:commandLink>-->
+                                </p:column>
+                            </p:dataTable>
+                        </div>
+                    </p:fieldset>
+                    <br/>
+                    <p:fieldset legend="#{res.get('localSync')}">
+                        <br/>
+                        <p:toolbar   >
+                            <p:toolbarGroup align="right">
+                                <p:commandButton disabled="#{user.type!=2  or protect.globalStatus.addLocalSyncDisable}"   value="#{global.get('add')}" icon="addIcon" action="#{protect.syncListBean.addLocalSync()}"  />
+                            </p:toolbarGroup>  
+                        </p:toolbar>
+                        <div style="overflow-x: auto;padding-bottom: 14px;">
+                        <!--<div style="overflow-x: auto; width:100%;;padding-bottom: 2px !important; padding-bottom: 14px;">-->
+                            <p:dataTable emptyMessage="#{global.get('emptyMessage')}" id="localsynctable" value="#{protect.syncListBean.localSyncList}" var="sync" >
+                                <p:column headerText="#{protect.headText}" style="white-space: nowrap" >
+                                    #{sync.targetFileSystem}
+                                </p:column>
+                                <p:column  headerText="#{res.get('lastSnap')}" style="white-space: nowrap"  >
+                                    #{sync.lastSnapTime} 
+                                </p:column>
+                                <p:column headerText="#{res.get('status')}" style="white-space: nowrap"  >
+                                    #{sync.status}
+                                </p:column>
+                                <p:column headerText="#{global.get('operation')}" style="white-space: nowrap"  >
+                                    <p:graphicImage height="16" width="16" style="border-color: transparent;vertical-align: middle" value="../resources/common/picture/plan.png" />
+                                    <p:commandLink  style="vertical-align: middle"   disabled="#{user.type!=2 }" value="#{res.get('plan')}" action="#{protect.syncListBean.configSyncPlan(sync)}"  >
+                                    </p:commandLink>
+                                    <p:spacer height="10" width="10" />
+                                    <p:graphicImage rendered="#{sync.start}"    height="16"  width="16" style="border-color: transparent;vertical-align: middle"   value="../resources/common/picture/start.png" />  
+                                    <!--<p:spacer height="10" width="1" /> onclick="startsync.show();" -->
+                                    <p:commandLink  style="vertical-align: middle" rendered="#{sync.start}"   disabled="#{user.type!=2 or protect.globalStatus.startSyncDisable}" value="#{res.get('start')}" actionListener="#{protect.syncListBean.checkBeforeStartSync(sync)}"   >
+                                        <f:setPropertyActionListener value="#{sync}"  target="#{protect.syncListBean.selectSync}" />                    
+                                    </p:commandLink>
+                                    <p:graphicImage rendered="#{sync.stop}"    height="17"  width="17" style="border-color: transparent;vertical-align: middle"   value="../resources/common/picture/stop.png" />  
+                                    <!--<p:spacer height="10" width="1" /> onclick="startsync.show();" -->
+                                    <p:commandLink  style="vertical-align: middle" rendered="#{sync.stop}"   disabled="#{user.type!=2 or protect.globalStatus.stopSyncDisable }" value="#{res.get('stop')}"   onclick="sourcestopsync.show();" >
+                                        <f:setPropertyActionListener value="#{sync}"  target="#{protect.syncListBean.selectSync}" />                    
+                                    </p:commandLink>
+                                    <p:spacer height="10" width="10" />
+                                    <p:graphicImage rendered="#{sync.suspend}"    height="16"  width="16" style="border-color: transparent;vertical-align: middle"   value="../resources/common/picture/pause.png" />  
+                                    <!--<p:spacer height="10" width="3" />-->
+                                    <p:commandLink  style="vertical-align: middle" rendered="#{sync.suspend}"  disabled="#{user.type!=2 or sync.suspendDisabled or protect.globalStatus.suspendSyncDisable }" value="#{res.get('pause')}" onclick="suspendsync.show()" >
+                                        <f:setPropertyActionListener value="#{sync}"  target="#{protect.syncListBean.selectSync}" />                    
+                                    </p:commandLink>
+                                    <!--<p:spacer height="10" width="10" />-->
+                                    <p:graphicImage rendered="#{sync.resume}"    height="16"  width="16" style="border-color: transparent;vertical-align: middle"   value="../resources/common/picture/start.png" />  
+                                    <!--<p:spacer height="10" width="1" /> onclick="startsync.show();" -->
+                                    <p:commandLink  style="vertical-align: middle" rendered="#{sync.resume}"   disabled="#{user.type!=2 or protect.globalStatus.resumeSyncDisable }" value="#{res.get('restore')}"  actionListener="#{protect.syncListBean.checkBeforeResumeSync(sync)}" >
+                                        <f:setPropertyActionListener value="#{sync}"  target="#{protect.syncListBean.selectSync}" />                    
+                                    </p:commandLink>
+                                    <p:spacer height="10" width="10" />
+<!--                                    <p:graphicImage   height="16"  width="16" style="border-color: transparent;vertical-align: middle"   value="../resources/common/picture/delete.png" />  
+                                    <p:spacer height="10" width="3" />
+                                    <p:commandLink  style="vertical-align: middle"   disabled="{user.type!=2 or sync.deleteDisabled or protect.globalStatus.deleteSyncDisable }" value="{global.get('delete')}" onclick="deletesync.show();"   >
+                                        <f:setPropertyActionListener value="{sync}"  target="{protect.syncListBean.selectSync}" />                    
+                                    </p:commandLink>-->
+                                </p:column>
+                            </p:dataTable>
+                        </div>
+                    </p:fieldset>
+
+                    <!--</h:panelGrid>-->
+                    <p:ajaxStatus rendered="#{protect.globalStatus.loadingRender}"   style="width:64px;height:64px;position:fixed;right:5px;bottom:5px">  
+                        <f:facet name="start">  
+                            <p:graphicImage value="../resources/common/picture/loading.gif" />  
+                        </f:facet>  
+
+                        <f:facet name="complete">  
+                            <h:outputText value="" />  
+                        </f:facet>  
+                    </p:ajaxStatus>
+                </h:form>
+            </p:tab>
+
+        </p:tabView>
+        <div style="width: 100%;text-align: center;" >
+            <p:commandButton value="#{global.get('update')}" icon="updateIcon" actionListener="#{protect.updateSnapAndSync()}" update=":view:form1 :view:form2" />
+            <p:spacer width="8"/>
+            <!--action="nas_path?faces-redirect=true"--> 
+            <p:commandButton value="#{global.get('return')}" icon="cancleIcon"  action="#{protect.goBack()}"  />
+        </div> 
+
+        <h:form>
+            <util:confirm  uid="delSnap" mess="#{res.get('confirmDelSnap')}" action="#{protect.deleteSnap()}" update=":view:form1"  >
+            </util:confirm>
+        </h:form>
+        <h:form>
+            <util:confirm  uid="delAllSnaps" mess="#{res.get('confirmDelAllSnaps')}" action="#{protect.deleteAllSnap()}" update=":view:form1"  >
+            </util:confirm>
+        </h:form>
+        <h:form>
+            <util:confirm  uid="rollBack" mess="#{res.get('rollBackOperation')}" action="#{protect.rollBackSnap()}" update=":view:form1 :view:form2 "  >
+            </util:confirm>
+        </h:form>
+        <!--        <h:form>
+                    <util:confirm  uid="afterRoll" mess="回滚操作已完成，是否开启共享功能并上线共享目录？" action="{snapshotlist.doAfterRollBack()}" update=":view:form1"  >
+                    </util:confirm>
+                </h:form>-->
+        <h:form>
+            <util:confirm  uid="saveRoll" mess="#{res.get('saveRollOperation')}" action="#{protect.saveRoll()}" update=":view:form1 :view:form2"  >
+            </util:confirm>
+        </h:form>
+        <h:form>
+            <util:confirm  uid="cancelRoll" mess="#{res.get('cancelRollBackOperation')}" action="#{protect.cancelRoll()}" update=":view:form1 :view:form2"  >
+            </util:confirm>
+        </h:form>
+        <h:form>
+            <util:confirm  uid="startsync" mess="#{res.get('startSync')}" action="#{protect.startSYNC()}" update=":view:form2 :view:form1"  >
+            </util:confirm>
+        </h:form>
+        <h:form>
+            <util:confirm  uid="suspendsync" mess="#{res.get('confirmSuspendCopy')}" action="#{protect.suspendSYNC()}" update=":view:form2"  >
+            </util:confirm>
+        </h:form>
+        <h:form>
+            <util:confirm  uid="stopsync" mess="#{res.get('confirmStopCopy')}" action="#{protect.stopTargetSync()}" update=":view:form2 :view:form1"  >
+            </util:confirm>
+        </h:form>
+        <h:form>
+            <util:confirm  uid="deletesync" mess="#{res.get('confirmDelCopy')}" action="#{protect.deleteSYNC()}" update=":view:form2 :view:form1"  >
+            </util:confirm>
+        </h:form>
+        <h:form>
+            <util:confirm  uid="sourcestopsync" mess="#{res.get('confirmStopCopy')}" action="#{protect.stopSourceSync()}" update=":view:form2 :view:form1"  >
+            </util:confirm>
+        </h:form>
+        <h:form>
+            <util:confirm  uid="resumesync" mess="#{res.get('confirmRestoreCopy')}" action="#{protect.resumeSync()}" update=":view:form2"  >
+            </util:confirm>
+        </h:form>
+        <h:form>
+            <util:confirm  uid="createCopy" mess="#{res.get('confirmCreateCopy')}" action="#{protect.createCopy()}" update=":view:form1 :form3"  >
+            </util:confirm>
+        </h:form>
+        <h:form>
+            <util:info uid="finishCreateCopy" mess="#{res.get('finishCreateCopy')}"  />
+        </h:form>
+        <h:form id="form3" >
+            <util:question2 uid="skipToNAS" mess="#{protect.mess_1}" action="/nas/nas_path?faces-redirect=true"  >
+            </util:question2>
+        </h:form>
+<!--        <h:form id="form4" >
+            <util:question1 uid="skipToVTL" mess="{protect.mess_2}" action="/vtl/storage_area?faces-redirect=true"  >
+            </util:question1>
+        </h:form>-->
+
+        <!--id="globalstatus" -->
+
+    </h:body>
+</html>

@@ -1,0 +1,120 @@
+<?xml version="1.0" encoding="GBK"?>
+<!--
+To change this template, choose Tools | Templates
+and open the template in the editor.
+-->
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.1//EN" "http://www.w3.org/TR/xhtml11/DTD/xhtml11.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:p="http://primefaces.org/ui">
+    <!--       template="../template/framework.xhtml"-->
+
+    <!--    <ui:define name="head">-->
+    <h:head>
+        <script type="text/javascript">
+            PrimeFaces.locales['cn'] = {
+                closeText: '确定',
+                prevText: '上',
+                nextText: '下',
+                monthNames: ['1', '2', '3', '4', '5', '6', '7', '8', '9', '10', '11', '12'],
+                monthNamesShort: ['1月', '2月', '3月', '4月', '5月', '6月', '7月', '8月', '9月', '10月', '11月', '12月'],
+                dayNames: ['日', '一', '二', '三', '四', '五', '六'],
+                dayNamesShort: ['日', '一', '二', '三', '四', '五', '六'],
+                dayNamesMin: ['日', '一', '二', '三', '四', '五', '六'],
+                weekHeader: 'Woche',
+                FirstDay: 1,
+                isRTL: false,
+                showMonthAfterYear: false,
+                yearSuffix: '',
+                timeOnlyTitle: 'Nur Zeit',
+                timeText: '时间',
+                hourText: '时',
+                minuteText: '分',
+                secondText: '秒',
+                currentText: '当前时间',
+                ampm: false,
+                month: 'Monat',
+                week: 'Woche',
+                day: 'Tag',
+                allDayText: 'Ganzer Tag'
+            }; 
+        </script>
+        <!--          <style type="text/css">
+                      .addIcon{
+                         width: 16px;
+                         height: 16px;
+                         background:url('{request.contextPath}/resources/common/picture/add.png') no-repeat !important;
+                      }
+                </style>-->
+        <link href="./../resources/common/css/default.css" rel="stylesheet" type="text/css" />
+        <link href="./../resources/common/css/cssIcon.css" rel="stylesheet" type="text/css" />
+    </h:head>
+
+    <!--    </ui:define>-->
+
+    <!--    <ui:define name="content">-->
+    <h:body>
+
+        <h1 title="System Infomation" class="title ui-widget-header ui-corner-all">系统>时间</h1>
+        <br/> 
+        <p:accordionPanel multiple="true">
+            <p:tab title="设置时间">
+                <h:form>
+                    <br/>
+                    <h:panelGrid columns="2" cellpadding="2">  
+                        <h:outputLabel value="当前系统时间："/>  
+                        <h:outputLabel value="#{system_time_setTimeBean.dateString}"/>  
+                        <h:outputLabel value="设置时间："/>  
+                        <p:calendar locale="cn" pattern="yyyy-MM-dd HH:mm:ss" showButtonPanel="true" navigator="true" id="customCal" value="#{system_time_setTimeBean.date}"/> 
+                    </h:panelGrid>
+                    <p:separator />
+                    <p:spacer width="120" height="6" />
+                    <p:commandButton id="btnTime" value="保存" icon="saveIcon" actionListener="#{system_time_setTimeBean.saveTime(system_time_setTimeBean.date)}"/>
+                </h:form>
+            </p:tab>
+            <p:tab title="设置时区">
+                <h:form>
+                    <br/>
+                    <h:panelGrid columns="2" style="margin-bottom:10px" cellpadding="7">  
+                        <h:outputText value="服务器时区： "/> 
+                        <p:selectOneMenu value="#{system_time_timeZoneBean.zoneName}" style="width: 240px; background-attachment: fixed; background-position-y: 1px;">  
+                            <f:selectItems value="#{system_time_timeZoneBean.zoneList}" />  
+                        </p:selectOneMenu>  
+
+                        <!--                        <p:selectOneMenu value="{system_time_timeZoneBean.zoneName}" effect="fade" style="width: 240px;">  
+                                                    <f:selectItems value="{system_time_timeZoneBean.zoneList}" var="timeZone" itemLabel="{timeZone.zoneName}" itemValue="{timeZone.number}"/>  
+                                                </p:selectOneMenu> -->
+                    </h:panelGrid>
+
+                    <p:separator />
+                    <p:spacer width="120" height="6" />
+                    <p:commandButton id="btnZone" value="保存" icon="saveIcon" actionListener="#{system_time_timeZoneBean.saveTimeZone(system_time_timeZoneBean.zoneName)}"/>
+                </h:form>
+            </p:tab>
+            <p:tab title="设置NTP">
+                <h:form>
+                    <br/>
+                    <h:panelGrid columns="1" cellpadding="5">  
+                        <h:panelGroup>
+                            <p:inputText value="#{system_time_NTPListBean.addNTP}" style="width: 205px;height: 30px;" />   
+                            <p:spacer width="3" height="6" />
+                            <p:commandButton value="添加" icon="addIcon" actionListener="#{system_time_NTPListBean.addNTPServer(system_time_NTPListBean.addNTP)}" update="customList" />  
+                            <p:spacer width="5" height="6" />
+                            <p:commandButton value="删除" icon="deleteIcon"  style="margin-top:5px" id="btnDelete" action="#{system_time_NTPListBean.deleteNTPServer(ntp)}" update="customList" />
+                        </h:panelGroup>
+                        <p:orderList value="#{system_time_NTPListBean.ntpList}" var="ntp" itemLabel="#{ntp}" itemValue="#{ntp}" controlsLocation="right" id="customList"/>
+                    </h:panelGrid>
+
+                    <p:separator />
+                    <p:spacer width="120" height="6" />
+                    <p:commandButton id="btnSave" value="保存" icon="saveIcon" actionListener="#{system_time_NTPListBean.saveNTPServer(system_time_NTPListBean.ntpList)}" />
+                </h:form>
+            </p:tab>
+            
+        </p:accordionPanel>
+       
+    </h:body>
+    <!--    </ui:define>-->
+</ui:composition>

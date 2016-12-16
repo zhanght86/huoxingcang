@@ -1,0 +1,140 @@
+<?xml version="1.0" encoding="GBK"?>
+<!--
+To change this template, choose Tools | Templates
+and open the template in the editor.
+-->
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.1//EN" "http://www.w3.org/TR/xhtml11/DTD/xhtml11.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:p="http://primefaces.org/ui"
+      template="../template/framework.xhtml"
+      xmlns:util="http://java.sun.com/jsf/composite/xhtml">
+    <h:head>
+        <link href="./../resources/common/css/default.css" rel="stylesheet" type="text/css" />
+        <link href="./../resources/common/css/cssIcon.css" rel="stylesheet" type="text/css" />
+    </h:head>
+    <h:body>            
+
+        <h1 class="title ui-widget-header ui-corner-all">#{global.get('cdp')}#{res.get('title')}</h1>
+        <p:messages showSummary="true" showDetail="false" autoUpdate="true" closable="true" />
+        <br/>
+        <p:tabView id="view" style="border:none;">
+            <p:tab title="设置" id="set">
+                <h:form id="settings">
+                    <p:selectOneRadio id="select_type" value="#{protectionBean.strategy}">
+                        <p:ajax listener="#{protectionBean.switchPanel()}" update="settings"/>
+                        <f:selectItem itemValue="1" itemLabel="#{res.get('mirror')}" />
+                        <f:selectItem itemValue="2" itemLabel="#{res.get('snapshot')}" />
+                        <f:selectItem itemValue="3" itemLabel="#{res.get('record')}" />
+                    </p:selectOneRadio>
+                    <div style="text-align: center;">
+                        <p:panel id="mirror" style=" border: 0px;" rendered="#{protectionBean.mirror}">
+                            <p:commandButton id="c1" disabled="#{user.type!=2}"  rendered="#{protectionBean.mirror}" value="${global.get('save')}" icon="saveIcon" action="#{protectionBean.mirror()}"   />
+                            <p:commandButton id="c2" icon="cancleIcon"  rendered="#{protectionBean.mirror}" value="${global.get('return')}"  immediate="true" onclick="javascript: window.history.go(-1);"/>  
+                        </p:panel>
+                        <p:panel  style=" border: 0px;" rendered="#{protectionBean.snapshot}">
+                            <h:panelGrid columns="2" cellpadding="2" rendered="#{protectionBean.snapshot}">
+                                <h:outputLabel value="时间间隔：" />
+                                <h:panelGrid columns="2" >
+                                    <p:inputText id="interval"  disabled="#{!protectionBean.snapshot}" value="60" />
+                                    <h:outputLabel value="分钟" />
+                                </h:panelGrid>
+                                <h:outputLabel value="保留数量：" />
+                                <h:panelGrid columns="2" >
+                                    <p:inputText id="reserve" value="10"  disabled="#{!protectionBean.snapshot}" />
+                                    <h:outputLabel value="个" />
+                                </h:panelGrid>
+                            </h:panelGrid>
+                            <p:commandButton id="c3"  rendered="#{protectionBean.snapshot}" disabled="#{user.type!=2}" value="${global.get('save')}" icon="saveIcon" action="#{protectionBean.mirror()}"   />
+                            <p:commandButton id="c4"  rendered="#{protectionBean.snapshot}" icon="cancleIcon" value="${global.get('return')}"  immediate="true" onclick="javascript: window.history.go(-1);"/>  
+                        </p:panel>
+                        <p:panel  style=" border: 0px;" rendered="#{protectionBean.record}">
+                            <p:messages id="messages" showDetail="true" autoUpdate="true" closable="true"  rendered="#{protectionBean.record}"/>
+                            <p:fieldset legend="${res.get('panel1')}" style="width: 450px; text-align: left">
+                                <h:panelGroup rendered="#{protectionBean.record}"> 
+                                    <h:panelGrid columns="4" cellpadding="5"  rendered="#{protectionBean.record}" style=" text-align: left;"> 
+                                        <h:outputLabel value="${res.get('label1')}" style=" min-width: 50px;"/>  
+                                        <h:outputLabel value="#{logBean.group.diskCount}" /> 
+
+                                        <h:outputLabel value="${res.get('label2')}"  style=" width: 50px;"/>  
+                                        <h:outputLabel value="#{logBean.getts()}" /> 
+                                    </h:panelGrid>
+                                    <h:panelGrid columns="5" cellpadding="5"  rendered="#{protectionBean.record}" style=" text-align: left; width: 450px;"> 
+                                        <h:outputLabel value="${res.get('label4')}" /> 
+                                        <p:inputText value="#{logBean.size}"/>
+                                        <h:outputLabel value="GB"/> 
+                                        <h:outputLabel/> 
+                                        <h:outputLabel/> 
+
+                                        <h:outputLabel value="${res.get('label5')}" /> 
+                                        <p:inputText id="keepTime" value="#{logBean.keepTime}" disabled="#{logBean.tillFull}"/> 
+                                        <h:outputLabel value="#{global.get('hour')}" style="width: 100px" />  
+                                        <p:selectBooleanCheckbox style="vertical-align: middle" value="#{logBean.tillFull}" >
+                                            <p:ajax event="change" update="keepTime"/>
+                                        </p:selectBooleanCheckbox>
+                                        <h:outputLabel value="${res.get('chb')}"  style="line-height: 25px;vertical-align: middle" />
+                                    </h:panelGrid>
+                                    <h:panelGrid columns="2" cellpadding="5"  style=" text-align: left; width: 450px;"  >
+                                        <h:outputLabel value="${res.get('label6')}" />
+                                        <h:selectOneRadio id="state" value="#{logBean.fullOption}">  
+                                            <f:selectItem itemLabel="${res.get('rd1')}" itemValue="1" />  
+                                            <f:selectItem itemLabel="${res.get('rd2')}" itemValue="3" />  
+                                            <f:selectItem itemLabel="${res.get('rd3')}" itemValue="2" />  
+                                        </h:selectOneRadio>  
+                                    </h:panelGrid>
+                                </h:panelGroup>
+                            </p:fieldset>
+                            <br></br>
+                            <p:fieldset legend="${res.get('panel2')}" style="width: 450px; text-align: left">
+                                <p:toolbar>  
+                                    <p:toolbarGroup align="right">
+                                        <p:commandButton id="addLink" icon="addIcon" value="#{global.get('add')}" immediate="true" update="agents" /> 
+                                    </p:toolbarGroup>
+                                </p:toolbar>
+                                <p:dataTable id="agents" var="agent" value="#{agentBean.agents}" emptyMessage="#{global.get('emptyMessage')}" >
+                                    <p:column headerText="${res.get('header0')}" width="60" style="text-align:center">
+                                        <p:selectBooleanCheckbox id="readfile" style="vertical-align: middle" onchange="#{agentBean.changeState()}" value="#{agent.state == 1}">
+                                        </p:selectBooleanCheckbox> 
+                                    </p:column>
+                                    <p:column headerText="${res.get('header1')}" style="text-align : center;  ">  
+                                        <h:outputText value="#{agent}" />  
+                                    </p:column>
+                                    <p:column headerText="${res.get('header2')}" style="text-align : center;  ">  
+                                        <h:outputText value="#{agent}" />  
+                                    </p:column>
+                                    <p:column headerText="${global.get('operation')}" style="text-align: center;">
+                                        <p:graphicImage value="../resources/common/picture/edit.png" width="16" height="16" style="vertical-align:middle;"/>
+                                        <p:commandLink id="set" disabled="#{agentBean.isDefault}" value="${res.get('o2')}" immediate="true" update="agents" action="#{agentBean.setting()}" style="vertical-align:middle;">
+                                            <f:setPropertyActionListener value="#{agent}" target="#{agentBean.selected}" />
+                                        </p:commandLink>
+                                    </p:column>
+                                </p:dataTable>
+                            </p:fieldset>
+                            <br></br>
+                            <h:inputHidden id="txt1" value="#{logBean.percent}"/>  
+                            <p:commandButton id="addButton"  rendered="#{protectionBean.record}" icon="saveIcon" value="${global.get('save')}"  action="#{addDGBean.addDG()}"/>  
+                            <p:spacer width="8"/>
+                            <p:commandButton id="closeButton"  rendered="#{protectionBean.record}" icon="cancleIcon" value="${global.get('return')}"  immediate="true" onclick="javascript: window.history.go(-1);"/>  
+                        </p:panel>
+                    </div>
+                </h:form>
+            </p:tab>
+            <p:tab  title="快照">
+
+            </p:tab>
+            <p:tab id="sync"   title="复制">
+
+            </p:tab>
+        </p:tabView>        
+        <p:ajaxStatus style="width:64px;height:64px;position:fixed;right:5px;bottom:5px">  
+            <f:facet name="start">  
+                <p:graphicImage value="../resources/common/picture/loading.gif" />  
+            </f:facet>  
+
+            <f:facet name="complete">  
+                <h:outputText value="" />  
+            </f:facet>  
+        </p:ajaxStatus>
+    </h:body>
+</html>

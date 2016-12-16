@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="GBK"?>
+<!--
+To change this template, choose Tools | Templates
+and open the template in the editor.
+-->
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.1//EN" "http://www.w3.org/TR/xhtml11/DTD/xhtml11.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:p="http://primefaces.org/ui">
+    <h:head>
+        <link href="./../resources/common/css/default.css" rel="stylesheet" type="text/css" />
+        <style type="text/css">
+            .postion{
+                margin-left: -21px;
+                padding-left: -21px;
+            }
+        </style>
+    </h:head>
+    <h:body>
+        <h:form id="form">
+            <h1 class="title ui-widget-header ui-corner-all">#{global.get('cdp')}</h1>
+            <br/>
+            <p:tabView id="tabView" dynamic="true" cache="true" style="border: none;"> 
+                <p:tab id="tab1" title="#{res.get('tab1')}"> 
+                    <p:dataTable id="diskGroup" var="diskGroup"  emptyMessage="#{global.get('emptyMessage')}" value="#{diskGroupsBean.diskGroups}">  
+                        <p:column headerText="#{res.get('header2_1')}" disabledSelection="true" sortBy="#{diskGroup}" style="text-align:center">  
+                            <h:outputText value="#{diskGroup.diskGroupName}"/>  
+                        </p:column>
+                    </p:dataTable>   
+                </p:tab>
+                <p:tab id="tab2" rendered="#{clientsBean.showClients()}" title="#{res.get('tab2')}">
+                    <p:dataTable id="clients" emptyMessage="#{global.get('emptyMessage')}"  var="client" value="#{clientsBean.clients}" >  
+                        <p:column headerText="#{res.get('header1_1')}"  style="text-align:center" >  
+                            <h:outputText value="#{client.hostname}"/>  
+                        </p:column> 
+                    </p:dataTable>  
+                </p:tab>
+            </p:tabView>
+        </h:form>
+    </h:body>
+</ui:composition>

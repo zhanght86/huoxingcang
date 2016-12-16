@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="GBK"?>
+<!--
+To change this template, choose Tools | Templates
+and open the template in the editor.
+-->
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.1//EN" "http://www.w3.org/TR/xhtml11/DTD/xhtml11.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:p="http://primefaces.org/ui">
+    <h:head>
+        <link href="./../resources/common/css/default.css" rel="stylesheet" type="text/css" />
+        <link href="./../resources/common/css/cssIcon.css" rel="stylesheet" type="text/css" />
+    </h:head>
+    <h:body>
+        <h1 title="System Infomation" class="title ui-widget-header ui-corner-all">#{global.get('backuptitle')}#{res.get('title')}</h1>
+        <br/> 
+        <h:form id="form">
+            <p:inputTextarea id="text" value="#{backupRmanLog.log}" style="width:98%; height: 400px; overflow-x: auto; overflow-y: auto">
+
+            </p:inputTextarea><br/><br/>
+            
+            <p:spacer width="300px" height="0"/>
+            <p:panel style=" text-align:  center;  border-color:  #ffffff">
+            <p:commandButton value="${global.get('return')}" icon="cancleIcon" immediate="true"
+                             action="#{backupRmanLog.goBack()}" />
+            </p:panel>
+        </h:form>
+    </h:body>
+</ui:composition>

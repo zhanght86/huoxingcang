@@ -1,0 +1,124 @@
+<?xml version="1.0" encoding="GBK"?>
+<!--
+To change this template, choose Tools | Templates
+and open the template in the editor.
+-->
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.1//EN" "http://www.w3.org/TR/xhtml11/DTD/xhtml11.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:p="http://primefaces.org/ui"
+                template="../template/framework.xhtml">
+
+    <ui:define name="left">
+        <ui:include src="../panel/leftMenu.xhtml"/>
+    </ui:define>
+
+    <ui:define name="content">
+        <script type="text/javascript">
+                            function init() {
+                                var  value = document.getElementById("form:bool_input").checked;
+                                //alert(value);
+                                if(value){
+                                    document.getElementById("form:testshare").disabled = false;
+                                   
+                                }
+                                if(!value) {
+                                    document.getElementById("form:testshare").setAttribute("disabled", "true");
+                                    
+                                    //document.getElementById("form:testshare").focus();
+                                }
+                                  //document.getElementById("form:testshare").value = "";
+                                  //document.getElementById("form:testshare").focus();
+                            }
+                      
+        </script>
+        <h:form id="form">
+            <h1 title="Share Path Infomation" class="title ui-widget-header ui-corner-all">CIFS管理</h1>
+            <!--            <p:contextMenu for="paths">  
+                            <p:menuitem value="View" update="display" icon="ui-icon-search" oncomplete="shareDialog.show()"/>  
+                            <p:menuitem value="del" update="display" icon="ui-icon-search" oncomplete="confirmation.show()" />
+                            <p:menuitem value="edit" update="display" icon="ui-icon-search"  action="{sharelist.action}" />
+                            <p:menuitem value="add" update="display" icon="ui-icon-search"   oncomplete="addShareDialog.show()"/>       
+                        </p:contextMenu> -->
+
+            <p:dataTable emptyMessage="#{global.get('emptyMessage')}"    id="paths" var="sharepath" value="#{sharelist.list}" rowKey="#{sharepath.path}" selection="#{sharelist.selectedShareBean}"  selectionMode="single" editable="true" >
+
+                <p:column headerText="目录">
+                    <p:commandLink disabled="#{user.type!=2}"  action="#{sharelist.editAuthority}" >
+
+                        <h:outputText value="#{sharepath.path}"/> 
+                        <f:param name="path" value="#{sharepath.path}" />
+                    </p:commandLink>
+                </p:column>
+                <p:column headerText="CIFS状态" >
+                    <h:outputText value="#{sharepath.cifsStatus}"/>
+                </p:column>
+                <p:column headerText="共享名称" >
+                    <h:outputText value="#{sharepath.shareName}"/>
+                </p:column>
+                <p:column headerText="设置" >
+                    <p:commandLink disabled="#{user.type!=2}"    id="modifyLink" actionListener="#{sharelist.initConfigStatus}" update=":form:configCIFS" oncomplete="configCIFSDialog.show()" >
+                        <!--                        <f:param  name="cifs" value="{sharepath.cifs}" />-->
+                        <f:param  name="path" value="#{sharepath.path}" />
+                        <f:param   name ="sharename" value="#{sharepath.shareName}" />
+                         <p:graphicImage value="../resources/nas/picture/edit.jpg" />  
+                    </p:commandLink>
+                </p:column>
+<!--                <p:column >
+                    {sharepath.configButtonStatus}
+                </p:column>-->
+
+            </p:dataTable>
+            <p:spacer width="80" height="2" />
+            <!--            <p:dialog header="Share Detail" widgetVar="shareDialog" resizable="false" width="200" showEffect="clip" hideEffect="fold" id="dialog">  
+            
+                            <h:panelGrid id="display" columns="2" cellpadding="4">  
+                                <h:outputText value="目录名称：" />  
+                                <h:outputText value="{sharelist.selectedShareBean.path}" style="font-weight:bold"/>  
+            
+                                <h:outputText value="CIFS：" />  
+                                <h:outputText value="{sharelist.selectedShareBean.cifs}" style="font-weight:bold"/>  
+                            </h:panelGrid> 
+                                            <p:commandButton id="addButton" value="确定"  />  
+                                            <p:commandButton id="closeButton" value="返回" /> 
+            
+                        </p:dialog>-->
+            <p:dialog id="confirmDialog" header="确认"   widgetVar="confirmation" width="300">  
+
+                <h:outputText value="确定要删除此共享目录吗?" />
+
+                <br/>
+                <br/>
+                <p:commandButton id="confirm" value="是"  update="paths" oncomplete="confirmation.hide()"  
+                                 actionListener="#{sharelist.deleteRow}" >
+                </p:commandButton>
+                <p:commandButton id="decline" value="否" onclick="confirmation.hide()" type="button" />    
+            </p:dialog>
+
+            <p:dialog id="configCIFS" header="CIFS设置" widgetVar="configCIFSDialog" resizable="false" modal="true" >
+                <h:panelGrid columns="2" style="line-height: 50px" >
+                    <p:selectBooleanCheckbox id="bool" value="#{sharelist.editBean.cifsOnOrOff}" style="line-height: 35px" >
+                        <p:ajax  listener="#{sharelist.editBean.change}" update="testshare" /> 
+                    </p:selectBooleanCheckbox>
+                    <h:outputText value="开启CIFS" />   
+                </h:panelGrid>
+                <h:panelGrid columns="2">
+                    <h:outputLabel for="pathname" value="目录名称:" />
+                    <p:inputText id="testshare" value="#{sharelist.editBean.shareName}" disabled="#{sharelist.editBean.shareNameTextStatus}" />
+                </h:panelGrid>
+                <br/>
+                <p:spacer width="65" height="6" />
+
+                <p:commandButton value="确定"  actionListener="#{sharelist.updateStatusOfPath}" update=":form:paths"    oncomplete="configCIFSDialog.hide()">
+
+                </p:commandButton>  
+                <p:spacer width="10" height="6" />
+                <p:commandButton value="返回" oncomplete="configCIFSDialog.hide();"/>
+            </p:dialog>
+        </h:form>
+    </ui:define>
+
+
+</html>

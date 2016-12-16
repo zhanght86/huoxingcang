@@ -1,0 +1,574 @@
+<?xml version="1.0" encoding="gb2312" ?> 
+<MarsMSA>
+    <ResourceInfo>
+        <Bean>
+            <Author>王麒</Author> 
+            <ResourceID>700001</ResourceID> 
+            <Macro>LOG_CREATE_SNAPSHOT_SUCCESS</Macro> 
+            <Chinese>在文件系统'%1'创建快照'%2'成功，快照保留天数'%3'</Chinese> 
+            <English>On file system '%1' create snapshot '%2' success,expiration date: '%3'</English> 
+        </Bean>
+        <Bean>
+            <Author>王麒</Author> 
+            <ResourceID>700002</ResourceID> 
+            <Macro>LOG_CREATE_SNAPSHOT_FAILED</Macro> 
+            <Chinese>在文件系统'%1'创建快照'%2'失败，快照保留天数'%3'，错误:'%4'</Chinese> 
+            <English>On file system '%1' create snapshot '%2' failed,expiration date: '%3',Error:'%4'</English> 
+        </Bean>
+        <Bean>
+            <Author>王麒</Author> 
+            <ResourceID>700003</ResourceID> 
+            <Macro>LOG_DESTROY_SNASHOT_SUCCESS</Macro> 
+            <Chinese>删除快照'%1'成功</Chinese> 
+            <English>Destroy snapshot '%1' success</English> 
+        </Bean>
+        <Bean>
+            <Author>王麒</Author> 
+            <ResourceID>700004</ResourceID> 
+            <Macro>LOG_DESTROY_SNASHOT_FAILED</Macro> 
+            <Chinese>删除快照'%1'失败，错误:'%2'</Chinese> 
+            <English>Destroy snapshot '%1' failed,Error:'%2'</English> 
+        </Bean>
+        <Bean>
+            <Author>王麒</Author> 
+            <ResourceID>700005</ResourceID> 
+            <Macro>LOG_ROLLBACK_SNAPSHOT_SUCCESS</Macro> 
+            <Chinese>回滚快照'%1'成功</Chinese> 
+            <English>Rollback snapshot '%1' success</English> 
+        </Bean>
+        <Bean>
+            <Author>王麒</Author> 
+            <ResourceID>700006</ResourceID> 
+            <Macro>LOG_ROLLBACK_SNAPSHOT_FAILED</Macro> 
+            <Chinese>回滚快照'%1'失败，错误:'%2'</Chinese> 
+            <English>Rollback snapshot '%1' failed,Error:'%2'</English> 
+        </Bean>
+		<Bean>
+            <Author>王麒</Author> 
+            <ResourceID>700007</ResourceID> 
+            <Macro>LOG_CREATE_FOREVER_SNAPSHOT_SUCCESS</Macro> 
+            <Chinese>在文件系统'%1'创建快照'%2'成功，快照保留天数'永久'</Chinese> 
+            <English>On file system '%1' create snapshot '%2' success,expiration date: 'forever'</English> 
+        </Bean>
+        <Bean>
+            <Author>王麒</Author> 
+            <ResourceID>700008</ResourceID> 
+            <Macro>LOG_CREATE_FOREVER_SNAPSHOT_FAILED</Macro> 
+            <Chinese>在文件系统'%1'创建快照'%2'失败，快照保留天数'永久'，错误:'%3'</Chinese> 
+            <English>On file system '%1' create snapshot '%2' failed,expiration date: 'forever',Error:'%3'</English> 
+        </Bean>
+        <Bean>
+            <Author>王麒</Author> 
+            <ResourceID>700010</ResourceID> 
+            <Macro>LOG_Get_FILE_SYSTEM_FAILED</Macro> 
+            <Chinese>获取文件系统列表失败，错误:'%1'</Chinese> 
+            <English>Get file system list failed,Error:'%1'</English> 
+        </Bean>
+        <Bean>
+            <Author>王麒</Author> 
+            <ResourceID>700011</ResourceID> 
+            <Macro>LOG_CREATE_TIMING_SNAPSHOT_SUCCESS</Macro> 
+            <Chinese>文件系统'%1'开启自动快照成功，时间间隔:'%2'分钟，最大快照数:'%3'</Chinese> 
+            <English>On file system '%1' open auto snapshot success,time intervel:'%2',maxnum:'%3'</English> 
+        </Bean>
+        <Bean>
+            <Author>王麒</Author> 
+            <ResourceID>700012</ResourceID> 
+            <Macro>LOG_CREATE_TIMING_SNAPSHOT_FAILED</Macro> 
+            <Chinese>文件系统'%1'开启自动快照失败，时间间隔:'%2'分钟，最大快照数:'%3'，错误:'%4'</Chinese> 
+            <English>On file system '%1' open auto snapshot failed,time intervel:'%2',maxnum:'%3',Error:'%4'</English> 
+        </Bean>
+        <Bean>
+            <Author>王麒</Author> 
+            <ResourceID>700013</ResourceID> 
+            <Macro>LOG_DESTROY_TIMING_SNAPSHOT_SUCCESS</Macro> 
+            <Chinese>文件系统'%1'关闭自动快照并保留创建的自动快照成功</Chinese> 
+            <English>On file system '%1' close auto snapshot and save before created snapshot success</English> 
+        </Bean>
+        <Bean>
+            <Author>王麒</Author> 
+            <ResourceID>700014</ResourceID> 
+            <Macro>LOG_DESTROY_TIMING_SNAPSHOT_FAILED</Macro> 
+            <Chinese>文件系统'%1'关闭自动快照并保留创建的自动快照失败，错误:'%2'</Chinese> 
+            <English>On file system '%1' close auto snapshot and save before created snapshot failed,Error:'%2'</English> 
+        </Bean>
+		<Bean>
+            <Author>王麒</Author> 
+            <ResourceID>700015</ResourceID> 
+            <Macro>LOG_DESTROY_TIMING_SNAPSHOT_DELETE_SNAPSHOT_SUCCESS</Macro> 
+            <Chinese>文件系统'%1'关闭自动快照并删除原有自动快照成功</Chinese> 
+            <English>On file system '%1' close auto snapshot and delete before created snapshot success</English> 
+        </Bean>
+        <Bean>
+            <Author>王麒</Author> 
+            <ResourceID>700016</ResourceID> 
+            <Macro>LOG_DESTROY_TIMING_SNAPSHOT_DELETE_SNAPSHOT_FAILED</Macro> 
+            <Chinese>文件系统'%1'关闭自动快照并删除原有自动快照失败，错误:'%2'</Chinese> 
+            <English>On file system '%1' close auto snapshot and delete before created snapshot success</English> 
+        </Bean>
+        <Bean>
+            <Author>王麒</Author> 
+            <ResourceID>700018</ResourceID> 
+            <Macro>LOG_GET_MANUAL_SNAPSHOT_FOR_SPECIFIED_ZFS_FAILED</Macro> 
+            <Chinese>获取文件系统'%1'手工快照列表失败，错误:'%2'</Chinese> 
+            <English>Get manual snapshot from file system '%1' failed,Error:'%2'</English> 
+        </Bean>
+        <Bean>
+            <Author>王麒</Author> 
+            <ResourceID>700020</ResourceID> 
+            <Macro>LOG_GET_AUTO_SNAPSHOT_FOR_SPECIFIED_ZFS_FAILED</Macro> 
+            <Chinese>获取文件系统'%1'自动快照列表失败，错误:'%2'</Chinese> 
+            <English>Get auto snapshot from file system '%1' failed,Error:'%2'</English> 
+        </Bean>
+		<Bean>
+            <Author>王麒</Author> 
+            <ResourceID>700021</ResourceID> 
+            <Macro>LOG_DESTROY_OUT_OF_DATE_SNAPSHOT_SUCCESS</Macro> 
+            <Chinese>删除过期手工快照'%1'成功</Chinese> 
+            <English>Destory out of date snapshot '%1' success</English> 
+        </Bean>
+        <Bean>
+            <Author>王麒</Author> 
+            <ResourceID>700022</ResourceID> 
+            <Macro>LOG_DESTROY_OUT_OF_DATE_SNAPSHOT_FAILED</Macro> 
+            <Chinese>删除过期手工快照'%1'失败，错误:'%2'</Chinese> 
+            <English>Destory out of date snapshot '%1',Error:'%2'</English> 
+        </Bean>
+		<Bean>
+            <Author>王麒</Author> 
+            <ResourceID>700023</ResourceID> 
+            <Macro>LOG_CREATE_TIMING_SNAPSHOT_SUCCESS</Macro> 
+            <Chinese>文件系统'%1'开启自动快照成功，时间间隔:'%2'分钟，最大快照数:'%3'，开启智能快照功能成功</Chinese> 
+            <English>On file system '%1' open auto snapshot success,time intervel:'%2',maxnum:'%3'</English> 
+        </Bean>
+        <Bean>
+            <Author>王麒</Author> 
+            <ResourceID>700024</ResourceID> 
+            <Macro>LOG_CREATE_TIMING_SNAPSHOT_FAILED</Macro> 
+            <Chinese>文件系统'%1'开启自动快照失败，时间间隔:'%2'分钟，最大快照数:'%3'，开启智能快照功能失败，错误:'%4'</Chinese> 
+            <English>On file system '%1' open auto snapshot failed,time intervel:'%2',maxnum:'%3',Error:'%4'</English> 
+        </Bean>
+		<Bean>
+            <Author>王麒</Author> 
+            <ResourceID>700025</ResourceID> 
+            <Macro>LOG_SEND_TARGET_SERVER_LOGIN_INFOMATION_FAILED</Macro> 
+            <Chinese>文件系统'%1'配置同步参数失败，错误:'%2'</Chinese> 
+            <English>On file system '%1'configure synchronization failed,Error:'%2'</English> 
+        </Bean>
+		<Bean>
+            <Author>王麒</Author> 
+            <ResourceID>700026</ResourceID> 
+            <Macro>LOG_GET_TARGET_SERVER_POOL_LIST_FAILED</Macro> 
+            <Chinese>获取主机:'%1'，端口:'%2'的卷组信息失败，错误：'%3'</Chinese> 
+            <English>Get host '%1' ,port '%2' zpool infomation failed , Error:'%3'</English> 
+        </Bean>
+		<Bean>
+            <Author>王麒</Author> 
+            <ResourceID>700027</ResourceID> 
+            <Macro>LOG_SEND_TARGET_SERVER_LOGIN_INFOMATION_SUCCESS</Macro> 
+            <Chinese>文件系统'%1'配置远程同步参数,目标主机IP:'%2',目标主机端口:'%3',目标主机文件系统:'%4',压缩级别:'%5'</Chinese> 
+            <English>On file system '%1'configure synchronization,IP:'%2',Port:'%3',Target ZFS:'%4',GzipLevel:'%5'</English> 
+        </Bean>
+		<Bean>
+            <Author>王麒</Author> 
+            <ResourceID>700028</ResourceID> 
+            <Macro>LOG_START_SYNCHRONIZATION_SUCCESS</Macro> 
+            <Chinese>文件系统'%1'开启远程同步成功</Chinese> 
+            <English>On file system '%1' start remote synchronized success</English> 
+        </Bean>
+		<Bean>
+            <Author>王麒</Author> 
+            <ResourceID>700029</ResourceID> 
+            <Macro>LOG_START_SYNCHRONIZATION_FAILED</Macro> 
+            <Chinese>文件系统'%1'开启远程同步失败，错误:'%2'</Chinese> 
+            <English>On file system '%1' start remote synchronized failed,Error:'%2'</English> 
+        </Bean>
+		<Bean>
+            <Author>王麒</Author> 
+            <ResourceID>700030</ResourceID> 
+            <Macro>LOG_CLOSE_SYNCHRONIZATION_SUCCESS</Macro> 
+            <Chinese>文件系统'%1'关闭远程同步成功</Chinese> 
+            <English>On file system '%1' close remote synchronized success</English> 
+        </Bean>
+		<Bean>
+            <Author>王麒</Author> 
+            <ResourceID>700031</ResourceID> 
+            <Macro>LOG_CLOSE_SYNCHRONIZATION_FAILED</Macro> 
+            <Chinese>文件系统'%1'关闭远程同步失败，错误:'%2'</Chinese> 
+            <English>On file system '%1' close remote synchronized failed,Error:'%2'</English> 
+        </Bean>
+		<Bean>
+            <Author>王麒</Author> 
+            <ResourceID>700032</ResourceID> 
+            <Macro>LOG_SYNCHRONIZATION_FAILED</Macro> 
+            <Chinese>文件系统'%1'远程同步失败,错误:'%2'</Chinese> 
+            <English>On file system '%1' remote synchronized failed,Error:'%2'</English> 
+        </Bean>
+	    <Bean>
+            <Author>王麒</Author> 
+            <ResourceID>700033</ResourceID> 
+            <Macro>LOG_PAUSE_SYNCHRONIZATION_SUCCESS</Macro> 
+            <Chinese>文件系统'%1'暂停远程同步成功</Chinese> 
+            <English>On file system '%1' pause remote synchronized success</English> 
+        </Bean>
+		<Bean>
+            <Author>王麒</Author> 
+            <ResourceID>700034</ResourceID> 
+            <Macro>LOG_PAUSE_SYNCHRONIZATION_FAILED</Macro> 
+            <Chinese>文件系统'%1'暂停远程同步失败，错误:'%2'</Chinese> 
+            <English>On file system '%1' pause remote synchronized failed,Error:'%2'</English> 
+        </Bean>
+	    <Bean>
+            <Author>王麒</Author> 
+            <ResourceID>700035</ResourceID> 
+            <Macro>LOG_RESTORE_SYNCHRONIZATION_SUCCESS</Macro> 
+            <Chinese>文件系统'%1'恢复远程同步成功</Chinese> 
+            <English>On file system '%1' restore remote synchronized success</English> 
+        </Bean>
+		<Bean>
+            <Author>王麒</Author> 
+            <ResourceID>700036</ResourceID> 
+            <Macro>LOG_RESTORE_SYNCHRONIZATION_FAILED</Macro> 
+            <Chinese>文件系统'%1'恢复远程同步失败，错误:'%2'</Chinese> 
+            <English>On file system '%1' restore remote synchronized failed,Error:'%2'</English> 
+        </Bean>
+		<Bean>
+            <Author>王麒</Author> 
+            <ResourceID>700037</ResourceID> 
+            <Macro>LOG_LOCALSYNCHRONIZATION_FAILED</Macro> 
+            <Chinese>文件系统'%1'本地同步失败，错误:'%2'</Chinese> 
+            <English>On file system '%1' local synchronized failed,Error:'%2'</English> 
+        </Bean>
+		<Bean>
+            <Author>王麒</Author> 
+            <ResourceID>700038</ResourceID> 
+            <Macro>LOG_GET_TARGET_SERVER_FILE_SYSTEM_INFO_FAILED</Macro> 
+            <Chinese>获取目标文件系统'%1'信息失败，错误:'%2'</Chinese> 
+            <English>Get target file system '%1' info failed,Error:'%2'</English> 
+        </Bean>
+	    <Bean>
+            <Author>王麒</Author> 
+            <ResourceID>700039</ResourceID> 
+            <Macro>LOG_START_LOCALSYNCHRONIZATION_SUCCESS</Macro> 
+            <Chinese>文件系统'%1'开启本地同步成功</Chinese> 
+            <English>On file system '%1' start local synchronized success</English> 
+        </Bean>
+		<Bean>
+            <Author>王麒</Author> 
+            <ResourceID>700040</ResourceID> 
+            <Macro>LOG_START_LOCALSYNCHRONIZATION_FAILED</Macro> 
+            <Chinese>文件系统'%1'开启本地同步失败，错误:'%2'</Chinese> 
+            <English>On file system '%1' start local synchronized failed,Error:'%2'</English> 
+        </Bean>
+		<Bean>
+            <Author>王麒</Author> 
+            <ResourceID>700041</ResourceID> 
+            <Macro>LOG_CLOSE_LOCALSYNCHRONIZATION_SUCCESS</Macro> 
+            <Chinese>文件系统'%1'关闭本地同步成功</Chinese> 
+            <English>On file system '%1' close local synchronized success</English> 
+        </Bean>
+		<Bean>
+            <Author>王麒</Author> 
+            <ResourceID>700042</ResourceID> 
+            <Macro>LOG_CLOSE_LOCALSYNCHRONIZATION_FAILED</Macro> 
+            <Chinese>文件系统'%1'关闭本地同步失败，错误:'%2'</Chinese> 
+            <English>On file system '%1' close local synchronized failed,Error:'%2'</English> 
+        </Bean>
+	    <Bean>
+            <Author>王麒</Author> 
+            <ResourceID>700043</ResourceID> 
+            <Macro>LOG_PAUSE_LOCALSYNCHRONIZATION_SUCCESS</Macro> 
+            <Chinese>文件系统'%1'暂停本地同步成功</Chinese> 
+            <English>On file system '%1' pause local synchronized success</English> 
+        </Bean>
+		<Bean>
+            <Author>王麒</Author> 
+            <ResourceID>700044</ResourceID> 
+            <Macro>LOG_PAUSE_LOCALSYNCHRONIZATION_FAILED</Macro> 
+            <Chinese>文件系统'%1'暂停本地同步失败，错误:'%2'</Chinese> 
+            <English>On file system '%1' pause local synchronized failed,Error:'%2'</English> 
+        </Bean>
+	    <Bean>
+            <Author>王麒</Author> 
+            <ResourceID>700045</ResourceID> 
+            <Macro>LOG_RESTORE_LOCALSYNCHRONIZATION_SUCCESS</Macro> 
+            <Chinese>文件系统'%1'恢复本地同步成功</Chinese> 
+            <English>On file system '%1' restore local synchronized success</English> 
+        </Bean>
+		<Bean>
+            <Author>王麒</Author> 
+            <ResourceID>700046</ResourceID> 
+            <Macro>LOG_RESTORE_LOCALSYNCHRONIZATION_FAILED</Macro> 
+            <Chinese>文件系统'%1'恢复本地同步失败，错误:'%2'</Chinese> 
+            <English>On file system '%1' restore local synchronized failed,Error:'%2'</English> 
+        </Bean>
+	    <Bean>
+            <Author>王麒</Author> 
+            <ResourceID>700047</ResourceID> 
+            <Macro>LOG_CONFIG_LOCAL_SYNC_INFO_SUCCESS</Macro> 
+            <Chinese>文件系统'%1'配置本地同步参数成功,目标文件系统:'%2'</Chinese> 
+            <English>On file system '%1'configure synchronization success,Target ZFS:'%2'</English> 
+        </Bean>
+	    <Bean>
+            <Author>王麒</Author> 
+            <ResourceID>700048</ResourceID> 
+            <Macro>LOG_CONFIG_LOCAL_SYNC_INFO_FAILED</Macro> 
+            <Chinese>文件系统'%1'配置本地同步参数失败,目标文件系统:'%2',错误：'%3'</Chinese> 
+            <English>On file system '%1'configure synchronization failed,Target ZFS:'%2',Error:'%3'</English> 
+        </Bean>		
+	    <Bean>
+            <Author>王麒</Author> 
+            <ResourceID>700049</ResourceID> 
+            <Macro>LOG_LOCALRECV_FAILED</Macro> 
+            <Chinese>文件系统'%1'继续本地同步时目标文件系统数据不一致，自动回滚目标文件系统失败,错误：'%2'</Chinese> 
+            <English>On file system '%1' resume local synchronization target server data not accordance,rollback target file system failed,Error:'%2'</English> 
+        </Bean>
+		<Bean>
+            <Author>王麒</Author> 
+            <ResourceID>700050</ResourceID> 
+            <Macro>LOG_REMOTERECV_FAILED</Macro> 
+            <Chinese>文件系统'%1'继续远程同步时目标文件系统数据不一致，自动回滚目标文件系统失败,错误：'%2'</Chinese> 
+            <English>On file system '%1' resume remote synchronization target server data not accordance,rollback target file system failed,Error:'%2'</English> 
+        </Bean>
+		<Bean>
+            <Author>王麒</Author> 
+            <ResourceID>700051</ResourceID> 
+            <Macro>LOG_GET_SERVER_POOL_FILESYTEM_LIST_FAILED</Macro> 
+            <Chinese>响应源主机获取本机文件系统与卷组信息命令执行时失败,错误：'%1'</Chinese> 
+            <English>Get local ZFS pool and file system failed,Error:'%2'</English> 
+        </Bean>
+		<Bean>
+            <Author>王麒</Author> 
+            <ResourceID>700052</ResourceID> 
+            <Macro>LOG_IMPORT_NAS_INFO_SUCCCESS</Macro> 
+            <Chinese>文件系统'%1'同步用户用户组信息成功</Chinese> 
+            <English>On file system '%1' synchronization user and user group infomation success</English> 
+        </Bean>
+		<Bean>
+            <Author>王麒</Author> 
+            <ResourceID>700053</ResourceID> 
+            <Macro>LOG_IMPORT_NAS_INFO_FAILED</Macro> 
+            <Chinese>文件系统'%1'同步用户用户组信息失败,错误：'%2'</Chinese> 
+            <English>On file system '%1' synchronization user and user group infomation success failed,Error:'%2'</English> 
+        </Bean>
+		<Bean>
+            <Author>王麒</Author> 
+            <ResourceID>700054</ResourceID> 
+            <Macro>LOG_CLEAR_TARGET_STATUS</Macro> 
+            <Chinese>目标文件系统'%1'在目标端停止同步成功</Chinese> 
+            <English>On file system '%1' stop synchronization </English> 
+        </Bean>
+		<Bean>
+            <Author>王麒</Author> 
+            <ResourceID>700055</ResourceID> 
+            <Macro>LOG_SAVE_ROLLBACK_SUCCESS</Macro> 
+            <Chinese>文件系统'%1'保存回滚成功</Chinese> 
+            <English>On file system '%1'save rollback success</English> 
+        </Bean>
+	    <Bean>
+            <Author>王麒</Author> 
+            <ResourceID>700056</ResourceID> 
+            <Macro>LOG_SAVE_ROLLBACK_FAILED</Macro> 
+            <Chinese>文件系统'%1'保存回滚失败,错误：'%2'</Chinese> 
+            <English>On file system '%1'save rollback failed,Error:'%2'</English> 
+        </Bean>
+		<Bean>
+            <Author>王麒</Author> 
+            <ResourceID>700057</ResourceID> 
+            <Macro>LOG_CANCAL_ROLLBACK_SUCCESS</Macro> 
+            <Chinese>文件系统'%1'取消回滚成功</Chinese> 
+            <English>On file system '%1'cancal rollback success</English> 
+        </Bean>
+	<Bean>
+            <Author>王麒</Author> 
+            <ResourceID>700058</ResourceID> 
+            <Macro>LOG_CANCAL_ROLLBACK_FAILED</Macro> 
+            <Chinese>文件系统'%1'取消回滚失败,错误：'%2'</Chinese> 
+            <English>On file system '%1'cancal rollback failed,Error:'%2'</English> 
+        </Bean>		
+
+	<Bean>
+            <Author>王麒</Author> 
+            <ResourceID>700059</ResourceID> 
+            <Macro>LOG_DELETE_LOCALSYNCHRONIZATION_SUCCESS</Macro> 
+            <Chinese>文件系统'%1'删除本地同步成功</Chinese> 
+            <English>On file system '%1' delete local synchronized success</English> 
+        </Bean>	
+        <Bean>
+            <Author>王麒</Author> 
+            <ResourceID>700060</ResourceID> 
+            <Macro>LOG_DELETE_LOCALSYNCHRONIZATION_FAILED</Macro> 
+            <Chinese>文件系统'%1'删除本地同步失败，错误:'%2'</Chinese> 
+            <English>On file system '%1' delete local synchronized failed,Error:'%2'</English> 
+        </Bean>
+        <Bean>
+            <Author>王麒</Author> 
+            <ResourceID>700061</ResourceID> 
+            <Macro>LOG_DELETE_SYNCHRONIZATION_SUCCESS</Macro> 
+            <Chinese>文件系统'%1'删除远程同步成功</Chinese> 
+            <English>On file system '%1' delete remote synchronized success</English> 
+        </Bean>	
+        <Bean>
+            <Author>王麒</Author> 
+            <ResourceID>700062</ResourceID> 
+            <Macro>LOG_DELETE_SYNCHRONIZATION_FAILED</Macro> 
+            <Chinese>文件系统'%1'删除远程同步失败，错误:'%2'</Chinese> 
+            <English>On file system '%1' delete remote synchronized failed,Error:'%2'</English> 
+        </Bean>
+        <Bean>
+            <Author>王麒</Author> 
+            <ResourceID>700063</ResourceID> 
+            <Macro>LOG_MODIFY_LOCALSYNCHRONIZATION_SUCCESS</Macro> 
+            <Chinese>文件系统'%1'修改本地同步执行时间成功</Chinese> 
+            <English>On file system '%1' modify local synchronized time success</English> 
+        </Bean>	
+        <Bean>
+            <Author>王麒</Author> 
+            <ResourceID>700064</ResourceID> 
+            <Macro>LOG_MODIFY_LOCALSYNCHRONIZATION_FAILED</Macro> 
+            <Chinese>文件系统'%1'修改本地同步执行时间失败，错误:'%2'</Chinese> 
+            <English>On file system '%1' modify local synchronized time failed,Error:'%2'</English> 
+        </Bean>
+        <Bean>
+            <Author>王麒</Author> 
+            <ResourceID>700065</ResourceID> 
+            <Macro>LOG_MODIFY_SYNCHRONIZATION_SUCCESS</Macro> 
+            <Chinese>文件系统'%1'修改远程同步执行时间成功</Chinese> 
+            <English>On file system '%1' modify remote synchronized time success</English> 
+        </Bean>	
+        <Bean>
+            <Author>王麒</Author> 
+            <ResourceID>700066</ResourceID> 
+            <Macro>LOG_MODIFY_SYNCHRONIZATION_FAILED</Macro> 
+            <Chinese>文件系统'%1'修改远程同步执行时间失败，错误:'%2'</Chinese> 
+            <English>On file system '%1' modify remote synchronized time failed,Error:'%2'</English> 
+        </Bean>
+        <Bean>
+            <Author>王麒</Author> 
+            <ResourceID>700067</ResourceID> 
+            <Macro>LOG_CREATE_CLONE_SUCCESS</Macro> 
+            <Chinese>创建副本'%1'成功</Chinese> 
+            <English>Create copy '%1' success</English> 
+        </Bean>	
+        <Bean>
+            <Author>王麒</Author> 
+            <ResourceID>700068</ResourceID> 
+            <Macro>LOG_CREATE_CLONE_FAILED</Macro> 
+            <Chinese>创建副本'%1'失败，错误:'%2'</Chinese> 
+            <English>Create copy '%1' failed,Error:'%2'</English> 
+        </Bean>
+        <Bean>
+            <Author>王麒</Author> 
+            <ResourceID>700069</ResourceID> 
+            <Macro>LOG_DELETE_CLONE_SUCCESS</Macro> 
+            <Chinese>删除副本'%1'成功</Chinese> 
+            <English>Delete copy '%1' success</English> 
+        </Bean>	
+        <Bean>
+            <Author>王麒</Author> 
+            <ResourceID>700070</ResourceID> 
+            <Macro>LOG_DELETE_CLONE_FAILED</Macro> 
+            <Chinese>删除副本'%1'失败，错误:'%2'</Chinese> 
+            <English>Delete copy '%1' failed,Error:'%2'</English> 
+        </Bean>
+        <Bean>
+            <Author>王麒</Author> 
+            <ResourceID>700072</ResourceID> 
+            <Macro>LOG_CONFIG_SNAPSHOT_PROTECT_SUCCESS</Macro> 
+            <Chinese>磁盘组'%1'修改快照保护成功，时间间隔:'%2'分钟，最大快照数:'%3'</Chinese> 
+            <English>On disk group '%1' open snapshot protect success,time intervel:'%2',maxnum:'%3'</English> 
+        </Bean>
+        <Bean>
+            <Author>王麒</Author> 
+            <ResourceID>700071</ResourceID> 
+            <Macro>LOG_CONFIG_SNAPSHOT_PROTECT_FAILED</Macro> 
+            <Chinese>磁盘组'%1'修改快照保护失败，时间间隔:'%2'分钟，最大快照数:'%3'，错误:'%4'</Chinese> 
+            <English>On disk group  '%1' open snapshot protect failed,time intervel:'%2',maxnum:'%3',Error:'%4'</English> 
+        </Bean>
+        
+        <Bean>
+            <Author>王麒</Author> 
+            <ResourceID>700073</ResourceID> 
+            <Macro>LOG_CONFIG_ADD_DEVICE_SUCCESS</Macro> 
+            <Chinese>添加远程设备'%1'成功</Chinese> 
+            <English>Add remote device '%1' success</English> 
+        </Bean>	
+        <Bean>
+            <Author>王麒</Author> 
+            <ResourceID>700074</ResourceID> 
+            <Macro>LOG_CONFIG_ADD_DEVICE_FAILED</Macro> 
+            <Chinese>添加远程设备'%1'失败，错误:'%2'</Chinese> 
+            <English>Add remote device '%1' failed,Error:'%2'</English> 
+        </Bean>
+        <Bean>
+            <Author>王麒</Author> 
+            <ResourceID>700075</ResourceID> 
+            <Macro>LOG_CONFIG_DELETE_DEVICE_SUCCESS</Macro> 
+            <Chinese>删除远程设备'%1'成功</Chinese> 
+            <English>Delete remote device '%1' success</English> 
+        </Bean>	
+        <Bean>
+            <Author>王麒</Author> 
+            <ResourceID>700076</ResourceID> 
+            <Macro>LOG_CONFIG_DELETE_DEVICE_FAILED</Macro> 
+            <Chinese>删除远程设备'%1'失败，错误:'%2'</Chinese> 
+            <English>Delete remote device '%1' failed,Error:'%2'</English> 
+        </Bean>
+        <Bean>
+            <Author>王麒</Author> 
+            <ResourceID>700077</ResourceID> 
+            <Macro>LOG_CONFIG_MODIFY_DEVICE_SUCCESS</Macro> 
+            <Chinese>更新远程设备'%1'成功</Chinese> 
+            <English>Modify remote device '%1' success</English> 
+        </Bean>	
+        <Bean>
+            <Author>王麒</Author> 
+            <ResourceID>700078</ResourceID> 
+            <Macro>LOG_CONFIG_MODIFY_DEVICE_FAILED</Macro> 
+            <Chinese>更新远程设备'%1'失败，错误:'%2'</Chinese> 
+            <English>Modify remote device '%1' failed,Error:'%2'</English> 
+        </Bean>
+        <Bean>
+            <Author>王麒</Author> 
+            <ResourceID>700079</ResourceID> 
+            <Macro>LOG_SET_FILE_SYSTEM_AUTH_SUCCESS</Macro> 
+            <Chinese>用户'%1'授权'%2'成功</Chinese> 
+            <English>Modify remote device '%1' '%2'success</English> 
+        </Bean>	
+        <Bean>
+            <Author>王麒</Author> 
+            <ResourceID>700080</ResourceID> 
+            <Macro>LOG_SET_FILE_SYSTEM_AUTH_SUCCESS</Macro> 
+            <Chinese>用户'%1'授权'%2'失败，错误:'%3'</Chinese> 
+            <English>Modify remote device '%1' '%2'success'</English> 
+        </Bean>
+        <Bean>
+            <Author>王麒</Author> 
+            <ResourceID>700081</ResourceID> 
+            <Macro>LOG_ROOLBACK_REMOTE_SNAPSHOT_SUCCESS</Macro> 
+            <Chinese>回滚远程主机'%1'上的快照'%2'成功</Chinese> 
+            <English>Rollback snapshot '%2' on remote device '%1' success</English> 
+        </Bean>	
+        <Bean>
+            <Author>王麒</Author> 
+            <ResourceID>700082</ResourceID> 
+            <Macro>LOG_ROOLBACK_REMOTE_SNAPSHOT_FAILED</Macro> 
+            <Chinese>回滚远程主机'%1'上的快照'%2'失败，错误:'%3'</Chinese> 
+            <English>Rollback snapshot '%2' on remote device '%1',error:%3</English> 
+        </Bean>
+        <Bean>
+            <Author>王麒</Author> 
+            <ResourceID>700083</ResourceID> 
+            <Macro>LOG_ROOLBACK_REMOTE_SNAPSHOT_SUCCESS</Macro> 
+            <Chinese>远程回滚主机上的快照'%1'成功</Chinese> 
+            <English>Rollback snapshot '%1' on remote device success</English> 
+        </Bean>	
+        <Bean>
+            <Author>王麒</Author> 
+            <ResourceID>700084</ResourceID> 
+            <Macro>LOG_ROOLBACK_REMOTE_SNAPSHOT_FAILED</Macro> 
+            <Chinese>远程回滚主机上的快照'%1'失败，错误:'%2'</Chinese> 
+            <English>Rollback snapshot '%1' on remote device,error:%2</English> 
+        </Bean>
+    </ResourceInfo>
+</MarsMSA>

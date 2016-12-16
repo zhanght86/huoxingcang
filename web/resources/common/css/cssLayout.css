@@ -1,0 +1,86 @@
+
+#top {
+    position: relative;
+    background-color: #ffff99;
+    color: white;
+    padding: 2px;
+    margin: 0px 0px 10px 0px;
+}
+
+#top_about {
+        position: relative;
+        padding: 10px;
+        margin: 0px 0px 0px 100px;
+        height: 15px;
+}
+
+#bottom {
+        position: relative;
+        background-color: #c2dfef;
+        padding: 5px;
+        margin: -40px 0px 0px 0px;
+        height: 15px;
+/*    left:0px;
+    position: relative;
+    background-color: #c2dfef;
+    padding: 5px;
+    bottom: 20px;
+    width: 90%;
+    height: 15px;*/
+
+}
+
+#left {
+    float: left;
+    background-color: #ece3a5;
+    padding: 5px;
+    width: 165px;
+    height: 800px;
+}
+
+#right {
+    float: right;
+    background-color: #ece3a5;
+    padding: 5px;
+    width: 150px;
+}
+
+.center_content {
+    position: relative;
+    background-color: #dddddd;
+    padding: 5px;
+}
+
+.left_content {
+/*    float: left;*/
+    background-color: #dddddd;
+    padding: 5px;
+    margin-left: 180px;
+/*    margin-top: -810px;*/
+    height: 800px;
+}
+
+.right_content {
+    background-color: #dddddd;
+    padding: 5px;
+    margin: 0px 170px 0px 170px;
+}
+
+#top a:link, #top a:visited {
+  color: black;
+  font-weight : bold;
+  text-decoration: none;
+}
+
+#top a:link:hover, #top a:visited:hover  {
+    color: blue;
+  font-weight : bold;
+  text-decoration : underline;
+}
+
+.ui-datatable-table-wrapper {
+   overflow: auto!important;
+}
+
+
+

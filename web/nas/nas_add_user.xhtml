@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="GBK"?>
+<!--
+To change this template, choose Tools | Templates
+and open the template in the editor.
+-->
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.1//EN" "http://www.w3.org/TR/xhtml11/DTD/xhtml11.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:p="http://primefaces.org/ui"
+      template="../template/framework.xhtml">
+    <h:head>
+        <link href="./../resources/common/css/cssIcon.css" rel="stylesheet" type="text/css" />
+        <link href="./../resources/common/css/default.css" rel="stylesheet" type="text/css" />
+    </h:head>
+    <h:body>
+        <h:form id="form1" >
+            <h1  class="title ui-widget-header ui-corner-all">#{res.get('title')}</h1>
+            <p:messages  showSummary="true" showDetail="false" autoUpdate="true" closable="true" />
+            <p:panel style="border-color: transparent;;width: 350px;text-align: left" >
+
+                <br/>
+                <br/>
+                <!--<p:spacer width="60" height="10" />-->
+                <h:panelGrid columns="3"  >
+                    <h:outputLabel for="username" value="#{res.get('userName')}" />
+                    <p:spacer width="13" height="10" />
+                    <p:inputText id="username" label="#{res.get('user')}"  value="#{addUserBean.name}"  >
+                        <!--<f:validator validatorId="UserNameValidate" ></f:validator>-->
+                    </p:inputText>
+                </h:panelGrid>
+                <!--<p:message id="usererror" for="username"  />-->
+                <br/>
+                <!--<p:spacer width="76" height="10" />-->
+                <h:panelGrid columns="3"  >
+                    <h:outputLabel for="pwd1" value="#{res.get('password')}" />  
+                    <p:spacer width="28" height="10" />
+                    <p:password id="pwd1"  label="#{res.get('passwd')}" value="#{addUserBean.passwd}" >
+                        <!--<f:validator validatorId="passwordValidate" ></f:validator>-->
+                    </p:password>  
+                </h:panelGrid>
+                <!--<p:message for="pwd1"  />-->
+                <br/>
+                <!--<p:spacer width="44" height="10" />-->
+                <h:panelGrid columns="2"  >
+                    <h:outputLabel for="pwd2" value="#{res.get('confirmPassword')}" />  
+                    <p:password id="pwd2"  label="#{res.get('confirmPasswd')}" value="#{addUserBean.confirmPasswd}" >
+                        <!--<f:validator validatorId="passwordValidate" ></f:validator>-->
+                    </p:password> 
+                </h:panelGrid>
+                <!--                <p:message for="pwd2" />
+                                <br/>
+                                <br/>-->
+            </p:panel>
+            <p:panel style="border-color: transparent;width: 350px;text-align: center" >
+                <!--                <p:spacer width="135" height="10" />-->
+                <p:commandButton  value="#{global.get('save')}" icon="saveIcon"  action="#{addUserBean.save}"  >
+                </p:commandButton>  
+                <p:spacer width="5" height="10" />
+                <p:commandButton  value="#{global.get('return')}" icon="cancleIcon" immediate="true" action="nas_domain_config?faces-redirect=true&amp;tabViewActive=1" /> 
+            </p:panel>
+            <!--            </p:panel>-->
+        </h:form>
+        <p:ajaxStatus style="width:64px;height:64px;position:fixed;right:5px;bottom:5px">  
+            <f:facet name="start">  
+                <p:graphicImage value="../resources/common/picture/loading.gif" />  
+            </f:facet>  
+
+            <f:facet name="complete">  
+                <h:outputText value="" />  
+            </f:facet>  
+        </p:ajaxStatus>
+    </h:body>
+</html>

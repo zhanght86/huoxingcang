@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="GBK"?>
+<!--
+To change this template, choose Tools | Templates
+and open the template in the editor.
+-->
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.1//EN" "http://www.w3.org/TR/xhtml11/DTD/xhtml11.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:p="http://primefaces.org/ui"> 
+
+    <h:head>
+        <link href="./../resources/common/css/default.css" rel="stylesheet" type="text/css" />
+        <link href="./../resources/common/css/cssIcon.css" rel="stylesheet" type="text/css" />
+
+    </h:head>
+    <h:body>
+        <h:form id="form">
+            <h1 class="title ui-widget-header ui-corner-all">#{global.get('cdp')}${res.get('title')}</h1>
+            <p:messages id="messages" showDetail="true" autoUpdate="true" closable="true" />
+            <br/>
+            <h:panelGrid columns="6" cellpadding="5" >  
+                <p:selectBooleanCheckbox id="allInitiators"  value="#{addlunBean.isAll}" style=" text-align: center; vertical-align: middle; height: 20px;">
+                    <p:ajax event="change"  listener="#{addlunBean.reloadLUN('all')}"  update="clientGroup table" />
+                </p:selectBooleanCheckbox>
+                <h:outputLabel value="${res.get('all')}" />  
+                <p:spacer width="8"/>
+                <h:outputLabel for="clientGroup" value="${res.get('label1')}" />  
+                <p:selectOneMenu id="clientGroup" value="#{addlunBean.selected}" disabled="#{addlunBean.isAll}" style="width: 147px;" maxlength="15">  
+                    <p:ajax event="change" listener="#{addlunBean.reloadLUN(addlunBean.selected)}" update="table" />
+                    <f:selectItems value="#{addlunBean.lun}" />
+                </p:selectOneMenu> 
+                <p:commandButton id="addHostGroup" icon="addIcon" value="${res.get('add')}" onclick="javascript: window.location.href = '../scsi/scsi_host.xhtml';"/> 
+            </h:panelGrid>
+            <br></br>
+            <p:fieldset legend="${res.get('panel')}" style="text-align: left">
+                <h:panelGrid columns="2">
+                    <p:selectBooleanCheckbox  id="isStart" value="#{addlunBean.enable}" rendered="false" style=" text-align: center; vertical-align: middle; height: 20px;">
+                        <p:ajax event="change"  update="table" />
+                    </p:selectBooleanCheckbox>
+                    <h:outputLabel value="${res.get('chk')}"  rendered="false" />  
+                </h:panelGrid>
+                <br></br>
+                <p:dataTable id="table" var="table" value="#{addlunBean.table}" emptyMessage="#{global.get('emptyMessage')}" >
+                    <p:column headerText="${res.get('header1')}">
+                        <h:outputText value="#{table.name}" />
+                    </p:column>
+                    <p:column headerText="${res.get('header2')}">
+                        <h:outputText value="#{table.serialNum}" />
+                    </p:column>
+                    <p:column headerText="${res.get('header3')}" style="white-space: nowrap;">  
+                        <p:selectOneMenu id="lunNum" value="#{table.lun}"  disabled="#{addlunBean.enable}" style="width: 70px; ">  
+                            <f:selectItems value="#{addlunBean.defaults}" />
+                        </p:selectOneMenu> 
+                    </p:column>
+                </p:dataTable>
+            </p:fieldset>         
+            <p:spacer width="50" height="6" />
+            <div style="text-align: center">
+                <p:commandButton id="addButton" icon="saveIcon" value="${global.get('save')}" action="#{addlunBean.addLun()}"/>  
+                <p:spacer width="8"/>
+                <p:commandButton id="closeButton" icon="cancleIcon" value="${global.get('return')}" immediate="true" action="#{addlunBean.returnLUN()}"/>  
+            </div>
+        </h:form>
+        <p:blockUI block="form" widgetVar="block"/>
+        <p:ajaxStatus style="width:64px;height:64px;position:fixed;right:5px;bottom:5px">
+            <f:facet name="start">
+                <p:graphicImage value="../resources/common/picture/loading.gif" />
+            </f:facet>
+
+            <f:facet name="complete">
+                <h:outputText value="" />
+            </f:facet>
+        </p:ajaxStatus>
+    </h:body>
+</ui:composition>

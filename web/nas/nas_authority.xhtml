@@ -1,0 +1,155 @@
+<?xml version="1.0" encoding="GBK"?>
+<!--
+To change this template, choose Tools | Templates
+and open the template in the editor.
+-->
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.1//EN" "http://www.w3.org/TR/xhtml11/DTD/xhtml11.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:util="http://java.sun.com/jsf/composite/xhtml">
+    <!--                template="../template/framework.xhtml"-->
+
+
+    <!--    <ui:define name="left">
+            <ui:include src="../panel/leftMenu.xhtml"/>
+        </ui:define>-->
+
+    <!--    <ui:define name="content">-->
+    <h:head>
+        <link href="./../resources/common/css/default.css" rel="stylesheet" type="text/css" />
+        <link href="./../resources/common/css/cssIcon.css" rel="stylesheet" type="text/css" />
+    </h:head>
+    <h:body>
+        <h:form id="form">
+            <h1 title="Share Path Infomation" style="font-weight: normal;" class="title ui-widget-header ui-corner-all">#{res.get('title')}</h1>
+            <p:messages showSummary="true" showDetail="false" autoUpdate="true" closable="true" />
+            <br/>
+            <!--            <p:layout style="min-width:100px;min-height:550px;max-width: 900px;max-height: 2000px; border-bottom-color: chartreuse" id="layout"  >-->
+            <!--                <p:layoutUnit header="对象类型及名称："  position="north"   >-->
+
+            <!--<p:panel style="border-color: transparent;" >-->
+            <!--                <p:panel style="border-color: transparent;text-align: right;width: 600px;height: 50px" >
+                                                    <h:panelGrid >
+                                <p:commandButton style="font-weight: normal;font-size: 14px"  id="add" value="创建共享目录"  oncomplete="addShareDialog.show()" />
+                                                    </h:panelGrid>
+                                <p:commandButton  value="添加" actionListener="{sharelist.editBean.initAddACL}" action="nas_add_author?faces-redirect=true" />
+                            </p:panel>-->
+            <!-- selectionMode="single" selection="{sharelist.editBean.selectedACL}" rowKey="{acl.index}"-->
+            <!--<p:spacer width="50" height="10" /> -->
+            <!--selectionMode="single" selection="{sharelist.editBean.selectedACL}"-->
+            <h:outputLabel value="#{global.get('shareName')}"  />
+            <h:outputLabel value="/#{configAuthoritiesBean.path}" />
+            <br/><br/>
+            <p:toolbar >
+                <p:toolbarGroup align="right">
+                    <p:commandButton  value="#{res.get('add')}" icon="addIcon"  action="#{configAuthoritiesBean.doBeforeAddAuthor()}" />
+                </p:toolbarGroup>  
+            </p:toolbar>
+            <div style="overflow-x: auto; width: 100%; padding-bottom: 14px;">
+                <p:dataTable emptyMessage="#{global.get('emptyMessage')}"  id="acls" value="#{configAuthoritiesBean.acls}" var="acl"  rowKey="#{acl.index}"  >
+                    <!--<p:ajax event="rowSelect"  update=":form:authors"  />-->
+                    <!--                    <f:facet name="header">
+                                            <div style=" text-align: right; margin-right: 20px;">
+                                                <p:commandButton  value="添加" icon="addIcon"  action="{configAuthoritiesBean.doBeforeAddAuthor()}" />
+                                            </div>
+                                        </f:facet>-->
+                    <p:column style="width:2%">  
+                        <p:rowToggler />  
+                    </p:column>
+                    <!--                p:ajax中指定的事件，这里可以不写    listener="{sharelist.editBean.onRowSelect}" -->
+                    <!--                <p:ajax event="rowEdit" />-->
+                    <p:column headerText="#{res.get('objectType')}"  style="width: 200px">
+                        <h:outputLabel style="text-align: left" value="#{acl.objectStyle}" />
+                    </p:column>
+                    <p:column headerText="#{res.get('objectName')}"  style="width: 200px">
+                        #{acl.objectName}
+                    </p:column>
+                    <p:column headerText="#{global.get('operation')}" >
+                        <p:spacer height="10" width="10" />
+                        <p:graphicImage height="16" width="16" style="border-color: transparent;vertical-align: middle"   value="../resources/common/picture/edit.png" />    
+                        <p:spacer height="10" width="5" />
+                        <p:commandLink disabled="#{user.type!=2}" value="#{global.get('modify')}" style="vertical-align: middle" action="#{configAuthoritiesBean.doBeforeEditAuthor(acl)}" >
+                            <!--<f:param name="index" value="{acl.index}" />-->
+                        </p:commandLink>
+                        <p:spacer height="20" width="15" />
+                        <p:graphicImage height="16"  rendered="#{acl.delImageRendered}"  style="border-color: transparent;vertical-align: middle"   value="../resources/common/picture/delete.png" />    
+                        <p:spacer height="10" width="5" />
+                        <p:commandLink disabled="#{user.type!=2}" value="#{global.get('delete')}" rendered="#{acl.delImageRendered}" style="vertical-align: middle" oncomplete="deleteAuthority.show();" update=":form1" >
+                            <!--<f:param name="index" value="{acl.index}" />-->
+                            <f:setPropertyActionListener value="#{acl}" target="#{configAuthoritiesBean.tempAcl}" />
+                        </p:commandLink>
+                    </p:column>
+                    <p:rowExpansion>
+                        <p:dataTable emptyMessage="#{global.get('emptyMessage')}" id="authors"   var="authority"  value="#{acl.generalAuthors}"   >
+
+                            <p:column headerText="#{acl.objectName}#{res.get('authority')}" >
+                                #{authority.name}
+                            </p:column>
+                            <p:column headerText="#{res.get('permit')}" style="text-align: center;" >
+                                <!--                   <p:selectBooleanCheckbox disabled="true" value="{authority.enabled}" />-->
+                                <p:selectBooleanCheckbox disabled="true" value="#{authority.enabled}"   />
+                            </p:column>
+                            <p:column headerText="#{res.get('deny')}"  style="text-align: center;">
+                                <p:selectBooleanCheckbox disabled="true" value="#{not authority.enabled}"  />
+                                <!--                   <p:selectBooleanCheckbox disabled="true" value="{not authority.enabled}" /> -->
+                            </p:column>
+                        </p:dataTable>
+                    </p:rowExpansion>
+                </p:dataTable>
+            </div>
+            
+            <h:panelGrid columns="2" >
+                <p:selectBooleanCheckbox style="vertical-align: middle"  value="#{configAuthoritiesBean.isApplyToSubDirectory}"  >
+                </p:selectBooleanCheckbox>
+                <h:outputLabel value="#{res.get('applyToSubDirectory')}" />
+            </h:panelGrid>
+            <br/>
+            <p:panel style="width: 700px;border-color: transparent;text-align: center;" >
+                <p:commandButton value="#{global.get('save')}" icon="saveIcon"   action="#{configAuthoritiesBean.save()}"  />
+                <p:spacer width="6" height="10" />
+                <p:commandButton  value="#{global.get('return')}" icon="cancleIcon" action="nas_path?faces-redirect=true" />
+            </p:panel>
+            <!--</p:panel>-->
+            <!--                <br/>
+                            <p:spacer height="10" width="10" />         
+                            <br/>
+                            <br/>-->
+            <br/>
+
+            <!--            -->
+
+            <!--            <p:dialog position="240,150" width="300" resizable="false"  header="确认" id="confirmDialog"  widgetVar="confirmation">  
+            
+                            <p:graphicImage  value="../resources/nas/picture/Question.gif" /> 
+                            <p:spacer width="10" height="10" />
+                            <h:outputLabel value="确定要删除吗？" />
+                            <br/>
+                            <br/>
+                            <p:spacer width="60" height="10" />
+                            <p:commandButton id="confirm" value="确定" update="form" oncomplete="confirmation.hide()"   actionListener="{sharelist.editBean.deleteACL}" />  
+                            <p:commandButton id="decline" value="返回" onclick="confirmation.hide();" type="button" />    
+                        </p:dialog>-->
+        </h:form>
+        <h:form id="form1">
+            <util:confirm  uid="deleteAuthority" mess="#{global.get('confirmDel')} #{global.get('lquote')}#{configAuthoritiesBean.tempAcl.objectName}#{global.get('rquote')} #{global.get('what')}" action="#{configAuthoritiesBean.deleteACL()}" update=":form:acls"  >
+
+            </util:confirm>
+        </h:form>
+
+        <p:ajaxStatus style="width:64px;height:64px;position:fixed;right:5px;bottom:5px">  
+            <f:facet name="start">  
+                <p:graphicImage value="../resources/common/picture/loading.gif" />  
+            </f:facet>  
+
+            <f:facet name="complete">  
+                <h:outputText value="" />  
+            </f:facet>  
+        </p:ajaxStatus>
+    </h:body>
+    <!--    </ui:define>-->
+
+</html>
+

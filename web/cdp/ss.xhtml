@@ -1,0 +1,88 @@
+<?xml version="1.0" encoding="GBK"?>
+<!--
+To change this template, choose Tools | Templates
+and open the template in the editor.
+-->
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.1//EN" "http://www.w3.org/TR/xhtml11/DTD/xhtml11.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:p="http://primefaces.org/ui">
+    <h:head>        
+        <link href="./../resources/common/css/default.css" rel="stylesheet" type="text/css" />
+        <link href="./../resources/common/css/cssIcon.css" rel="stylesheet" type="text/css" />
+    </h:head>
+    <h:body>
+        <h:form id="form">
+            <h1 class="title ui-widget-header ui-corner-all">#{global.get('cdp')}#{res.get('title')}</h1>
+            <p:messages id="messages" showDetail="true" autoUpdate="true" closable="true" />
+            <br></br>
+            <p:progressBar id="process" widgetVar="pbAjax" rendered="#{snapshotBean.rolling}" ajax="true" value="#{snapshotBean.progress}" labelTemplate="{value}%" styleClass="animated">  
+                <p:ajax event="complete" listener="#{snapshotBean.onComplete}" oncomplete="startButton2.enable()"/>  
+            </p:progressBar>
+            <p:spacer rendered="#{snapshotBean.rolling}" height="0" width="1"/>
+            <div style="text-align: center;">
+                
+                <p:commandButton id="cancelRollback" update=":form" icon="deleteIcon" value="${res.get('cancleRollback')}" rendered="#{snapshotBean.rolling}" actionListener="#{snapshotBean.cancel}" oncomplete="pbAjax.cancel();startButton2.enable();" />  
+            </div>
+            <p:spacer rendered="#{snapshotBean.rolling}" height="0" width="1"/>
+            <p:toolbar>
+                <p:toolbarGroup align="right">
+                    <h:outputLabel value="${res.get('bar')}"/>
+                    <p:calendar value="#{snapshotBean.date}" id="popupCal" pattern="yyyy-MM-dd"> 
+                        <p:ajax event="dateSelect" listener="#{snapshotBean.seekTime()}" update="snapshots" /> 
+                    </p:calendar>
+                    <p:spacer width="370px" height="0px"/>
+                    <p:commandButton icon="ui-icon-seek-prev" action="#{snapshotBean.seekRev()}" update="snapshots" />
+                    <p:commandButton icon="ui-icon-seek-next" action="#{snapshotBean.seekNext()}" update="snapshots"/>
+                </p:toolbarGroup>
+            </p:toolbar>
+            <div style="overflow-x: auto; width:100%;padding-bottom: 2px !important; padding-bottom: 14px;">
+                <p:dataTable id="snapshots" resizableColumns="true" var="snapshot" value="#{snapshotBean.snapshotInfos}" rows="#{snapshotBean.count}"  
+                             emptyMessage="#{global.get('emptyMessage')}" > 
+                    <p:column headerText="#{res.get('header1')}" width="80" style="text-align:center">  
+                        <h:outputText value="#{snapshot.snapshotID}"/>  
+                    </p:column>
+                    <p:column headerText="#{res.get('header2')}" disabledSelection="true" sortBy="#{snapshot.snapshotTime}" style="text-align:center">  
+                        <h:outputText value="#{snapshot.snapshotTime}"/>
+                    </p:column>
+                    <p:column headerText="#{res.get('header3')}" disabledSelection="true" sortBy="#{snapshot.snapshotTime}" style="text-align:center">  
+                        <h:outputText value="#{snapshot.agentID}"/>  
+                    </p:column>
+                    <p:column headerText="#{res.get('header4')}" disabledSelection="true" sortBy="#{snapshot.snapshotTime}" style="text-align:center">  
+                        <h:outputText value="#{snapshot.snapshotSize}"/>  
+                    </p:column>
+                    <p:column headerText="#{global.get('operation')}" disabledSelection="true" sortBy="#{snapshot.snapshotTime}" style="text-align:center">  
+                        <p:graphicImage  value="../resources/vm/picture/rebootVM.png"  width="16" height="16" style=" vertical-align:middle;"/>
+                        <p:commandLink id="rollbackL" disabled="#{snapshotBean.rolling}" value="${res.get('o1')}" action="#{snapshotBean.rollback()}"  update=":form" style=" vertical-align:middle;">
+                            <f:setPropertyActionListener value="#{snapshot}" target="#{snapshotBean.selected}" />
+                        </p:commandLink>
+                        <p:spacer width="10"/>
+                        <p:graphicImage value="../resources/common/picture/edit.png" width="16" height="16" style="vertical-align:middle;"/>
+                        <p:commandLink id="recordL" disabled="#{user.type!=2}" value="${res.get('o2')}" immediate="true" action="#{snapshotBean.record()}" style="vertical-align:middle;">
+                            <f:setPropertyActionListener value="#{snapshot.snapshotID}" target="#{snapshotBean.SID}" />
+                        </p:commandLink>
+                    </p:column>
+                </p:dataTable>
+                <br/>
+                <div style="text-align: center;">
+                    <p:commandButton id="closeButton" disabled="#{snapshotBean.rolling}"  icon="cancleIcon" value="${global.get('return')}"  immediate="true" onclick="javascript: window.location.href = 'cdp.xhtml';"/>  
+                </div>
+            </div>
+        </h:form>
+        <p:ajaxStatus style="width:64px;height:64px;position:fixed;right:5px;bottom:5px">  
+            <f:facet name="start">  
+                <p:graphicImage value="../resources/common/picture/loading.gif" />  
+            </f:facet>  
+
+            <f:facet name="complete">  
+                <h:outputText value="" />
+            </f:facet>  
+        </p:ajaxStatus>
+    </h:body>
+
+
+
+    <!--    </ui:define>-->
+</ui:composition>

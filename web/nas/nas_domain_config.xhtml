@@ -1,0 +1,216 @@
+<?xml version="1.0" encoding="GBK"?>
+<!--
+To change this template, choose Tools | Templates
+and open the template in the editor.
+-->
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.1//EN" "http://www.w3.org/TR/xhtml11/DTD/xhtml11.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:util="http://java.sun.com/jsf/composite/xhtml">
+    <!--                template="../template/framework.xhtml">-->
+
+    <!--    <ui:define name="left">
+            <ui:include src="../panel/leftMenu.xhtml"/>
+        </ui:define>-->
+
+    <!--    <ui:define name="content">-->
+    <h:head>
+        <link href="./../resources/common/css/cssIcon.css" rel="stylesheet" type="text/css" />
+        <link href="./../resources/common/css/default.css" rel="stylesheet" type="text/css" />
+    </h:head>
+    <h:body>
+        <script type="text/javascript">
+            function init() {
+                var value = document.getElementById("form:bool_input").checked;
+                //alert(value);
+                if (value) {
+                    document.getElementById("form:testshare").disabled = false;
+
+                }
+                if (!value) {
+                    document.getElementById("form:testshare").setAttribute("disabled", "true");
+
+                    //document.getElementById("form:testshare").focus();
+                }
+                //document.getElementById("form:testshare").value = "";
+                //document.getElementById("form:testshare").focus();
+            }
+
+        </script>
+
+        <h1  class="title ui-widget-header ui-corner-all">#{res.get('title')}</h1>
+        <br/>
+        <p:tabView id="view"  style="border:none;" activeIndex="#{userGroupBean.tabViewActive}" >
+            <p:tab title="#{res.get('domain')}" >
+                <p:accordionPanel id="pan1" multiple="true" activeIndex="#{domainBean.accordionActive1}">
+                    <!--<p:ajax event="tabChange" listener="{domainBean.onTabChange}" update=":form:growl"/>-->  
+                    <p:tab  id="tab1" title="#{res.get('domainSet')}">
+                        <h:form id="form1">
+                            <p:toolbar >
+                                <p:toolbarGroup align="right">
+                                    <p:commandButton disabled="#{user.type!=2}"  icon="addIcon" immediate="true" value="#{res.get('joinDomain')}" action="nas_join_domain?faces-redirect=true" />
+                                    <p:spacer width="5" />
+                                    <p:commandButton disabled="#{user.type!=2}"  icon="shutdownIcon" immediate="true" value="#{res.get('exitDomain')}" oncomplete="exitDomain.show();" />
+                                </p:toolbarGroup>
+                            </p:toolbar>
+                            <div style="overflow-x: auto; width: 100%; padding-bottom: 14px;">
+                                <p:dataTable id="properyies" emptyMessage="#{global.get('emptyMessage')}"  value="#{domainBean.properyies}"  var="keyvalue"  >
+                                    <p:column headerText="#{global.get('name')}"  >
+                                        #{keyvalue.name}   
+                                    </p:column>
+                                    <p:column headerText="#{res.get('value')}"  >
+                                        #{keyvalue.value}
+                                    </p:column>
+                                </p:dataTable>
+                            </div>
+                        </h:form>
+                    </p:tab>
+                    <p:tab id="tab2" title="#{res.get('idmap')}" >
+                        <h:form id="form2" >
+                            <p:messages showSummary="true" showDetail="false" autoUpdate="true" closable="true" />
+                            <p:toolbar >
+                                <p:toolbarGroup align="right">
+                                    <p:commandButton disabled="#{user.type!=2 or !domainBean.isInDomain}"  icon="addIcon"  value="#{global.get('add')}"  action="nas_create_idmap?faces-redirect=true"  />
+                                </p:toolbarGroup>  
+                            </p:toolbar>
+                            <p:dataTable emptyMessage="#{global.get('emptyMessage')}" id="idmaptable"  value="#{idmapbean.maps}" var="map"  >
+                                <p:column headerText="Windows"  >
+                                    #{map.winNameStr}
+                                </p:column>
+                                <p:column headerText="NAS"    >
+                                    #{map.unixNameStr}
+                                </p:column>
+                                <p:column headerText="#{global.get('operation')}" style="white-space: nowrap"  >
+                                    <p:spacer width="2" height="10" />
+                                    <p:graphicImage height="16" width="16" style="border-color: transparent;text-align: center;vertical-align: middle"   value="../resources/common/picture/delete.png" />    
+                                    <p:spacer width="5" height="10" />
+                                    <p:commandLink disabled="#{user.type!=2}" value="#{global.get('delete')}"  style="text-align: center;vertical-align: middle" oncomplete="deletemap.show();"  update=":form7" >
+                                        <!--<f:param name="index" value="{map.index}" />--> 
+                                        <f:setPropertyActionListener value="#{map}" target="#{idmapbean.selectedMap}" />
+                                    </p:commandLink>
+                                </p:column>
+                            </p:dataTable>  
+                        </h:form>
+                    </p:tab>
+
+                </p:accordionPanel>
+            </p:tab>
+            <p:tab title="#{res.get('userGroup')}" >
+                <p:accordionPanel  styleClass="acordionPanelPostion"   id="pan2" multiple="true"  activeIndex="#{userGroupBean.accordionActive}"  >               
+                    <p:tab id="tab3" title="#{res.get('userName')}"> 
+                        <h:form id="form3" >
+                            <p:toolbar >
+                                <p:toolbarGroup align="right">
+                                    <p:commandButton disabled="#{user.type!=2}"  value="#{global.get('add')}" icon="addIcon" action="nas_add_user?faces-redirect=true"/>
+                                </p:toolbarGroup>
+                            </p:toolbar>
+                            <div style="overflow-x: auto; width: 100%; padding-bottom: 14px;">
+                                <p:dataTable emptyMessage="#{global.get('emptyMessage')}"  id="users" value="#{userGroupBean.allUserList}" var="sysuser"    paginator="true" rows="10"   >
+                                    <!--                        <f:facet name="header">
+                                                                <div style=" text-align: right; margin-right: 20px;">
+                                                                    <p:commandButton disabled="{user.type!=2}"  value="添加" icon="addIcon" action="nas_add_user?faces-redirect=true"/>
+                                                                </div>
+                                                            </f:facet>-->
+                                    <p:column headerText="#{res.get('uName')}" style="white-space: nowrap">
+                                        #{sysuser.name}
+                                    </p:column>
+                                    <p:column    headerText="#{res.get('attributeGroup')}"  width="190" >
+                                        #{sysuser.groupStrs}
+                                    </p:column>
+                                    <p:column headerText="#{global.get('operation')}" style="white-space: nowrap"  >
+                                        <p:spacer width="5" height="10" />
+                                        <p:graphicImage value="../resources/common/picture/edit.png" style="border-color: transparent;vertical-align: middle" />
+                                        <p:spacer width="2" height="10" />
+                                        <!--                          action="{userGroupData.updateSelectedUserForModifyPasswd}"   update=":form:editpasswdDialog" oncomplete="editPasswdDialog.show()"-->
+                                        <p:commandLink disabled="#{user.type!=2}" value="#{res.get('modifyPasswd')}" action="#{userGroupBean.doBeforeModifyPasswd(sysuser)}" >
+                                            <!--<f:param name="username" value="{cifsuser.name}" />-->
+                                        </p:commandLink>
+                                        <p:spacer width="10" height="10" />
+                                        <p:graphicImage value="../resources/common/picture/edit.png" style="border-color: transparent;vertical-align: middle" />
+                                        <p:spacer width="2" height="10" />
+                                        <!--                action="{userGroupData.updateSelectedUserForModifyGroup}"             update=":form:setgroup" oncomplete="setGroupDialog.show()"-->
+                                        <p:commandLink disabled="#{user.type!=2}" value="#{res.get('setUserGroup')}" action="#{userGroupBean.doBeforeModifyUserGroup(sysuser)}"  >
+                                            <!--<f:param name="username" value="{cifsuser.name}" />-->
+                                        </p:commandLink>
+                                        <p:spacer width="10" height="10" />
+                                        <p:graphicImage height="16" style="border-color: transparent;vertical-align: middle"   value="../resources/common/picture/delete.png" />   
+                                        <p:commandLink disabled="#{user.type!=2}" style="vertical-align: middle" value="#{global.get('delete')}" oncomplete="deleteuser.show();" update=":form5"  >
+                                            <f:setPropertyActionListener value="#{sysuser}" target="#{userGroupBean.selectedUser}" />                    
+                                        </p:commandLink>
+                                    </p:column>
+                                </p:dataTable>
+                            </div>
+                        </h:form>
+                    </p:tab>
+
+                    <p:tab id="tab4" title="#{res.get('uGroup')}">
+                        <h:form id="form4" >
+                            <p:toolbar >
+                                <p:toolbarGroup align="right">
+                                    <p:commandButton disabled="#{user.type!=2}"  icon="addIcon"  value="#{global.get('add')}" action="nas_add_group?faces-redirect=true"/>
+                                </p:toolbarGroup>
+                            </p:toolbar>
+                            <div style="overflow-x: auto; width: 100%; padding-bottom: 14px;">
+                                <p:dataTable emptyMessage="#{global.get('emptyMessage')}" id="groups" value="#{userGroupBean.allGroupList}" var="group" paginator="true" rows="10"  >
+                                    <p:column headerText="#{res.get('groupName')}" style="white-space: nowrap" >
+                                        #{group.name}
+                                    </p:column>
+                                    <p:column headerText="#{res.get('userInGroup')}"  >
+                                        #{group.userStrs}
+                                    </p:column>
+                                    <p:column headerText="#{global.get('operation')}" style="white-space: nowrap" >
+                                        <p:spacer width="5" height="10" />
+                                        <p:graphicImage value="../resources/common/picture/edit.png" style="border-color: transparent;vertical-align: middle" />
+                                        <p:spacer width="2" height="10" />
+                                        <!--update=":form:setUsersInGroup" oncomplete="setUsersInGroupDialog.show()"--> 
+                                        <p:commandLink disabled="#{user.type!=2}" style="vertical-align: middle" value="#{res.get('setGroupUser')}"  action="#{userGroupBean.doBeforeModifyGroupUser(group)}" >
+                                            <!--<f:param name="groupname" value="{group.name}" />-->
+                                        </p:commandLink>
+                                        <p:spacer width="10" height="10" />
+                                        <p:graphicImage height="16" width="16" style="border-color: transparent;vertical-align: middle"   value="../resources/common/picture/delete.png" />   
+                                        <p:spacer width="5" height="10" />
+                                        <p:commandLink disabled="#{user.type!=2}"   value="#{global.get('delete')}" style="vertical-align: middle" oncomplete="deletegroup.show();" update=":form6"  >
+                                            <f:setPropertyActionListener value="#{group}" target="#{userGroupBean.selectedGroup}" />                    
+                                        </p:commandLink>
+                                    </p:column>
+                                </p:dataTable>
+                            </div>
+                        </h:form>
+                    </p:tab>
+                </p:accordionPanel>
+            </p:tab>
+        </p:tabView>
+        <h:form id="form5">
+            <util:confirm    uid="deleteuser" mess="#{global.get('confirmDel')} #{global.get('lquote')}#{userGroupBean.selectedUser.name}#{global.get('rquote')} #{global.get('what')}" action="#{userGroupBean.deleteUser()}" update=":view:pan2:form3:users :view:pan2:form4:groups"  >
+            </util:confirm>
+        </h:form>
+        <h:form id="form6">
+            <util:confirm    uid="deletegroup" mess="#{global.get('confirmDel')} #{global.get('lquote')}#{userGroupBean.selectedGroup.name}#{global.get('rquote')} #{global.get('what')}" action="#{userGroupBean.deleteGroup()}" update=":view:pan2:form3:users :view:pan2:form4:groups"  >
+            </util:confirm>
+        </h:form>
+        <h:form id="form7">
+            <util:confirm    uid="deletemap" mess="#{res.get('confirmDelIDmap')}" action="#{idmapbean.removeIDMap()}" update=":view:pan1:form2"  >
+            </util:confirm>
+        </h:form>
+        <!--:view:pan1:form1:properyies-->
+        <h:form id="form8" >
+            <util:confirm    uid="exitDomain" mess="#{res.get('confirmExitDomain')}" action="#{domainBean.exitDomain()}" update=":view:pan1:form1:properyies :view:pan1:form2" >
+            </util:confirm>
+        </h:form>
+        <p:ajaxStatus style="width:64px;height:64px;position:fixed;right:5px;bottom:5px">  
+            <f:facet name="start">  
+                <p:graphicImage value="../resources/common/picture/loading.gif" />  
+            </f:facet>  
+
+            <f:facet name="complete">  
+                <h:outputText value="" />  
+            </f:facet>  
+        </p:ajaxStatus>
+    </h:body>
+
+
+</html>
+

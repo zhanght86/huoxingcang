@@ -1,0 +1,416 @@
+<?xml version="1.0" encoding="GBK"?>
+<!--
+To change this template, choose Tools | Templates
+and open the template in the editor.
+-->
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.1//EN" "http://www.w3.org/TR/xhtml11/DTD/xhtml11.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:p="http://primefaces.org/ui"
+                xmlns:util="http://java.sun.com/jsf/composite/xhtml">
+    <!--template="../template/framework.xhtml"-->
+    <!--    <ui:define name="content">-->
+    <h:head>
+        <link href="./../resources/common/css/default.css" rel="stylesheet" type="text/css" />
+        <link href="./../resources/common/css/cssIcon.css" rel="stylesheet" type="text/css" />
+        <style type="text/css">
+            .tableViewPostion{
+                padding-top: 5px;
+                margin-top: 5px;
+                margin-left: -19px;
+                padding-left: -19px;
+                margin-right: -21px;
+                float: right;
+            }
+            .acordionPanelPostion{
+                padding-top: -10px;
+                margin-top: -10px;
+                margin-left: -21px;
+                padding-left: -21px;
+                margin-right: -21px;
+                padding-right: -21px;
+
+            }
+            .postion{
+                margin-left: -12px;
+                padding-left: -12px;
+                margin-right: 12px;
+                padding-right: 12px;
+            }
+            .dataPostion{
+                margin-left: -12px;
+                padding-left: -12px;
+
+            }
+
+
+
+
+        </style>
+    </h:head>
+    <h:body>
+
+        <h1 class="title ui-widget-header ui-corner-all">${res.get('title')}</h1>
+        <p:messages id="messages" showDetail="true" autoUpdate="true" closable="true" />
+        <br/> 
+
+        <h:form id="tip1">
+            <util:confirm  uid="deleteAgg" mess="#{nICAggregationBean.deleteaggtip}" action="#{nICAggregationBean.deleteAgg_real()}" update=":view:accord:form1:agg :view:accord:form2:cardList" >
+            </util:confirm>
+        </h:form>
+        <h:form id="tip2">
+            <util:confirm uid="deleteAggip" mess="#{nICAggregationBean.deleteaggiptip}" action="#{nICAggregationBean.deleteAgg_real()}"  update=":view:accord:form1:agg :view:accord:form2:cardList">
+            </util:confirm>
+        </h:form>
+        <h:form id="tip3">
+            <util:confirm  uid="deleteIPMP" update=":view:accord:ipmpform:ipmp" mess="#{iPMPBean.deleteipmptip}" action="#{iPMPBean.deleteIPMP_real()}" >
+            </util:confirm>
+        </h:form>
+        <h:form id="tip4">
+            <util:confirm  uid="deleteIPMP_IP" update=":view:accord:ipmpform:ipmp" mess="#{iPMPBean.deleteipmp_ip}" action="#{iPMPBean.deleteIPMP_real()}" >
+            </util:confirm>
+        </h:form>
+        <h:form id="tip5">
+
+            <util:confirm  uid="deleteArea" update=":view:ibform:ibaccord:area"  mess="#{infiniBandAreaBean.deleteArea}" action="#{infiniBandAreaBean.deteteAreaList_real()}">
+            </util:confirm>
+        </h:form>
+        <h:form id="tip6">
+
+            <util:confirm  uid="deleteArea_forbiddenIP" update=":view:ibform:ibaccord:area"  mess="#{infiniBandAreaBean.deleteArea_forbiddenIP}" action="#{infiniBandAreaBean.deteteAreaList_forbiddenIP_real()}">
+            </util:confirm>
+        </h:form>
+
+        <p:tabView style="border:none;" id="view" activeIndex="#{netWorkCardBean.tabViewActive}">
+            <p:tab title="${res.get('network')}">
+                <!--                <p:separator style="margin-left: -20px;padding-left: -20px;margin-right: -20px;padding-right: -20px;" /> -->
+                <p:accordionPanel id="accord" style="border:none;width: 100%;" styleClass="acordionPanelPostion" multiple="true" activeIndex="#{netWorkCardBean.accordionActive1}">
+                    <p:tab title="${res.get('networkcard')}">
+                        <h:form class="postion" id="form2">
+                            <!--                            overflow-x: scroll; width:100%;border-left:1px solid #ccc;border-right:1px solid #ccc;-->
+                            <div style="overflow-x:auto; width: 100%; padding-bottom: 14px;">
+                                <p:dataTable id="cardList"  var="netWorkCard" value="#{netWorkCardBean.cardModel}" selection="#{netWorkCardBean.selectedCards}" emptyMessage="#{global.get('emptyMessage')}" >  
+
+                                    <!--                                    <p:column selectionMode="multiple" style="width:18px;text-align:center"/> -->
+                                    <p:column headerText="${res.get('networkcardname')}" disabledSelection="true" style="min-width: 70px;">  
+                                        <h:outputText value="#{netWorkCard.cardName}"/>  
+                                    </p:column>
+                                    <p:column headerText="${res.get('ip')}" disabledSelection="true"  style=" white-space: nowrap;">  
+                                        <h:outputText value="#{netWorkCard.ip}"/>  
+                                    </p:column>
+                                    <p:column headerText="${res.get('gatewaystr')}" disabledSelection="true"  style=" white-space: nowrap;">  
+                                        <h:outputText value="#{netWorkCard.gateway}"/>  
+                                    </p:column>
+                                    <!--                                    <p:column headerText="子网掩码" disabledSelection="true"  style="text-align:center">  
+                                                                            <h:outputText value="{netWorkCard.subnet}"/>  
+                                                                        </p:column>-->
+                                    <p:column headerText="${res.get('dhcp')}" disabledSelection="true"  style="text-align:center;white-space: nowrap;">  
+                                        <h:outputText value="#{netWorkCard.state}"/>  
+                                    </p:column>
+                                    <p:column headerText="${res.get('aggregate')}" disabledSelection="true" style="min-width: 65px;">  
+                                        <h:outputText value="#{netWorkCard.aggregation}"/>  
+                                    </p:column>
+                                    <p:column headerText="${res.get('ipmp')}" disabledSelection="true" style="min-width: 40px;">  
+                                        <h:outputText value="#{netWorkCard.ipmpGroupName}"/>  
+                                    </p:column>
+                                    <!--                                    <p:column headerText="PCoE网卡" disabledSelection="true"  style="text-align:center">  
+                                                                            <h:outputText value="{netWorkCard.PCoECard}"/>  
+                                                                        </p:column>-->
+                                    <!--                                    <p:column headerText="启用" disabledSelection="true"  style="text-align:center">  
+                                                                            <h:outputText value="{netWorkCard.enable}"/>  
+                                                                        </p:column>-->
+                                    <p:column headerText="${res.get('operation')}" disabledSelection="true" style=" white-space: nowrap;">  
+                                        <p:graphicImage value="../resources/common/picture/edit.png" width="16" height="16" style="vertical-align:middle;"/>
+                                        <p:commandLink id="modifyButton" value="${global.get('modify')}" disabled="#{netWorkCard.notEdit}" update="cardList" action="#{netWorkCardBean.toModifyIP}" style="vertical-align:middle;">
+                                            <f:setPropertyActionListener value="#{netWorkCard}" target="#{netWorkCardBean.selectedCard}" />
+                                        </p:commandLink>
+                                    </p:column>
+                                </p:dataTable> 
+                            </div>
+                        </h:form>
+                    </p:tab>
+                    <p:tab title="${res.get('aggregate')}">
+                        <br/>
+                        <h:form class="postion" id="form1">
+                            <p:toolbar>  
+                                <p:toolbarGroup align="right">  
+                                    <p:commandButton id="creatAgg" disabled="#{user.type!=2}" value="${res.get('new')}" icon="addIcon" action="network_createaggregate?faces-redirect=true" />
+                                </p:toolbarGroup> 
+                            </p:toolbar>
+                            <div style="overflow-x: auto; width: 100%; padding-bottom: 2px !important;padding-bottom: 14px;">
+                                <p:dataTable var="nICAggregation" value="#{nICAggregationBean.nicAggList}" id="agg" emptyMessage="#{global.get('emptyMessage')}" >  
+                                    <p:column headerText="${res.get('name')}" style=" min-width:70px;">  
+                                        <h:outputText value="#{nICAggregation.name}"/>  
+                                    </p:column>     
+                                    <p:column headerText="${res.get('networkcard')}" style="min-width:70px;">  
+                                        <h:outputText value="#{nICAggregation.nic}" />  
+                                    </p:column>  
+                                    <p:column headerText="${res.get('ip')}" style=" white-space: nowrap;">  
+                                        <h:outputText value="#{nICAggregation.ip}" />  
+                                    </p:column> 
+                                    <p:column headerText="${res.get('gatewaystr')}" style=" white-space: nowrap;">  
+                                        <h:outputText value="#{nICAggregation.gateway}" />  
+                                    </p:column> 
+                                    <!--                                    <p:column headerText="子网掩码" style="text-align: center">  
+                                                                            <h:outputText value="{nICAggregation.subnet}" />  
+                                                                        </p:column>  -->
+                                    <p:column headerText="${res.get('dhcp')}" style="text-align: center;">  
+                                        <h:outputText value="#{nICAggregation.state}" />  
+                                    </p:column>
+                                    <!--                                    <p:column headerText="IPMP" style="text-align: center">  
+                                                                            <h:outputText value="{nICAggregation.ipmp}" />  
+                                                                        </p:column>-->
+                                    <p:column headerText="${res.get('mode')}" style=" white-space: nowrap;">  
+                                        <h:outputText value="#{nICAggregation.mode}" />  
+                                    </p:column>
+                                    <!--                                    <p:column headerText="启用" style="text-align: center">  
+                                                                            <h:outputText value="{nICAggregation.enable}" />  
+                                                                        </p:column>-->
+                                    <p:column headerText="${res.get('operation')}" style=" white-space: nowrap;">  
+
+
+
+                                        <p:graphicImage value="../resources/common/picture/edit.png"  width="16" height="16" style="vertical-align:middle;"/>
+                                        <p:commandLink id="modifyAgg" disabled="#{user.type!=2}" value="${global.get('modify')}" update="agg"  action="#{nICAggregationBean.toModifyAgg}" >
+                                            <f:setPropertyActionListener value="#{nICAggregation}" target="#{nICAggregationBean.selectAgg}"/>
+                                        </p:commandLink> 
+
+                                        <p:spacer width="10"/>
+                                        <p:graphicImage value="../resources/common/picture/delete.png"  width="16" height="16" style="vertical-align:middle;"/>             
+                                        <p:commandLink id="deleteAgg" disabled="#{user.type!=2}" value="${global.get('delete')}" update="agg :tip1 :tip2" action="#{nICAggregationBean.deleteAgg}">
+                                            <f:setPropertyActionListener value="#{nICAggregation}" target="#{nICAggregationBean.selectAgg}"/>
+                                            <!--                                        <p:ajax event="click"  listener="{nICAggregationBean.selectAgg(nICAggregation)}"></p:ajax>-->
+                                        </p:commandLink> 
+                                    </p:column>
+                                </p:dataTable>
+                            </div>
+                            <!--                            <util:confirm  uid="deleteAgg" mess="确定要删除该链路聚合吗？" action="{nICAggregationBean.deleteAgg_real()}" update=":view:accord:form1:agg" >
+                                                        </util:confirm>
+                                                        
+                                                        <util:confirm uid="deleteAggip" mess="选择网卡正在被当前连接使用,修改后必须重新登录,继续操作吗？" action="{nICAggregationBean.deleteAgg_real()}"  update=":view:accord:form1:agg">
+                            
+                                                        </util:confirm>-->
+
+                        </h:form>
+                    </p:tab>
+                    <p:tab title="${res.get('ipmp')}">
+                        <h:form class="postion" id="ipmpform">
+                            <p:toolbar>  
+                                <p:toolbarGroup align="right">  
+                                    <p:commandButton id="creatIPMP" disabled="#{user.type!=2}" value="${res.get('new')}" icon="addIcon" action="#{createIPMPBean.toCreatIPMP()}" />
+                                </p:toolbarGroup> 
+                            </p:toolbar>
+                            <div style="overflow-x: auto; width: 100%; padding-bottom: 14px;">
+                                <p:dataTable var="iPMP" value="#{iPMPBean.ipmpList}" id="ipmp" emptyMessage="#{global.get('emptyMessage')}" >  
+                                    <p:column style="width:2%">  
+                                        <p:rowToggler />  
+                                    </p:column>  
+
+                                    <p:column headerText="${res.get('ipmpgroup')}" >  
+                                        <h:outputText value="#{iPMP.groupName}" />  
+                                    </p:column>     
+                                    <!--                                    <p:column headerText="IPMP组名" style="text-align: center">  
+                                                                            <h:outputText value="{iPMP.groupName}" />  
+                                                                        </p:column>  -->
+                                    <p:column headerText="${res.get('state')}" style="text-align: center;width:20%;">  
+                                        <h:outputText value="#{iPMP.state}" />  
+                                    </p:column> 
+                                    <p:column headerText="${res.get('device')}">  
+                                        <h:outputText value="#{iPMP.type}" />  
+                                    </p:column>  
+                                    <p:column headerText="${res.get('operation')}" style=" white-space: nowrap;">  
+                                        <p:graphicImage value="../resources/common/picture/look.png"  width="16" height="16" style=" vertical-align:middle;"/>
+                                        <p:commandLink id="checkIPMP" disabled="#{user.type!=2}" value="${global.get('check')}"  style="width: 20px; height: 20px" action="#{iPMPBean.cheakIPMP}" >
+                                            <f:setPropertyActionListener value="#{iPMP}" target="#{iPMPBean.selectIPMP}" />
+                                        </p:commandLink> 
+                                        
+                                        <p:spacer width="10"/>
+                                        <p:graphicImage value="../resources/common/picture/delete.png"  width="16" height="16" style=" vertical-align:middle;"/>
+                                        <p:commandLink id="deleteIPMP" disabled="#{user.type!=2}" value="${global.get('delete')}"  style="width: 20px; height: 20px" action="#{iPMPBean.deleteIPMP}" update=":tip3 :tip4">
+                                            <f:setPropertyActionListener value="#{iPMP}" target="#{iPMPBean.selectIPMP}" />
+                                        </p:commandLink>
+                                    </p:column>
+                                    <p:rowExpansion>
+                                        <p:accordionPanel id="accord" style="border:none; " multiple="true">
+                                            <p:tab title="${res.get('dataaddress')}">
+                                                <p:dataTable var="detailBean" value="#{iPMP.detailList}" id="detail" style=" margin-top: 10px;margin-bottom: 6px; margin-right: 0px !important;margin-right: -70px;" emptyMessage="#{global.get('emptyMessage')}">  
+                                                    <!--                                            <p:column headerText="{res.get('ipmpgroup')}" style="text-align: center;">  
+                                                                                                    <h:outputText value="{detailBean.IPMPGroup}" />  
+                                                                                                </p:column>  -->
+                                                    <p:column headerText="${res.get('address')}">  
+                                                        <h:outputText value="#{detailBean.ip}" />  
+                                                    </p:column>    
+                                                    <!--                                            <p:column headerText="{res.get('state')}" style="text-align: center;">  
+                                                                                                    <h:outputText value="{detailBean.state}" />  
+                                                                                                </p:column> -->
+                                                    <p:column headerText="${res.get('entry')}">  
+                                                        <h:outputText value="#{detailBean.entry}" />  
+                                                    </p:column>    
+                                                    <p:column headerText="${res.get('exit')}">  
+                                                        <h:outputText value="#{detailBean.exit}" />  
+                                                    </p:column>    
+                                                </p:dataTable>
+                                            </p:tab>
+
+                                            <p:tab title="${res.get('probe')}">
+                                                <p:dataTable var="targetBean" value="#{iPMP.targetList}" id="target" style=" margin-top: 10px;margin-bottom: 6px; margin-right: 0px !important;margin-right: -70px;" emptyMessage="#{global.get('emptyMessage')}">  
+                                                   
+                                                    <p:column headerText="${res.get('networkcard')}" style=" white-space: nowrap;">  
+                                                        <h:outputText value="#{targetBean.nic}" />  
+                                                    </p:column>    
+                                                    <p:column headerText="${res.get('mode')}" style=" white-space: nowrap;">  
+                                                        <h:outputText value="#{targetBean.mode}" />  
+                                                    </p:column>    
+                                                       <p:column headerText="${res.get('state')}" style=" white-space: nowrap;">  
+                                                        <h:outputText value="#{targetBean.state}" />  
+                                                    </p:column> 
+                                                    <p:column headerText="${res.get('testip')}">  
+                                                        <h:outputText value="#{targetBean.testIP}" />  
+                                                    </p:column> 
+                                                    <p:column headerText="${res.get('targetip')}">  
+                                                        <h:outputText value="#{targetBean.target}" />  
+                                                    </p:column> 
+                                                </p:dataTable>
+                                            </p:tab>
+                                        </p:accordionPanel>
+
+                                    </p:rowExpansion>
+                                </p:dataTable>
+                            </div>
+                            <!--                            <util:confirm  uid="deleteIPMP" update=":view:accord:ipmpform:ipmp" mess="确定要删除该IPMP组吗？" action="{iPMPBean.deleteIPMP_real()}" >
+                                                        </util:confirm>
+                                                        <util:confirm  uid="deleteIPMP_IP" update=":view:accord:ipmpform:ipmp" mess="正在使用当前网卡，修改后必须重新登录,确定要删除该IPMP组吗？" action="{iPMPBean.deleteIPMP_real()}" >
+                                                        </util:confirm>-->
+                        </h:form>
+                    </p:tab>
+                </p:accordionPanel>
+            </p:tab>
+            <p:tab title="${res.get('dnsandgateway')}">
+                <h:form id="dnsform">
+                    <h:panelGrid columns="3" cellpadding="5">
+                        <h:outputText value="${res.get('gateway')}" />
+                        <p:inputText value="#{dNSBean.gateway}" style="width: 180px;" />
+                        <p:spacer width="10px"/>
+
+
+                        <h:outputText value="${res.get('setdns')}" />
+                        <p:inputText value="#{dNSBean.addStr}" style="width: 180px;" id="dnsText" />
+                        <h:panelGroup>
+                            <p:commandButton id="addDNS" value="${global.get('add')}" icon="addIcon"  action="#{dNSBean.addDNS(dNSBean.addStr)}" update="dnsList dnsText"/>
+                            <p:commandButton id="testDNS" value="${res.get('test')}" icon="testIcon" action="#{dNSBean.pingDNS(dNSBean.addStr)}"/>
+                        </h:panelGroup>
+
+                        <p:spacer width="5px"/>
+                        <p:selectOneListbox id="dnsList" value="#{dNSBean.selectDNS}" style="overflow-y:auto;height:100px; width: 184px;">
+                            <f:selectItems value="#{dNSBean.dnsList}" var="player" itemLabel="#{dns}" itemValue="#{dns}" />
+                        </p:selectOneListbox>
+                        <p:commandButton id="deleteDNS" value="${global.get('delete')}" icon="deleteIcon" action="#{dNSBean.deleteDNS(dNSBean.selectDNS)}" update="dnsList" style=" position: absolute;margin-top: -51px;"/>
+
+                    </h:panelGrid>
+
+                    <p:spacer width="152px" height="40px"/>
+                    <p:commandButton value="${global.get('save')}" disabled="#{user.type!=2}" icon="saveIcon" action="#{dNSBean.saveDNS}"></p:commandButton>
+                </h:form>
+            </p:tab>
+            <p:tab title="${res.get('infiniband')}">
+                <!--                <p:separator style="margin-left: -20px;padding-left: -20px;margin-right: -20px;padding-right: -20px;" /> -->
+                <h:form id="ibform">
+                    <p:accordionPanel style="border:none;" multiple="true" styleClass="acordionPanelPostion" id="ibaccord">
+                        <p:tab title="${res.get('infinibandcard')}">
+                            <p:dataTable var="infiniBanCard" value="#{infiniBandCardBean.infiniBanList}" styleClass="dataPostion" emptyMessage="#{global.get('emptyMessage')}" >  
+                                <p:column headerText="${res.get('device')}" >  
+                                    <h:outputText value="#{infiniBanCard.name}" />  
+                                </p:column>     
+                                <p:column headerText="${res.get('state')}" style="text-align: center">  
+                                    <h:outputText value="#{infiniBanCard.state}" />  
+                                </p:column>  
+                                <p:column headerText="${res.get('pkeys')}" style="text-align: center">  
+                                    <h:outputText value="#{infiniBanCard.PKeys}" />  
+                                </p:column>  
+                                <p:column headerText="${res.get('operation')}" style="white-space: nowrap;">  
+                                    <p:graphicImage value="../resources/common/picture/add.png"  width="16" height="16" style=" vertical-align:middle;"/>
+                                    <p:commandLink id="createArea" disabled="#{user.type!=2}" value="${res.get('newarea')}" action="#{infiniBandCardBean.setIBValue}">
+                                        <!--                                        <f:param  name="IBName" value="{infiniBanCard.name}" />-->
+                                        <f:setPropertyActionListener value="#{infiniBanCard}" target="#{infiniBandCardBean.selectedInf}" />
+                                    </p:commandLink> 
+                                </p:column>
+                            </p:dataTable>
+                        </p:tab>
+                        <p:tab title="${res.get('infinibandarea')}">
+                            <p:dataTable id="area" var="infini" value="#{infiniBandAreaBean.areaList}" styleClass="dataPostion" emptyMessage="#{global.get('emptyMessage')}" >  
+                                <p:column headerText="${res.get('device')}">  
+                                    <h:outputText value="#{infini.card_name}" />  
+                                </p:column> 
+                                <p:column headerText="${res.get('areaname')}">  
+                                    <h:outputText value="#{infini.name}" />  
+                                </p:column>     
+                                <!--                                <p:column headerText="{res.get('state')}" style="text-align: center">  
+                                                                    <h:outputText value="{infini.state}" />  
+                                                                </p:column>  -->
+                                <p:column headerText="${res.get('pkey')}" style="text-align: center">  
+                                    <h:outputText value="#{infini.PKey}" />  
+                                </p:column>  
+                                <p:column headerText="${res.get('operation')}" style=" white-space: nowrap;">  
+                                    <p:graphicImage value="../resources/common/picture/delete.png"  width="16" height="16" style=" vertical-align:middle;float:left;display:inline;margin-top:1px;"/>
+                                    <p:commandLink id="deleteButton" disabled="#{user.type!=2}" value="${global.get('delete')}" update="area :tip5 :tip6" action="#{infiniBandAreaBean.deteteAreaList}" style="width: 20px; height: 20px">
+                                        <f:setPropertyActionListener value="#{infini}" target="#{infiniBandAreaBean.selectedInfo}" />
+                                    </p:commandLink> 
+                                </p:column>
+                            </p:dataTable>
+
+                        </p:tab>
+                    </p:accordionPanel>
+                    <!--                    <util:confirm  uid="deleteArea" update=":view:ibform:ibaccord:area"  mess="确定要删除该InfiniBand分区？" action="{infiniBandAreaBean.deteteAreaList()}" > />
+                                        </util:confirm>-->
+
+                </h:form>
+            </p:tab>
+
+
+        </p:tabView>
+
+        <p:ajaxStatus style="width:64px;height:64px;position:fixed;right:5px;bottom:5px">  
+            <f:facet name="start">  
+                <p:graphicImage value="../resources/common/picture/loading.gif" />  
+            </f:facet>  
+
+            <f:facet name="complete">  
+                <h:outputText value="" />  
+            </f:facet>  
+        </p:ajaxStatus>
+
+
+
+
+
+
+        <!--            <p:panel style="height: 800px">-->
+        <!--                <h1>{msgs.enterPayment}</h1>
+                        <h:panelGrid columns="3">
+        {msgs.amount}
+        <h:inputText id="amount" value="{paymentBean.amount}">
+            <f:convertNumber minFractionDigits="2"/>
+        </h:inputText>
+        <h:message for="amount" styleClass="errorMessage"/>
+
+        {msgs.creditCard}
+        <h:inputText id="card" value="{paymentBean.card}"/>
+        <h:message for="card" styleClass="errorMessage"/>
+
+        {msgs.expriationDate}
+        <h:inputText id="date" value="{paymentBean.date}">
+            <f:convertDateTime pattern="MM/yyyy"/>
+        </h:inputText>
+        <h:message for="date" styleClass="errorMessage"/>
+    </h:panelGrid>
+    <h:commandButton value="{msgs.process}" action="result"/>-->
+        <!--            </p:panel>-->
+
+    </h:body>
+
+
+
+    <!--    </ui:define>-->
+</ui:composition>

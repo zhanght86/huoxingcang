@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="GBK"?>
+<!--
+To change this template, choose Tools | Templates
+and open the template in the editor.
+-->
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.1//EN" "http://www.w3.org/TR/xhtml11/DTD/xhtml11.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:p="http://primefaces.org/ui">
+     <h:head>
+        <link href="./../resources/common/css/default.css" rel="stylesheet" type="text/css" />
+        <link href="./../resources/common/css/cssIcon.css" rel="stylesheet" type="text/css" />
+    </h:head>
+    <h:body>
+        <h:form id="form">
+            <h1 class="title ui-widget-header ui-corner-all">${res.get('title')}</h1>
+            <br/>
+            <p:dataTable id="countList" var="diskRootInfo" value="#{diskRootBean.all}" emptyMessage="#{global.get('emptyMessage')}" >  
+                <p:column headerText="" style="text-align:center">  
+                    <h:outputText value="#{diskRootInfo.name}"/>  
+                </p:column>
+                <p:column headerText="${res.get('num')}" style="text-align:center">  
+                    <h:outputText value="#{diskRootInfo.num}"/>  
+                </p:column>
+            </p:dataTable>
+        </h:form>
+    </h:body>
+</html>
+

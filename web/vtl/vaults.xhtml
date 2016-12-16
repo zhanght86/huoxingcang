@@ -1,0 +1,118 @@
+<?xml version="1.0" encoding="GBK"?>
+<!--
+To change this template, choose Tools | Templates
+and open the template in the editor.
+-->
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.1//EN" "http://www.w3.org/TR/xhtml11/DTD/xhtml11.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:p="http://primefaces.org/ui"
+                xmlns:util="http://java.sun.com/jsf/composite/xhtml">
+    <!--template="../template/framework.xhtml"-->
+
+    <!--    <ui:define name="content">-->
+    <h:head>
+        <link href="./../resources/common/css/default.css" rel="stylesheet" type="text/css" />
+        <link href="./../resources/common/css/cssIcon.css" rel="stylesheet" type="text/css" />
+    </h:head>
+    <h:body>
+        <h:form id="tip1">
+            <util:confirm  uid="deleteVault" mess="#{res.get('confirm_left')}#{vaultsBean.valutName}#{res.get('confirm_right')}" action="#{vaultsBean.deleteVault_real()}" update=":form:dgs">
+            </util:confirm>
+        </h:form>
+         <h:form id="tip2">
+            <util:confirm  uid="delTapes" mess="#{res.get('movetapetip_left')}#{vaultsBean.valutName}#{res.get('movetapetip_right')}" action="#{vaultsBean.moveTapes_real()}" update=":form:dgs">
+
+            </util:confirm> 
+        </h:form>
+        <h:form id="form">
+            <h1 class="title ui-widget-header ui-corner-all">${global.get('moduletitle')}${res.get('title')}</h1>
+            <p:messages id="messages" showDetail="true" autoUpdate="true" closable="true" />
+            <br></br>
+
+            <p:toolbar>  
+                <p:toolbarGroup align="right">
+                    <p:commandButton id="addLink" icon="addIcon" disabled="#{user.type!=2}" value="#{global.get('create')}" action="#{vaultsBean.addVtl()}" update="dgs" /> 
+                </p:toolbarGroup>
+            </p:toolbar>
+            <div style="overflow-x: auto; width:100%;padding-bottom: 2px !important; padding-bottom: 14px;">
+                <p:dataTable id="dgs" var="diskGroup" value="#{vaultsBean.diskGroups}" emptyMessage="#{global.get('emptyMessage')}" >
+                    <p:ajax event="rowToggle" listener="#{vaultsBean.getExpansions(diskGroup)}" />
+                    <p:column style="width:2%">
+                        <p:rowToggler />  
+                    </p:column>
+                    <p:column headerText="#{res.get('header1')}" width="200" >  
+                        <h:outputText value="#{vaultsBean.vaultName(diskGroup)}" />  
+                    </p:column>
+                    <p:column headerText="#{global.get('operation')}" style="white-space: nowrap">                        
+                        <p:graphicImage value="../resources/volume/picture/replace.png"  width="16" height="16" style=" vertical-align:middle;"/>
+                        <p:commandLink id="movetape" value="#{res.get('operation1')}" disabled="#{user.type!=2}" action="#{vaultsBean.moveTape()}" style="vertical-align:middle;">
+                            <f:setPropertyActionListener value="#{diskGroup}" target="#{vaultsBean.selectedDG}" />
+                        </p:commandLink>
+                        <p:spacer width="10"/>
+                        <p:graphicImage value="../resources/common/picture/download.png"  width="16" height="16" style=" vertical-align:middle;"/>
+                        <p:commandLink id="tapeputin" value="#{res.get('operation2')}" disabled="#{user.type!=2}" action="#{vaultsBean.tapePutinX()}"  style=" vertical-align:middle;">
+                            <f:setPropertyActionListener value="#{diskGroup}" target="#{vaultsBean.selectedDG}" />
+                        </p:commandLink>
+                        <p:spacer width="10" rendered="#{vaultsBean.renderTapesAttrs(diskGroup)}" />
+                        <p:graphicImage value="../resources/common/picture/edit.png" rendered="#{vaultsBean.renderTapesAttrs(diskGroup)}" width="16" height="16" style=" vertical-align:middle;"/>
+                        <p:commandLink id="tapesAttrs" value="#{res.get('operation3')}" rendered="#{vaultsBean.renderTapesAttrs(diskGroup)}" action="#{vaultsBean.tapesAttrs()}" disabled="#{user.type!=2}" style=" vertical-align:middle;">
+                            <f:setPropertyActionListener value="#{diskGroup}" target="#{vaultsBean.selectedDG}" />
+                        </p:commandLink>
+                        <p:spacer width="10" rendered="#{vaultsBean.renderDeleteTapes(diskGroup)}"/>
+                        <p:graphicImage value="../resources/vtl/picture/deltape.png"  rendered="#{vaultsBean.renderDeleteTapes(diskGroup)}" width="16" height="16" style=" vertical-align:middle;"/>
+                        <p:commandLink id="deletetape" value="#{res.get('operation4')}"  rendered="#{vaultsBean.renderDeleteTapes(diskGroup)}" disabled="#{user.type!=2}" action="#{vaultsBean.deleteTape()}" style=" vertical-align:middle;">
+                            <f:setPropertyActionListener value="#{diskGroup}" target="#{vaultsBean.selectedDG}" />
+                        </p:commandLink>
+                        <p:spacer width="10" rendered="#{vaultsBean.renderTapesAttrs(diskGroup)}"/>
+                        <p:graphicImage value="../resources/common/picture/delete.png" rendered="#{vaultsBean.renderTapesAttrs(diskGroup)}" width="16" height="16" style=" vertical-align:middle;"/>
+                        <p:commandLink id="deletevault" value="#{res.get('operation5')}" rendered="#{vaultsBean.renderTapesAttrs(diskGroup)}" disabled="#{user.type!=2}" action="#{vaultsBean.deleteVault}" update=":tip1 :tip2" style=" vertical-align:middle;">
+                            <f:setPropertyActionListener value="#{diskGroup}" target="#{vaultsBean.selectedDG}" />
+                        </p:commandLink>
+                    </p:column>
+
+                    <p:rowExpansion >
+                        <p:dataTable emptyMessage="#{global.get('emptyMessage')}" id="luns" value="#{vaultsBean.disks}" var="lun" >
+<!--                            <p:column headerText="{res.get('header3_1')}">
+                                <h:outputText value="{lun.name}" />
+                            </p:column>-->
+                            <p:column headerText="#{res.get('header3_2')}">
+                                <h:outputText value="#{lun.barcode}"/>  
+                            </p:column>
+                            <p:column headerText="#{res.get('header3_3')}" style="text-align: center;">
+                                <h:outputText value="#{vtl_util.sizeToString(lun.tapeSize)}" />
+                            </p:column>
+                            <p:column headerText="#{res.get('header3_4')}" style="text-align: center;">
+                                <h:outputText value="#{vtl_util.sizeToString(lun.usedSize)}" />
+                            </p:column>
+                            <p:column headerText="#{global.get('operation')}" style="white-space: nowrap">                        
+<!--                                <p:graphicImage value="../resources/common/picture/cancle.png" rendered="{vaultsBean.renameTape_render(lun)}"  width="16" height="16" style=" vertical-align:middle;"/>
+                                <p:commandLink id="diskL" value="{res.get('o1')}" rendered="{vaultsBean.renameTape_render(lun)}" disabled="{user.type!=2}" action="{vaultsBean.renameTape()}" style="vertical-align:middle;">
+                                    <f:setPropertyActionListener value="{lun}" target="{vaultsBean.selectedD}" />
+                                </p:commandLink>
+                                <p:spacer width="10"/>-->
+                                <p:graphicImage value="../resources/common/picture/edit.png"  width="16" height="16" style=" vertical-align:middle;"/>
+                                <p:commandLink id="logL" value="#{res.get('o2')}" disabled="#{user.type!=2}" action="#{vaultsBean.tapeAttrs()}"  style=" vertical-align:middle;">
+                                    <f:setPropertyActionListener value="#{lun}" target="#{vaultsBean.selectedD}" />
+                                    <f:setPropertyActionListener value="#{diskGroup}" target="#{vaultsBean.selectedDG}" />
+                                </p:commandLink>                                        
+                            </p:column>
+                        </p:dataTable>
+                    </p:rowExpansion>
+                </p:dataTable> 
+            </div>            
+        </h:form>
+
+        <p:ajaxStatus style="width:64px;height:64px;position:fixed;right:5px;bottom:5px">  
+            <f:facet name="start">  
+                <p:graphicImage value="../resources/common/picture/loading.gif" />  
+            </f:facet>  
+
+            <f:facet name="complete">  
+                <h:outputText value="" />
+            </f:facet>  
+        </p:ajaxStatus>
+    </h:body>
+</ui:composition>

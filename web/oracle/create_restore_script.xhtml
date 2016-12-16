@@ -1,0 +1,205 @@
+<?xml version="1.0" encoding="GBK"?>
+<!--
+To change this template, choose Tools | Templates
+and open the template in the editor.
+-->
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.1//EN" "http://www.w3.org/TR/xhtml11/DTD/xhtml11.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" 
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
+
+    <h:head>
+        <link href="./../resources/common/css/default.css" rel="stylesheet" type="text/css" />
+        <link href="./../resources/common/css/cssIcon.css" rel="stylesheet" type="text/css" />
+        <script type="text/javascript">
+            navigateToTab = function () {
+                if (window.location.hash) {
+                    jQuery('ul.ui-tabs-nav li a').each(function (i, el) {
+                        if (jQuery(el).text() === window.location.hash.replace('#', '')) {
+                            jQuery(el).click();
+                            return;
+                        }
+                    });
+                }
+            };
+
+            jQuery().ready(navigateToTab);
+            jQuery(window).bind('hashchange', navigateToTab);
+            setupTabFragmentLinks = function () {
+                jQuery('ul.ui-tabs-nav li a').each(function (i, el) {
+                    el.onclick = function () {
+                        window.location = '#' + jQuery(el).text();
+                    };
+                });
+            };
+            jQuery().ready(setupTabFragmentLinks);
+        </script>
+    </h:head>
+    <h:body>
+        <h1 class="title ui-widget-header ui-corner-all">#{global.get('backuptitle')}#{res.get('title')}</h1>
+        <p:messages id="message" for="message" autoUpdate="true" redisplay="true" showDetail="true" closable="true" />
+        <p:tabView style="border:none; " activeIndex="#{restoreBean.activeIndex}" >
+            <p:tab title="#{res.get('spfile')}">
+                <h:form>
+                    <p:selectOneRadio id="spfile" value="#{restoreBean.ISpfile}" layout="custom" >
+                        <p:ajax listener="#{restoreBean.spfileListener()}" update="text_spfile"/>
+                        <f:selectItem    itemValue="1" />
+                        <f:selectItem    itemValue="2"/>
+                    </p:selectOneRadio> 
+                    <h:panelGrid columns="3" >
+                        <p:radioButton id="sp0" for="spfile" itemIndex="0"  />  
+                        <h:outputLabel for="sp0" value="#{res.get('fromautobackup')}"  />  
+                        <p:spacer/>
+
+                        <p:radioButton id="sp1" for="spfile" itemIndex="1"/>  
+                        <h:outputLabel for="sp1" value="#{res.get('fromfile')}" />  
+                        <p:inputText id="text_spfile" value="#{restoreBean.SSpfile}"  disabled="#{restoreBean.BSpfile}"/>
+                    </h:panelGrid>
+
+                    <p:spacer width="45px" height="50px"/>
+                    <p:commandButton value="${global.get('save')}" icon="saveIcon"  action="#{restoreBean.restoreSpfile()}"/>
+
+                    <p:spacer width="8px"/>
+                    <p:commandButton value="${global.get('return')}" icon="cancleIcon" action="#{restoreBean.goBack()}"/>
+                </h:form>
+            </p:tab>
+            <p:tab title="#{res.get('controlfile')}">
+                <h:form>
+                    <p:selectOneRadio id="control" value="#{restoreBean.IControlFile}" layout="custom">
+                        <p:ajax listener="#{restoreBean.controlFileListener()}" update="text_controlfile"/>
+                        <f:selectItem    itemValue="1" />
+                        <f:selectItem    itemValue="2" />
+                    </p:selectOneRadio> 
+                    <h:panelGrid columns="3" >
+                        <p:radioButton id="co0" for="control" itemIndex="0"  />  
+                        <h:outputLabel for="co0" value="#{res.get('fromautobackup')}"  />  
+                        <p:spacer/>
+
+                        <p:radioButton id="co1" for="control" itemIndex="1"/>  
+                        <h:outputLabel for="co1" value="#{res.get('fromfile')}" />  
+                        <p:inputText id="text_controlfile" value="#{restoreBean.SControlFile}"  disabled="#{restoreBean.BControlFile}"/>
+                    </h:panelGrid>
+
+                    <p:spacer width="45px" height="50px"/>
+                    <p:commandButton value="${global.get('save')}" icon="saveIcon"  action="#{restoreBean.restoreControl()}"/>
+
+                    <p:spacer width="8px"/>
+                    <p:commandButton value="${global.get('return')}" icon="cancleIcon" action="#{restoreBean.goBack()}"/>
+                </h:form>
+            </p:tab>
+            <p:tab title="#{res.get('dataRestore')}">
+                <h:form>
+                    <h:panelGroup>
+                        <h:selectBooleanCheckbox label="Restore" value="#{restoreBean.BRestore}" >
+                            <p:ajax listener="#{restoreBean.restoreListener()}" update="restore restore_type  rtext restore_online"/>                           
+                        </h:selectBooleanCheckbox>
+                        #{res.get('restore')}
+                    </h:panelGroup>                    
+                    <h:panelGrid columns="1" cellpadding="5" id="restore_type" >
+                        <p:selectOneRadio id="restore" layout="custom"  disabled="#{restoreBean.BRestoreType}" value="#{restoreBean.IRestoreType}">
+                            <p:ajax listener="#{restoreBean.restoreTypeListener()}" update="restore_online rtext" />
+                            <f:selectItem    itemValue="1" />
+                            <f:selectItem    itemValue="2" />
+                        </p:selectOneRadio> 
+                        <h:panelGrid columns="3" >
+                            <p:radioButton id="rpt0" for="restore" itemIndex="0"  />  
+                            <h:outputLabel for="rpt0" value="#{res.get('database')}"  />  
+                            <p:spacer/>
+
+                            <p:radioButton id="rpt1" for="restore" itemIndex="1"/>  
+                            <h:outputLabel for="rpt1" value="#{res.get('space')}" />  
+                            <p:inputText id="rtext" value="#{restoreBean.STables}"  disabled="#{restoreBean.BTables}"/>
+                        </h:panelGrid>
+                        <p:selectManyCheckbox  id="restore_online" disabled="#{restoreBean.BLine}" value="#{restoreBean.LLine}" >
+                            <f:selectItem itemLabel="#{res.get('offline')}"  itemValue="1" />
+                            <f:selectItem itemLabel="#{res.get('online')}"  itemValue="2" />
+                        </p:selectManyCheckbox>
+                    </h:panelGrid>
+
+                    <h:panelGrid columns="3" cellpadding="5" style="left: -7px; position: relative" >
+                        <h:panelGrid columns="2">
+                        <h:selectBooleanCheckbox label="Recover" value="#{restoreBean.BRecover}" >
+                            <p:ajax listener="#{restoreBean.recoverListener()}" update="recover_type openDB recover reLog"/> 
+                        </h:selectBooleanCheckbox>
+                        <h:outputLabel value="#{res.get('recover')}" style="position: relative; " />
+                         </h:panelGrid>
+                        <p:spacer/>
+                       <p:spacer/>
+                        <h:panelGrid columns="1" id="recover">
+                            <p:selectOneRadio  layout="custom" value="#{restoreBean.IRecover}" disabled="#{restoreBean.BRecoverType}"
+                                               id="recover_type"  >
+                                <p:ajax listener="#{restoreBean.recoverTypeListener()}" update="@widgetVar(text_sqe) @widgetVar(text_scn) @widgetVar(text_time) @widgetVar(test_thread)" />
+                                <f:selectItem    itemValue="1" />
+                                <f:selectItem    itemValue="2" />
+                                <f:selectItem    itemValue="3" />
+                                <f:selectItem    itemValue="4"/>
+                            </p:selectOneRadio>
+
+                            <h:panelGrid columns="5" >
+                                <p:radioButton id="opt0" for="recover_type" itemIndex="0"  />  
+                                <h:outputLabel for="opt0" value="#{res.get('complete')}"  />  
+                                <p:spacer/>
+                                <p:spacer/>
+                                <p:spacer/>
+
+                                <p:radioButton id="opt1" for="recover_type" itemIndex="1"/>  
+                                <h:outputLabel for="opt1" value="#{res.get('seq')}" />  
+                                <p:inputText  widgetVar="text_sqe" value="#{restoreBean.SSeq}" disabled="#{restoreBean.BSeq}"/>
+                                <h:outputLabel value="#{res.get('thread')}" style=" margin-left: 20px;"></h:outputLabel>
+                                <p:inputText  value="#{restoreBean.SThread}" widgetVar="test_thread" style="  margin-left: -50px;" disabled="#{restoreBean.BSeq}"></p:inputText>
+
+                                <p:radioButton id="opt2" for="recover_type" itemIndex="2"/>  
+                                <h:outputLabel for="opt2" value="#{res.get('scn')}" />  
+                                <p:inputText widgetVar="text_scn"  value="#{restoreBean.SSCN}" disabled="#{restoreBean.BSCN}"/>
+                                <p:spacer/>
+                                <p:spacer/>
+
+
+                                <p:radioButton id="opt3" for="recover_type" itemIndex="3"/>  
+                                <h:outputLabel for="opt3" value="#{res.get('time')}" />  
+                                <p:inputText widgetVar="text_time"  value="#{restoreBean.STime}" disabled="#{restoreBean.BTime}"/>
+                                <h:panelGroup style="position: relative; margin-left: 20px; " >
+                                    <h:selectBooleanCheckbox id="openDB" label="opendb" disabled="#{restoreBean.BOpenDB}" value="#{restoreBean.BDB}" >
+                                        <p:ajax listener="#{restoreBean.openDBListener()}" update="reLog"/>
+                                    </h:selectBooleanCheckbox>
+                                    #{res.get('opendb')}
+                                </h:panelGroup>
+                                <h:panelGroup style="position: relative; ">
+                                    <h:selectBooleanCheckbox id="reLog"  disabled="#{restoreBean.BReLog}" value="#{restoreBean.BLog}"/>
+                                    <h:outputLabel for="reLog" value="#{res.get('log')}"/>      
+                                </h:panelGroup>
+                            </h:panelGrid>
+                        </h:panelGrid>
+
+
+                    </h:panelGrid>
+
+                    <h:panelGrid columns="5" style="position: relative; left: -3px">
+                        <h:selectBooleanCheckbox label="DBID：" value="#{restoreBean.BDBID}">
+                            <p:ajax listener="#{restoreBean.bDBIDListener()}" update="dbid"/>
+                        </h:selectBooleanCheckbox>
+                        #{res.get('dbid')}
+                        <p:inputText id="dbid" disabled="#{restoreBean.BDBIDNum}"  value="#{restoreBean.SDBID}"/>
+                        <p:spacer width="50px" height="0"/>
+                        <p:commandButton value="#{res.get('channel')}" action="#{channelBean.dbProperty(restoreBean.DBName, restoreBean.jobName)}"/>
+                    </h:panelGrid>
+                    <p:spacer width="240px" height="50px"/>
+                    <p:commandButton value="${global.get('save')}" icon="saveIcon" action="#{restoreBean.restoreDate()}"/>
+
+                    <p:spacer width="8px"/>
+                    <p:commandButton value="${global.get('return')}" icon="cancleIcon" action="#{restoreBean.goBack()}"/>
+                </h:form>
+            </p:tab>
+        </p:tabView>
+        <p:ajaxStatus style="width:64px;height:64px;position:fixed;right:5px;bottom:5px">  
+            <f:facet name="start">  
+                <p:graphicImage value="../resources/common/picture/loading.gif" />  
+            </f:facet>  
+
+            <f:facet name="complete">  
+                <h:outputText value="" />  
+            </f:facet>  
+        </p:ajaxStatus>
+    </h:body>
+</html>

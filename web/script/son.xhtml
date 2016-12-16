@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="GBK"?>
+<!--
+To change this template, choose Tools | Templates
+and open the template in the editor.
+-->
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.1//EN" "http://www.w3.org/TR/xhtml11/DTD/xhtml11.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+    <head>
+        <title>将值返回父页面</title>
+        <script type="text/javascript">
+            function returnValueToFather()
+            {
+                var ValueToFather=document.getElementById("preturnValue").value;
+                window.opener.document.getElementById("elementName").value=ValueToFather;
+                window.close();
+            }
+        </script>
+     
+    </head>
+    <body>
+        <input type="text" name="preturnValue" id="preturnValue"/>
+        <input type="button" value="提交" onclick="returnValueToFather();"/>
+       
+    </body>
+</html>

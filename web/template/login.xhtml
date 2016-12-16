@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="GBK"?>
+<!--
+To change this template, choose Tools | Templates
+and open the template in the editor.
+-->
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.1//EN" "http://www.w3.org/TR/xhtml11/DTD/xhtml11.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:p="http://primefaces.org/ui"
+                xmlns:util="http://java.sun.com/jsf/composite/xhtml">
+    <h:head>
+        <title>${oem.get('title')}</title>
+        <LINK REL="SHORTCUT ICON" HREF="#{request.contextPath}/resources/oempic/favicon.ico"/>
+        <link href="./../resources/common/css/default.css" rel="stylesheet" type="text/css" />
+        <script type="text/javascript">
+            if (window != top) {
+                if (window.name == "right_frame")
+                {
+                    top.location.href = location.href;
+                }
+            }
+        </script> 
+        <style type="text/css">
+            .button{
+                background: #000000 ;
+                color: #F2F2F2;
+                width: 95px;
+                height: 34px;
+                vertical-align: central;
+                text-align: center;
+                border: none;
+                background: -webkit-gradient(linear, 0 0, 0 100%, from(#808080), to(#000000)); /*  适用于谷歌浏览器*/
+                background: -moz-linear-gradient( top,#808080,#000000);/* 适用于火狐浏览器中*/
+                filter: progid:DXImageTransform.Microsoft.gradient(GradientType=0, startColorstr=#808080, endColorstr=#000000);/* 适用于IE浏览器中*/
+            }
+        </style>  
+    </h:head>
+    <h:body >
+        <h:form id="form" style="text-align: center;border: none; height: auto; width: auto;">
+            <div id="login_page">
+                <div id ="login_info">
+                    <h:panelGrid columns="2" cellpadding="7" style="text-align: left; ">  
+                        <h:outputLabel value="#{res.get('userName')}"/>
+                        <p:inputText value="#{loginBean.username}" id="username" style="width: 200px;height: 28px;"/>
+
+                        <h:outputLabel escape="false" value="#{res.get('password')}"/>  
+                        <p:password value="#{loginBean.password}" id="password" style="width: 200px;height: 28px;"/>
+                    </h:panelGrid> 
+                    <h:panelGrid columns="2" cellpadding="0" styleClass="loginButton" style="width: 320px; height: 50px; text-align: left; vertical-align: central">
+                        <p:commandButton id="loginBut" value="#{res.get('login')}" action="#{loginBean.login()}" styleClass="button" update=":form text1 text2"/>
+                        <h:panelGroup>
+                            <h:outputLabel id="text1" value="* " style="color: #cc3333;font-size:16pt;font-weight: bold;" rendered="#{loginBean.isrender}"/>
+                            <h:outputLabel id="text2"  value="#{res.get('userOrPasswordError')}" style="color: #cc3333;font-size:12pt;font-weight: bold;"  rendered="#{loginBean.isrender}"/>
+                        </h:panelGroup>
+                    </h:panelGrid>
+                </div>
+            </div>
+        </h:form>  
+        <h:form>
+            <util:question id="ask" uid="askLogin" mess="#{res.get('kickOut')}" action="#{loginBean.userLogin()}"/>
+        </h:form>
+    </h:body>
+</ui:composition>

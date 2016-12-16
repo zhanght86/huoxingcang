@@ -1,0 +1,133 @@
+<?xml version="1.0" encoding="GBK"?>
+<!--
+To change this template, choose Tools | Templates
+and open the template in the editor.
+-->
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.1//EN" "http://www.w3.org/TR/xhtml11/DTD/xhtml11.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:util="http://java.sun.com/jsf/composite/xhtml">
+    <h:head>
+        <link href="./../resources/common/css/default.css" rel="stylesheet" type="text/css" />
+        <link href="./../resources/common/css/cssIcon.css" rel="stylesheet" type="text/css" />
+        <style type="text/css">
+
+        </style>
+    </h:head>
+    <h:body>
+        <script type="text/javascript">
+            function init() {
+                var value = document.getElementById("form:bool_input").checked;
+                //alert(value);
+                if (value) {
+                    document.getElementById("form:testshare").disabled = false;
+
+                }
+                if (!value) {
+                    document.getElementById("form:testshare").setAttribute("disabled", "true");
+
+                    //document.getElementById("form:testshare").focus();
+                }
+                //document.getElementById("form:testshare").value = "";
+                //document.getElementById("form:testshare").focus();
+            }
+
+        </script>
+        <h:form id="form" >
+            <h1  class="title ui-widget-header ui-corner-all">#{addLocalSync.title}</h1>
+            <p:messages  showSummary="true" showDetail="false" autoUpdate="true" closable="true"  />
+            <br/>
+            <!--<p:panel style="width: 450px;border-color: transparent" >-->
+            <p:selectOneRadio id="radio" value="#{addLocalSync.radioValue}" layout="custom" >  
+                <f:selectItem itemLabel="" itemValue="1" ></f:selectItem>
+                <f:selectItem itemLabel="" itemValue="2" />  
+                <p:ajax listener="#{addLocalSync.listen()}"  update="timelab pg " /> 
+            </p:selectOneRadio>
+
+            <h:panelGrid  columns="2" >
+                <h:panelGrid>
+                    <h:outputLabel  value="#{addLocalSync.outputLabel_1}"  />
+                </h:panelGrid>
+                <h:panelGrid>
+                    <h:outputLabel  value="#{addLocalSync.pathName}"  />
+                </h:panelGrid>
+                <h:panelGrid>
+                    <h:outputLabel  value="#{res.get('plan')}" />
+                </h:panelGrid>
+                <h:panelGrid columns="5" >
+                    <p:radioButton id="opt1" for="radio" itemIndex="0" >
+                    </p:radioButton>
+                    <h:outputLabel  value="#{res.get('actualTime')}" />  
+                    <p:spacer width="20" />
+                    <p:radioButton id="opt2" for="radio" itemIndex="1" >
+                    </p:radioButton>
+                    <h:outputLabel  value="#{res.get('fixedTime')}" />
+                </h:panelGrid>
+                <h:panelGrid id="timelab" >
+                    <h:outputLabel id="lab3" rendered="#{addLocalSync.timeRendered}"  value="#{res.get('chooseTime')}" />
+                </h:panelGrid>
+                <h:panelGrid id="pg" columns="3" >
+                    <p:selectOneMenu id="menu1" rendered="#{addLocalSync.timeRendered}" style="min-width: 80px" value="#{addLocalSync.startTime}" >
+                        <f:selectItems value="#{addLocalSync.startTimeList}" />
+                    </p:selectOneMenu>
+                    <h:outputLabel id="lab2" rendered="#{addLocalSync.timeRendered}" value="#{res.get('to')}"  />
+                    <p:selectOneMenu id="menu2" rendered="#{addLocalSync.timeRendered}" style="min-width: 80px" value="#{addLocalSync.endTime}"  >
+                        <f:selectItems value="#{addLocalSync.endtimeList}" />
+                    </p:selectOneMenu>
+                </h:panelGrid>
+                <h:outputLabel  value="#{addLocalSync.outputLabel}"  />
+                <p:selectOneMenu id="name" value="#{addLocalSync.selectedPath}" style="min-width:  180px;max-width: 280px" > 
+                    <f:selectItems value="#{addLocalSync.paths}" />
+                </p:selectOneMenu> 
+            </h:panelGrid>
+            <!--                <h:panelGrid  columns="4" rendered="{addLocalSync.timeRendered}" >
+                                <h:outputLabel  value="{res.get('chooseTime')}" />
+                                <p:selectOneMenu style="min-width: 80px" value="{addLocalSync.startTime}" >
+                                    <f:selectItems value="{addLocalSync.timeList}" />
+                                </p:selectOneMenu>
+                                {res.get('to')}
+                                <p:selectOneMenu style="min-width: 80px" value="{addLocalSync.endTime}"  >
+                                    <f:selectItems value="{addLocalSync.timeList}" />
+                                </p:selectOneMenu>
+                            </h:panelGrid>
+                            <br/>
+                            <h:panelGrid  columns="2" cellpadding="5"  >
+                                <h:outputLabel  value="{res.get('share')}"  />
+                                <p:selectOneMenu id="name" value="{addLocalSync.selectedPath}" style="min-width:  180px;max-width: 280px" > 
+                                    <f:selectItems value="{addLocalSync.paths}" />
+                                </p:selectOneMenu> 
+                            </h:panelGrid>-->
+
+            <!--</p:panel>-->
+
+            <p:panel style="width: 330px;text-align: center;border-color: transparent" >
+
+                <!--<p:spacer width="65" height="6" />-->
+                <p:commandButton value="#{global.get('save')}" icon="saveIcon"  action="#{addLocalSync.save()}" update=":form1" />
+                <p:spacer width="8" height="6" />
+                <p:commandButton value="#{global.get('return')}" icon="cancleIcon" immediate="true" action="#{addLocalSync.cancel()}" />
+            </p:panel>
+
+            <!--            <p:dialog id="configCIFS" header="CIFS设置" widgetVar="configCIFSDialog" resizable="false" modal="true" >
+            
+                        </p:dialog>-->
+        </h:form>
+        <h:form id="form1">
+            <util:confirm  uid="addsync" mess="#{res.get('confirmOffLine')} #{global.get('lquote')}#{addLocalSync.selectedPath}#{global.get('rquote')} #{global.get('and')}#{global.get('delete')}#{global.get('lquote')}#{addLocalSync.selectedPath}#{global.get('rquote')} #{res.get('snapInDirectory')} #{global.get('what')}" action="#{addLocalSync.operateBeforeAddSync()}"  >
+            </util:confirm>
+        </h:form>
+        <p:ajaxStatus style="width:64px;height:64px;position:fixed;right:5px;bottom:5px">  
+            <f:facet name="start">  
+                <p:graphicImage value="../resources/common/picture/loading.gif" />  
+            </f:facet>  
+
+            <f:facet name="complete">  
+                <h:outputText value="" />  
+            </f:facet>  
+        </p:ajaxStatus>
+    </h:body>
+
+</html>

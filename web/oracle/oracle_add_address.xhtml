@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="GBK"?>
+<!--
+To change this template, choose Tools | Templates
+and open the template in the editor.
+-->
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.1//EN" "http://www.w3.org/TR/xhtml11/DTD/xhtml11.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:f="http://java.sun.com/jsf/core">
+
+    <h:head>
+        <link href="./../resources/common/css/default.css" rel="stylesheet" type="text/css" />
+        <link href="./../resources/common/css/cssIcon.css" rel="stylesheet" type="text/css" />
+        <script type="text/javascript">
+        </script>
+    </h:head>
+
+    <h:body>
+        <h:form id="form">
+            <h1 class="title ui-widget-header ui-corner-all">#{global.get('backuptitle')}#{res.get('title')}</h1>
+            <p:messages id="messages" showDetail="true" autoUpdate="true" closable="true" />
+            <br></br>
+            <p:panel style="border: none;">
+                <h:panelGrid >
+                    <h:panelGroup>
+                        <h:outputLabel value="#{res.get('address')}"/>
+                        <p:inputText value="#{address.IP}"/><br/><br/>
+
+                        <h:outputLabel value="#{res.get('port')}"/>
+                        <p:spacer width="14px"/>
+                        <p:inputText value="#{address.port}"/>
+                    </h:panelGroup> 
+                </h:panelGrid>
+                <div>
+                    <p:spacer width="40px" height="50px"/>
+                    <p:commandButton value="${global.get('save')}" icon="saveIcon" update="messages"
+                                     action="#{createNSNameBean.listAdd(address.IP, address.port)}" />
+
+                    <p:spacer width="8px"/>
+                    <p:commandButton value="${global.get('return')}" icon="cancleIcon" onclick="javascript: window.history.go(-1)"/>
+                </div> 
+            </p:panel>
+            <p:ajaxStatus style="width:64px;height:64px;position:fixed;right:5px;bottom:5px">  
+                <f:facet name="start">  
+                    <p:graphicImage value="../resources/common/picture/loading.gif" />  
+                </f:facet>  
+
+                <f:facet name="complete">  
+                    <h:outputText value="" />  
+                </f:facet>  
+            </p:ajaxStatus>
+        </h:form>
+    </h:body>
+</html>

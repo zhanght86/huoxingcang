@@ -1,0 +1,193 @@
+<?xml version="1.0" encoding="GBK"?>
+<!--
+To change this template, choose Tools | Templates
+and open the template in the editor.
+-->
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.1//EN" "http://www.w3.org/TR/xhtml11/DTD/xhtml11.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:p="http://primefaces.org/ui">
+
+    <h:head>
+        <link href="./../resources/common/css/default.css" rel="stylesheet" type="text/css" />
+        <link href="./../resources/common/css/cssIcon.css" rel="stylesheet" type="text/css" />
+
+    </h:head>
+    <h:body>
+        <h:form id="form">
+            <h1 class="title ui-widget-header ui-corner-all">#{global.get('cdp')}${res.get('title')}</h1>
+            <p:messages id="messages" showDetail="true" autoUpdate="true" closable="true" />
+            <p:panel style="border: none;">                
+                <h:panelGrid columns="1" cellpadding="5">  
+                    <p:fieldset legend="${res.get('p1')}" style="width: 310px;">
+                        <p:dataTable id="disks" var="disk" value="#{linuxClientBean.client.linuxClientDisks}">  
+                            <p:column style="width:2%">
+                                <p:rowToggler />  
+                            </p:column>
+                            <p:column headerText="#{res.get('header1')}" width="200" style="text-align:center;" >  
+                                <h:outputLabel id="dNum" value="#{disk.device}"/>
+                            </p:column>
+                            <p:column headerText="#{res.get('header2')}" width="200" style="text-align:center; white-space:  nowrap" >  
+                                <h:outputLabel id="dSize" value="#{linuxClientBean.getStrSize(disk.size)}"/>                            
+                            </p:column>
+                            <p:column headerText="#{res.get('header3')}" width="200" style="text-align:center" >
+                                <h:outputLabel id="dType" value="#{util.getCDPTypeString(disk.CDPType)}"/>                            
+                            </p:column>
+                            <p:column headerText="#{res.get('header4')}" width="200" style="text-align:center" >
+                                <h:outputLabel id="dMirrorInfo" value="#{linuxClientBean.getDStrMirror(disk)}"/>                            
+                            </p:column>
+                            <p:column headerText="#{res.get('header5')}" width="200" style="text-align:center" >
+                                <h:outputLabel id="dStatus" value="#{linuxClientBean.getDStrStatus(disk)}"/>                            
+                            </p:column>
+                            <p:column headerText="#{global.get('operation')}" style="white-space:  nowrap">                     
+                                <p:graphicImage value="../resources/vm/picture/rebootVM.png"  width="16" height="16" style="vertical-align:middle"/>
+                                <p:commandLink id="dMirror" value="#{linuxClientBean.getO1(disk.CDPType)}" action="#{linuxClientBean.dMirror()}" style="vertical-align:middle">
+                                    <f:setPropertyActionListener value="#{disk}" target="#{linuxClientBean.selectedD}" />
+                                </p:commandLink>
+                                <p:spacer width="10"/>
+                                <p:graphicImage value="../resources/vm/picture/rebootVM.png"  width="16" height="16" style="vertical-align:middle"/>
+                                <p:commandLink id="dCDP" value="#{linuxClientBean.getO2(disk.CDPType)}" style="vertical-align:middle"/>
+                                <p:spacer width="10"/>
+                                <p:graphicImage value="../resources/vm/picture/rebootVM.png"  width="16" height="16" style="vertical-align:middle"/>
+                                <p:commandLink id="dRestore" value="#{res.get('o3')}" action="#{linuxClientBean.dRestore()}" style="vertical-align:middle">
+                                    <f:setPropertyActionListener value="#{disk}" target="#{linuxClientBean.selectedD}" />
+                                </p:commandLink>
+                                <p:spacer width="10"/>
+                                <p:graphicImage value="../resources/common/picture/edit.png" width="16" height="16" style="vertical-align:middle" />  
+                                <p:commandLink id="dDetails"  value="#{res.get('o4')}" immediate="true" action="#{linuxClientBean.dDetails()}" style="vertical-align:middle">
+                                    <f:setPropertyActionListener value="#{disk}" target="#{linuxClientBean.selectedD}" />
+                                </p:commandLink>
+                            </p:column> 
+
+                            <p:rowExpansion >
+                                <p:dataTable var="partition" value="#{disk.partitionInfos}" id="detail" style=" margin-top: 10px;margin-bottom: 6px; margin-right: 0px !important;margin-right: -70px;">  
+                                    <p:column headerText="#{res.get('h1')}" width="200" style="text-align:center;" >  
+                                        <h:outputLabel id="pNum" value="#{partition.pDevice}"/>                            
+                                    </p:column>
+                                    <p:column headerText="#{res.get('h2')}" width="200" style="text-align:center; white-space:  nowrap" >  
+                                        <h:outputLabel id="pSize" value="#{linuxClientBean.getStrSize(partition.PartitionSize)}"/>                            
+                                    </p:column>
+                                    <p:column headerText="#{res.get('header3')}" width="200" style="text-align:center" >
+                                        <h:outputLabel id="pType" value="#{util.getCDPTypeString(partition.CDPType)}"/>                            
+                                    </p:column>
+                                    <p:column headerText="#{res.get('header4')}" width="200" style="text-align:center" >
+                                        <h:outputLabel id="pMirrorInfo" value="#{linuxClientBean.getPStrMirror(partition)}"/>                            
+                                    </p:column>
+                                    <p:column headerText="#{res.get('header5')}" width="200" style="text-align:center" >
+                                        <h:outputLabel id="pStatus" value="#{linuxClientBean.getPStrStatus(partition)}"/>                            
+                                    </p:column>
+                                    <p:column headerText="#{global.get('operation')}" style="white-space:  nowrap">                     
+                                        <p:graphicImage value="../resources/vm/picture/rebootVM.png"  width="16" height="16" style="vertical-align:middle"/>
+                                        <p:commandLink id="pMirror" value="#{linuxClientBean.getO1(partition.CDPType)}" action="#{linuxClientBean.pMirror()}" style="vertical-align:middle">
+                                            <f:setPropertyActionListener value="#{partition}" target="#{linuxClientBean.selectedP}" />
+                                        </p:commandLink>
+                                        <p:spacer width="10"/>
+                                        <p:graphicImage value="../resources/vm/picture/rebootVM.png"  width="16" height="16" style="vertical-align:middle"/>
+                                        <p:commandLink id="pCDP" value="#{linuxClientBean.getO2(partition.CDPType)}" style="vertical-align:middle"/>
+                                        <p:spacer width="10"/>
+                                        <p:graphicImage value="../resources/vm/picture/rebootVM.png"  width="16" height="16" style="vertical-align:middle"/>
+                                        <p:commandLink id="pRestore" value="#{res.get('o3')}" action="#{linuxClientBean.pRestore()}" style="vertical-align:middle">
+                                            <f:setPropertyActionListener value="#{partition}" target="#{linuxClientBean.selectedP}" />
+                                        </p:commandLink>
+                                        <p:spacer width="10"/>
+                                        <p:graphicImage value="../resources/common/picture/edit.png" width="16" height="16" style="vertical-align:middle" />  
+                                        <p:commandLink id="pDetails"  value="#{res.get('o4')}" immediate="true" action="#{linuxClientBean.pDetails()}" style="vertical-align:middle">
+                                            <f:setPropertyActionListener value="#{disk}" target="#{linuxClientBean.selectedD}" />
+                                            <f:setPropertyActionListener value="#{partition}" target="#{linuxClientBean.selectedP}" />
+                                        </p:commandLink>
+                                    </p:column>
+                                </p:dataTable>
+                            </p:rowExpansion>
+                        </p:dataTable> 
+                    </p:fieldset>
+                    <p:fieldset legend="${res.get('p2')}" style="width: 310px;">
+                        <p:dataTable id="volumes" var="disk" value="#{linuxClientBean.client.linuxVGs}">  
+                            <p:column style="width:2%">
+                                <p:rowToggler />  
+                            </p:column>
+                            <p:column headerText="#{res.get('header1')}" width="200" style="text-align:center;" >  
+                                <h:outputLabel id="dNum" value="#{disk.diskNumber}"/>                            
+                            </p:column>
+                            <p:column headerText="#{res.get('header2')}" width="200" style="text-align:center; white-space:  nowrap" >  
+                                <h:outputLabel id="dSize" value="#{linuxClientBean.getStrSize(disk.diskSize)}"/>                            
+                            </p:column>
+                            <p:column headerText="#{res.get('header3')}" width="200" style="text-align:center" >
+                                <h:outputLabel id="dType" value="#{linuxClientBean.getStrType(disk.CDPType)}"/>                            
+                            </p:column>
+                            <p:column headerText="#{global.get('operation')}" style="white-space:  nowrap">                     
+                                <p:graphicImage value="../resources/vm/picture/rebootVM.png"  width="16" height="16" style="vertical-align:middle"/>
+                                <p:commandLink id="dMirror" value="#{linuxClientBean.getO1(disk.CDPType)}" action="#{linuxClientBean.dMirror()}" style="vertical-align:middle">
+                                    <f:setPropertyActionListener value="#{disk}" target="#{linuxClientBean.selectedD}" />
+                                </p:commandLink>
+                                <p:spacer width="10"/>
+                                <p:graphicImage value="../resources/vm/picture/rebootVM.png"  width="16" height="16" style="vertical-align:middle"/>
+                                <p:commandLink id="dCDP" value="#{linuxClientBean.getO2(disk.CDPType)}" style="vertical-align:middle"/>
+                                <p:spacer width="10"/>
+                                <p:graphicImage value="../resources/vm/picture/rebootVM.png"  width="16" height="16" style="vertical-align:middle"/>
+                                <p:commandLink id="dRestore" value="#{res.get('o3')}" action="#{linuxClientBean.dRestore()}" style="vertical-align:middle">
+                                    <f:setPropertyActionListener value="#{disk}" target="#{linuxClientBean.selectedD}" />
+                                </p:commandLink>
+                                <p:spacer width="10"/>
+                                <p:graphicImage value="../resources/common/picture/edit.png" width="16" height="16" style="vertical-align:middle" />  
+                                <p:commandLink id="dDetails"  value="#{res.get('o4')}" immediate="true" action="#{linuxClientBean.dDetails()}" style="vertical-align:middle">
+                                    <f:setPropertyActionListener value="#{disk}" target="#{linuxClientBean.selectedD}" />
+                                </p:commandLink>
+                            </p:column> 
+
+                            <p:rowExpansion >
+                                <p:dataTable var="partition" value="#{disk.partitionInfos}" id="detail" style=" margin-top: 10px;margin-bottom: 6px; margin-right: 0px !important;margin-right: -70px;">  
+                                    <p:column headerText="#{res.get('header1')}" width="200" style="text-align:center;" >  
+                                        <h:outputLabel id="pNum" value="#{partition.partitionNumber}"/>                            
+                                    </p:column>
+                                    <p:column headerText="#{res.get('header2')}" width="200" style="text-align:center; white-space:  nowrap" >  
+                                        <h:outputLabel id="pSize" value="#{linuxClientBean.getStrSize(partition.partitionSize)}"/>                            
+                                    </p:column>
+                                    <p:column headerText="#{res.get('header3')}" width="200" style="text-align:center" >
+                                        <h:outputLabel id="pType" value="#{linuxClientBean.getStrType(partition.CDPType)}"/>                            
+                                    </p:column>
+                                    <p:column headerText="#{global.get('operation')}" style="white-space:  nowrap">                     
+                                        <p:graphicImage value="../resources/vm/picture/rebootVM.png"  width="16" height="16" style="vertical-align:middle"/>
+                                        <p:commandLink id="pMirror" value="#{linuxClientBean.getO1(partition.CDPType)}" action="#{linuxClientBean.pMirror()}" style="vertical-align:middle">
+                                            <f:setPropertyActionListener value="#{partition}" target="#{linuxClientBean.selectedP}" />
+                                        </p:commandLink>
+                                        <p:spacer width="10"/>
+                                        <p:graphicImage value="../resources/vm/picture/rebootVM.png"  width="16" height="16" style="vertical-align:middle"/>
+                                        <p:commandLink id="pCDP" value="#{linuxClientBean.getO2(partition.CDPType)}" style="vertical-align:middle"/>
+                                        <p:spacer width="10"/>
+                                        <p:graphicImage value="../resources/vm/picture/rebootVM.png"  width="16" height="16" style="vertical-align:middle"/>
+                                        <p:commandLink id="pRestore" value="#{res.get('o3')}" action="#{linuxClientBean.pRestore()}" style="vertical-align:middle">
+                                            <f:setPropertyActionListener value="#{partition}" target="#{linuxClientBean.selectedP}" />
+                                        </p:commandLink>
+                                        <p:spacer width="10"/>
+                                        <p:graphicImage value="../resources/common/picture/edit.png" width="16" height="16" style="vertical-align:middle" />  
+                                        <p:commandLink id="pDetails"  value="#{res.get('o4')}" immediate="true" action="#{linuxClientBean.pDetails()}" style="vertical-align:middle">
+                                            <f:setPropertyActionListener value="#{disk}" target="#{linuxClientBean.selectedD}" />
+                                            <f:setPropertyActionListener value="#{partition}" target="#{linuxClientBean.selectedP}" />
+                                        </p:commandLink>
+                                    </p:column>
+                                </p:dataTable>
+                            </p:rowExpansion>
+                        </p:dataTable> 
+                    </p:fieldset>
+                </h:panelGrid> 
+                <br></br>
+                <p:spacer width="75" height="6" />
+
+                <p:commandButton id="addButton" icon="saveIcon" value="${global.get('save')}"  action="#{sqlBean.setting()}"/>  
+                <p:spacer width="8"/>
+                <p:commandButton id="closeButton" icon="cancleIcon" value="${global.get('return')}"  immediate="true" onclick="javascript: window.history.go(-1);"/>  
+            </p:panel>
+        </h:form>
+        <p:ajaxStatus style="width:64px;height:64px;position:fixed;right:5px;bottom:5px">  
+            <f:facet name="start">
+                <p:graphicImage value="../resources/common/picture/loading.gif" />  
+            </f:facet>
+
+            <f:facet name="complete">
+                <h:outputText value="" />
+            </f:facet>
+        </p:ajaxStatus>
+    </h:body>
+</ui:composition>

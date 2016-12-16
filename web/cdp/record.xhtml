@@ -1,0 +1,89 @@
+<?xml version="1.0" encoding="GBK"?>
+<!--
+To change this template, choose Tools | Templates
+and open the template in the editor.
+-->
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.1//EN" "http://www.w3.org/TR/xhtml11/DTD/xhtml11.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:p="http://primefaces.org/ui"
+                xmlns:util="http://java.sun.com/jsf/composite/xhtml">
+    <h:head>        
+        <link href="./../resources/common/css/default.css" rel="stylesheet" type="text/css" />
+        <link href="./../resources/common/css/cssIcon.css" rel="stylesheet" type="text/css" />
+    </h:head>
+    <h:body>
+        <h:form id="form">  
+            <h1 class="title ui-widget-header ui-corner-all">#{global.get('cdp')}#{res.get('title')}</h1>
+            <p:messages id="messages" showDetail="true" autoUpdate="true" closable="true" />            
+            <h:panelGrid id="status" columns="2" cellpadding="5" >  
+                <h:outputLabel value="${global.get('dg')}"/> 
+                <h:outputLabel value="#{recordBean.dg}" />
+            </h:panelGrid>
+            <p:toolbar>
+                <p:toolbarGroup align="right">
+                    <h:outputLabel value="${res.get('bar')}"/>
+                    <h:selectOneMenu id="count" value="#{recordBean.count}" style="width:100px; height: 25px" onchange="#{recordBean.changeCount()}">  
+                        <f:selectItem itemLabel="50" itemValue="50" />  
+                        <f:selectItem itemLabel="100" itemValue="100" />  
+                        <f:selectItem itemLabel="200" itemValue="200" />  
+                        <f:selectItem itemLabel="500" itemValue="500" />  
+                        <p:ajax event="change" listener="#{recordBean.changeCount()}" update="records" /> 
+                    </h:selectOneMenu>
+                    <p:spacer width="700px" height="0px"/>
+                    <p:commandButton icon="ui-icon-seek-prev" immediate="true" action="#{recordBean.seekRev()}" update="records" />
+                    <p:commandButton icon="ui-icon-seek-next" immediate="true" action="#{recordBean.seekNext()}" update="records"/>
+                </p:toolbarGroup>
+            </p:toolbar>
+            <div style="overflow-x: auto; width: 100%; padding-bottom: 14px;">
+                <p:dataTable id="records" var="record" value="#{recordBean.recordInfos}" rows="#{recordBean.count}"  
+                             emptyMessage="#{global.get('emptyMessage')}" > 
+                    <p:column headerText="#{res.get('header1')}" style="white-space: nowrap;" resizable="false">  
+                        <h:outputText value="#{cu.dateToStringLocalMS(record.getLogTime())}"/>  
+                    </p:column>
+                    <p:column headerText="#{res.get('header4')}" disabledSelection="true"  resizable="false" style="white-space: nowrap;">  
+                        <h:outputText value="#{record.logSize}"/>  
+                    </p:column>
+                    <p:column headerText="#{global.get('operation')}"  disabledSelection="true" resizable="false"  style="white-space: nowrap;">  
+                        <p:graphicImage value="../resources/common/picture/rollback.png"  width="16" height="16" style=" vertical-align:middle;"/>
+                        <p:commandLink id="rollbackL" disabled="#{user.type!=2 or recordBean.globalStatus.rollDisabled}" action="#{recordBean.preRollback()}" immediate="true" value="${res.get('o1')}" update=":c" style=" vertical-align:middle;">
+                            <f:setPropertyActionListener value="#{record}" target="#{recordBean.selected}" />
+                        </p:commandLink>
+                    </p:column>
+                </p:dataTable>
+            </div>
+            <br/>
+            <div style="text-align: center;">
+                <p:commandButton id="closeButton" icon="cancleIcon" value="${global.get('return')}"  immediate="true" action="#{recordBean.back()}"/>  
+            </div>
+
+        </h:form>
+        <h:form id="c" style=" border: none;">
+            <util:confirm  uid="Rollback" mess="#{res.get('rollBackOperation')}" action="#{recordBean.rollback()}" update=":form"  >
+            </util:confirm>         
+            <util:confirm  uid="deleteDGBox" mess="#{res.get('confirm')}#{global.get('lquote')}#{cu.dateToStringLocalMS(recordBean.selected.logTime)}#{global.get('rquote')}#{global.get('what')}" action="#{recordBean.rollback()}" update=":form">
+            </util:confirm>
+            <util:confirm  uid="disLUNDel" mess="#{res.get('confirm2')}#{global.get('lquote')}#{cu.dateToStringLocalMS(recordBean.selected.logTime)}#{global.get('rquote')}#{global.get('what')}" action="#{recordBean.rollback()}"  update=":form">
+            </util:confirm >
+            <util:confirm  uid="SdeleteDGBox" mess="#{res.get('confirm4')}#{global.get('lquote')}#{cu.dateToStringLocalMS(recordBean.selected.logTime)}#{global.get('rquote')}#{global.get('what')}" action="#{recordBean.rollback()}" update=":form">
+            </util:confirm>
+            <util:confirm  uid="SdisLUNDel" mess="#{res.get('confirm5')}#{global.get('lquote')}#{cu.dateToStringLocalMS(recordBean.selected.logTime)}#{global.get('rquote')}#{global.get('what')}" action="#{recordBean.rollback()}"  update=":form">
+            </util:confirm >
+        </h:form> 
+        <p:ajaxStatus style="width:64px;height:64px;position:fixed;right:5px;bottom:5px">  
+            <f:facet name="start">
+                <p:graphicImage value="../resources/common/picture/loading.gif" />  
+            </f:facet>
+
+            <f:facet name="complete">  
+                <h:outputText value="" />
+            </f:facet>  
+        </p:ajaxStatus>
+    </h:body>
+
+
+
+    <!--    </ui:define>-->
+</ui:composition>

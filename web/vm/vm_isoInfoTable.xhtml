@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="GBK"?>
+<!--
+To change this template, choose Tools | Templates
+and open the template in the editor.
+-->
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.1//EN" "http://www.w3.org/TR/xhtml11/DTD/xhtml11.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:p="http://primefaces.org/ui"
+                xmlns:util="http://java.sun.com/jsf/composite/xhtml">
+    <!--template="../template/framework.xhtml"-->
+
+    <!--    <ui:define name="content">-->
+    <h:head>
+        <link href="./../resources/common/css/default.css" rel="stylesheet" type="text/css" />
+        <link href="./../resources/common/css/cssIcon.css" rel="stylesheet" type="text/css" />
+    </h:head>
+    <h:body>
+        <h:form>
+            <util:confirm  uid="deleteISO" mess="${res.get('deleteisotip')}" action="#{iSOPathList.handleDelete_real()}" update=":form:isoList">
+
+            </util:confirm>
+        </h:form>
+        <h:form id="form">  
+            <h1 class="title ui-widget-header ui-corner-all">${global.get('moduletitle')}${res.get('title')}</h1>
+             <p:messages id="messages" showDetail="true" autoUpdate="true" closable="true" />
+            <br></br>     
+            <p:toolbar>  
+                <p:toolbarGroup align="right">  
+                    <p:commandButton id="upLoadButton" value="${res.get('upload')}" icon="uploadIcon" update="isoList" disabled="#{iSOPathList.cantEdit}" action="fileUpload?faces-redirect=true" />
+                    <p:spacer width="5"/>
+                    <p:commandButton id="multiViewButton" value="${res.get('delete')}" icon="deleteIcon" disabled="#{iSOPathList.cantEdit}" action="#{iSOPathList.handleDelete}" update="isoList"/>
+                </p:toolbarGroup> 
+            </p:toolbar>
+            <div style="overflow-x:auto; width: 100%;">
+                <p:dataTable id="isoList" var="iSOPathBean" value="#{iSOPathList.mediumISOsModel}" paginator="true" rows="10"  
+                             paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"  
+                             rowsPerPageTemplate="10,20,50" selection="#{iSOPathList.selectedISOs}" rowIndexVar="row" emptyMessage="#{global.get('emptyMessage')}">  
+                    <p:column selectionMode="multiple" width="60" style="text-align:center"/> 
+                    <p:column headerText="${res.get('num')}" width="80" style="text-align:center">  
+                        <h:outputText value="#{row + 1}"/>  
+                    </p:column>  
+                    <p:column headerText="${res.get('iso')}" disabledSelection="true" sortBy="#{iSOPathBean.isoPath}" >  
+                        <h:outputText value="#{iSOPathBean.isoPath}"/>  
+                    </p:column>
+                    <!--                <p:column headerText="删除" width="80" style="text-align:center">  
+                                        <p:commandButton id="deleteButton" icon="ui-icon-close" immediate="true" update="isoList" action="{iSOPathList.handleDeleteISO}" style="width: 20px; height: 20px">
+                                            <f:setPropertyActionListener value="{iSOPathBean}" target="{iSOPathList.selectedISO}" />
+                                                                    <p:graphicImage value="../resources/picture/delete.png"/>  
+                                        </p:commandButton> 
+                                    </p:column>
+                    -->
+                </p:dataTable> 
+            </div>
+
+<!--            <p:dialog widgetVar="up" id="upload"  header="上传文件" modal="true" width="700" height="150" dynamic="false" visible="false" resizable="false" position="20,50"> 
+                <p:fileUpload fileUploadListener="{uploadMyFile.saveFile}" id="upLoad2" auto="true"  label="上传"   mode="advanced" style="width: 650px;float: left;" >
+                </p:fileUpload>
+            </p:dialog> -->
+        </h:form>
+        <p:ajaxStatus style="width:64px;height:64px;position:fixed;right:5px;bottom:5px">  
+            <f:facet name="start">  
+                <p:graphicImage value="../resources/common/picture/loading.gif" />  
+            </f:facet>  
+                
+            <f:facet name="complete">  
+                <h:outputText value="" />  
+            </f:facet>  
+        </p:ajaxStatus>
+    </h:body>
+
+
+
+    <!--    </ui:define>-->
+</ui:composition>

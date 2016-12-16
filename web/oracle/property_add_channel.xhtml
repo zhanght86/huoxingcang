@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="GBK"?>
+<!--
+To change this template, choose Tools | Templates
+and open the template in the editor.
+-->
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.1//EN" "http://www.w3.org/TR/xhtml11/DTD/xhtml11.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:f="http://java.sun.com/jsf/core">
+
+    <h:head>
+        <link href="./../resources/common/css/default.css" rel="stylesheet" type="text/css" />
+        <link href="./../resources/common/css/cssIcon.css" rel="stylesheet" type="text/css" />
+    </h:head>
+    <h:body>
+        <h:form id="form">
+            <h1 class="title ui-widget-header ui-corner-all">#{global.get('backuptitle')}#{res.get('title')}</h1>
+            <p:messages  for="message" autoUpdate="true" redisplay="true" showDetail="true" closable="true" />
+            <br></br>
+            <p:panel style="border: none;">
+
+
+                <h:panelGroup>
+                    <h:outputLabel value="#{res.get('channel')}"/>
+                    <p:spacer width="50px" height="0px" />
+                    <p:inputText value="#{channel.name}"/><br/>
+
+                    <h:outputLabel value="${res.get('netServiceName')} " style="position: relative; top: 6px;" /> 
+                    <p:spacer width="14px" height="0px" />
+                    <p:selectOneMenu id="nsName" value="#{channel.NSName}" style="min-width: 187px; 
+                                     background-attachment: fixed; background-position-y: 1px; position: relative; top:14px;">  
+                        <f:selectItems value="#{NSNameBean.netServiceNameList}" />  
+                    </p:selectOneMenu><br/><br/>         
+
+                    <h:outputLabel value="#{res.get('route')}"/>
+                    <p:spacer width="66px" height="0px" />
+                    <p:inputText id="path" value="#{channel.path}" style="position: relative; top: 2px;" /><br/><br/>              
+                </h:panelGroup>
+                <p:watermark for="path"   value="#{res.get('PathDemo')}" />
+                <div>
+                    <p:spacer width="70px" height="30px"/>
+                    <p:commandButton value="${global.get('save')}" icon="saveIcon" action="#{dbProperty.addChannel(channel.name, channel.NSName, channel.path)}" />
+                    <p:spacer width="8px"/>
+                    <p:commandButton value="${global.get('return')}" icon="cancleIcon" onclick="javascript: window.history.go(-1)"/>
+                </div>
+            </p:panel>
+            <p:ajaxStatus style="width:64px;height:64px;position:fixed;right:5px;bottom:5px">  
+                <f:facet name="start">  
+                    <p:graphicImage value="../resources/common/picture/loading.gif" />  
+                </f:facet>  
+
+                <f:facet name="complete">  
+                    <h:outputText value="" />  
+                </f:facet>  
+            </p:ajaxStatus>
+        </h:form>
+    </h:body>
+</html>

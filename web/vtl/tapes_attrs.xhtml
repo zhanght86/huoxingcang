@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="GBK"?>
+<!--
+To change this template, choose Tools | Templates
+and open the template in the editor.
+-->
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.1//EN" "http://www.w3.org/TR/xhtml11/DTD/xhtml11.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:p="http://primefaces.org/ui">
+
+    <h:head>
+        <link href="./../resources/common/css/default.css" rel="stylesheet" type="text/css" />
+        <link href="./../resources/common/css/cssIcon.css" rel="stylesheet" type="text/css" />
+
+    </h:head>
+    <h:body>
+        <h:form id="form">
+            <h1 class="title ui-widget-header ui-corner-all">${global.get('moduletitle')}${res.get('title')}</h1>
+            <p:messages id="messages" showDetail="true" autoUpdate="true" closable="true" />
+            <br/>
+            <h:panelGrid columns="2" cellpadding="5">
+                <h:panelGroup>
+                    ${res.get('valutname')}#{tapesAttrs.name}
+                </h:panelGroup>
+                <p:spacer width="1" height="5"/>
+
+                <h:panelGroup>
+                    <p:selectBooleanCheckbox  id="allcompress" value="#{tapesAttrs.allcompress}">
+                        <p:ajax listener="#{tapesAttrs.changeAllcompress(tapesAttrs.allcompress)}" update="agents" />
+                    </p:selectBooleanCheckbox>
+                    ${res.get('allcompress')}  
+                </h:panelGroup>
+                <h:panelGroup>
+                    <p:selectBooleanCheckbox  id="allreadfile" value="#{tapesAttrs.allreadfile}">
+                        <p:ajax listener="#{tapesAttrs.changeAllreadfile(tapesAttrs.allreadfile)}" update="agents" />
+                    </p:selectBooleanCheckbox>
+                    ${res.get('allreadfile')}
+                </h:panelGroup>
+            </h:panelGrid>
+            
+            <p:dataTable id="agents" var="tape" style=" width: 350px"  value="#{tapesAttrs.tapes}" emptyMessage="#{global.get('emptyMessage')}" >
+                <p:column headerText="${res.get('h0')}" style="text-align : center;  ">  
+                    <h:outputText value="#{tape.name}" />  
+                </p:column>
+                <p:column headerText="${res.get('h1')}" width="60" style="text-align:center">
+                    <p:selectBooleanCheckbox id="compress" style="vertical-align: middle" value="#{tape.enableCompression}">
+                        <p:ajax event="change" listener="#{tapesAttrs.changeNotAllcompress()}" update=":form:allcompress"/>
+                    </p:selectBooleanCheckbox> 
+                </p:column>
+                <p:column headerText="${res.get('h2')}" width="60" style="text-align:center">
+                    <p:selectBooleanCheckbox id="readfile" style="vertical-align: middle" value="#{tape.writeProtect}">
+                         <p:ajax event="change" listener="#{tapesAttrs.changeNoAllreadfile()}" update=":form:allreadfile"/>
+                    </p:selectBooleanCheckbox> 
+                </p:column>
+            </p:dataTable>
+            <br></br>
+            <p:spacer width="85" height="6" />
+
+            <p:commandButton id="addButton" icon="saveIcon" value="${global.get('save')}" action="#{tapesAttrs.modifyTapes()}"/>  
+            <p:spacer width="8"/>
+            <p:commandButton id="closeButton" icon="cancleIcon" value="${global.get('return')}"  immediate="true" onclick="javascript: window.history.go(-1);"/>  
+        </h:form>
+        <p:ajaxStatus style="width:64px;height:64px;position:fixed;right:5px;bottom:5px">  
+            <f:facet name="start">  
+                <p:graphicImage value="../resources/common/picture/loading.gif" />  
+            </f:facet>  
+
+            <f:facet name="complete">  
+                <h:outputText value="" />
+            </f:facet>  
+        </p:ajaxStatus>
+    </h:body>
+</ui:composition>

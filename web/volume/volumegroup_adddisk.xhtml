@@ -1,0 +1,90 @@
+<?xml version="1.0" encoding="GBK"?>
+<!--
+To change this template, choose Tools | Templates
+and open the template in the editor.
+-->
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.1//EN" "http://www.w3.org/TR/xhtml11/DTD/xhtml11.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:f="http://java.sun.com/jsf/core">
+    
+    <h:head>
+        <link href="./../resources/common/css/default.css" rel="stylesheet" type="text/css" />
+        <link href="./../resources/common/css/cssIcon.css" rel="stylesheet" type="text/css" />
+        <style type="text/css">
+
+            .acordionPanelPostion{
+                padding-top: -10px;
+                margin-top: -10px;
+                margin-left: -28px;
+                padding-left: -28px;
+                margin-right: -21px;
+                padding-right: -21px;
+
+            }
+
+
+        </style>
+    </h:head>
+    <h:body>
+        <h:form id="form">
+            <h1 class="title ui-widget-header ui-corner-all">${res.get('title')}</h1>
+            <p:messages id="messages" showDetail="true" autoUpdate="true" closable="true" />
+            <br/> 
+            <h:panelGrid columns="1" cellpadding="5">
+                <h:panelGrid columns="2" cellpadding="5">
+                    <h:outputLabel value="${res.get('volumename')}"/>
+                    <h:outputLabel value="#{addDiskBean.volumeName}"/>
+                    
+                    <h:outputLabel value="${res.get('disktype')}"/>
+                    <p:selectOneMenu id="userType" value="#{addDiskBean.diskType}">  
+                        <p:ajax event="change" update="diskList"  listener="#{addDiskBean.handleChange}" />
+                        <f:selectItem itemLabel="${res.get('sparedisk')}" itemValue="1" />  
+                        <f:selectItem itemLabel="${res.get('cachedisk')}" itemValue="2" /> 
+                        <f:selectItem itemLabel="${res.get('logdisk')}" itemValue="3" /> 
+                    </p:selectOneMenu>
+                </h:panelGrid>
+                
+                <p:dataTable id="diskList"  var="disk" value="#{addDiskBean.hotModel}" selection="#{addDiskBean.selectedDisks}" emptyMessage="#{global.get('emptyMessage')}">  
+
+                    <p:column selectionMode="multiple" style="width:18px;text-align:center"/> 
+                    <p:column headerText="${res.get('position')}" disabledSelection="true"  style="text-align:center">  
+                        <h:outputText value="#{disk.position}"/>  
+                    </p:column>
+                    <p:column headerText="${res.get('num')}" disabledSelection="true"  style="text-align:center">  
+                        <h:outputText value="#{disk.num}"/>  
+                    </p:column>
+                    <p:column headerText="${res.get('size')}" disabledSelection="true"  style="text-align:center">  
+                        <h:outputText value="#{disk.size}"/>  
+                    </p:column>
+                    <p:column headerText="${res.get('state')}" disabledSelection="true"  style="text-align:center">  
+                        <h:outputText value="#{disk.state}"/>  
+                    </p:column>
+                    <p:column headerText="${res.get('diskname')}" disabledSelection="true"  style="text-align:center">  
+                        <h:outputText value="#{disk.diskName}"/>  
+                    </p:column>
+                </p:dataTable>
+            </h:panelGrid>
+            <br/>
+            <div>
+                <p:spacer width="202px" height="40px"/>
+                <p:commandButton value="${global.get('save')}" disabled="#{user.type!=2}" icon="saveIcon" action="#{addDiskBean.saveAddDisk(addDiskBean.diskType)}" update="diskList userType">
+
+                </p:commandButton>
+                <p:spacer width="8px"/>
+                <p:commandButton value="${global.get('return')}" disabled="#{user.type!=2}" icon="cancleIcon" onclick="javascript: window.history.go(-1);"/>
+            </div>
+
+        </h:form>
+        <p:ajaxStatus style="width:64px;height:64px;position:fixed;right:5px;bottom:5px; " >  
+            <f:facet name="start" >  
+                <p:graphicImage value="../resources/common/picture/loading.gif" />  
+            </f:facet>  
+
+            <f:facet name="complete">  
+                <h:outputText value="" />  
+            </f:facet>  
+        </p:ajaxStatus>
+    </h:body>
+</html>

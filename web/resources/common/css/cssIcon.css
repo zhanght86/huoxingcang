@@ -1,0 +1,497 @@
+/* 
+    Document   : cssIcon
+    Created on : 2013-6-21, 9:04:34
+    Author     : Administrator
+    Description:
+        Purpose of the stylesheet follows.
+*/
+.blank{
+    width: 16px;
+    height: 16px;
+    background:url('./web/resources/common/picture/add.png') no-repeat !important;
+}
+.yly{
+    width: 16px;
+    height: 16px;
+    padding-top: 4px;
+    margin-top: 4px;
+    background:url('../picture/delete.png') no-repeat !important;
+}
+.yl{
+    width: 16px;
+    height: 16px;
+    padding-top: 4px;
+    margin-top: 4px;
+    background:url('../picture/clear.png') no-repeat !important;
+}
+.addIcon{
+    width: 16px;
+    height: 16px;
+    background:url('../picture/add.png') no-repeat !important;
+}
+
+.clearIcon{
+    width: 16px;
+    height: 16px;
+    background:url('../picture/clear.png') no-repeat !important;
+}
+
+.deleteIcon{
+    width: 16px;
+    height: 16px;
+    background:url('../picture/delete.png') no-repeat !important;
+    border: none !important;
+}
+.saveIcon{
+    width: 16px;
+    height: 16px;
+    background:url('../picture/save.png') no-repeat !important;
+}
+.modifyIcon{
+    width: 16px;
+    height: 16px;
+    background:url('../picture/edit.png') no-repeat !important;
+}
+.setIcon{
+    width: 16px;
+    height: 16px;
+    background:url('../picture/set.png') no-repeat !important;
+}
+.cancleIcon{
+    width: 16px;
+    height: 16px;
+    background:url('../picture/cancle.png') no-repeat !important;
+}
+.selectIcon{
+    width: 16px;
+    height: 16px;
+    background:url('../picture/select.png') no-repeat !important;
+}
+.testIcon{
+    width: 16px;
+    height: 16px;
+    background:url('../picture/select.png') no-repeat !important;
+}
+.uploadIcon{
+    width: 16px;
+    height: 16px;
+    background:url('../picture/upload.png') no-repeat !important;
+}
+
+.addCDIcon{
+    width: 16px;
+    height: 16px;
+    background:url('../picture/addCD.png') no-repeat !important;
+}
+.addDiskIcon{
+    width: 16px;
+    height: 16px;
+    background:url('../picture/addDisk.PNG') no-repeat !important;
+}
+.reconnectIcon{
+    width: 16px;
+    height: 16px;
+    background:url('../picture/reconnect.png') no-repeat !important;
+    border-color: transparent
+    
+}
+.addLunIcon{
+    width: 16px;
+    height: 16px;
+    background:url('../picture/addlun.png') no-repeat !important;
+    border-color: transparent
+    
+}
+.onLineIcon{
+    width: 16px;
+    height: 16px;
+    background:url('../picture/online.png') no-repeat !important;
+}
+.offLineIcon{
+    width: 16px;
+    height: 16px;
+    background:url('../picture/offline.png') no-repeat !important;
+}
+
+.scanIcon{
+    width: 16px;
+    height: 16px;
+    background:url('../picture/scan.png') no-repeat !important;
+}
+
+.updateIcon{
+    width: 16px;
+    height: 16px;
+    background:url('../picture/update.png') no-repeat !important;
+}
+
+.checkIcon{
+    width: 16px;
+    height: 16px;
+    background:url('../picture/look.png') no-repeat !important;
+}
+
+
+.browseIcon{
+    width: 16px;
+    height: 16px;
+    background:url('../picture/browse.png') no-repeat !important;
+}
+
+.stopIcon{
+    width: 16px;
+    height: 16px;
+    background:url('../picture/stop.png') no-repeat !important;
+}
+
+.startIcon{
+    width: 16px;
+    height: 16px;
+    background:url('../picture/start.png') no-repeat !important;
+}
+
+.downloadIcon{
+    width: 16px;
+    height: 16px;
+    background:url('../picture/download.png') no-repeat !important;
+}
+
+.shutdownIcon{
+    width: 16px;
+    height: 16px;
+    background:url('../picture/shutdown.png') no-repeat !important;
+}
+
+.rollbackIcon{
+    width: 16px;
+    height: 16px;
+    background:url('../picture/rollback.png') no-repeat !important;
+}
+.backupTitleIcon{
+    width: 16px;
+    height: 16px;
+    padding-top: 4px;
+    margin-top: 4px;
+    background:url('../picture/backup.png') no-repeat !important;
+}
+.deviceTitleIcon{
+    width: 16px;
+    height: 16px;
+    padding-top: 4px;
+    margin-top: 4px;
+    background:url('../picture/device.png') no-repeat !important;
+}
+.storageTitleIcon{
+    width: 16px;
+    height: 16px;
+    padding-top: 4px;
+    margin-top: 4px;
+    background:url('../picture/storage.png') no-repeat !important;
+}
+.systemTitleIcon{
+    width: 16px;
+    height: 16px;
+    padding-top: 4px;
+    margin-top: 4px;
+    background:url('../picture/system.png') no-repeat !important;
+}
+.controllerTitleIcon{
+    width: 16px;
+    height: 16px;
+    padding-top: 4px;
+    margin-top: 4px;
+    background:url('../picture/controller.png') no-repeat !important;
+}
+.userTitleIcon{
+    width: 16px;
+    height: 16px;
+    padding-top: 4px;
+    margin-top: 4px;
+    background:url('../picture/user.png') no-repeat !important;
+}
+.timeTitleIcon{
+    width: 16px;
+    height: 16px;
+    padding-top: 4px;
+    margin-top: 4px;
+    background:url('../picture/time.png') no-repeat !important;
+}
+.statusTitleIcon{
+    width: 16px;
+    height: 16px;
+    padding-top: 4px;
+    margin-top: 4px;
+    background:url('../picture/status.png') no-repeat !important;
+}
+.mailTitleIcon{
+    width: 16px;
+    height: 16px;
+    padding-top: 4px;
+    margin-top: 4px;
+    background:url('../picture/mail.png') no-repeat !important;
+}
+.logTitleIcon{
+    width: 16px;
+    height: 16px;
+    padding-top: 4px;
+    margin-top: 4px;
+    background:url('../picture/log.png') no-repeat !important;
+}
+.serviceTitleIcon{
+    width: 16px;
+    height: 16px;
+    padding-top: 4px;
+    margin-top: 4px;
+    background:url('../picture/service.png') no-repeat !important;
+}
+.diskCDPTitleIcon{
+    width: 16px;
+    height: 16px;
+    padding-top: 4px;
+    margin-top: 4px;
+    background:url('../picture/diskCDP.png') no-repeat !important;
+}
+.vitualTapeTitleIcon{
+    width: 16px;
+    height: 16px;
+    padding-top: 4px;
+    margin-top: 4px;
+    background:url('../picture/vitualTape.png') no-repeat !important;
+}
+.nasTitleIcon{
+    width: 16px;
+    height: 16px;
+    padding-top: 4px;
+    margin-top: 4px;
+    background:url('../picture/nas.png') no-repeat !important;
+}
+.virtualMachineTitleIcon{
+    width: 16px;
+    height: 16px;
+    padding-top: 4px;
+    margin-top: 4px;
+    background:url('../picture/virtualMachine.png') no-repeat !important;
+}
+.uniteBackupTitleIcon{
+    width: 16px;
+    height: 16px;
+    padding-top: 4px;
+    margin-top: 4px;
+    background:url('../picture/uniteBackup.png') no-repeat !important;
+}
+.oracleBackupTitleIcon{
+    width: 16px;
+    height: 16px;
+    padding-top: 4px;
+    margin-top: 4px;
+    background:url('../picture/oracleBackup.png') no-repeat !important;
+}
+.netManageTitleIcon{
+    width: 16px;
+    height: 16px;
+    padding-top: 4px;
+    margin-top: 4px;
+    background:url('../picture/netManage.png') no-repeat !important;
+}
+.raidVolumnTitleIcon{
+    width: 16px;
+    height: 16px;
+    padding-top: 4px;
+    margin-top: 4px;
+    background:url('../picture/raidVolumn.png') no-repeat !important;
+}
+.physicDiskTitleIcon{
+    width: 16px;
+    height: 16px;
+    padding-top: 4px;
+    margin-top: 4px;
+    background:url('../picture/physicDisk.png') no-repeat !important;
+}
+.hostGroupTitleIcon{
+    width: 16px;
+    height: 16px;
+    padding-top: 4px;
+    margin-top: 4px;
+    background:url('../picture/hostGroup.png') no-repeat !important;
+}
+.targetTitleIcon{
+    width: 16px;
+    height: 16px;
+    padding-top: 4px;
+    margin-top: 4px;
+    background:url('../picture/target.png') no-repeat !important;
+}
+.initiatorTitleIcon{
+    width: 16px;
+    height: 16px;
+    padding-top: 4px;
+    margin-top: 4px;
+    background:url('../picture/initiator.png') no-repeat !important;
+}
+.disasterTitleIcon{
+    width: 16px;
+    height: 16px;
+    padding-top: 4px;
+    margin-top: 4px;
+    background:url('../picture/disaster.png') no-repeat !important;
+}
+.diskGroupTitleIcon{
+    width: 16px;
+    height: 16px;
+    padding-top: 4px;
+    margin-top: 4px;
+    background:url('../picture/diskGroup.png') no-repeat !important;
+}
+.cdpProtectTitleIcon{
+    width: 16px;
+    height: 16px;
+    padding-top: 4px;
+    margin-top: 4px;
+    background:url('../picture/cdpProtect.png') no-repeat !important;
+}
+.hostImageTitleIcon{
+    width: 16px;
+    height: 16px;
+    padding-top: 4px;
+    margin-top: 4px;
+    background:url('../picture/hostImage.png') no-repeat !important;
+}
+.storageSpaceTitleIcon{
+    width: 16px;
+    height: 16px;
+    padding-top: 4px;
+    margin-top: 4px;
+    background:url('../picture/storageSpace.png') no-repeat !important;
+}
+.tapeLibraryTitleIcon{
+    width: 16px;
+    height: 16px;
+    padding-top: 4px;
+    margin-top: 4px;
+    background:url('../picture/tapeLibrary.png') no-repeat !important;
+}
+.tapeholderTitleIcon{
+    width: 16px;
+    height: 16px;
+    padding-top: 4px;
+    margin-top: 4px;
+    background:url('../picture/tapeholder.png') no-repeat !important;
+}
+.shareTitleIcon{
+    width: 16px;
+    height: 16px;
+    padding-top: 4px;
+    margin-top: 4px;
+    background:url('../picture/sharePath.png') no-repeat !important;
+}
+.cifsTitleIcon{
+    width: 16px;
+    height: 16px;
+    padding-top: 4px;
+    margin-top: 4px;
+    background:url('../picture/cifs.png') no-repeat !important;
+}
+.nfsTitleIcon{
+    width: 16px;
+    height: 16px;
+    padding-top: 4px;
+    margin-top: 4px;
+    background:url('../picture/nfs.png') no-repeat !important;
+}
+.virtualManageTitleIcon{
+    width: 16px;
+    height: 16px;
+    padding-top: 4px;
+    margin-top: 4px;
+    background:url('../picture/virtualManage.png') no-repeat !important;
+}
+.isoFileTitleIcon{
+    width: 16px;
+    height: 16px;
+    padding-top: 4px;
+    margin-top: 4px;
+    background:url('../picture/isoFile.png') no-repeat !important;
+}
+.cleanVirtualDiskTitleIcon{
+    width: 16px;
+    height: 16px;
+    padding-top: 4px;
+    margin-top: 4px;
+    background:url('../picture/cleanVirtualDisk.png') no-repeat !important;
+}
+.clientTitleIcon{
+    width: 16px;
+    height: 16px;
+    padding-top: 4px;
+    margin-top: 4px;
+    background:url('../picture/client.png') no-repeat !important;
+}
+.sysMaintenanceTitleIcon{
+    width: 16px;
+    height: 16px;
+    padding-top: 4px;
+    margin-top: 4px;
+    background:url('../picture/sysMaintenance.png') no-repeat !important;
+}
+.netServiceTitleIcon{
+    width: 16px;
+    height: 16px;
+    padding-top: 4px;
+    margin-top: 4px;
+    background:url('../picture/netService.png') no-repeat !important;
+}
+.databaseTitleIcon{
+    width: 16px;
+    height: 16px;
+    padding-top: 4px;
+    margin-top: 4px;
+    background:url('../picture/database.png') no-repeat !important;
+}
+/*.disasterTitleIcon{
+    width: 16px;
+    height: 16px;
+    padding-top: 4px;
+    margin-top: 4px;
+    background:url('../picture/disasterTitle.png') no-repeat !important;
+}*/
+.backupCenterTitleIcon{
+    width: 16px;
+    height: 16px;
+    padding-top: 4px;
+    margin-top: 4px;
+    background:url('../picture/backupCenter.png') no-repeat !important;   
+}
+
+.vmwareBackupIcon{
+    width: 16px;
+    height: 16px;
+    padding-top: 4px;
+    margin-top: 4px;
+    background:url('../picture/vmwareBackup.png') no-repeat !important;   
+}
+.advanceBackupIcon{
+    width: 16px;
+    height: 16px;
+    padding-top: 4px;
+    margin-top: 4px;
+    background:url('../picture/advancebackup.png') no-repeat !important;   
+}
+
+.cloudDiskIcon{
+    width: 16px;
+    height: 16px;
+    padding-top: 4px;
+    margin-top: 4px;
+    background:url('../picture/cloudDisk.png') no-repeat !important;   
+}
+.snapIcon{
+    width: 16px;
+    height: 16px;
+    background:url('../picture/snapicon.png') no-repeat !important;   
+}
+
+.exportIcon{
+    width: 16px;
+    height: 16px;
+    background:url('../picture/export.png') no-repeat !important;
+}

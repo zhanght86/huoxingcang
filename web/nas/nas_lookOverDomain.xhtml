@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="GBK"?>
+<!--
+To change this template, choose Tools | Templates
+and open the template in the editor.
+-->
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.1//EN" "http://www.w3.org/TR/xhtml11/DTD/xhtml11.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:p="http://primefaces.org/ui">
+
+    <h:head>
+        <link href="./../resources/common/css/default.css" rel="stylesheet" type="text/css" />
+    </h:head>
+
+    <!--    <ui:define name="content">-->
+    <h:body>
+
+        <h:form id="form">
+            <h1 title="Share Path Infomation" style="width: 730px"  class="title ui-widget-header ui-corner-all">存储功能>NAS网络存储共享>全局CIFS设置>查看域</h1>
+            <!--            <p:tabView>
+                            <p:tab title="CIFS用户" >-->
+            <!--            <p:panel >-->
+            <br/>
+            <p:dataTable emptyMessage="#{global.get('emptyMessage')}"  value="#{domainBean.properyies}"  var="property"  >
+                <p:column headerText="名称" style="text-align: center" >
+<!--                    {nameValue.name} -->
+                        #{property}   
+                </p:column>
+                <p:column headerText="值" style="text-align: center" >
+<!--                    {nameValue.value} -->
+                        #{domainBean.map[property]} 
+                </p:column>
+            </p:dataTable> 
+<!--            {domainData.map[{domainData.}]} -->
+            <!--            </p:panel>-->
+
+            <!--                </p:tab>-->
+            <!--                <p:tab title="CIFS用户组" >-->
+
+            <!--                </p:tab>
+                        </p:tabView>-->
+        </h:form>
+        <!--    </ui:define>-->
+    </h:body>
+</html>
+

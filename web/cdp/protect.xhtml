@@ -1,0 +1,310 @@
+<?xml version="1.0" encoding="GBK"?>
+<!--
+To change this template, choose Tools | Templates
+and open the template in the editor.
+-->
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.1//EN" "http://www.w3.org/TR/xhtml11/DTD/xhtml11.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:p="http://primefaces.org/ui"
+      template="../template/framework.xhtml"
+      xmlns:util="http://java.sun.com/jsf/composite/xhtml">
+    <h:head>
+        <link href="./../resources/common/css/default.css" rel="stylesheet" type="text/css" />
+        <link href="./../resources/common/css/cssIcon.css" rel="stylesheet" type="text/css" />
+    </h:head>
+
+    <h:body>            
+        <h:form id="form">
+            <h1 class="title ui-widget-header ui-corner-all">#{global.get('cdp')}#{res.get('title')}</h1>
+            <p:messages showSummary="true" showDetail="false" autoUpdate="true" closable="true" />
+            <br/>
+            <p:tabView id="view" style="border:none;" activeIndex="#{protectionBean.index}">
+                <p:tab title="设置" id="set">
+                    <p:panel id="settings" style=" border: none;">
+                        <p:selectOneRadio id="select_type" value="#{protectionBean.strategy}">
+                            <p:ajax listener="#{protectionBean.switchPanel()}" update=":form:view:settings"/>
+                            <f:selectItem itemValue="0" itemLabel="#{res.get('mirror')}" />
+                            <f:selectItem itemValue="1" itemLabel="#{res.get('snapshot')}" />
+                            <f:selectItem itemValue="2" itemLabel="#{res.get('record')}" />
+                        </p:selectOneRadio>
+                        <div style="text-align: center; width: 550px;">
+                            <p:panel id="mirror" style=" border: 0px; width: 550px;" rendered="#{protectionBean.mirror}">
+                                <div style="width: 190px;">
+                                    <br></br>
+                                    <p:commandButton id="c1" disabled="#{user.type!=2}"  rendered="#{protectionBean.mirror}" value="${global.get('save')}" icon="saveIcon" action="#{protectionBean.mirror()}"   />
+                                    <p:spacer width="8"/>
+                                    <p:commandButton id="c2" icon="cancleIcon"  rendered="#{protectionBean.mirror}" value="${global.get('return')}"  immediate="true" onclick="javascript: window.location.href = 'dgs.xhtml';"/>  
+                                </div>
+                            </p:panel>
+                            <p:panel  style=" border: 0px;" rendered="#{protectionBean.snapshot}">
+                                <h:panelGrid columns="2" cellpadding="2" rendered="#{protectionBean.snapshot}">
+                                    <h:outputLabel value="时间间隔：" />
+                                    <h:panelGrid columns="2" >
+                                        <p:inputText id="interval"  disabled="#{!protectionBean.snapshot}" value="60" />
+                                        <h:outputLabel value="分钟" />
+                                    </h:panelGrid>
+                                    <h:outputLabel value="保留数量：" />
+                                    <h:panelGrid columns="2" >
+                                        <p:inputText id="reserve" value="10"  disabled="#{!protectionBean.snapshot}" />
+                                        <h:outputLabel value="个" />
+                                    </h:panelGrid>
+                                </h:panelGrid>
+
+                                <div style="text-align: center; width: 310px;">
+                                    <br></br>
+                                    <p:commandButton id="c3"  rendered="#{protectionBean.snapshot}" disabled="#{user.type!=2}" value="${global.get('save')}" icon="saveIcon" action="#{protectionBean.snapshot()}"   />
+                                    <p:spacer width="8"/>
+                                    <p:commandButton id="c4" icon="cancleIcon"  rendered="#{protectionBean.snapshot}" value="${global.get('return')}" immediate="true" onclick="javascript: window.location.href = 'dgs.xhtml';"/>
+                                </div>
+                            </p:panel>
+                            <p:panel  style=" border: 0px;" rendered="#{protectionBean.record}">
+                                <p:messages id="messages" showDetail="true" autoUpdate="true" closable="true"  rendered="#{protectionBean.record}"/>
+                                <p:fieldset legend="${res.get('panel1')}" style="width: 450px; text-align: left">
+                                    <h:panelGroup rendered="#{protectionBean.record}"> 
+                                        <h:panelGrid columns="4" cellpadding="5"  rendered="#{protectionBean.record}" style=" text-align: left;"> 
+                                            <h:outputLabel value="${res.get('label1')}" style=" min-width: 50px;"/>  
+                                            <h:outputLabel value="#{protectionBean.group.diskCount}" /> 
+
+                                            <h:outputLabel value="${res.get('label2')}"  style=" width: 50px;"/>  
+                                            <h:outputLabel value="#{protectionBean.getts()}" /> 
+                                        </h:panelGrid>
+                                        <br></br>
+                                        <h:panelGrid columns="5" cellpadding="5"  rendered="#{protectionBean.record}" style=" text-align: left; width: 450px;"> 
+                                            <h:outputLabel value="${res.get('label4')}" /> 
+                                            <p:inputText value="#{protectionBean.size}"/>
+                                            <h:outputLabel value="GB"/> 
+                                            <h:outputLabel/> 
+                                            <h:outputLabel/> 
+
+                                            <h:outputLabel value="${res.get('label5')}" /> 
+                                            <p:inputText id="keepTime" value="#{protectionBean.keepTime}" disabled="#{protectionBean.tillFull}"/> 
+                                            <h:outputLabel value="#{global.get('hour')}" style="width: 100px" />  
+                                            <p:selectBooleanCheckbox style="vertical-align: middle" value="#{protectionBean.tillFull}" >
+                                                <p:ajax event="change" update="keepTime"/>
+                                            </p:selectBooleanCheckbox>
+                                            <h:outputLabel value="${res.get('chb')}"  style="line-height: 25px;vertical-align: middle" />
+                                        </h:panelGrid>
+                                        <h:panelGrid columns="2" cellpadding="5"  style=" text-align: left; width: 450px;"  >
+                                            <h:outputLabel value="${res.get('label6')}" />
+                                            <h:selectOneRadio id="state" value="#{protectionBean.fullOption}">  
+                                                <f:selectItem itemLabel="${res.get('rd1')}" itemValue="1" />  
+                                                <f:selectItem itemLabel="${res.get('rd2')}" itemValue="3" />  
+                                                <f:selectItem itemLabel="${res.get('rd3')}" itemValue="2" />  
+                                            </h:selectOneRadio>  
+                                        </h:panelGrid>
+                                    </h:panelGroup>
+                                </p:fieldset>
+                                <br></br>
+                                <p:fieldset legend="${res.get('panel2')}" style="width: 450px; text-align: left">
+                                    <h:panelGrid columns="6" cellpadding="5">
+                                        <p:selectBooleanCheckbox style="vertical-align: middle" value="#{protectionBean.isDefault}">
+                                            <p:ajax event="change"  update=" default ip port addLink agents" />
+                                        </p:selectBooleanCheckbox>
+                                        <h:outputLabel value="${res.get('chk')}"  style="line-height: 25px;vertical-align: middle" />
+                                        <p:spacer width="12"/>
+                                        <h:outputLabel value="${res.get('label1l')}" /> 
+                                        <p:inputText value="#{protectionBean.interval}" id="default" disabled="#{!protectionBean.isDefault}" label="interval" style=" width: 40px;"/> 
+                                        <h:outputLabel value="#{global.get('second')}" />                    
+                                    </h:panelGrid> 
+                                    <br></br>
+                                    <h:panelGrid columns="2" cellpadding="5" >
+                                        <h:outputLabel for="ip" value="${res.get('label7')}" />  
+                                        <p:inputText value="#{protectionBean.host}" id="ip" label="ip" disabled="#{protectionBean.isDefault}"/>
+
+                                        <h:outputLabel for="port" value="${res.get('label8')}" />  
+                                        <p:inputText value="#{protectionBean.port}" id="port" label="port" disabled="#{protectionBean.isDefault}"/>
+                                    </h:panelGrid>
+                                    <p:toolbar>  
+                                        <p:toolbarGroup align="right">
+                                            <p:commandButton id="addLink" icon="addIcon" disabled="#{protectionBean.isDefault}" action="#{protectionBean.addAgent()}" value="#{global.get('add')}" immediate="true" update="agents" /> 
+                                        </p:toolbarGroup>
+                                    </p:toolbar>
+                                    <p:dataTable id="agents" var="table" value="#{protectionBean.agent.listDB}"  emptyMessage="#{global.get('emptyMessage')}" >
+                                        <p:column headerText="${res.get('header0')}" width="60" style="text-align:center; white-space: nowrap;">
+                                            <h:outputText value="#{protectionBean.strType(table.agentType)}" />  
+                                        </p:column>
+                                        <p:column headerText="${res.get('header1')}" style="text-align : center;  ">  
+                                            <h:outputText value="#{table.dbInstance}" />  
+                                        </p:column>
+                                        <p:column headerText="${global.get('operation')}">
+                                            <p:graphicImage value="../resources/common/picture/edit.png" width="16" height="16" style="vertical-align:middle;"/>
+                                            <p:commandLink id="set" disabled="#{protectionBean.isDefault}" value="${res.get('o1')}" immediate="true" update="agents" action="#{protectionBean.editAgent()}" style="vertical-align:middle;">
+                                                <f:setPropertyActionListener value="#{table}" target="#{protectionBean.db}" />
+                                            </p:commandLink>
+                                            <p:spacer width="10"/>
+                                            <p:graphicImage value="../resources/common/picture/delete.png" width="16" height="16" style=" vertical-align:middle;"/>
+                                            <p:commandLink id="deleteLink" disabled="#{protectionBean.isDefault}" value="#{global.get('delete')}" immediate="true" update="agents"  onclick="deleteDG.show();" style=" vertical-align:middle;">
+                                                <f:setPropertyActionListener value="#{table}" target="#{protectionBean.db}" />
+                                            </p:commandLink>
+                                        </p:column>
+                                    </p:dataTable>
+                                </p:fieldset>
+                                <br></br>
+                                <p:commandButton id="addButton"  rendered="#{protectionBean.record}" icon="saveIcon" value="${global.get('save')}"  action="#{protectionBean.record()}"/>  
+                                <p:spacer width="8"/>
+                                <p:commandButton id="closeButton"  rendered="#{protectionBean.record}" icon="cancleIcon" value="${global.get('return')}"  immediate="true" onclick="javascript: window.location.href = 'dgs.xhtml';"/>  
+                            </p:panel>
+                        </div>
+                    </p:panel>
+                </p:tab>
+                <p:tab  title="快照">                    
+                    <p:toolbar >
+                        <p:toolbarGroup align="right">
+                            <p:commandButton disabled="#{user.type!=2}"  id="add" value="#{global.get('add')}" action="#{protectionBean.doBeforeAddSnap()}"
+                                             icon="addIcon"  />
+                        </p:toolbarGroup>  
+                    </p:toolbar>
+                    <div style="overflow-x: auto; width:100%;padding-bottom: 2px !important; padding-bottom: 14px;">
+                        <p:dataTable id="snapshots" resizableColumns="true" var="snapshot" value="#{snapshotBean.snapshotInfos}" rows="#{snapshotBean.count}"  
+                                     emptyMessage="#{global.get('emptyMessage')}" > 
+                            <p:column headerText="#{res.get('hd1')}" style="text-align:center">  
+                                <h:outputText value="#{snapshot.snapshotName}"/>  
+                            </p:column>
+                            <p:column headerText="#{res.get('hd2')}" >  
+                                <h:outputText value="#{u.dateToStringLocalMS(snapshot.snapshotTime)}"/>  
+                            </p:column>
+                            <p:column headerText="#{res.get('hd3')}" disabledSelection="true" sortBy="#{snapshot.snapshotTime}" style="text-align:center">  
+                                <h:outputText value="#{snapshot.snapshotSize}"/>
+                            </p:column>
+                            <p:column headerText="#{res.get('hd4')}" disabledSelection="true" sortBy="#{snapshot.snapshotTime}" style="text-align:center">  
+                                <h:outputText value="#{snapshot.agentHost}"/>  
+                            </p:column>
+                            <p:column headerText="#{res.get('hd5')}" disabledSelection="true" sortBy="#{snapshot.snapshotTime}" style="text-align:center">  
+                                <h:outputText value="#{protectionBean.getAgentString(snapshot.agentID)}"/>  
+                            </p:column>
+                            <p:column headerText="#{global.get('operation')}" disabledSelection="true" sortBy="#{snapshot.snapshotTime}" style="text-align:center">  
+                                <p:graphicImage  value="../resources/cdp/clone.jpg"  width="16" height="16" style=" vertical-align:middle;"/>
+                                <p:commandLink id="rollbackL" disabled="#{snapshotBean.rolling}" value="${res.get('op1')}"  oncomplete="clone.show();" update=":form:c" style=" vertical-align:middle;">
+                                    <f:setPropertyActionListener value="#{snapshot}" target="#{protectionBean.snap}" />
+                                </p:commandLink>
+                                <p:spacer width="10"/>
+                                <p:graphicImage value="../resources/common/picture/rollback.png" width="16" height="16" style="vertical-align:middle;"/>
+                                <p:commandLink id="recordL" disabled="#{user.type!=2}" value="${res.get('op2')}" immediate="true" action="#{snapshotBean.rollback()}" style="vertical-align:middle;">
+                                    <f:setPropertyActionListener value="#{snapshot.snapshotID}" target="#{snapshotBean.SID}" />
+                                </p:commandLink>
+                            </p:column>
+                        </p:dataTable>
+                        <br/>
+                        <div style="text-align: center;">
+                            <p:commandButton id="closeBut" icon="cancleIcon" value="${global.get('return')}" immediate="true" onclick="javascript: window.location.href = 'dgs.xhtml';"/>  
+                        </div>
+                    </div>
+                </p:tab>
+
+                <p:tab id="sync"   title="复制">
+                    <p:fieldset legend="${res.get('fs1')}">
+                        <p:toolbar >
+                            <p:toolbarGroup align="right">
+                                <p:commandButton disabled="#{user.type!=2  or protect.globalStatus.addRemoteSyncDisable }"  value="#{global.get('add')}" icon="addIcon"  action="#{protectionBean.sync.addRemoteSync()}"  />
+                            </p:toolbarGroup>  
+                        </p:toolbar>
+                        <div style="overflow-x: auto; width: 100%; padding-bottom: 14px;">
+                            <p:dataTable emptyMessage="#{global.get('emptyMessage')}" id="remotesynctable" value="#{protectionBean.sync.remoteSyncList}" var="sync" >
+                                <p:column headerText="#{res.get('targetPath')}" style="white-space: nowrap" >
+                                    #{sync.targetFileSystem}
+                                </p:column>
+                                <p:column headerText="#{res.get('targetHost')}" style="white-space: nowrap"  >
+                                    #{sync.targetIP} 
+                                </p:column>
+                                <p:column  headerText="#{res.get('lastSnap')}" >
+                                    #{sync.lastSnap} 
+                                </p:column>
+                                <p:column headerText="#{res.get('status')}" style="white-space: nowrap" >
+                                    #{sync.status}
+                                </p:column>
+                                <p:column headerText="#{global.get('operation')}" style="white-space: nowrap"  >
+                                    <p:spacer height="10" width="10" />
+                                    <p:graphicImage rendered="#{sync.start}"    height="16"  width="16" style="border-color: transparent;vertical-align: middle"   value="../resources/common/picture/start.png" />  
+                                    <p:commandLink  style="vertical-align: middle" rendered="#{sync.start}"   disabled="#{user.type!=2 or protectionBean.ean.ean.globalStatus.startSyncDisable}" value="#{res.get('start')}" actionListener="#{protectionBeansync.checkBeforeStartSync(sync)}"   >
+                                        <f:setPropertyActionListener value="#{sync}"  target="#{protectionBean.sync.selectSync}" />                    
+                                    </p:commandLink>
+                                    <p:graphicImage rendered="#{sync.stop}"    height="17"  width="17" style="border-color: transparent;vertical-align: middle"   value="../resources/common/picture/stop.png" />  
+                                    <p:commandLink  style="vertical-align: middle" rendered="#{sync.stop}"   disabled="#{user.type!=2 or protectionBean.ean.ean.globalStatus.stopSyncDisable }" value="#{res.get('stop')}"   onclick="sourcestopsync.show();" >
+                                        <f:setPropertyActionListener value="#{sync}"  target="#{protectionBean.sync.selectSync}" />                    
+                                    </p:commandLink>
+                                    <p:spacer height="10" width="10" />
+                                    <p:graphicImage rendered="#{sync.suspend}"    height="16"  width="16" style="border-color: transparent;vertical-align: middle"   value="../resources/common/picture/pause.png" />  
+                                    <p:commandLink  style="vertical-align: middle" rendered="#{sync.suspend}"  disabled="#{user.type!=2 or sync.suspendDisabled or protectionBean.ean.ean.globalStatus.suspendSyncDisable }" value="#{res.get('pause')}" onclick="suspendsync.show();" >
+                                        <f:setPropertyActionListener value="#{sync}"  target="#{protectionBean.sync.selectSync}" />                    
+                                    </p:commandLink>
+                                    <p:graphicImage rendered="#{sync.resume}"    height="16"  width="16" style="border-color: transparent;vertical-align: middle"   value="../resources/common/picture/start.png" />  
+                                    <p:commandLink  style="vertical-align: middle" rendered="#{sync.resume}"   disabled="#{user.type!=2 or protectionBean.ean.ean.globalStatus.resumeSyncDisable }" value="#{res.get('restore')}"  actionListener="#{protectionBean.sync.checkBeforeResumeSync(sync)}" >
+                                        <f:setPropertyActionListener value="#{sync}"  target="#{protectionBean.sync.selectSync}" />                    
+                                    </p:commandLink>
+                                    <p:spacer height="10" width="10" />
+                                    <p:graphicImage   height="16"  width="16" style="border-color: transparent;vertical-align: middle"   value="../resources/common/picture/delete.png" />  
+                                    <p:spacer height="10" width="3" />
+                                    <p:commandLink  style="vertical-align: middle"   disabled="#{user.type!=2 or sync.deleteDisabled or protectionBean.ean.ean.globalStatus.deleteSyncDisable }" value="#{global.get('delete')}" onclick="deletesync.show();"   >
+                                        <f:setPropertyActionListener value="#{sync}"  target="#{protectionBean.sync.selectSync}" />                    
+                                    </p:commandLink>
+                                </p:column>
+                            </p:dataTable>
+                        </div>
+                    </p:fieldset>
+                    <br></br>
+                    <p:fieldset id="restart" legend="${res.get('fs2')}">
+                        <p:toolbar >
+                            <p:toolbarGroup align="right">
+                                <p:commandButton disabled="#{user.type!=2  or protectionBean.globalStatus.addLocalSyncDisable}"   value="#{global.get('add')}" icon="addIcon" action="#{protectionBean.sync.addLocalSync()}"  />
+                            </p:toolbarGroup>  
+                        </p:toolbar>
+                        <div style="overflow-x: auto; width: 100%; padding-bottom: 14px;">
+                            <p:dataTable emptyMessage="#{global.get('emptyMessage')}" id="localsynctable" value="#{protectionBean.sync.localSyncList}" var="sync" >
+                                <p:column headerText="#{res.get('targetPath')}" style="white-space: nowrap" >
+                                    #{sync.targetFileSystem}
+                                </p:column>
+                                <p:column  headerText="#{res.get('lastSnap')}" >
+                                    #{sync.lastSnap} 
+                                </p:column>
+                                <p:column headerText="#{res.get('status')}" style="white-space: nowrap"  >
+                                    #{sync.status}
+                                </p:column>
+                                <p:column headerText="#{global.get('operation')}" style="white-space: nowrap"  >
+                                    <p:graphicImage rendered="#{sync.start}"    height="16"  width="16" style="border-color: transparent;vertical-align: middle"   value="../resources/common/picture/start.png" />  
+                                    <p:commandLink  style="vertical-align: middle" rendered="#{sync.start}"   disabled="#{user.type!=2 or protectionBean.globalStatus.startSyncDisable}" value="#{res.get('start')}" actionListener="#{protectionBean.sync.checkBeforeStartSync(sync)}"   >
+                                        <f:setPropertyActionListener value="#{sync}"  target="#{protectionBean.sync.selectSync}" />                    
+                                    </p:commandLink>
+                                    <p:graphicImage rendered="#{sync.stop}"    height="17"  width="17" style="border-color: transparent;vertical-align: middle"   value="../resources/common/picture/stop.png" />  
+                                    <p:commandLink  style="vertical-align: middle" rendered="#{sync.stop}"   disabled="#{user.type!=2 or protectionBean.globalStatus.stopSyncDisable }" value="#{res.get('stop')}"   onclick="sourcestopsync.show();" >
+                                        <f:setPropertyActionListener value="#{sync}"  target="#{protectionBean.sync.selectSync}" />                    
+                                    </p:commandLink>
+                                    <p:spacer height="10" width="10" />
+                                    <p:graphicImage rendered="#{sync.suspend}"    height="16"  width="16" style="border-color: transparent;vertical-align: middle"   value="../resources/common/picture/pause.png" />  
+                                    <p:commandLink  style="vertical-align: middle" rendered="#{sync.suspend}"  disabled="#{user.type!=2 or sync.suspendDisabled or protectionBean.globalStatus.suspendSyncDisable }" value="#{res.get('pause')}" onclick="suspendsync.show();" >
+                                        <f:setPropertyActionListener value="#{sync}"  target="#{protectionBean.sync.selectSync}" />                    
+                                    </p:commandLink>
+                                    <p:graphicImage rendered="#{sync.resume}"    height="16"  width="16" style="border-color: transparent;vertical-align: middle"   value="../resources/common/picture/start.png" />  
+                                    <p:commandLink  style="vertical-align: middle" rendered="#{sync.resume}"   disabled="#{user.type!=2 or protectionBean.globalStatus.resumeSyncDisable }" value="#{res.get('restore')}"  actionListener="#{protectionBean.sync.checkBeforeResumeSync(sync)}" >
+                                        <f:setPropertyActionListener value="#{sync}"  target="#{protectionBean.sync.selectSync}" />                    
+                                    </p:commandLink>
+                                    <p:spacer height="10" width="10" />
+                                    <p:graphicImage   height="16"  width="16" style="border-color: transparent;vertical-align: middle"   value="../resources/common/picture/delete.png" />  
+                                    <p:spacer height="10" width="3" />
+                                    <p:commandLink  style="vertical-align: middle"   disabled="#{user.type!=2 or sync.deleteDisabled or protectionBean.globalStatus.deleteSyncDisable }" value="#{global.get('delete')}" onclick="deletesync.show();"   >
+                                        <f:setPropertyActionListener value="#{sync}"  target="#{protectionBean.sync.selectSync}" />                    
+                                    </p:commandLink>
+                                </p:column>
+                            </p:dataTable>
+                        </div>
+                    </p:fieldset>
+                </p:tab>
+            </p:tabView> 
+            <p:panel id="c" style=" border: none;">
+                <util:confirm  uid="clone" mess="#{res.get('c0')}#{protectionBeansnap.snapshotName}#{global.get('what')}" action="#{protectionBean.cloneSnap()}" update=":form:view:snapshots">
+
+                </util:confirm>
+            </p:panel> 
+        </h:form>
+        <p:ajaxStatus style="width:64px;height:64px;position:fixed;right:5px;bottom:5px">  
+            <f:facet name="start">  
+                <p:graphicImage value="../resources/common/picture/loading.gif" />  
+            </f:facet>  
+
+            <f:facet name="complete">  
+                <h:outputText value="" />  
+            </f:facet>  
+        </p:ajaxStatus>
+    </h:body>
+</html>

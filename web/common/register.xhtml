@@ -1,0 +1,80 @@
+<?xml version="1.0" encoding="GBK"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.1//EN" "http://www.w3.org/TR/xhtml11/DTD/xhtml11.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:p="http://primefaces.org/ui"
+                xmlns:util="http://java.sun.com/jsf/composite/xhtml">
+    <h:head> 
+        <link type="text/css" rel="stylesheet" href="#{request.contextPath}/resources/common/css/register.css"/>
+        <link type="text/css" rel="stylesheet" href="#{request.contextPath}/resources/common/css/cssIcon.css"/>   
+       
+        <script type="text/javascript">
+            function jumpDialog(taste) {
+                if (0 === taste) {
+                    prompt.show();
+                }
+            }
+        </script>
+    </h:head>
+    <h:body onload="jumpDialog(#{register.taste});" style="left: -118px; width:1250px; margin:0 auto;overflow-y: auto; overflow-x: hidden; ">
+        <div style="width:1238px;">
+        <p id="title" style="width:100%;" class="title ui-widget-header ui-corner-all" >#{res.get('title')}</p>
+        <div style="position: relative;top: -16px">
+            <p:messages  showDetail="true" autoUpdate="true" closable="true"/>
+        </div>
+        <h:form id="form" style="width:100%;"  enctype="multipart/form-data" >
+           
+            <h:outputLabel id="sysCode" value="#{register.systemCode}" style="font-weight:600; 
+                          position: relative; width: 625px; top:-14px;font-size: 20px;"/>
+             
+            <div class="upload" style="left: 575px;">
+                <p:fileUpload style=" left: 625px;" fileUploadListener="#{register.fileUpload}" id="upLoad" disabled="#{user.type!=2}" 
+                              auto="true" label="#{res.get('import')}" mode="advanced" update="registerInfo"/>   
+                <img src="../resources/common/picture/add.png" style="left: 17px;position: relative; top:-29px"/>
+            </div>
+       
+            <p:dataTable id="registerInfo" value="#{register.moduleList}" var="data" 
+                         style="padding-top: 5px; height: 100%; width: 100%; position: relative; top:-70px;"
+                         emptyMessage="#{global.get('emptyMessage')}" >
+                <p:column style="width: 30%;">
+                    <f:facet name="header">
+                        <h:outputText value="#{res.get('module')}" style="font-weight:bold;text-align: center" />
+                    </f:facet>
+                    <h:outputText value="#{data.module}" />
+                </p:column>
+                <p:column style="width: 50%;">
+                    <f:facet name="header">
+                        <h:outputText value="#{res.get('function')}" style="font-weight:bold;text-align: center" />
+                    </f:facet>
+                    <h:outputText value="#{data.function}" />
+                </p:column>
+                <p:column style="width: 20%;">
+                    <f:facet name="header">
+                        <h:outputText value="#{res.get('value')}" style="font-weight:bold;text-align: center" />
+                    </f:facet>
+                    <h:outputText value="#{data.value}"/>
+                </p:column>
+            </p:dataTable>
+           
+        </h:form>
+        </div>
+        <h:form id="form1">
+            <util:info id="prompt" uid="prompt" mess="#{res.get('info')}" action="#{register.closePage()}" />
+        </h:form>
+        <h:form id="form2">
+            <util:question id="jump"  uid="jump" mess="#{res.get('comfirm')}" action="#{register.jumpPage()}" actionListener="#{register.jumpPage1()}" />
+        </h:form>
+        <p:ajaxStatus style="width:64px;height:64px;position:fixed;right:5px;bottom:5px">  
+            <f:facet name="start">  
+                <p:graphicImage value="../resources/common/picture/loading.gif" />  
+            </f:facet>  
+
+            <f:facet name="complete">  
+                <h:outputText value="" />  
+            </f:facet>  
+        </p:ajaxStatus>
+    </h:body>
+</ui:composition>
+

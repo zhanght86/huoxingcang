@@ -1,0 +1,95 @@
+<?xml version="1.0" encoding="GBK"?>
+<!--
+To change this template, choose Tools | Templates
+and open the template in the editor.
+-->
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.1//EN" "http://www.w3.org/TR/xhtml11/DTD/xhtml11.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:f="http://java.sun.com/jsf/core">
+
+    <h:head>
+        <link href="./../resources/common/css/default.css" rel="stylesheet" type="text/css" />
+        <link href="./../resources/common/css/cssIcon.css" rel="stylesheet" type="text/css" />
+    </h:head>
+    <h:body id="addnsname">
+        <h:form id="form">
+            <h1 class="title ui-widget-header ui-corner-all">#{global.get('backuptitle')}#{res.get('title')}</h1>
+            <p:messages id="message" showDetail="true" autoUpdate="true" closable="true" />
+            <br></br>
+            <h:panelGrid >
+                <h:panelGroup>
+                    <h:outputLabel value="#{res.get('netServiceName')}"/>
+                    <p:spacer width="16px" height="0px"/>
+                    <p:inputText value="#{createNSNameBean.nsName.netServiceName}" /><br/><br/>
+                    <h:outputLabel value="#{res.get('databaseServiceName')}"/>
+                    <p:inputText value="#{createNSNameBean.nsName.DBServiceName}" />
+                    <p:spacer  width="200px" height="0px" /><br/><br/>
+                </h:panelGroup>
+                <p:toolbar>  
+                    <p:toolbarGroup align="right">  
+                        <p:commandButton id="addButton" value="${global.get('add')}" icon="addIcon" update="form"
+                                         action="oracle_add_address?faces-redirect=true" /> 
+                    </p:toolbarGroup> 
+                </p:toolbar>
+                <p:dataTable id="nsList"  var="nsList" value="#{createNSNameBean.nsName.list}" emptyMessage="#{global.get('emptyMessage')}"
+                             style="position: relative;top:-4px;" >  
+                    <p:column headerText="#{res.get('address')}" disabledSelection="true" style=" width: 50%">  
+                        <h:outputText value="#{nsList.IP}"/>  
+                    </p:column>
+                    <p:column headerText="#{res.get('port')}" disabledSelection="true"  style=" width: 25%">  
+                        <h:outputText value="#{nsList.port}"/>  
+                    </p:column>
+                    <p:column headerText="${global.get('operation')}" disabledSelection="true" style="width: 25%">  
+                        <p:graphicImage value="../resources/common/picture/delete.png" style=" vertical-align:middle;"/>
+                        <p:commandLink id="deleteButton" value="${global.get('delete')}" action="#{createNSNameBean.deleteAddress()}"
+                                       update="nsList" disabled="#{user.type!=2}"> 
+                            <f:setPropertyActionListener value="#{nsList}" target="#{createNSNameBean.selectedAdd}" />
+                        </p:commandLink>       
+                    </p:column>
+                </p:dataTable>
+            </h:panelGrid>
+            <div>
+                <p:spacer width="100px" height="50px"/> 
+                <p:commandButton value="#{res.get('test')}" icon="selectIcon" onclick="dlg.show();" />
+                <p:spacer width="8px"/>
+                <p:commandButton id="saveButton" value="${global.get('save')}" icon="saveIcon"
+                                 disabled="#{createNSNameBean.BSave}"
+                                 action="#{createNSNameBean.saveNetServiceName()}"/>
+
+                <p:spacer width="8px"/>
+                <p:commandButton value="${global.get('return')}" icon="cancleIcon" action="oracle_nsname?faces-redirect=true"/>
+            </div>
+
+        </h:form>
+        <h:form>
+            <p:dialog id="dialog" header="#{res.get('test')}" widgetVar="dlg" style="min-width: 300px; max-width: 320px;" resizable="false" modal="true">  
+                <h:panelGrid columns="2" cellpadding="5">  
+                    <h:outputLabel for="username" value="#{res.get('username')}" />  
+                    <p:inputText value="#{createNSNameBean.user}" id="username"  label="username" />  
+
+                    <h:outputLabel for="password" value="#{res.get('password')}" />  
+                    <p:password value="#{createNSNameBean.pass}"  redisplay="true" id="password" label="password" />  
+
+                    <f:facet name="footer">  
+                        <p:commandButton id="loginButton" value="#{global.get('ok')}"  action="#{createNSNameBean.testConnect()}"
+                                         update="dialog :form:saveButton" style="position: relative; left: 60px" />
+                        <p:spacer width="10px"/>
+                        <p:commandButton id="cancelButton" value="#{global.get('cancel')}" action="#{createNSNameBean.closeDialog()}"
+                                         style="position: relative; left: 60px"/>  
+                    </f:facet>  
+                </h:panelGrid>  
+            </p:dialog>  
+        </h:form>
+        <p:ajaxStatus style="width:64px;height:64px;position:fixed;right:5px;bottom:5px">  
+            <f:facet name="start">  
+                <p:graphicImage value="../resources/common/picture/loading.gif" />  
+            </f:facet>  
+
+            <f:facet name="complete">  
+                <h:outputText value="" />  
+            </f:facet>  
+        </p:ajaxStatus>
+    </h:body>
+</html>

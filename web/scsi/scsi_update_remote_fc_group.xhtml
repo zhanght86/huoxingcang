@@ -1,0 +1,118 @@
+<?xml version="1.0" encoding="GBK"?>
+<!--
+To change this template, choose Tools | Templates
+and open the template in the editor.
+-->
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.1//EN" "http://www.w3.org/TR/xhtml11/DTD/xhtml11.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:p="http://primefaces.org/ui"
+                xmlns:util="http://java.sun.com/jsf/composite/xhtml">
+    <h:head>
+        <link href="./../resources/common/css/default.css" rel="stylesheet" type="text/css" />
+        <link href="./../resources/common/css/cssIcon.css" rel="stylesheet" type="text/css" />
+        <style  type="text/css">
+            .ui-picklist-item {
+                width: 400px;
+
+
+            }
+        </style>
+    </h:head>
+
+    <h:body>
+        <h:form id="form">
+            <h1 class="title ui-widget-header ui-corner-all">#{res.get('title')}</h1>
+            <p:messages showSummary="true" showDetail="false" autoUpdate="true" closable="true" />
+            <br/>
+            <!--<p:panel style="width: 600px;text-align: left;border-color: transparent;" >-->
+            <!--                <h:panelGrid columns="3" >
+                                <p:inputText id="member" style="width: 300px" value="{modifyFCInitiatorGroupBean.initiatorName}" >
+                                    <f:validator validatorId="fCMemberValidator" />
+                                </p:inputText>
+                                <p:spacer height="10" width="15" />
+                                <p:commandButton  value="{global.get('add')}" actionListener="{modifyFCInitiatorGroupBean.addInitiatorToFCGroup()}" update="fcinitiators" />
+                            </h:panelGrid>  
+                            <br/>
+                            <p:dataTable id="fcinitiators"   emptyMessage="{global.get('emptyMessage')}" value="{modifyFCInitiatorGroupBean.dataModel}" var="initiator" selection="{modifyFCInitiatorGroupBean.selectedInitiator}" >
+                                <p:column selectionMode="multiple" style="width:2%" />
+                                <p:column selectionMode="multiple" width="25" style="text-align:center;vertical-align: middle"/> 
+                                                    <p:column    width="15" >
+                                                        <p:spacer width="20" height="10" />
+                                                        <p:selectBooleanCheckbox value="{initiator.belongGroupOrNot}" style="vertical-align: middle" >
+                                                        </p:selectBooleanCheckbox>
+                                                    </p:column>
+                                <p:column headerText="{res.get('InitiatorName')}">
+                                    {initiator.name}
+                                </p:column>
+                                <p:column headerText="{res.get('status')}" >
+                                    <h:outputLabel rendered="{initiator.connectedOrNot}" value="{res.get('connected')}" />
+                                    <h:outputLabel rendered={not initiator.connectedOrNot}" value="{res.get('notConnected')}" />
+                                </p:column>
+                            </p:dataTable>-->
+            <h:outputLabel value="#{global.get('HostGroup')}：" />
+            <h:outputLabel value="#{modifyFCInitiatorGroupBean.groupName}" />
+            <br/><br/>
+            <p:toolbar >
+                <p:toolbarGroup align="right">
+                    <p:commandButton icon="addIcon" value="#{res.get('add')}" action="#{modifyFCInitiatorGroupBean.addInitiatorToFCGroup()}"/>
+                </p:toolbarGroup>  
+            </p:toolbar>
+            <div style="overflow-x: auto; width: 100%; padding-bottom: 14px;">
+                <p:dataTable id="fcinitiators"   emptyMessage="#{global.get('emptyMessage')}" value="#{modifyFCInitiatorGroupBean.members}" var="initiator"  >
+                    <p:column headerText="#{res.get('initiatorName')}">
+                        #{initiator.name}
+                    </p:column>
+                    <p:column headerText="#{res.get('status')}" >
+                        <h:outputLabel rendered="#{initiator.connectedOrNot}" value="#{res.get('connected')}" />
+                        <h:outputLabel rendered="#{not initiator.connectedOrNot}" value="#{res.get('notConnected')}" />
+                    </p:column>
+                    <p:column headerText="#{global.get('operation')}" >
+                        <p:graphicImage height="16"  width="16" style="border-color: transparent;vertical-align: middle"   value="../resources/common/picture/delete.png" />
+                        <p:commandLink disabled="#{user.type!=2}" value="#{global.get('delete')}"  style="vertical-align: middle"   oncomplete="deleteinitiator.show();" update=":form1" >
+                            <!--<f:setPropertyActionListener value="{initiator}" target="{modifyFCInitiatorGroupBean.selectedInitiator}" />actionListener="{modifyFCInitiatorGroupBean.confirmDeleteInitiator(initiator)}"  -->
+                            <f:setPropertyActionListener value="#{initiator}" target="#{modifyFCInitiatorGroupBean.selectedInitiator}" />
+                        </p:commandLink>
+                    </p:column>
+                </p:dataTable>
+            </div>
+
+            <!--                <p:pickList  id="picklist" value="{updateRemoteInitiatorGroup.group.model}" var="initiator" itemValue="{initiator}" itemLabel="{initiator}"   >
+                                <f:facet name="sourceCaption">Initiator</f:facet>  
+                                <f:facet name="targetCaption">{res.get('InitiatorMember')}</f:facet>
+                                <p:column  >
+                                    <h:outputLink id="data" >
+                                        <h:outputLabel style="width:600px;" value="{initiator}" />
+                                    </h:outputLink>
+                                    <p:tooltip  for="data" value="{initiator.name}"  showEffect="fade" hideEffect="fade" />
+                                </p:column> 
+                                
+                            </p:pickList>-->
+            <!--</p:panel>-->
+            <!--<br/><br/>-->
+            <!--            <p:panel style="width: 600px;text-align: center;border-color: transparent;" >
+                            <p:commandButton immediate="true"  id="addButton"  value="{global.get('save')}" icon="saveIcon" action="{modifyFCInitiatorGroupBean.save()}"   >
+                            </p:commandButton>
+                            <p:spacer width="8" height="6" />
+                            <p:commandButton immediate="true"  id="closeButton" icon="cancleIcon" value="{global.get('return')}" action="scsi_host?faces-redirect=true" />  
+                        </p:panel>-->
+            <p:panel style="width: 700px;text-align: center;border-color: transparent;" >
+                <p:commandButton  icon="cancleIcon" value="#{global.get('return')}" action="scsi_host?faces-redirect=true" />  
+            </p:panel>
+        </h:form>
+        <h:form id="form1">
+            <util:confirm  uid="deleteinitiator" mess="#{global.get('confirmDel')} #{global.get('lquote')}#{modifyFCInitiatorGroupBean.selectedInitiator.name}#{global.get('rquote')} #{global.get('what')}" action="#{modifyFCInitiatorGroupBean.deleteInitiator()}" update=":form:fcinitiators"  >
+            </util:confirm>
+        </h:form>
+        <p:ajaxStatus style="width:64px;height:64px;position:fixed;right:5px;bottom:5px">  
+            <f:facet name="start">  
+                <p:graphicImage value="../resources/common/picture/loading.gif" />  
+            </f:facet>  
+            <f:facet name="complete">  
+                <h:outputText value="" />  
+            </f:facet>  
+        </p:ajaxStatus>
+    </h:body>
+</html>

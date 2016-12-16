@@ -1,0 +1,153 @@
+<?xml version="1.0" encoding="GBK"?>
+<!--
+To change this template, choose Tools | Templates
+and open the template in the editor.
+-->
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.1//EN" "http://www.w3.org/TR/xhtml11/DTD/xhtml11.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:util="http://java.sun.com/jsf/composite/xhtml">
+    <h:head>
+        <link href="./../resources/common/css/default.css" rel="stylesheet" type="text/css" />
+         <link href="./../resources/common/css/cssIcon.css" rel="stylesheet" type="text/css" />
+    </h:head>
+    <h:body>
+        <h:form id="form">
+            <h1 class="title ui-widget-header ui-corner-all">${res.get('title')}</h1>
+            <p:messages id="messages" showDetail="true" autoUpdate="true" closable="true" />
+             <br/>
+            <h:panelGrid columns="2" cellpadding="5">
+                <h:outputLabel value="${res.get('ipmpgroup')}" />
+                <h:outputLabel value="#{createIPMPBean.ipmpGroupName}"/>
+
+                ${res.get('net')}
+                <p:dataTable id="cardList"  var="netConfigInformation" value="#{createIPMPBean.cardList}" emptyMessage="#{global.get('emptyMessage')}" >  
+
+<!--                    <p:column selectionMode="multiple" style="width:18px;text-align: center; vertical-align: middle; "> 
+                        <p:ajax listener="{createIPMPBean.change()}" update="testList"/>
+                    </p:column>-->
+                    <p:column style="width:18px;text-align: center; vertical-align: middle; "> 
+                        <p:selectBooleanCheckbox id="isuse" style="vertical-align: middle" value="#{netConfigInformation.isused}">
+                        <p:ajax event="change" listener="#{createIPMPBean.change()}" update=":form:testList"/>
+                        </p:selectBooleanCheckbox> 
+                    </p:column>
+
+                    <p:column headerText="${res.get('networkoragg')}" disabledSelection="true"  style="text-align:center">  
+                        <h:outputText value="#{netConfigInformation.name}"/>  
+                    </p:column>
+                    <p:column headerText="${res.get('ip')}" disabledSelection="true"  style="text-align:center">  
+                        <h:outputText value="#{netConfigInformation.address}"/>  
+                    </p:column>
+                    <p:column headerText="${res.get('subnet')}" disabledSelection="true"  style="text-align:center">  
+                        <h:outputText value="#{netConfigInformation.netmask}"/>  
+                    </p:column>
+                </p:dataTable>
+                 ${res.get('dataaddress')}
+                <h:panelGroup>
+                    <p:toolbar>  
+                        <p:toolbarGroup align="right">  
+                            <p:commandButton id="addButton" value="${global.get('add')}" icon="addIcon" update="form"
+                                             action="#{createIPMPBean.toAddDataAddress}" /> 
+                        </p:toolbarGroup> 
+                    </p:toolbar>
+                    <p:dataTable id="dataList"  var="dataList" value="#{createIPMPBean.dataList}" emptyMessage="#{global.get('emptyMessage')}"
+                                 style="position: relative;top:-4px; width: 550px;" >  
+                        <p:column headerText="${res.get('ip')}" disabledSelection="true">  
+                            <h:outputText value="#{dataList.ip}"/>  
+                        </p:column>
+                        <p:column headerText="${res.get('subnet')}" disabledSelection="true">  
+                            <h:outputText value="#{dataList.netmask}"/>  
+                        </p:column>
+                        <p:column headerText="${res.get('gateway')}" disabledSelection="true">  
+                            <h:outputText value="#{dataList.gateway}"/>  
+                        </p:column>
+                        <p:column headerText="${global.get('operation')}" disabledSelection="true" style="width: 25%">  
+                            <p:graphicImage value="../resources/common/picture/delete.png" style=" vertical-align:middle;"/>
+                            <p:commandLink id="deleteButton" value="${global.get('delete')}" action="#{createIPMPBean.deleteDataAddress()}"
+                                           update="dataList" disabled="#{user.type!=2}"> 
+                                <f:setPropertyActionListener value="#{dataList}" target="#{createIPMPBean.selectedDataAddress}" />
+                            </p:commandLink>       
+                        </p:column>
+
+                    </p:dataTable>
+                </h:panelGroup>
+            </h:panelGrid>
+            <h:panelGrid columns="2" cellpadding="5">
+                <h:panelGroup>
+                    <p:selectBooleanCheckbox  id="isCheck" value="#{createIPMPBean.ischeck}">
+                        <p:ajax event="change" listener="#{createIPMPBean.isnottargetIP()}" update="isTarget targetip testList" />
+                    </p:selectBooleanCheckbox>
+                    ${res.get('ischeck')}
+                </h:panelGroup>
+                <p:spacer width="2"/>
+
+                <h:panelGroup>
+                    <p:selectBooleanCheckbox  id="isTarget" value="#{createIPMPBean.istarget}" disabled="#{!createIPMPBean.ischeck}">
+                    <p:ajax event="change" listener="#{createIPMPBean.isnottargetIP()}" update="targetip" />
+                    </p:selectBooleanCheckbox>
+                    ${res.get('istarget')}
+                </h:panelGroup>
+                <h:panelGroup>
+                    <h:outputLabel value="${res.get('targetip')}" />
+                    <p:inputText id="targetip" value="#{createIPMPBean.targetIP}" disabled="#{createIPMPBean.nottargetIP}"/>
+                </h:panelGroup>
+
+
+            </h:panelGrid>
+            <h:panelGrid columns="2" cellpadding="9">
+                ${res.get('testAddress')}
+                <p:dataTable id="testList"  var="testList" value="#{createIPMPBean.testList}" emptyMessage="#{global.get('emptyMessage')}"
+                                 style="position: relative;top:-4px; width: 550px;" >  
+                     <p:column headerText="${res.get('networkoragg')}" disabledSelection="true">  
+                         <h:outputText value="#{testList.nic}"/>  
+                        </p:column>
+                        <p:column headerText="${res.get('ip')}" disabledSelection="true">  
+                            <h:outputText value="#{testList.ip}"/>  
+                        </p:column>
+                        <p:column headerText="${res.get('subnet')}" disabledSelection="true">  
+                            <h:outputText value="#{testList.netmask}"/>  
+                        </p:column>
+                       
+                        <p:column headerText="${global.get('operation')}" disabledSelection="true" style="width: 25%">  
+                            <p:graphicImage value="../resources/common/picture/edit.png" style=" vertical-align:middle;"/>
+                            <p:commandLink id="modifyButton" value="${global.get('modify')}" action="#{createIPMPBean.toModifyTestAddress()}"
+                                           update="testList" disabled="#{!createIPMPBean.ischeck}"> 
+                                <f:setPropertyActionListener value="#{testList}" target="#{createIPMPBean.selectedTestAddress}" />
+                            </p:commandLink>       
+                        </p:column>
+
+                    </p:dataTable>
+            </h:panelGrid>
+            <br/>
+            ${res.get('ipmptip')}
+             <br/>
+    
+             <p:panel style="border: none; text-align: center;">
+                 <p:commandButton id="save" value="${global.get('save')}" icon="saveIcon" action="#{createIPMPBean.createIPMP(createIPMPBean.ipmpGroupName)}" />
+                 <p:spacer style="width: 8px; height: 5px"/>
+                 <p:commandButton value="${global.get('return')}" icon="cancleIcon" action="#{createIPMPBean.cancleIPMP()}" id="btnCancle"/> 
+             </p:panel>
+             
+             <util:confirm  uid="card" mess="${res.get('cardtip')}" action="#{createIPMPBean.createIPMP_real()}" >
+
+            </util:confirm>
+            <util:confirm  uid="connect" mess="${res.get('connecttip')}" action="#{createIPMPBean.createIPMP_real()}" >
+
+            </util:confirm>
+            <util:confirm  uid="two" mess="${res.get('twotip')}" action="#{createIPMPBean.createIPMP_real()}" >
+
+            </util:confirm>
+        </h:form>
+           <p:ajaxStatus style="width:64px;height:64px;position:fixed;right:5px;bottom:5px">  
+            <f:facet name="start">  
+                <p:graphicImage value="../resources/common/picture/loading.gif" />  
+            </f:facet>  
+                
+            <f:facet name="complete">  
+                <h:outputText value="" />  
+            </f:facet>  
+        </p:ajaxStatus>
+    </h:body>
+</html>

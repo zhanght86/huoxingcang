@@ -1,0 +1,110 @@
+<?xml version="1.0" encoding="GBK"?>
+<!--
+To change this template, choose Tools | Templates
+and open the template in the editor.
+-->
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.1//EN" "http://www.w3.org/TR/xhtml11/DTD/xhtml11.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:p="http://primefaces.org/ui">
+    <!--                template="../template/framework.xhtml">-->
+
+    <!--    <ui:define name="left">
+            <ui:include src="../panel/leftMenu.xhtml"/>
+        </ui:define>-->
+
+    <!--    <ui:define name="content">-->
+    <h:head>
+        <link href="./../resources/common/css/cssIcon.css" rel="stylesheet" type="text/css" />
+        <link href="./../resources/common/css/default.css" rel="stylesheet" type="text/css" />
+    </h:head>
+    <h:body>
+<!--        <script type="text/javascript">
+            function init() {
+                var value = document.getElementById("form:bool_input").checked;
+                //alert(value);
+                if (value) {
+                    document.getElementById("form:testshare").disabled = false;
+
+                }
+                if (!value) {
+                    document.getElementById("form:testshare").setAttribute("disabled", "true");
+
+                    //document.getElementById("form:testshare").focus();
+                }
+                //document.getElementById("form:testshare").value = "";
+                //document.getElementById("form:testshare").focus();
+            }
+
+        </script>-->
+        <h:form id="form">
+            <h1 style="width: 710px" class="title ui-widget-header ui-corner-all">NAS>CIFS域设置</h1>
+            <br/>
+                    <p:messages showSummary="true" showDetail="false" autoUpdate="true" closable="true" />
+                    <h:panelGrid columns="5" >
+                        <h:panelGrid  >
+                            <p:selectOneMenu  id="winType" style="width: 160px;height: 25px" value="#{IDMapBean().selectedWinType}" >
+                                <p:ajax event="change" listener="#{IDMapBean().changeWinTypeValue}" update="unixType winName unixName" />
+                                <f:selectItems value="#{IDMapBean().winTypes}" />
+                            </p:selectOneMenu>
+                        </h:panelGrid>
+                        <h:panelGrid  >
+                            <p:selectOneMenu  style="width: 170px;height: 25px" editable="true"  label="Windows域用户或用户组名称"   required="true"   id="winName" value="#{IDMapBean().selectedWinName}"   >
+                                <!--<f:validator validatorId="WindowsNameValidate"  />-->
+                                <f:selectItems value="#{IDMapBean().winNames}" />
+                            </p:selectOneMenu>
+                        </h:panelGrid>
+                        =>
+                        <h:panelGrid  >
+                            <p:selectOneMenu  id="unixType" style="width: 110px;height: 25px" value="#{IDMapBean().selectedUnixType}" >
+                                <p:ajax event="change" listener="#{IDMapBean().changeUnixTypeValue}" update="winType unixName winName" />
+                                <f:selectItems value="#{IDMapBean().unixTypes}" />
+                            </p:selectOneMenu>
+                        </h:panelGrid>
+                        <h:panelGrid >
+                            <p:selectOneMenu  id="unixName" style="width: 95px;height: 25px" value="#{IDMapBean().selectedUnixName}" effect="fold"  >
+                                <f:selectItems value="#{IDMapBean().unixNames}" />
+                            </p:selectOneMenu>
+                        </h:panelGrid>
+                    </h:panelGrid>
+                    <p:panel style="text-align: right;border-color: transparent"  >
+                        <!--<p:spacer height="10" width="100" />-->
+                        <p:commandButton icon="addIcon"  value="添加"  actionListener="#{IDMapBean().addIDMap}"  />
+                    </p:panel>
+                    <br/>
+                    <h:outputLabel value="规则" />
+                    <br/>
+                    <p:separator style="width: 600px" />
+                    <br/>
+                    <!--                <h:panelGrid columns="2" >-->
+                    <!--                    <h:panelGrid columns="1" >-->
+                    <!--paginator="true" rows ="5"-->
+                    <!--            selectionMode="single" selection="{iDMapDataTable.selectedMap}"-->
+<!--                    <p:dataTable id="idmaptable"  value="{iDMapDataTable.dataModel.maps}" var="map"  rowKey="{map.winName}" >
+                        <p:column headerText="Windows" style="text-align: center"  >
+                            {map.winNameStr}
+                        </p:column>
+                        <p:column headerText="NAS"  style="text-align: center"  >
+                            {map.unixNameStr}
+                        </p:column>
+                        <p:column headerText="操作" style="text-align: center">
+                            <p:spacer width="20" height="10" />
+                            <p:graphicImage height="16" width="16" style="border-color: transparent;text-align: center;vertical-align: middle"   value="../resources/common/picture/delete.png" />    
+                            <p:spacer width="5" height="10" />
+                         
+                        </p:column>
+                    </p:dataTable>  -->
+                    <br/>
+                    <br/>
+
+            
+        </h:form>
+        <!--    </ui:define>-->
+    </h:body>
+
+
+</html>
+
+

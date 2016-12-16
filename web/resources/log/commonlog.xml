@@ -1,0 +1,1862 @@
+<?xml version="1.0" encoding="gb2312" ?> 
+<MarsMSA>
+    <ResourceInfo> 
+        <Bean>
+            <Author>田文博</Author>
+            <ResourceID>1</ResourceID>
+            <Macro>LOG_SERVER_START</Macro>
+            <Chinese>服务启动</Chinese>
+            <English>Server start</English>
+        </Bean>  
+        <Bean>
+            <Author>田文博</Author>
+            <ResourceID>100002</ResourceID>
+            <Macro>LOG_LOGOUT</Macro>
+            <Chinese>用户'%1'退出服务器</Chinese>
+            <English>User '%1' logout</English>
+        </Bean>   
+        <Bean>
+            <Author>田文博</Author>
+            <ResourceID>100003</ResourceID>
+            <Macro>LOG_NORMAL</Macro>
+            <Chinese>%1</Chinese>
+            <English>%1</English>
+        </Bean>
+        <Bean>
+            <Author>田文博</Author>
+            <ResourceID>100004</ResourceID>
+            <Macro>LOG_KICK_USER</Macro>
+            <Chinese>用户‘%1’（ip=%2）登录，将用户‘%3’（ip=%4）断开连接</Chinese>
+            <English>User '%1' from '%2' logon, kick off user '%3' from '%4'</English>
+        </Bean>
+        <Bean>
+            <Author>田文博</Author>
+            <ResourceID>100101</ResourceID>
+            <Macro>LOG_COMMON_INIT_STARTSTART</Macro>
+            <Chinese>正在初始化服务</Chinese>
+            <English>Initializing</English>
+        </Bean>
+        <Bean>
+            <Author>田文博</Author>
+            <ResourceID>100102</ResourceID>
+            <Macro>LOG_COMMON_INIT_SUCCESS</Macro>
+            <Chinese>初始化成功</Chinese>
+            <English>Initialized success</English>
+        </Bean>
+        <Bean>
+            <Author>田文博</Author>
+            <ResourceID>100103</ResourceID>
+            <Macro>LOG_COMMON_INIT_FAILED</Macro>
+            <Chinese>初始化失败，错误：%1</Chinese>
+            <English>Initialized failed. Error: %1</English>
+        </Bean>
+        <Bean>
+            <Author>田文博</Author>
+            <ResourceID>100104</ResourceID>
+            <Macro>LOG_UPDATE_FC_DRV_FAILED</Macro>
+            <Chinese>FC卡初始化失败</Chinese>
+            <English>FC initialized failed</English>
+        </Bean>
+        <Bean>
+            <Author>田文博</Author>
+            <ResourceID>100201</ResourceID>
+            <Macro>LOG_READ_LICENSE_SUCCESS</Macro>
+            <Chinese>读取许可证文件成功</Chinese>
+            <English>Read license file success</English>
+        </Bean>
+        <Bean>
+            <Author>田文博</Author>
+            <ResourceID>100202</ResourceID>
+            <Macro>LOG_READ_LICENSE_FAILED</Macro>
+            <Chinese>读取许可证文件失败，错误：%1</Chinese>
+            <English>Read license file failed. Error: %1</English>
+        </Bean>
+        <Bean>
+            <Author>田文博</Author>
+            <ResourceID>100301</ResourceID>
+            <Macro>LOG_CREATE_FILE_FAILED</Macro>
+            <Chinese>扩展磁盘文件'%1'失败，错误：%2</Chinese>
+            <English>Expand virtual disk file '%1' failed. Error: %2</English>
+        </Bean>
+        <Bean>
+            <Author>田文博</Author>
+            <ResourceID>100302</ResourceID>
+            <Macro>LOG_CREATE_FILE_SUCCESS</Macro>
+            <Chinese>扩展磁盘文件'%1'成功</Chinese>
+            <English>Expand virtual disk file '%1' success</English>
+        </Bean>
+        <Bean>
+            <Author>田文博</Author>
+            <ResourceID>100303</ResourceID>
+            <Macro>LOG_CREATE_FILE_BEGIN</Macro>
+            <Chinese>开始扩展磁盘文件'%1'</Chinese>
+            <English>Begin expand virtual disk file '%1'</English>
+        </Bean>
+        <Bean>
+            <Author>田文博</Author>
+            <ResourceID>120011</ResourceID>
+            <Macro>LOG_CONNECT_MSA_SERVER_SUCCESS</Macro>
+            <Chinese>用户'%1'登录服务器成功</Chinese>
+            <English>User '%1' login success</English>
+        </Bean>
+        <Bean>
+            <Author>田文博</Author>
+            <ResourceID>120012</ResourceID>
+            <Macro>LOG_CONNECT_MSA_FAILED</Macro>
+            <Chinese>用户'%1'登录服务器失败，用户名或密码错误</Chinese>
+            <English>User '%1' login failed. User or password wrong</English>
+        </Bean>
+        <Bean>
+            <Author>田文博</Author>
+            <ResourceID>120071</ResourceID>
+            <Macro>LOG_SET_SYSTEM_TIME_SUCCESS</Macro>
+            <Chinese>设置系统时间为'%1'成功</Chinese>
+            <English>Set system time to '%1' success</English>
+        </Bean>
+        <Bean>
+            <Author>田文博</Author>
+            <ResourceID>120072</ResourceID>
+            <Macro>LOG_SET_SYSTEM_TIME_FAILED</Macro>
+            <Chinese>设置系统时间为'%1'失败，错误：%2</Chinese>
+            <English>Set system time to '%1' failed. Error: %2</English>
+        </Bean>
+        <Bean>
+            <Author>田文博</Author>
+            <ResourceID>120111</ResourceID>
+            <Macro>LOG_GET_NTP_FAILED</Macro>
+            <Chinese>获取NTP设置信息失败，错误：%1</Chinese>
+            <English>Get NTP configuration failed. Error: %1</English>
+        </Bean>
+        <Bean>
+            <Author>田文博</Author>
+            <ResourceID>120131</ResourceID>
+            <Macro>LOG_SET_NTP_SUCCESS</Macro>
+            <Chinese>设置NTP成功</Chinese>
+            <English>Set NTP configuration success</English>
+        </Bean>
+        <Bean>
+            <Author>田文博</Author>
+            <ResourceID>120132</ResourceID>
+            <Macro>LOG_SET_NTP_FAILED</Macro>
+            <Chinese>设置NTP失败，错误：%1</Chinese>
+            <English>Set NTP configuration failed. Error: %1</English>
+        </Bean>
+        <Bean>
+            <Author>田文博</Author>
+            <ResourceID>120151</ResourceID>
+            <Macro>LOG_GET_SYSTEM_INFO_FAILED</Macro>
+            <Chinese>获取系统信息失败，错误：%1</Chinese>
+            <English>Get system information failed. Error: %1</English>
+        </Bean>
+        <Bean>
+            <Author>田文博</Author>
+            <ResourceID>120171</ResourceID>
+            <Macro>LOG_GET_HOST_NAME_FAILED</Macro>
+            <Chinese>获取主机名失败，错误：%1</Chinese>
+            <English>Get host name failed. Error: %1</English>
+        </Bean>
+        <Bean>
+            <Author>田文博</Author>
+            <ResourceID>120191</ResourceID>
+            <Macro>LOG_SET_HOSTNAME_SUCCESS</Macro>
+            <Chinese>设置主机名'%1'成功</Chinese>
+            <English>Set host name '%1' success</English>
+        </Bean>
+        <Bean>
+            <Author>田文博</Author>
+            <ResourceID>120192</ResourceID>
+            <Macro>LOG_SET_HOSTNAME_FAILED</Macro>
+            <Chinese>设置主机名'%1'失败，错误：%2</Chinese>
+            <English>Set host name '%1' failed. Error: %2</English>
+        </Bean>
+        <Bean>
+            <Author>田文博</Author>
+            <ResourceID>120211</ResourceID>
+            <Macro>LOG_GET_USERINFO_FAILED</Macro>
+            <Chinese>获取用户信息失败，错误：%1</Chinese>
+            <English>Get user information failed. Error: %1</English>
+        </Bean>
+        <Bean>
+            <Author>田文博</Author>
+            <ResourceID>120231</ResourceID>
+            <Macro>LOG_ADD_USER_SUCCESS</Macro>
+            <Chinese>添加用户'%1'成功</Chinese>
+            <English>Add user '%1' success</English>
+        </Bean>
+        <Bean>
+            <Author>田文博</Author>
+            <ResourceID>120232</ResourceID>
+            <Macro>LOG_ADD_USER_FAILED</Macro>
+            <Chinese>添加用户'%1'失败，错误：%2</Chinese>
+            <English>Add user '%1' failed. Error: %2</English>
+        </Bean>
+        <Bean>
+            <Author>田文博</Author>
+            <ResourceID>120251</ResourceID>
+            <Macro>LOG_DELETE_USER_SUCCESS</Macro>
+            <Chinese>删除用户'%1'成功</Chinese>
+            <English>Delete user '%1' success</English>
+        </Bean>
+        <Bean>
+            <Author>田文博</Author>
+            <ResourceID>120252</ResourceID>
+            <Macro>LOG_DELETE_USER_FAILED</Macro>
+            <Chinese>删除用户'%1'失败，错误：%2</Chinese>
+            <English>Delete user '%1' failed. Error: %2</English>
+        </Bean>
+        <Bean>
+            <Author>田文博</Author>
+            <ResourceID>120271</ResourceID>
+            <Macro>LOG_RESET_USER_PASSWORD_SUCCESS</Macro>
+            <Chinese>重置用户'%1'密码成功</Chinese>
+            <English>Modify user '%1' password success</English>
+        </Bean>
+        <Bean>
+            <Author>田文博</Author>
+            <ResourceID>120272</ResourceID>
+            <Macro>LOG_RESET_USER_PASSWORD_FAILED</Macro>
+            <Chinese>重置用户'%1'密码失败，错误：%2</Chinese>
+            <English>Modify user '%1' password failed. Error: %2</English>
+        </Bean>
+        <Bean>
+            <Author>田文博</Author>
+            <ResourceID>120331</ResourceID>
+            <Macro>LOG_GET_AVAIL_TIMEZONE_FAILED</Macro>
+            <Chinese>获取合法的时区名失败，错误：%1</Chinese>
+            <English>Get available timezone failed. Error: %1</English>
+        </Bean>
+        <Bean>
+            <Author>田文博</Author>
+            <ResourceID>120351</ResourceID>
+            <Macro>LOG_GET_TIMEZONE_FAILED</Macro>
+            <Chinese>获取当前系统时区失败，错误：%1</Chinese>
+            <English>Get current system timezone failed. Error: %1</English>
+        </Bean>
+        <Bean>
+            <Author>田文博</Author>
+            <ResourceID>120371</ResourceID>
+            <Macro>LOG_SET_TIMEZONE_FAILED</Macro>
+            <Chinese>设置系统时区为'%1'失败，错误：%2</Chinese>
+            <English>Set system timezone to '%1' failed. Error: %2</English>
+        </Bean>
+        <Bean>
+            <Author>田文博</Author>
+            <ResourceID>120372</ResourceID>
+            <Macro>LOG_SET_TIMEZONE_SUCCESS</Macro>
+            <Chinese>设置系统时区为'%1'成功</Chinese>
+            <English>Set system timezone to '%1' sucess</English>
+        </Bean>
+        <Bean>
+            <Author>田文博</Author>
+            <ResourceID>120391</ResourceID>
+            <Macro>LOG_POWER_OFF</Macro>
+            <Chinese>关闭主机</Chinese>
+            <English>Poweroff</English>
+        </Bean>
+        <Bean>
+            <Author>田文博</Author>
+            <ResourceID>120392</ResourceID>
+            <Macro>LOG_POWER_OFF_FAILED</Macro>
+            <Chinese>关闭主机失败，错误：%1</Chinese>
+            <English>Poweroff failed. Error: %1</English>
+        </Bean>
+        <Bean>
+            <Author>田文博</Author>
+            <ResourceID>120411</ResourceID>
+            <Macro>LOG_REBOOT</Macro>
+            <Chinese>重启主机</Chinese>
+            <English>Poweroff</English>
+        </Bean>
+        <Bean>
+            <Author>田文博</Author>
+            <ResourceID>120412</ResourceID>
+            <Macro>LOG_REBOOT_FAILED</Macro>
+            <Chinese>重启主机失败，错误：%1</Chinese>
+            <English>Reboot failed. Error: %1</English>
+        </Bean>
+        <Bean>
+            <Author>田文博</Author>
+            <ResourceID>120431</ResourceID>
+            <Macro>LOG_GET_DISK_STATICS_SUCCESS</Macro>
+            <Chinese>获取磁盘状态成功</Chinese>
+            <English>Get disk statistics success</English>
+        </Bean>
+        <Bean>
+            <Author>田文博</Author>
+            <ResourceID>120432</ResourceID>
+            <Macro>LOG_GET_DISK_STATICS_FAILED</Macro>
+            <Chinese>获取磁盘状态成功失败，错误：%1</Chinese>
+            <English>Get disk statistics failed. Error: %1</English>
+        </Bean>
+        <Bean>
+            <Author>田文博</Author>
+            <ResourceID>120451</ResourceID>
+            <Macro>LOG_GET_NIC_STATICS_SUCCESS</Macro>
+            <Chinese>获取网卡状态成功</Chinese>
+            <English>Get NIC statistics success</English>
+        </Bean>
+        <Bean>
+            <Author>田文博</Author>
+            <ResourceID>120452</ResourceID>
+            <Macro>LOG_GET_NIC_STATICS_FAILED</Macro>
+            <Chinese>获取网卡状态成功失败，错误：%1</Chinese>
+            <English>Get NIC statistics failed. Error: %1</English>
+        </Bean>
+        <Bean>
+            <Author>田文博</Author>
+            <ResourceID>120471</ResourceID>
+            <Macro>LOG_GET_CPU_STATICS_SUCCESS</Macro>
+            <Chinese>获取CPU状态成功</Chinese>
+            <English>Get cpu statistics success</English>
+        </Bean>
+        <Bean>
+            <Author>田文博</Author>
+            <ResourceID>120472</ResourceID>
+            <Macro>LOG_GET_CPU_STATICS_FAILED</Macro>
+            <Chinese>获取CPU状态成功失败，错误：%1</Chinese>
+            <English>Get cpu statistics failed. Error: %1</English>
+        </Bean>
+        <Bean>
+            <Author>田文博</Author>
+            <ResourceID>121011</ResourceID>
+            <Macro>LOG_GET_NIC_INFO_FAILED</Macro>
+            <Chinese>获取网卡信息失败，错误：%1</Chinese>
+            <English>Get nic information failed. Error: %1</English>
+        </Bean>
+        <Bean>
+            <Author>田文博</Author>
+            <ResourceID>121031</ResourceID>
+            <Macro>LOG_MODIFY_NIC_STATIC_SUCCESS</Macro>
+            <Chinese>修改网卡'%1'为静态IP'%2'，子网掩码'%3'成功</Chinese>
+            <English>Modify NIC '%1' to static ip '%2' netmask '%3' success</English>
+        </Bean>
+        <Bean>
+            <Author>田文博</Author>
+            <ResourceID>121032</ResourceID>
+            <Macro>LOG_MODIFY_NIC_STATIC_FAILED</Macro>
+            <Chinese>修改网卡'%1'为静态IP'%2'，子网掩码'%3'失败，错误：%4</Chinese>
+            <English>Modify NIC '%1' to static ip '%2' netmask '%3' failed. Error: %4</English>
+        </Bean>
+          <Bean>
+            <Author>田文博</Author>
+            <ResourceID>121033</ResourceID>
+            <Macro>LOG_MODIFY_NIC_DHCP_SUCCESS</Macro>
+            <Chinese>修改网卡'%1'为动态IP成功</Chinese>
+            <English>Modify NIC '%1' to DHCP success</English>
+        </Bean>
+        <Bean>
+            <Author>田文博</Author>
+            <ResourceID>121034</ResourceID>
+            <Macro>LOG_MODIFY_NIC_DHCP_FAILED</Macro>
+            <Chinese>修改网卡'%1'为动态IP失败，错误：%2</Chinese>
+            <English>Modify NIC '%1' to DHCP failed. Error: %2</English>
+        </Bean>
+         <Bean>
+            <Author>田文博</Author>
+            <ResourceID>121035</ResourceID>
+            <Macro>LOG_MODIFY_NIC_DISABLE_SUCCESS</Macro>
+            <Chinese>禁用网卡'%1'成功</Chinese>
+            <English>Disable NIC '%1' success</English>
+        </Bean>
+        <Bean>
+            <Author>田文博</Author>
+            <ResourceID>121036</ResourceID>
+            <Macro>LOG_MODIFY_NIC_DISABLE_FAILED</Macro>
+            <Chinese>禁用网卡'%1'失败，错误：%2</Chinese>
+            <English>Disable NIC '%1' failed. Error: %2</English>
+        </Bean>
+        <Bean>
+            <Author>田文博</Author>
+            <ResourceID>121051</ResourceID>
+            <Macro>LOG_GET_AGGR_INFO_FAILED</Macro>
+            <Chinese>获取聚合信息失败，错误：%1</Chinese>
+            <English>Get aggregation information failed. Error: %1</English>
+        </Bean>
+        <Bean>
+            <Author>田文博</Author>
+            <ResourceID>121071</ResourceID>
+            <Macro>LOG_DELETE_AGRREGATION_SUCCESS</Macro>
+            <Chinese>删除聚合'%1'成功</Chinese>
+            <English>Delete aggregation '%1' success</English>
+        </Bean>
+        <Bean>
+            <Author>田文博</Author>
+            <ResourceID>121072</ResourceID>
+            <Macro>LOG_DELETE_AGGREGATION_FAILED</Macro>
+            <Chinese>删除聚合'%1'失败，错误：%2</Chinese>
+            <English>Delete aggregation '%1' failed. Error: %2</English>
+        </Bean>
+        <Bean>
+            <Author>田文博</Author>
+            <ResourceID>121091</ResourceID>
+            <Macro>LOG_CREATE_AGRREGATION_SUCCESS</Macro>
+            <Chinese>创建聚合'%1'成功</Chinese>
+            <English>Create aggregation '%1' success</English>
+        </Bean>
+        <Bean>
+            <Author>田文博</Author>
+            <ResourceID>121092</ResourceID>
+            <Macro>LOG_CREATE_AGRREGATION_FAILED</Macro>
+            <Chinese>创建聚合'%1'失败，错误：%2</Chinese>
+            <English>Create aggregation '%1' failed. Error: %2</English>
+        </Bean> 
+        <Bean>
+            <Author>田文博</Author>
+            <ResourceID>121111</ResourceID>
+            <Macro>LOG_MODIFY_AGGR_STATIC_SUCCESS</Macro>
+            <Chinese>修改聚合'%1'为静态IP'%2'，子网掩码'%3'成功</Chinese>
+            <English>Modify aggregation '%1' to static ip '%2' netmask '%3' success</English>
+        </Bean>
+        <Bean>
+            <Author>田文博</Author>
+            <ResourceID>121112</ResourceID>
+            <Macro>LOG_MODIFY_AGGR_STATIC_FAILED</Macro>
+            <Chinese>修改聚合'%1'为静态IP'%2'，子网掩码'%3'失败，错误：%4</Chinese>
+            <English>Modify aggregation '%1' to static ip '%2' netmask '%3' failed. Error: %4</English>
+        </Bean>
+          <Bean>
+            <Author>田文博</Author>
+            <ResourceID>121113</ResourceID>
+            <Macro>LOG_MODIFY_AGGR_DHCP_SUCCESS</Macro>
+            <Chinese>修改聚合'%1'为动态IP成功</Chinese>
+            <English>Modify aggregation '%1' to DHCP success</English>
+        </Bean>
+        <Bean>
+            <Author>田文博</Author>
+            <ResourceID>121114</ResourceID>
+            <Macro>LOG_MODIFY_AGGR_DHCP_FAILED</Macro>
+            <Chinese>修改聚合'%1'为动态IP失败，错误：%2</Chinese>
+            <English>Modify aggregation '%1' to DHCP failed. Error: %2</English>
+        </Bean>
+         <Bean>
+            <Author>田文博</Author>
+            <ResourceID>121115</ResourceID>
+            <Macro>LOG_MODIFY_AGGR_DISABLE_SUCCESS</Macro>
+            <Chinese>禁用聚合'%1'成功</Chinese>
+            <English>Disable aggregation '%1' success</English>
+        </Bean>
+        <Bean>
+            <Author>田文博</Author>
+            <ResourceID>121116</ResourceID>
+            <Macro>LOG_MODIFY_AGGR_DISABLE_FAILED</Macro>
+            <Chinese>禁用聚合'%1'失败，错误：%2</Chinese>
+            <English>Disable aggregation '%1' failed. Error: %2</English>
+        </Bean>
+        
+        <Bean>
+            <Author>田文博</Author>
+            <ResourceID>121131</ResourceID>
+            <Macro>LOG_GET_DNS_AND_ROUTER_FAILED</Macro>
+            <Chinese>获取DNS和网关失败，错误：%1</Chinese>
+            <English>Get DNS and default router failed. Error: %1</English>
+        </Bean>
+        <Bean>
+            <Author>田文博</Author>
+            <ResourceID>121151</ResourceID>
+            <Macro>LOG_SET_DNS_AND_ROUTER_SUCCESS</Macro>
+            <Chinese>设置DNS和网关成功</Chinese>
+            <English>Get DNS and default router success</English>
+        </Bean>
+        <Bean>
+            <Author>田文博</Author>
+            <ResourceID>121152</ResourceID>
+            <Macro>LOG_SET_DNS_AND_ROUTER_FAILED</Macro>
+            <Chinese>设置DNS和网关失败，错误：%1</Chinese>
+            <English>Set DNS and default router failed. Error: %1</English>
+        </Bean>
+        <Bean>
+            <Author>田文博</Author>
+            <ResourceID>121171</ResourceID>
+            <Macro>LOG_GET_IPMP_GROUP_FAILED</Macro>
+            <Chinese>获取IPMP组信息失败，错误：%1</Chinese>
+            <English>Get IPMP groups failed. Error: %1</English>
+        </Bean>
+        <Bean>
+            <Author>田文博</Author>
+            <ResourceID>121191</ResourceID>
+            <Macro>LOG_GET_IPMP_ADDRESS_FAILED</Macro>
+            <Chinese>获取IPMP地址信息失败，错误：%1</Chinese>
+            <English>Get IPMP addresses failed. Error: %1</English>
+        </Bean>
+        <Bean>
+            <Author>田文博</Author>
+            <ResourceID>121211</ResourceID>
+            <Macro>LOG_CREATE_IPMP_GROUP_FAILED</Macro>
+            <Chinese>创建IPMP组失败，错误：%1</Chinese>
+            <English>Create IPMP group failed. Error: %1</English>
+        </Bean>
+        <Bean>
+            <Author>田文博</Author>
+            <ResourceID>121212</ResourceID>
+            <Macro>LOG_CREATE_IPMP_GROUP_SUCCESS</Macro>
+            <Chinese>创建IPMP组成功</Chinese>
+            <English>Create IPMP group success</English>
+        </Bean>
+        <Bean>
+            <Author>田文博</Author>
+            <ResourceID>121231</ResourceID>
+            <Macro>LOG_DELETE_IPMP_GROUP_FAILED</Macro>
+            <Chinese>删除IPMP组失败，错误：%1</Chinese>
+            <English>Delete IPMP group failed. Error: %1</English>
+        </Bean>
+        <Bean>
+            <Author>田文博</Author>
+            <ResourceID>121232</ResourceID>
+            <Macro>LOG_DELETE_IPMP_GROUP_SUCCESS</Macro>
+            <Chinese>删除IPMP组成功</Chinese>
+            <English>Delete IPMP group success. Error: %1</English>
+        </Bean>
+        
+        <Bean>
+            <Author>田文博</Author>
+            <ResourceID>121311</ResourceID>
+            <Macro>LOG_GET_IB_FAILED</Macro>
+            <Chinese>获取Infiniband卡信息失败，错误：%1</Chinese>
+            <English>Get Infiniband card failed. Error: %1</English>
+        </Bean>
+         <Bean>
+            <Author>田文博</Author>
+            <ResourceID>121331</ResourceID>
+            <Macro>LOG_GET_IB_PART_FAILED</Macro>
+            <Chinese>获取Infiniband分区信息失败，错误：%1</Chinese>
+            <English>Get Infiniband partition failed. Error: %1</English>
+        </Bean>
+         <Bean>
+            <Author>田文博</Author>
+            <ResourceID>121351</ResourceID>
+            <Macro>LOG_CREATE_IB_PART_FAILED</Macro>
+            <Chinese>创建Infiniband分区（分区名=%1，PKEY=%2，IB卡=%3）失败，错误：%4</Chinese>
+            <English>Create Infiniband partition (name=%1,PKEY=%2,IB=%3) failed. Error: %4</English>
+        </Bean>
+         <Bean>
+            <Author>田文博</Author>
+            <ResourceID>121352</ResourceID>
+            <Macro>LOG_CREATE_IB_PART_SUCCESS</Macro>
+            <Chinese>创建Infiniband分区（分区名=%1，PKEY=%2，IB卡=%3）成功</Chinese>
+            <English>Create Infiniband partition (name=%1,PKEY=%2,IB=%3) success</English>
+        </Bean>
+        <Bean>
+            <Author>田文博</Author>
+            <ResourceID>121371</ResourceID>
+            <Macro>LOG_DELETE_IB_PART_FAILED</Macro>
+            <Chinese>删除Infiniband分区（分区名=%1）失败，错误：%2</Chinese>
+            <English>Delete Infiniband partition (name=%1) failed. Error: %2</English>
+        </Bean>
+        <Bean>
+            <Author>田文博</Author>
+            <ResourceID>121372</ResourceID>
+            <Macro>LOG_DELETE_IB_PART_SUCCESS</Macro>
+            <Chinese>删除Infiniband分区（分区名=%1）成功</Chinese>
+            <English>Delete Infiniband partition (name=%1) success</English>
+            </Bean>
+        
+        <Bean>
+            <Author>田文博</Author>
+            <ResourceID>122011</ResourceID>
+            <Macro>LOG_GET_VOLUME_FAILED</Macro>
+            <Chinese>获取卷组信息失败，错误：%1</Chinese>
+            <English>Get volume group failed. Error: %1</English>
+        </Bean>
+        <Bean>
+            <Author>田文博</Author>
+            <ResourceID>122031</ResourceID>
+            <Macro>LOG_GET_PHYSICAL_DISK_FAILED</Macro>
+            <Chinese>获取物理磁盘信息失败，错误：%1</Chinese>
+            <English>Get physical disk failed. Error: %1</English>
+        </Bean>
+        <Bean>
+            <Author>田文博</Author>
+            <ResourceID>122051</ResourceID>
+            <Macro>LOG_CREATE_POOL_SUCCESS</Macro>
+            <Chinese>创建卷组'%1'成功</Chinese>
+            <English>Create volume group '%1' success</English>
+        </Bean>
+        <Bean>
+            <Author>田文博</Author>
+            <ResourceID>122052</ResourceID>
+            <Macro>LOG_CREATE_POOL_FAILED</Macro>
+            <Chinese>创建卷组'%1'失败，错误：%2</Chinese>
+            <English>Create volume group '%1' failed. Error: %2</English>
+        </Bean>
+
+        <Bean>
+            <Author>田文博</Author>
+            <ResourceID>122071</ResourceID>
+            <Macro>LOG_DELETE_POOL_SUCCESS</Macro>
+            <Chinese>删除卷组'%1'成功</Chinese>
+            <English>Deleted volume group '%1' success</English>
+        </Bean>
+        <Bean>
+            <Author>田文博</Author>
+            <ResourceID>122072</ResourceID>
+            <Macro>LOG_DELETE_POOL_FAILED</Macro>
+            <Chinese>删除卷组'%1'失败，错误：%2</Chinese>
+            <English>Deleted volume group '%1' failed. Error: %2</English>
+        </Bean>        
+        <Bean>
+            <Author>田文博</Author>
+            <ResourceID>122091</ResourceID>
+            <Macro>LOG_ADD_SPARE_DISK_SUCCESS</Macro>
+            <Chinese>添加热备盘'%1'到卷组'%2'成功</Chinese>
+            <English>Add hot spare disk '%1' to volume group '%2' success</English>
+        </Bean>
+        <Bean>
+            <Author>田文博</Author>
+            <ResourceID>122092</ResourceID>
+            <Macro>LOG_ADD_SPARE_DISK_FAILED</Macro>
+            <Chinese>添加热备盘'%1'到卷组'%2'失败，错误：%3</Chinese>
+            <English>Add hot spare disk '%1' to volume group '%2' failed. Error: %3</English>
+        </Bean>
+        <Bean>
+            <Author>田文博</Author>
+            <ResourceID>122111</ResourceID>
+            <Macro>LOG_REMOVE_SPARE_DISK_SUCCESS</Macro>
+            <Chinese>从卷组'%1'移除热备盘'%2'成功</Chinese>
+            <English>Remove hot spare disk '%2' from volume group '%1' success</English>
+        </Bean>
+        <Bean>
+            <Author>田文博</Author>
+            <ResourceID>122112</ResourceID>
+            <Macro>LOG_REMOVE_SPARE_DISK_FAILED</Macro>
+            <Chinese>从卷组'%1'移除热备盘'%2'失败，错误：%3</Chinese>
+            <English>Remove hot spare disk '%2' from volume group '%1' failed. Error: %3</English>
+        </Bean>
+        <Bean>
+            <Author>田文博</Author>
+            <ResourceID>122131</ResourceID>
+            <Macro>LOG_ADD_CACHE_DISK_SUCCESS</Macro>
+            <Chinese>添加cache盘'%1'到卷组'%2'成功</Chinese>
+            <English>Add cache disk '%1' to volume group '%2' success</English>
+        </Bean>
+        <Bean>
+            <Author>田文博</Author>
+            <ResourceID>122132</ResourceID>
+            <Macro>LOG_ADD_CACHE_DISK_FAILED</Macro>
+            <Chinese>添加cache盘'%1'到卷组'%2'失败，错误：%3</Chinese>
+            <English>Add cache disk '%1' to volume group '%2' failed. Error: %3</English>
+        </Bean>         
+        <Bean>
+            <Author>田文博</Author>
+            <ResourceID>122151</ResourceID>
+            <Macro>LOG_REMOVE_CACHE_DISK_SUCCESS</Macro>
+            <Chinese>从卷组'%1'移除cache盘'%2'成功</Chinese>
+            <English>Remove cache disk '%2' from volume group '%1' success</English>
+        </Bean>
+        <Bean>
+            <Author>田文博</Author>
+            <ResourceID>122152</ResourceID>
+            <Macro>LOG_REMOVE_CACHE_DISK_FAILED</Macro>
+            <Chinese>从卷组'%1'移除cache盘'%2'失败，错误：%3</Chinese>
+            <English>Remove cache disk '%2' from volume group '%1' failed. Error: %3</English>
+        </Bean>
+
+        <Bean>
+            <Author>田文博</Author>
+            <ResourceID>122171</ResourceID>
+            <Macro>LOG_DISK_REPLACE_SUCCESS</Macro>
+            <Chinese>把卷组'%1'中的物理磁盘'%2'替换成物理磁盘'%3'成功</Chinese>
+            <English>Replace '%2' with '%3' of volume group '%1' success</English>
+        </Bean>
+        <Bean>
+            <Author>田文博</Author>
+            <ResourceID>122172</ResourceID>
+            <Macro>LOG_DISK_REPLACE_FAILED</Macro>
+            <Chinese>把卷组'%1'中的物理磁盘'%2'替换成物理磁盘'%3'失败，错误：%4</Chinese>
+            <English>Replace '%2' with '%3' of volume group '%1' failed. Error: %4</English>
+        </Bean>
+        
+        <Bean>
+            <Author>田文博</Author>
+            <ResourceID>122211</ResourceID>
+            <Macro>LOG_SET_DEDUP_ON_SUCCESS</Macro>
+            <Chinese>启用'%1'的重复数据删除功能成功</Chinese>
+            <English>Enable deduplication of '%1' success</English>
+        </Bean>
+        <Bean>
+            <Author>田文博</Author>
+            <ResourceID>122212</ResourceID>
+            <Macro>LOG_SET_DEDUP_ON_FAILED</Macro>
+            <Chinese>启用'%1'的重复数据删除功能成功失败，错误：%2</Chinese>
+            <English>Enable deduplication of '%1' failed. Error: %2</English>
+        </Bean>
+         <Bean>
+            <Author>田文博</Author>
+            <ResourceID>122213</ResourceID>
+            <Macro>LOG_SET_DEDUP_OFF_SUCCESS</Macro>
+            <Chinese>禁用'%1'的重复数据删除功能成功</Chinese>
+            <English>Disable deduplication of '%1' success</English>
+        </Bean>
+        <Bean>
+            <Author>田文博</Author>
+            <ResourceID>122214</ResourceID>
+            <Macro>LOG_SET_DEDUP_OFF_FAILED</Macro>
+            <Chinese>禁用'%1'的重复数据删除功能成功失败，错误：%2</Chinese>
+            <English>Disable deduplication of '%1' failed. Error: %2</English>
+        </Bean>
+        <Bean>
+            <Author>田文博</Author>
+            <ResourceID>122215</ResourceID>
+            <Macro>LOG_SET_DEDUP_VARIFY_SUCCESS</Macro>
+            <Chinese>启用'%1'的重复数据删除和数据校验功能成功</Chinese>
+            <English>Enable deduplication of '%1' and varify data success</English>
+        </Bean>
+        <Bean>
+            <Author>田文博</Author>
+            <ResourceID>122216</ResourceID>
+            <Macro>LOG_SET_DEDUP_VARIFY_FAILED</Macro>
+            <Chinese>启用'%1'的重复数据删除和数据校验功能失败，错误：%2</Chinese>
+            <English>Enable deduplication of '%1' and varify data failed. Error: %2</English>
+        </Bean>
+        
+        <Bean>
+            <Author>田文博</Author>
+            <ResourceID>122217</ResourceID>
+            <Macro>LOG_SET_COMPRESS_ON_SUCCESS</Macro>
+            <Chinese>设置'%1'的数据压缩级别为'%2'成功</Chinese>
+            <English>Enable compress of '%1' success</English>
+        </Bean>
+        <Bean>
+            <Author>田文博</Author>
+            <ResourceID>122218</ResourceID>
+            <Macro>LOG_SET_COMPRESS_ON_FAILED</Macro>
+            <Chinese>设置'%1'的数据压缩级别为'%2'，错误：%3</Chinese>
+            <English>Enable compress of '%1' failed. Error: %3</English>
+        </Bean>  
+        <Bean>
+            <Author>田文博</Author>
+            <ResourceID>122219</ResourceID>
+            <Macro>LOG_SET_COMPRESS_OFF_SUCCESS</Macro>
+            <Chinese>禁用'%1'的数据压缩功能成功</Chinese>
+            <English>Set compress of '%1' success</English>
+        </Bean>
+        <Bean>
+            <Author>田文博</Author>
+            <ResourceID>122210</ResourceID>
+            <Macro>LOG_SET_COMPRESS_OFF_FAILED</Macro>
+            <Chinese>禁用'%1'的数据压缩功能失败，错误：%2</Chinese>
+            <English>Set compress of '%1' failed. Error: %2</English>
+        </Bean>  
+    
+        <Bean>
+            <Author>田文博</Author>
+            <ResourceID>122231</ResourceID>
+            <Macro>LOG_SET_QUOTA_SUCCESS</Macro>
+            <Chinese>设置'%1'的配额为'%2'成功</Chinese>
+            <English>Set quota of '%1' to '%2' success</English>
+        </Bean>
+        <Bean>
+            <Author>田文博</Author>
+            <ResourceID>122232</ResourceID>
+            <Macro>LOG_SET_QUOTA_FAILED</Macro>
+            <Chinese>设置'%1'的配额为'%2'失败，错误：%3</Chinese>
+            <English>Set quota of '%1' to '%2' failed. Error: %3</English>
+        </Bean>
+        <Bean>
+            <Author>田文博</Author>
+            <ResourceID>122233</ResourceID>
+            <Macro>LOG_SET_QUOTA_OFF_SUCCESS</Macro>
+            <Chinese>关闭'%1'的配额成功</Chinese>
+            <English>Set quota of '%1' to off success</English>
+        </Bean>
+        <Bean>
+            <Author>田文博</Author>
+            <ResourceID>122234</ResourceID>
+            <Macro>LOG_SET_QUOTA_OFF_FAILED</Macro>
+            <Chinese>关闭'%1'的配额失败，错误：%2</Chinese>
+            <English>Set quota of '%1' to off failed. Error: %2</English>
+        </Bean>
+
+        <Bean>
+            <Author>田文博</Author>
+            <ResourceID>122252</ResourceID>
+            <Macro>LOG_DD_DISK_FAILED</Macro>
+            <Chinese>定位磁盘'%1'失败，错误：%2</Chinese>
+            <English>Locate disk '%1' failed. Error: %2</English>
+        </Bean>
+        <Bean>
+            <Author>田文博</Author>
+            <ResourceID>122271</ResourceID>
+            <Macro>LOG_UNCONFIG_DISK_SUCCESS</Macro>
+            <Chinese>卸载磁盘'%1'成功</Chinese>
+            <English>Remove disk '%1' success</English>
+        </Bean>
+        <Bean>
+            <Author>田文博</Author>
+            <ResourceID>122272</ResourceID>
+            <Macro>LOG_UNCONFIG_DISK_FAILED</Macro>
+            <Chinese>卸载磁盘'%1'失败，错误：%2</Chinese>
+            <English>Remove disk '%1' failed. Error: %2</English>
+        </Bean>
+        
+        <Bean>
+            <Author>田文博</Author>
+            <ResourceID>122431</ResourceID>
+            <Macro>LOG_SET_RECORD_SIZE_SUCCESS</Macro>
+            <Chinese>设置'%1'的块大小为'%2'成功</Chinese>
+            <English>Set recordSize of '%1' to '%2' success</English>
+        </Bean>
+        <Bean>
+            <Author>田文博</Author>
+            <ResourceID>122432</ResourceID>
+            <Macro>LOG_SET_RECORD_SIZE_FAILED</Macro>
+            <Chinese>设置'%1'的块大小为'%2'，错误：%3</Chinese>
+            <English>Set recordSize of '%1' to '%2' failed. Error: %3</English>
+        </Bean>
+         <Bean>
+            <Author>田文博</Author>
+            <ResourceID>122471</ResourceID>
+            <Macro>LOG_ADD_LOG_DISK_SUCCESS</Macro>
+            <Chinese>添加索引盘'%1'到卷组'%2'成功</Chinese>
+            <English>Add log disk '%1' to volume group '%2' success</English>
+        </Bean>
+        <Bean>
+            <Author>田文博</Author>
+            <ResourceID>122472</ResourceID>
+            <Macro>LOG_ADD_LOG_DISK_FAILED</Macro>
+            <Chinese>添加索引盘'%1'到卷组'%2'失败，错误：%3</Chinese>
+            <English>Add log disk '%1' to volume group '%2' failed. Error: %3</English>
+        </Bean>
+        <Bean>
+            <Author>田文博</Author>
+            <ResourceID>122491</ResourceID>
+            <Macro>LOG_REMOVE_LOG_DISK_SUCCESS</Macro>
+            <Chinese>从卷组'%1'移除索引盘'%2'成功</Chinese>
+            <English>Remove log disk '%2' from volume group '%1' success</English>
+        </Bean>
+        <Bean>
+            <Author>田文博</Author>
+            <ResourceID>122492</ResourceID>
+            <Macro>LOG_REMOVE_LOG_DISK_FAILED</Macro>
+            <Chinese>从卷组'%1'移除索引盘'%2'失败，错误：%3</Chinese>
+            <English>Remove log disk '%2' from volume group '%1' failed. Error: %3</English>
+        </Bean>
+        <Bean>
+            <Author>田文博</Author>
+            <ResourceID>122531</ResourceID>
+            <Macro>LOG_ZPOOL_SCRUB_SUCCESS</Macro>
+            <Chinese>开始检查卷组'%1'成功</Chinese>
+            <English>Start scrub '%1' success</English>
+        </Bean>
+        <Bean>
+            <Author>田文博</Author>
+            <ResourceID>122532</ResourceID>
+            <Macro>LOG_ZPOOL_SCRUB_FAILED</Macro>
+            <Chinese>开始检查卷组'%1'失败，错误：%2</Chinese>
+            <English>Start scrub '%1' failed. Error: %2</English>
+        </Bean>
+        <Bean>
+            <Author>田文博</Author>
+            <ResourceID>122551</ResourceID>
+            <Macro>LOG_ZPOOL_CLEAR_SUCCESS</Macro>
+            <Chinese>清理卷组'%1'成功</Chinese>
+            <English>Clear  '%1' success</English>
+        </Bean>
+        <Bean>
+            <Author>田文博</Author>
+            <ResourceID>122552</ResourceID>
+            <Macro>LOG_ZPOOL_CLEAR_FAILED</Macro>
+            <Chinese>清理卷组'%1'失败，错误：%2</Chinese>
+            <English>Deach zpool '%1' disk '%2' failed. Error: %2</English>
+        </Bean>
+         <Bean>
+            <Author>田文博</Author>
+            <ResourceID>122571</ResourceID>
+            <Macro>LOG_ZPOOL_DETACH_SUCCESS</Macro>
+            <Chinese>移除卷组'%1'磁盘'%2'成功</Chinese>
+            <English>Deach zpool '%1' disk '%2' success</English>
+        </Bean>
+        <Bean>
+            <Author>田文博</Author>
+            <ResourceID>122572</ResourceID>
+            <Macro>LOG_ZPOOL_DETACH_FAILED</Macro>
+            <Chinese>移除卷组'%1'磁盘'%2'失败，错误：%2</Chinese>
+            <English>Deach zpool '%1' disk '%2' failed. Error: %2</English>
+        </Bean>
+        
+        <Bean>
+            <Author>田文博</Author>
+            <ResourceID>123011</ResourceID>
+            <Macro>LOG_GET_ALL_TARGET_FAILED</Macro>
+            <Chinese>获取所有目标器失败，错误：%1</Chinese>
+            <English>Get all target failed. Error: %1</English>
+        </Bean>
+        
+        <Bean>
+            <Author>田文博</Author>
+            <ResourceID>123031</ResourceID>
+            <Macro>LOG_CREATE_ISCSI_TARGET_SUCCESS</Macro>
+            <Chinese>创建iSCSI 目标器 '%1'成功</Chinese>
+            <English>Create iSCSI target '%1' success</English>
+        </Bean>
+        <Bean>
+            <Author>田文博</Author>
+            <ResourceID>123032</ResourceID>
+            <Macro>LOG_CREATE_ISCSI_TARGET_FAILED</Macro>
+            <Chinese>创建iSCSI 目标器 '%1'失败，错误：%2</Chinese>
+            <English>Create iSCSI target '%1' failed. Error: %2</English>
+        </Bean>   
+        <Bean>
+            <Author>田文博</Author>
+            <ResourceID>123051</ResourceID>
+            <Macro>LOG_DELETE_TARGET_SUCCESS</Macro>
+            <Chinese>删除目标器 '%1'成功</Chinese>
+            <English>Delete target '%1' success</English>
+        </Bean>
+        <Bean>
+            <Author>田文博</Author>
+            <ResourceID>123052</ResourceID>
+            <Macro>LOG_DELETE_TARGET_FAILED</Macro>
+            <Chinese>删除目标器 '%1'失败，错误：%2</Chinese>
+            <English>Delete target '%1' failed. Error: %2</English>
+        </Bean>
+        <Bean>
+            <Author>田文博</Author>
+            <ResourceID>123071</ResourceID>
+            <Macro>LOG_DELETE_INITIATOR_SUCCESS</Macro>
+            <Chinese>删除启动器 '%1' 成功</Chinese>
+            <English>Delete initiator '%1' success</English>
+        </Bean>
+        <Bean>
+            <Author>田文博</Author>
+            <ResourceID>123072</ResourceID>
+            <Macro>LOG_DELETE_INITIATOR_FAILED</Macro>
+            <Chinese>删除启动器 '%1' 失败，错误：%2</Chinese>
+            <English>Delete initiator '%1' failed. Error: %2</English>
+        </Bean>
+        <Bean>
+            <Author>田文博</Author>
+            <ResourceID>123091</ResourceID>
+            <Macro>LOG_ASSIGN_DISK_SUCCESS</Macro>
+            <Chinese>给目标器 '%1'分配磁盘'%2'成功</Chinese>
+            <English>Assign disk %2 to target '%1' success</English>
+        </Bean>
+        <Bean>
+            <Author>田文博</Author>
+            <ResourceID>123092</ResourceID>
+            <Macro>LOG_ASSIGN_DISK_FAILED</Macro>
+            <Chinese>给目标器 '%1'分配磁盘'%2'失败，错误：%3</Chinese>
+            <English>Assign disk %2 to target '%1' failed. Error: %3</English>
+        </Bean>
+        <Bean>
+            <Author>田文博</Author>
+            <ResourceID>123711</ResourceID>
+            <Macro>LOG_ASSIGN_CDPDISK_SUCCESS</Macro>
+            <Chinese>给目标器 '%1'分配CDP磁盘'%2'成功</Chinese>
+            <English>Assign CDP disk %2 to target '%1' success</English>
+        </Bean>
+        <Bean>
+            <Author>田文博</Author>
+            <ResourceID>123712</ResourceID>
+            <Macro>LOG_ASSIGN_CDPDISK_FAILED</Macro>
+            <Chinese>给目标器 '%1'分配CDP磁盘'%2'失败，错误：%3</Chinese>
+            <English>Assign CDP disk %2 to target '%1' failed. Error: %3</English>
+        </Bean>
+        <Bean>
+            <Author>田文博</Author>
+            <ResourceID>123111</ResourceID>
+            <Macro>LOG_ASSIGN_TAPELIBRARY_SUCCESS</Macro>
+            <Chinese>给目标器 '%1'分配磁带库'%2'成功</Chinese>
+            <English>Assign tape library '%2' to target '%1' success</English>
+        </Bean>
+        <Bean>
+            <Author>田文博</Author>
+            <ResourceID>123112</ResourceID>
+            <Macro>LOG_ASSIGN_TAPELIBRARY_FAILED</Macro>
+            <Chinese>给目标器 '%1'分配磁带库'%2'失败，错误：%3</Chinese>
+            <English>Assign tape library '%2' to target '%1' failed. Error: %3</English>
+        </Bean>
+        
+      
+        <Bean>
+            <Author>田文博</Author>
+            <ResourceID>123131</ResourceID>
+            <Macro>LOG_LUN_MASKING_DISK_SUCCESS</Macro>
+            <Chinese>设置LUN masking，允许启动器 '%1'访问磁盘'%2'成功</Chinese>
+            <English>Set LUN masking, enable initiator '%1' access to disk '%2' success</English>
+        </Bean>
+        <Bean>
+            <Author>田文博</Author>
+            <ResourceID>123132</ResourceID>
+            <Macro>LOG_LUN_MASKING_DISK_FAILED</Macro>
+            <Chinese>设置LUN masking，允许启动器 '%1'访问磁盘'%2'失败，错误：%3</Chinese>
+            <English>Set LUN masking, enable initiator '%1' access to disk '%2' failed. Error: %3</English>
+        </Bean>
+        <Bean>
+            <Author>田文博</Author>
+            <ResourceID>123151</ResourceID>
+            <Macro>LOG_LUN_MASKING_TAPELIBRARY_SUCCESS</Macro>
+            <Chinese>设置LUN masking，允许启动器 '%1'访问磁带库'%2'成功</Chinese>
+            <English>Set LUN masking, enable initiator '%1' access to tape library '%2' success</English>
+        </Bean>
+        <Bean>
+            <Author>田文博</Author>
+            <ResourceID>123152</ResourceID>
+            <Macro>LOG_LUN_MASKING_TAPELIBRARY_FAILED</Macro>
+            <Chinese>设置LUN masking，允许启动器 '%1'访问磁带库'%2'失败，错误：%3</Chinese>
+            <English>Set LUN masking, enable initiator '%1' access to tape library '%2' failed. Error: %3</English>
+        </Bean>
+        
+        <Bean>
+            <Author>田文博</Author>
+            <ResourceID>123153</ResourceID>
+            <Macro>LOG_LUN_MAPPING_SUCCESS</Macro>
+            <Chinese>创建LUN映射（主机组='%1' GUID='%2' LUN='%3'）成功</Chinese>
+            <English>Set LUN mapping(hostgroup='%1' GUID='%2' LUN='%3') success</English>
+        </Bean>
+        <Bean>
+            <Author>田文博</Author>
+            <ResourceID>123154</ResourceID>
+            <Macro>LOG_LUN_MAPPING_FAILED</Macro>
+            <Chinese>创建LUN映射（主机组='%1' GUID='%2' LUN='%3'）失败，错误：%4</Chinese>
+            <English>Set LUN mapping(hostgroup='%1' GUID='%2' LUN='%3') failed. Error: %4</English>
+        </Bean>
+        <Bean>
+            <Author>田文博</Author>
+            <ResourceID>123155</ResourceID>
+            <Macro>LOG_LUN_MAPPING_DELETE_SUCCESS</Macro>
+            <Chinese>删除LUN映射（GUID='%1' 映射号='%2'）成功</Chinese>
+            <English>Delete LUN mapping(GUID='%1' viewEntry='%2) success</English>
+        </Bean>
+        <Bean>
+            <Author>田文博</Author>
+            <ResourceID>123156</ResourceID>
+            <Macro>LOG_LUN_MAPPING_DELETE_FAILED</Macro>
+            <Chinese>删除LUN映射（GUID='%1' 映射号='%2'）失败，错误：%3</Chinese>
+            <English>Delete LUN mapping(GUID='%1' viewEntry='%2) failed. Error: %3</English>
+        </Bean>
+
+        <Bean>
+            <Author>田文博</Author>
+            <ResourceID>123171</ResourceID>
+            <Macro>LOG_CREATE_FCOE_TARGET_SUCCESS</Macro>
+            <Chinese>创建FCoE 目标器 '%1'成功</Chinese>
+            <English>Create FCoE target '%1' success</English>
+        </Bean>
+        <Bean>
+            <Author>田文博</Author>
+            <ResourceID>123172</ResourceID>
+            <Macro>LOG_CREATE_FCOE_TARGET_FAILED</Macro>
+            <Chinese>创建FCoE 目标器 '%1'失败，错误：%2</Chinese>
+            <English>Create FCoE target '%1' failed. Error: %2</English>
+        </Bean>   
+        
+        <Bean>
+            <Author>田文博</Author>
+            <ResourceID>123392</ResourceID>
+            <Macro>LOG_ADD_INITIATOR_FAILED</Macro>
+            <Chinese>添加启动器 '%1'失败，错误：%2</Chinese>
+            <English>Add initiator '%1' failed. Error: %2</English>
+        </Bean>
+        
+        <Bean>
+            <Author>田文博</Author>
+            <ResourceID>123411</ResourceID>
+            <Macro>LOG_SET_INITIATOR_SUCCESS</Macro>
+            <Chinese>设置启动器 '%1'认证信息成功</Chinese>
+            <English>Set initiator '%1' authorization success</English>
+        </Bean>
+        <Bean>
+            <Author>田文博</Author>
+            <ResourceID>123412</ResourceID>
+            <Macro>LOG_SET_INITIATOR_FAILED</Macro>
+            <Chinese>设置启动器 '%1'认证信息失败，错误：%2</Chinese>
+            <English>Set initiator '%1' authorization failed. Error: %2</English>
+        </Bean>
+       
+         <Bean>
+            <Author>田文博</Author>
+            <ResourceID>123471</ResourceID>
+            <Macro>LOG_UNASSIGN_DEVICE_DISK_SUCCESS</Macro>
+            <Chinese>解除目标器 '%1'下的磁盘'%2'(GUID=%3)成功</Chinese>
+            <English>Unassign target '%1' disk '%2' success</English>
+        </Bean>
+        <Bean>
+            <Author>田文博</Author>
+            <ResourceID>123472</ResourceID>
+            <Macro>LOG_UNASSIGN_DEVICE_DISK_FAILED</Macro>
+            <Chinese>解除目标器 '%1'下的磁盘'%2'(GUID=%3)，错误：%4</Chinese>
+            <English>Unassign target '%1' disk '%2'(GUID=%3) failed. Error: %4</English>
+        </Bean>
+        <Bean>
+            <Author>田文博</Author>
+            <ResourceID>123473</ResourceID>
+            <Macro>LOG_UNASSIGN_DEVICE_LIB_SUCCESS</Macro>
+            <Chinese>解除目标器 '%1'下的带库'%2'(GUID=%3)成功</Chinese>
+            <English>Unassign target '%1' tape library '%2'(GUID=%3) success</English>
+        </Bean>
+        <Bean>
+            <Author>田文博</Author>
+            <ResourceID>123474</ResourceID>
+            <Macro>LOG_UNASSIGN_DEVICE_LIB_FAILED</Macro>
+            <Chinese>解除目标器 '%1'下的带库'%2'(GUID=%3)，错误：%4</Chinese>
+            <English>Unassign target '%1' tape library '%2'(GUID=%3) failed. Error: %4</English>
+        </Bean>
+        <Bean>
+            <Author>田文博</Author>
+            <ResourceID>123475</ResourceID>
+            <Macro>LOG_UNASSIGN_DEVICE_DRIVE_SUCCESS</Macro>
+            <Chinese>解除目标器 '%1'下的驱动器'%2'(GUID=%3)成功</Chinese>
+            <English>Unassign target '%1' drive '%2'(GUID=%3) success</English>
+        </Bean>
+        <Bean>
+            <Author>田文博</Author>
+            <ResourceID>123476</ResourceID>
+            <Macro>LOG_UNASSIGN_DEVICE_DRIVE_FAILED</Macro>
+            <Chinese>解除目标器 '%1'下的驱动器'%2'(GUID=%3)，错误：%4</Chinese>
+            <English>Unassign target '%1' drive '%2'(GUID=%3) failed. Error: %4</English>
+        </Bean>
+          <Bean>
+            <Author>田文博</Author>
+            <ResourceID>123477</ResourceID>
+            <Macro>LOG_UNASSIGN_DEVICE_CDPDSIK_SUCCESS</Macro>
+            <Chinese>解除目标器 '%1'下的CDP磁盘'%2'(GUID=%3)成功</Chinese>
+            <English>Unassign target '%1' CDP disk '%2'(GUID=%3) success</English>
+        </Bean>
+        <Bean>
+            <Author>田文博</Author>
+            <ResourceID>123478</ResourceID>
+            <Macro>LOG_UNASSIGN_DEVICE_CDPDSIK_FAILED</Macro>
+            <Chinese>解除目标器 '%1'下的CDP磁盘'%2'(GUID=%3)，错误：%4</Chinese>
+            <English>Unassign target '%1' CDP disk '%2'(GUID=%3) failed. Error: %4</English>
+        </Bean>
+       
+        <Bean>
+            <Author>田文博</Author>
+            <ResourceID>123511</ResourceID>
+            <Macro>LOG_MANAGE_TARGET_NONE_SUCCESS</Macro>
+            <Chinese>禁用目标器 '%1' CHAP认证成功</Chinese>
+            <English>Disable target '%1' CHAP success</English>
+        </Bean>
+        <Bean>
+            <Author>田文博</Author>
+            <ResourceID>123512</ResourceID>
+            <Macro>LOG_MANAGE_TARGET_NONE_FAILED</Macro>
+            <Chinese>禁用目标器 '%1' CHAP认证失败，错误：%2</Chinese>
+            <English>Disable target '%1' CHAP failed. Error: %2</English>
+        </Bean>
+        <Bean>
+            <Author>田文博</Author>
+            <ResourceID>123531</ResourceID>
+            <Macro>LOG_MANAGE_TARGET_CHAP_SUCCESS</Macro>
+            <Chinese>启用目标器 '%1' CHAP认证成功</Chinese>
+            <English>Enable target '%1' CHAP success</English>
+        </Bean>
+        <Bean>
+            <Author>田文博</Author>
+            <ResourceID>123532</ResourceID>
+            <Macro>LOG_MANAGE_TARGET_CHAP_FAILED</Macro>
+            <Chinese>启用目标器 '%1' CHAP认证失败，错误：%2</Chinese>
+            <English>Enable target '%1' CHAP failed. Error: %2</English>
+        </Bean>  
+        
+        <Bean>
+            <Author>田文博</Author>
+            <ResourceID>123671</ResourceID>
+            <Macro>LOG_BIND_TARGET_IP_SUCCESS</Macro>
+            <Chinese>把目标器 '%1'绑定到IP '%2'成功</Chinese>
+            <English>Bind target '%1' with IP '%2' success</English>
+        </Bean>
+        <Bean>
+            <Author>田文博</Author>
+            <ResourceID>123672</ResourceID>
+            <Macro>LOG_BIND_TARGET_IP_FAILED</Macro>
+            <Chinese>把目标器 '%1'绑定到IP '%2'失败，错误：%3</Chinese>
+            <English>Bind target '%1' with IP '%2' failed. Error: %3</English>
+        </Bean>
+        
+        <Bean>
+            <Author>田文博</Author>
+            <ResourceID>123691</ResourceID>
+            <Macro>LOG_OFFLINE_TARGET_SUCCESS</Macro>
+            <Chinese>使目标器 '%1' 离线成功</Chinese>
+            <English>Offline target '%1' success</English>
+        </Bean>
+        <Bean>
+            <Author>田文博</Author>
+            <ResourceID>123692</ResourceID>
+            <Macro>LOG_OFFLINE_TARGET_FAILED</Macro>
+            <Chinese>使目标器 '%1' 离线失败，错误：%2</Chinese>
+            <English>Offline target '%1' failed. Error: %2</English>
+        </Bean>
+        <Bean>
+            <Author>田文博</Author>
+            <ResourceID>123693</ResourceID>
+            <Macro>LOG_ONLINE_TARGET_SUCCESS</Macro>
+            <Chinese>使目标器 '%1' 在线成功</Chinese>
+            <English>Online target '%1' success</English>
+        </Bean>
+        <Bean>
+            <Author>田文博</Author>
+            <ResourceID>123694</ResourceID>
+            <Macro>LOG_ONLINE_TARGET_FAILED</Macro>
+            <Chinese>使目标器 '%1' 在线失败，错误：%2</Chinese>
+            <English>Online target '%1' failed. Error: %2</English>
+        </Bean>
+        
+        <Bean>
+            <Author>田文博</Author>
+            <ResourceID>123701</ResourceID>
+            <Macro>LOG_CREATE_HOST_GROUP_SUCCESS</Macro>
+            <Chinese>创建主机组'%1'成功</Chinese>
+            <English>Create host group '%1' success</English>
+        </Bean>
+        <Bean>
+            <Author>田文博</Author>
+            <ResourceID>123702</ResourceID>
+            <Macro>LOG_CREATE_HOST_GROUP_FAILED</Macro>
+            <Chinese>创建主机组'%1'失败，错误：%2</Chinese>
+            <English>Create host group '%1' failed. Error: %2</English>
+        </Bean>
+        <Bean>
+            <Author>田文博</Author>
+            <ResourceID>123703</ResourceID>
+            <Macro>LOG_ADD_HOST_GROUP_MEMBER_SUCCESS</Macro>
+            <Chinese>主机组'%1'添加成员'%2'成功</Chinese>
+            <English>Add host group '%1' member '%2' success</English>
+        </Bean>
+        <Bean>
+            <Author>田文博</Author>
+            <ResourceID>123704</ResourceID>
+            <Macro>LOG_ADD_HOST_GROUP_MEMBER_FAILED</Macro>
+            <Chinese>主机组'%1'添加成员'%2'失败，错误：%2</Chinese>
+            <English>Add host group '%1' member '%2' failed. Error: %2</English>
+        </Bean>
+        <Bean>
+            <Author>田文博</Author>
+            <ResourceID>123705</ResourceID>
+            <Macro>LOG_DELETE_HOST_GROUP_SUCCESS</Macro>
+            <Chinese>删除主机组'%1'成功</Chinese>
+            <English>Delete host group '%1' success</English>
+        </Bean>
+        <Bean>
+            <Author>田文博</Author>
+            <ResourceID>123706</ResourceID>
+            <Macro>LOG_DELETE_HOST_GROUP_FAILED</Macro>
+            <Chinese>删除主机组'%1'失败，错误：%2</Chinese>
+            <English>Delete host group '%1' failed. Error: %2</English>
+        </Bean>
+          <Bean>
+            <Author>田文博</Author>
+            <ResourceID>123707</ResourceID>
+            <Macro>LOG_REMOVE_HOST_GROUP_MEMBER_SUCCESS</Macro>
+            <Chinese>删除主机组'%1'成员'%2'成功</Chinese>
+            <English>Remove host group '%1' member '%2' success</English>
+        </Bean>
+        <Bean>
+            <Author>田文博</Author>
+            <ResourceID>123708</ResourceID>
+            <Macro>LOG_REMOVE_HOST_GROUP_MEMBER_FAILED</Macro>
+            <Chinese>删除主机组'%1'成员'%2'失败，错误：%2</Chinese>
+            <English>Remove host group '%1' member '%2' failed. Error: %2</English>
+        </Bean>
+        
+        <Bean>
+            <Author>田文博</Author>
+            <ResourceID>124011</ResourceID>
+            <Macro>LOG_LIST_DISCOVERY_ADDRESS_FAILED</Macro>
+            <Chinese>获取iSCSI 启动器主机信息失败，错误：%1</Chinese>
+            <English>Get iSCSI initiator discovery address failed. Error: %1</English>
+        </Bean>
+        <Bean>
+            <Author>田文博</Author>
+            <ResourceID>124031</ResourceID>
+            <Macro>LOG_ADD_DISCOVERY_ADDRESS_FAILED</Macro>
+            <Chinese>添加iSCSI 启动器主机'%1'失败，错误：%2</Chinese>
+            <English>Add iSCSI initiator discovery address '%1' failed. Error: %2</English>
+        </Bean>
+        <Bean>
+            <Author>田文博</Author>
+            <ResourceID>124032</ResourceID>
+            <Macro>LOG_ADD_DISCOVERY_ADDRESS_SUCCESS</Macro>
+            <Chinese>添加iSCSI 启动器主机'%1'成功</Chinese>
+            <English>Add iSCSI initiator discovery address '%1' success</English>
+        </Bean>
+        <Bean>
+            <Author>田文博</Author>
+            <ResourceID>124051</ResourceID>
+            <Macro>LOG_DELETE_DISCOVERY_ADDRESS_FAILED</Macro>
+            <Chinese>删除iSCSI 启动器主机'%1'失败，错误：%2</Chinese>
+            <English>Delete iSCSI initiator discovery address '%1' failed. Error: %2</English>
+        </Bean>
+        <Bean>
+            <Author>田文博</Author>
+            <ResourceID>124052</ResourceID>
+            <Macro>LOG_DELETE_DISCOVERY_ADDRESS_SUCCESS</Macro>
+            <Chinese>删除iSCSI 启动器主机'%1'成功</Chinese>
+            <English>Delete iSCSI initiator discovery address '%1' success</English>
+        </Bean>
+        <Bean>
+            <Author>田文博</Author>
+            <ResourceID>124071</ResourceID>
+            <Macro>LOG_LIST_STATIC_CONFIG_FAILED</Macro>
+            <Chinese>获取iSCSI 启动器的目标器静态配置失败，错误：%1</Chinese>
+            <English>Get iSCSI initiator target static config failed. Error: %1</English>
+        </Bean>
+        <Bean>
+            <Author>田文博</Author>
+            <ResourceID>124091</ResourceID>
+            <Macro>LOG_ADD_STATIC_CONFIG_FAILED</Macro>
+            <Chinese>添加iSCSI 启动器的目标器静态配置'%1'失败，错误：%2</Chinese>
+            <English>Add iSCSI initiator target static config '%1' failed. Error: %2</English>
+        </Bean>
+        <Bean>
+            <Author>田文博</Author>
+            <ResourceID>124092</ResourceID>
+            <Macro>LOG_ADD_STATIC_CONFIG_SUCCESS</Macro>
+            <Chinese>添加iSCSI 启动器的目标器静态配置'%1'成功</Chinese>
+            <English>Add iSCSI initiator target static config '%1' success</English>
+        </Bean>
+        <Bean>
+            <Author>田文博</Author>
+            <ResourceID>124111</ResourceID>
+            <Macro>LOG_DELETE_STATIC_CONFIG_FAILED</Macro>
+            <Chinese>删除iSCSI 启动器的目标器静态配置'%1'失败，错误：%2</Chinese>
+            <English>Delete iSCSI initiator target static config '%1' failed. Error: %2</English>
+        </Bean>
+        <Bean>
+            <Author>田文博</Author>
+            <ResourceID>124112</ResourceID>
+            <Macro>LOG_DELETE_STATIC_CONFIG_SUCCESS</Macro>
+            <Chinese>删除iSCSI 启动器的目标器静态配置'%1'成功</Chinese>
+            <English>Delete iSCSI initiator target static config '%1' success</English>
+        </Bean>
+        <Bean>
+            <Author>田文博</Author>
+            <ResourceID>124131</ResourceID>
+            <Macro>LOG_LIST_DISCOVERY_V_FAILED</Macro>
+            <Chinese>获取iSCSI启动器主机'%1'的目标器失败，错误：%2</Chinese>
+            <English>Get the target of discovery '%1' failed. Error: %2</English>
+        </Bean>
+        <Bean>
+            <Author>田文博</Author>
+            <ResourceID>124151</ResourceID>
+            <Macro>LOG_LIST_TARGET_FAILED</Macro>
+            <Chinese>获取iSCSI启动器的目标器信息失败，错误：%1</Chinese>
+            <English>Get the target by iSCSI initiator failed. Error: %1</English>
+        </Bean>
+        <Bean>
+            <Author>田文博</Author>
+            <ResourceID>124191</ResourceID>
+            <Macro>LOG_LIST_ISCSI_INITIATOR_NODE_FAILED</Macro>
+            <Chinese>获取iSCSI 启动器的配置信息失败，错误：%1</Chinese>
+            <English>Get iSCSI initiator node failed. Error: %1</English>
+        </Bean>
+        <Bean>
+            <Author>田文博</Author>
+            <ResourceID>124211</ResourceID>
+            <Macro>LOG_MODIFY_ISCSI_INITIATOR_ALIAS_FAILED</Macro>
+            <Chinese>修改iSCSI 启动器别名为'%1'失败，错误：%2</Chinese>
+            <English>Modify iSCSI initiator alias to '%1' failed. Error: %2</English>
+        </Bean>
+        <Bean>
+            <Author>田文博</Author>
+            <ResourceID>124212</ResourceID>
+            <Macro>LOG_MODIFY_ISCSI_INITIATOR_ALIAS_SUCCESS</Macro>
+            <Chinese>修改iSCSI 启动器别名为'%1'成功</Chinese>
+            <English>Modify iSCSI initiator alias to '%1' success</English>
+        </Bean>
+        <Bean>
+            <Author>田文博</Author>
+            <ResourceID>124231</ResourceID>
+            <Macro>LOG_MODIFY_ISCSI_INITIATOR_CHAP_FAILED</Macro>
+            <Chinese>修改iSCSI 启动器 CHAP认证失败，错误：%1</Chinese>
+            <English>Modify iSCSI initiator CHAP failed. Error: %1</English>
+        </Bean>
+        <Bean>
+            <Author>田文博</Author>
+            <ResourceID>124232</ResourceID>
+            <Macro>LOG_MODIFY_ISCSI_INITIATOR_CHAP_SUCCESS</Macro>
+            <Chinese>修改iSCSI 启动器 CHAP认证成功</Chinese>
+            <English>Modify iSCSI initiator CHAP success</English>
+        </Bean>
+        <Bean>
+            <Author>田文博</Author>
+            <ResourceID>124251</ResourceID>
+            <Macro>LOG_MODIFY_ISCSI_INITIATOR_TARGET_CHAP_FAILED</Macro>
+            <Chinese>修改iSCSI 启动器的目标器 '%1' CHAP认证失败，错误：%2</Chinese>
+            <English>Modify CHAP of iSCSI initiator target '%1' failed. Error: %2</English>
+        </Bean>
+        <Bean>
+            <Author>田文博</Author>
+            <ResourceID>124252</ResourceID>
+            <Macro>LOG_MODIFY_ISCSI_INITIATOR_TARGET_CHAP_SUCCESS</Macro>
+            <Chinese>修改iSCSI 启动器的目标器 '%1' CHAP认证成功</Chinese>
+            <English>Modify CHAP of iSCSI initiator target '%1' success</English>
+        </Bean>
+        <Bean>
+            <Author>田文博</Author>
+            <ResourceID>124271</ResourceID>
+            <Macro>LOG_RECONNECT_ISCSI_FAILED</Macro>
+            <Chinese>重新连接iSCSI失败，错误：%1</Chinese>
+            <English>Reconnect iSCSI failed. Error: %1</English>
+        </Bean>
+        <Bean>
+            <Author>田文博</Author>
+            <ResourceID>124272</ResourceID>
+            <Macro>LOG_RECONNECT_ISCSI_SUCCESS</Macro>
+            <Chinese>重新连接iSCSI成功</Chinese>
+            <English>Reconnect iSCSI success</English>
+        </Bean>
+        
+        
+        <Bean>
+            <Author>田文博</Author>
+            <ResourceID>125011</ResourceID>
+            <Macro>LOG_NFS_SHARE_RO_SUCCESS</Macro>
+            <Chinese>设置'%1'的NFS共享为只读'%2'成功</Chinese>
+            <English>Set NFS of '%1' = '%2' success</English>
+        </Bean>
+        <Bean>
+            <Author>田文博</Author>
+            <ResourceID>125012</ResourceID>
+            <Macro>LOG_NFS_SHARE_RO_FAILED</Macro>
+            <Chinese>设置'%1'的NFS共享为只读'%2'失败，错误：%3</Chinese>
+            <English>Set NFS of '%1' = '%2' failed. Error: %3</English>
+        </Bean>
+        <Bean>
+            <Author>田文博</Author>
+            <ResourceID>125013</ResourceID>
+            <Macro>LOG_NFS_SHARE_RW_SUCCESS</Macro>
+            <Chinese>设置'%1'的NFS共享为读写'%2'成功</Chinese>
+            <English>Set NFS of '%1' = '%2' success</English>
+        </Bean>
+        <Bean>
+            <Author>田文博</Author>
+            <ResourceID>125014</ResourceID>
+            <Macro>LOG_NFS_SHARE_RW_FAILED</Macro>
+            <Chinese>设置'%1'的NFS共享为读写'%2'失败，错误：%3</Chinese>
+            <English>Set NFS of '%1' = '%2' failed. Error: %3</English>
+        </Bean>
+        
+        <Bean>
+            <Author>田文博</Author>
+            <ResourceID>125031</ResourceID>
+            <Macro>LOG_CANCEL_NFS_SHARE_SUCCESS</Macro>
+            <Chinese>取消'%1'的NFS共享成功</Chinese>
+            <English>Cancel NFS share of '%1' success</English>
+        </Bean>
+        <Bean>
+            <Author>田文博</Author>
+            <ResourceID>125032</ResourceID>
+            <Macro>LOG_CANCEL_NFS_SHARE_FAILED</Macro>
+            <Chinese>取消'%1'的NFS共享失败，错误：%3</Chinese>
+            <English>Cancel NFS share of '%1' failed. Error: %3</English>
+        </Bean>
+
+        <Bean>
+            <Author>田文博</Author>
+            <ResourceID>125071</ResourceID>
+            <Macro>LOG_SMB_SHARE_SUCCESS</Macro>
+            <Chinese>设置'%1'的SMB共享为'%2'成功</Chinese>
+            <English>Set SMB of '%1' = '%2' success</English>
+        </Bean>
+        <Bean>
+            <Author>田文博</Author>
+            <ResourceID>125072</ResourceID>
+            <Macro>LOG_SMB_SHARE_FAILED</Macro>
+            <Chinese>设置'%1'的SMB共享为'%2'失败，错误：%3</Chinese>
+            <English>Set SMB of '%1' = '%2' failed. Error: %3</English>
+        </Bean>
+        
+        <Bean>
+            <Author>田文博</Author>
+            <ResourceID>125091</ResourceID>
+            <Macro>LOG_CANCEL_SMB_SHARE_SUCCESS</Macro>
+            <Chinese>取消'%1'的SMB共享成功</Chinese>
+            <English>Canel SMB share of '%1' success</English>
+        </Bean>
+        <Bean>
+            <Author>田文博</Author>
+            <ResourceID>125092</ResourceID>
+            <Macro>LOG_CANCEL_SMB_SHARE_FAILED</Macro>
+            <Chinese>取消'%1'的SMB共享失败，错误：%3</Chinese>
+            <English>Canel SMB share of '%1' failed. Error: %3</English>
+        </Bean>
+   
+   
+        <Bean>
+            <Author>田文博</Author>
+            <ResourceID>125131</ResourceID>
+            <Macro>LOG_CREATE_VIRTUAL_DISKS_SUCCESS</Macro>
+            <Chinese>创建磁盘(磁盘名=%1,大小=%2GB，GUID=%3，是否按需分配=%4)成功</Chinese>
+            <English>Create disk(name=%1,size=%2GB,GUID=%3,demand=%4) success,</English>
+        </Bean>
+        <Bean>
+            <Author>田文博</Author>
+            <ResourceID>125132</ResourceID>
+            <Macro>LOG_CREATE_VIRTUAL_DISKS_FAILED</Macro>
+            <Chinese>创建磁盘(磁盘名=%1,大小=%2GB，GUID=%3，是否按需分配=%4)失败，错误：%5</Chinese>
+            <English>Create disk(name=%1,size=%2GB,GUID=%3,demand=%4) failed</English>
+        </Bean>
+   
+        <Bean>
+            <Author>田文博</Author>
+            <ResourceID>125151</ResourceID>
+            <Macro>LOG_DELETE_VIRTUAL_DISK_SUCCESS</Macro>
+            <Chinese>删除磁盘'%1'成功</Chinese>
+            <English>Delete disk '%1' success</English>
+        </Bean>
+        <Bean>
+            <Author>田文博</Author>
+            <ResourceID>125152</ResourceID>
+            <Macro>LOG_DELETE_VIRTUAL_DISK_FAILED</Macro>
+            <Chinese>删除磁盘'%1'失败，错误：%2</Chinese>
+            <English>Delete disk '%1' failed. Error: %2</English>
+        </Bean>
+        
+         <Bean>
+            <Author>田文博</Author>
+            <ResourceID>125211</ResourceID>
+            <Macro>LOG_IMPORT_VIRTUAL_DISK_SUCCESS</Macro>
+            <Chinese>导入磁盘'%1'成功</Chinese>
+            <English>Import disk '%1' success</English>
+        </Bean>
+        <Bean>
+            <Author>田文博</Author>
+            <ResourceID>125212</ResourceID>
+            <Macro>LOG_IMPORT_VIRTUAL_DISK_FAILED</Macro>
+            <Chinese>导入磁盘'%1'失败，错误：%2</Chinese>
+            <English>Import disk '%1' failed. Error: %2</English>
+        </Bean>
+        
+        <Bean>
+            <Author>田文博</Author>
+            <ResourceID>125231</ResourceID>
+            <Macro>LOG_UMOUNT_ZFS_SUCCESS</Macro>
+            <Chinese>卸载'%1'成功</Chinese>
+            <English>Umount '%1' success</English>
+        </Bean>
+        <Bean>
+            <Author>田文博</Author>
+            <ResourceID>125232</ResourceID>
+            <Macro>LOG_UMOUNT_ZFS_FAILED</Macro>
+            <Chinese>卸载'%1'失败，错误：%2</Chinese>
+            <English>Umount '%1' failed. Error: %2</English>
+        </Bean>
+        <Bean>
+            <Author>田文博</Author>
+            <ResourceID>125251</ResourceID>
+            <Macro>LOG_MOUNT_ZFS_SUCCESS</Macro>
+            <Chinese>挂载'%1'成功</Chinese>
+            <English>Mount '%1' success</English>
+        </Bean>
+        <Bean>
+            <Author>田文博</Author>
+            <ResourceID>125252</ResourceID>
+            <Macro>LOG_MOUNT_ZFS_FAILED</Macro>
+            <Chinese>挂载'%1'失败，错误：%2</Chinese>
+            <English>Mount '%1' failed. Error: %2</English>
+        </Bean>
+       
+        <Bean>
+            <Author>田文博</Author>
+            <ResourceID>126011</ResourceID>
+            <Macro>LOG_GET_LICENSE_FAILED</Macro>
+            <Chinese>获取许可证失败，错误: %1</Chinese>
+            <English>Get license failed. Error: %1</English>
+        </Bean>
+ 
+        <Bean>
+            <Author>田文博</Author>
+            <ResourceID>126031</ResourceID>
+            <Macro>LOG_ADD_LICENSE_SUCCESS</Macro>
+            <Chinese>添加许可证成功</Chinese>
+            <English>Add license success</English>
+        </Bean>
+        <Bean>
+            <Author>田文博</Author>
+            <ResourceID>126032</ResourceID>
+            <Macro>LOG_ADD_LICENSE_FAILED</Macro>
+            <Chinese>添加许可证失败，错误: %1</Chinese>
+            <English>Add license failed. Error: %1</English>
+        </Bean>
+       
+        <Bean>
+            <Author>田文博</Author>
+            <ResourceID>127011</ResourceID>
+            <Macro>LOG_SEARCH_LOG_FAILED</Macro>
+            <Chinese>查询日志信息失败，错误：%1</Chinese>
+            <English>Load log information failed. Error: %1</English>
+        </Bean>
+        
+        <Bean>
+            <Author>田文博</Author>
+            <ResourceID>127031</ResourceID>
+            <Macro>LOG_CLEAR_LOG_SUCCESS</Macro>
+            <Chinese>清除日志(从‘%1’到‘%2’)成功</Chinese>
+            <English>Clear log ( from '%1' to '%2') success</English>
+        </Bean>
+        <Bean>
+            <Author>田文博</Author>
+            <ResourceID>127032</ResourceID>
+            <Macro>LOG_CLEAR_LOG_FAILED</Macro>
+            <Chinese>清除日志失败，错误：%1</Chinese>
+            <English>Clear log information failed. Error: %1</English>
+        </Bean>       
+        <Bean>
+            <Author>田文博</Author>
+            <ResourceID>128011</ResourceID>
+            <Macro>LOG_EXPORT_CONFIG_SUCCESS</Macro>
+            <Chinese>导出基本功能配置文件成功</Chinese>
+            <English>Export configuration success</English>
+        </Bean>
+        <Bean>
+            <Author>田文博</Author>
+            <ResourceID>128012</ResourceID>
+            <Macro>LOG_EXPORT_CONFIG_FAILED</Macro>
+            <Chinese>导出基本功能配置文件失败，错误：%1</Chinese>
+            <English>Export configuration failed. Error: %1</English>
+        </Bean> 
+        
+        <Bean>
+            <Author>田文博</Author>
+            <ResourceID>128031</ResourceID>
+            <Macro>LOG_IMPORT_CONFIG_SUCCESS</Macro>
+            <Chinese>导入配置文件成功</Chinese>
+            <English>Import configuration success</English>
+        </Bean>        
+        <Bean>
+            <Author>田文博</Author>
+            <ResourceID>128032</ResourceID>
+            <Macro>LOG_IMPORT_CONFIG_FAILED</Macro>
+            <Chinese>导入配置文件失败，错误：%1</Chinese>
+            <English>Import configuration failed. Error: %1</English>
+        </Bean>   
+        <Bean>
+            <Author>田文博</Author>
+            <ResourceID>128071</ResourceID>
+            <Macro>LOG_CREATE_EXPORT_DIR_SUCCESS</Macro>
+            <Chinese>创建导出目录成功</Chinese>
+            <English>Create export dir success</English>
+        </Bean>        
+        <Bean>
+            <Author>田文博</Author>
+            <ResourceID>128072</ResourceID>
+            <Macro>LOG_CREATE_EXPORT_DIR_FAILED</Macro>
+            <Chinese>创建导出目录失败</Chinese>
+            <English>Create export dir failed</English>
+        </Bean>  
+        <Bean>
+            <Author>田文博</Author>
+            <ResourceID>128091</ResourceID>
+            <Macro>LOG_CREATE_TAR_SUCCESS</Macro>
+            <Chinese>创建配置文件tar包成功</Chinese>
+            <English>Create export tar success</English>
+        </Bean>        
+        <Bean>
+            <Author>田文博</Author>
+            <ResourceID>128092</ResourceID>
+            <Macro>LOG_CREATE_TAR_FAILED</Macro>
+            <Chinese>创建配置文件tar包失败，错误：%1</Chinese>
+            <English>Create export tar failed. Error: %1</English>
+        </Bean>
+        <Bean>
+            <Author>田文博</Author>
+            <ResourceID>128111</ResourceID>
+            <Macro>LOG_UNTAR_SUCCESS</Macro>
+            <Chinese>解压配置文件成功</Chinese>
+            <English>Extract configuration tar success</English>
+        </Bean>        
+        <Bean>
+            <Author>田文博</Author>
+            <ResourceID>128112</ResourceID>
+            <Macro>LOG_UNTAR_FAILED</Macro>
+            <Chinese>解压配置文件失败，错误：%1</Chinese>
+            <English>Extract configuration tar failed. Error: %1</English>
+        </Bean>
+        <Bean>
+            <Author>田文博</Author>
+            <ResourceID>128131</ResourceID>
+            <Macro>LOG_DELETE_IMPORT_FILE_SUCCESS</Macro>
+            <Chinese>删除导入临时文件成功</Chinese>
+            <English>Delete temperature file success</English>
+        </Bean>        
+        <Bean>
+            <Author>田文博</Author>
+            <ResourceID>128132</ResourceID>
+            <Macro>LOG_DELETE_IMPORT_FILE_FAILED</Macro>
+            <Chinese>删除导入临时文件失败，错误：%1</Chinese>
+            <English>Delete temperature file failed. Error: %1</English>
+        </Bean>
+        <Bean>
+            <Author>田文博</Author>
+            <ResourceID>128152</ResourceID>
+            <Macro>LOG_GET_LAST_EXPORT_TIME_FAILED</Macro>
+            <Chinese>获取上次导出时间和用户失败，错误：%1</Chinese>
+            <English>Get last export time and user failed. Error: %1</English>
+        </Bean>
+        
+        <Bean>
+            <Author>田文博</Author>
+            <ResourceID>129011</ResourceID>
+            <Macro>LOG_GET_SERVICE_FAILED</Macro>
+            <Chinese>获取服务状态失败，错误：%1</Chinese>
+            <English>Get service status failed. Error: %1</English>
+        </Bean>
+        
+        <Bean>
+            <Author>田文博</Author>
+            <ResourceID>129031</ResourceID>
+            <Macro>LOG_SET_SERVICE_SUCCESS</Macro>
+            <Chinese>设置服务'%1'状态为'%2'成功</Chinese>
+            <English>Modify service '%1' to '%2' success</English>
+        </Bean>
+        <Bean>
+            <Author>田文博</Author>
+            <ResourceID>129032</ResourceID>
+            <Macro>LOG_SET_SERVICE_FAILED</Macro>
+            <Chinese>设置服务'%1'状态为'%2'失败，错误：%3</Chinese>
+            <English>Modify service '%1' to '%2' failed. Error: %3</English>
+        </Bean>
+        
+        <Bean>
+            <Author>田文博</Author>
+            <ResourceID>130011</ResourceID>
+            <Macro>LOG_GET_CLIENT_FAILED</Macro>
+            <Chinese>获取Client Jars失败，错误：%1</Chinese>
+            <English>Get client jars failed. Error: %1</English>
+        </Bean>
+        
+        <Bean>
+            <Author>田文博</Author>
+            <ResourceID>130031</ResourceID>
+            <Macro>LOG_INIT_UPLOAD_FAILED</Macro>
+            <Chinese>初始化上传任务失败，错误：%1</Chinese>
+            <English>Initializing upload file failed. Error: %1</English>
+        </Bean>
+        
+        <Bean>
+            <Author>田文博</Author>
+            <ResourceID>130032</ResourceID>
+            <Macro>LOG_START_UPLOAD</Macro>
+            <Chinese>开始上传文件'%1'</Chinese>
+            <English>Start upload file '%1'</English>
+        </Bean>
+
+        <Bean>
+            <Author>田文博</Author>
+            <ResourceID>130033</ResourceID>
+            <Macro>LOG_UPLOAD_SUCCESS</Macro>
+            <Chinese>上传文件成功</Chinese>
+            <English>Upload success</English>
+        </Bean>
+        <Bean>
+            <Author>田文博</Author>
+            <ResourceID>130071</ResourceID>
+            <Macro>LOG_TERMINATE_UPLOAD</Macro>
+            <Chinese>中止上传文件'%1'</Chinese>
+            <English>Terminate upload file '%1'</English>
+        </Bean>
+         <Bean>
+            <Author>田文博</Author>
+            <ResourceID>130051</ResourceID>
+            <Macro>LOG_INIT_DOWNLOAD_FAILED</Macro>
+            <Chinese>初始化下载任务失败，错误：%1</Chinese>
+            <English>Initializing download file failed. Error: %1</English>
+        </Bean>
+        
+        <Bean>
+            <Author>田文博</Author>
+            <ResourceID>130052</ResourceID>
+            <Macro>LOG_START_DOWNLOAD</Macro>
+            <Chinese>开始下载文件'%1'</Chinese>
+            <English>Start download file '%1'</English>
+        </Bean>
+
+        <Bean>
+            <Author>田文博</Author>
+            <ResourceID>130053</ResourceID>
+            <Macro>LOG_DOWNLOAD_SUCCESS</Macro>
+            <Chinese>下载文件成功</Chinese>
+            <English>Download success</English>
+        </Bean>
+        
+         <Bean>
+            <Author>田文博</Author>
+            <ResourceID>130111</ResourceID>
+            <Macro>LOG_CREATE_SYSVOL_SUCCESS</Macro>
+            <Chinese>创建系统卷成功</Chinese>
+            <English>Create SYSVOL success</English>
+        </Bean>
+        <Bean>
+            <Author>田文博</Author>
+            <ResourceID>130112</ResourceID>
+            <Macro>LOG_CREATE_SYSVOL_FAILED</Macro>
+            <Chinese>创建系统卷失败，错误：%1</Chinese>
+            <English>Create SYSVOL failed. Error: %1</English>
+        </Bean>
+        
+        <Bean>
+            <Author>田文博</Author>
+            <ResourceID>130211</ResourceID>
+            <Macro>LOG_IMPORT_SYSVOL_SUCCESS</Macro>
+            <Chinese>导入系统卷成功</Chinese>
+            <English>Import SYSVOL success</English>
+        </Bean>
+        <Bean>
+            <Author>田文博</Author>
+            <ResourceID>130212</ResourceID>
+            <Macro>LOG_IMPORT_SYSVOL_FAILED</Macro>
+            <Chinese>导入统卷失败，错误：%1</Chinese>
+            <English>Import SYSVOL failed. Error: %1</English>
+        </Bean>
+        
+         <Bean>
+            <Author>王麒</Author>
+            <ResourceID>130213</ResourceID>
+            <Macro>LOG_IMPORT_VOLUME_SUCCESS</Macro>
+            <Chinese>导入卷组%1成功</Chinese>
+            <English>Import %1 volume success</English>
+        </Bean>
+        <Bean>
+            <Author>王麒</Author>
+            <ResourceID>130214</ResourceID>
+            <Macro>LOG_IMPORT_VOLUME_FAILED</Macro>
+            <Chinese>导入卷组%2失败，错误：%1</Chinese>
+            <English>Import %2 volume failed. Error: %2</English>
+        </Bean>
+                <Bean>
+            <Author>田文博</Author>
+            <ResourceID>130233</ResourceID>
+            <Macro>LOG_EXPAND_POOL_SUCCESS</Macro>
+            <Chinese>扩容卷组'%1'成功</Chinese>
+            <English>Create volume group '%1' success</English>
+        </Bean>
+        <Bean>
+            <Author>田文博</Author>
+            <ResourceID>130234</ResourceID>
+            <Macro>LOG_EXPAND_POOL_FAILED</Macro>
+            <Chinese>扩容卷组'%1'失败，错误：%2</Chinese>
+            <English>Create volume group '%1' failed. Error: %2</English>
+        </Bean>
+        <Bean>
+            <Author>田文博</Author>
+            <ResourceID>130235</ResourceID>
+            <Macro>LOG_SMART_SUCCESS</Macro>
+            <Chinese>设置智能内存管理成功，系统占用最大内存'%1'GB</Chinese>
+            <English>Create volume group '%1' success</English>
+        </Bean>
+        <Bean>
+            <Author>田文博</Author>
+            <ResourceID>130236</ResourceID>
+            <Macro>LOG_SMART_FAILED</Macro>
+            <Chinese>设置智能内存管理失败</Chinese>
+            <English>Create volume group '%1' failed. Error: %2</English>
+        </Bean>
+        <Bean>
+            <Author>田文博</Author>
+            <ResourceID>130231</ResourceID>
+            <Macro>LOG_UPDATE_SUCCESS</Macro>
+            <Chinese>更新软件包</Chinese>
+            <English>Update system</English>
+        </Bean>
+        <Bean>
+            <Author>田文博</Author>
+            <ResourceID>130212</ResourceID>
+            <Macro>LOG_UPDATE_FAILED</Macro>
+            <Chinese>更新软件包失败，错误：%1</Chinese>
+            <English>Update system failed. Error: %1</English>
+        </Bean>
+        
+    </ResourceInfo>      
+</MarsMSA>

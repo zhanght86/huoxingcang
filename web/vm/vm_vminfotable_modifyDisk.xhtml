@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="GBK"?>
+<!--
+To change this template, choose Tools | Templates
+and open the template in the editor.
+-->
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.1//EN" "http://www.w3.org/TR/xhtml11/DTD/xhtml11.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:p="http://primefaces.org/ui">
+     <!--template="../template/framework.xhtml"-->
+     
+    <h:head>
+        <link href="./../resources/common/css/default.css" rel="stylesheet" type="text/css" />
+        <link href="./../resources/common/css/cssIcon.css" rel="stylesheet" type="text/css" />
+    </h:head>
+
+    <!--    <ui:define name="content">-->
+    <h:body>
+        <h:form>
+<!--            <p:panel style="height: 600px">-->
+                <h1 class="title ui-widget-header ui-corner-all">${global.get('moduletitle')}${res.get('title')}</h1>
+                <br></br>
+                <h:panelGrid columns="2" cellpadding="5">
+                    <h:outputLabel value="${res.get('vmname')}"/>
+                    <h:outputLabel value="#{modifyDiskPort.vmName}"/>
+                    <h:outputLabel value="${res.get('controlname')}"/>
+                    <h:outputLabel value="#{modifyDiskPort.controlName}"/>
+                    <h:outputLabel value="${res.get('portattribute')}"/>
+                    <p:selectOneMenu id="diskSelect" value="#{modifyDiskPort.portAttribute}" style="min-width: 205px;max-width: 205px;">  
+                        <f:selectItems value="#{modifyDiskPort.portList}" />  
+                    </p:selectOneMenu>
+
+                </h:panelGrid>
+                <!--                <p:panelGrid>                   
+                    <p:row>
+                        <p:column width="40">虚拟硬盘（D）：</p:column>  
+                        <p:column width="220">
+                            <h:selectOneMenu id="diskSelect" value="{modifyDiskPort.portAttribute}" style="width: 205px">  
+                                <f:selectItems value="{modifyDiskPort.portList}" />  
+                            </h:selectOneMenu>
+                        </p:column>                   
+                    </p:row> 
+                </p:panelGrid> -->
+                <br></br>
+                <p:spacer width="120" height="6" />
+                <p:commandButton id="modifyConButton" icon="saveIcon" value="${global.get('save')}" action="#{modifyDiskPort.modifyButton}"/>  
+                <p:spacer width="8"/>
+                <p:commandButton id="closeConButton" icon="cancleIcon" value="${global.get('return')}" action="#{modifyDiskPort.cancleButton}"/> 
+<!--            </p:panel>-->
+        </h:form>
+        <p:ajaxStatus style="width:64px;height:64px;position:fixed;right:5px;bottom:5px">  
+            <f:facet name="start">  
+                <p:graphicImage value="../resources/common/picture/loading.gif" />  
+            </f:facet>  
+                
+            <f:facet name="complete">  
+                <h:outputText value="" />  
+            </f:facet>  
+        </p:ajaxStatus>
+    </h:body>
+
+    <!--    </ui:define>-->
+</ui:composition>

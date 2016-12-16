@@ -1,0 +1,148 @@
+<?xml version="1.0" encoding="GBK"?>
+<!--
+To change this template, choose Tools | Templates
+and open the template in the editor.
+-->
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.1//EN" "http://www.w3.org/TR/xhtml11/DTD/xhtml11.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:p="http://primefaces.org/ui"
+                xmlns:util="http://java.sun.com/jsf/composite/xhtml">
+    <!--     template="../template/framework.xhtml"-->
+
+    <!--    <ui:define name="content">-->
+    <h:head>
+        <script type="text/javascript">
+            function dialogShow(name) {
+                alert("2222=" + name);
+                var obj = window.parent.multiDialog;
+                
+                //                     obj.test.value = name;
+                //    window.parent.document.getElementById("multiDialog:test").value=name;
+                window.parent.multiCarDialog.show();
+                
+            }
+        </script>
+        <link href="./../resources/common/css/default.css" rel="stylesheet" type="text/css" />
+        <link href="./../resources/common/css/cssIcon.css" rel="stylesheet" type="text/css" />
+    </h:head>
+    <h:body style="overflow-x:hidden">
+        <h:form id="tip1">
+            <util:confirm  uid="deletevm" mess="#{res.get('deletevmtip_left')}#{vMList.vmname}#{res.get('deletevmtip_right')}" action="#{vMList.deleteVM()}" update=":form:vmInfos">
+
+            </util:confirm>
+        </h:form>
+        <h:form>
+            <util:confirm  uid="pausevm" mess="${res.get('pausevmtip')}" action="#{vMList.pauseVM()}" update=":form:vmInfos">
+
+            </util:confirm>
+        </h:form>
+        <h:form>
+            <util:confirm  uid="rebootvm" mess="${res.get('rebootvmtip')}" action="#{vMList.rebootVM_real()}" update=":form:vmInfos">
+
+            </util:confirm>
+        </h:form>
+        <h:form>
+            <util:confirm  uid="closevm" mess="${res.get('closevmtip')}" action="#{vMList.closeVM()}" update=":form:vmInfos">
+
+            </util:confirm>
+        </h:form>
+        <h:form id="form">
+            <!--            <p:panel style="margin-bottom:5px; height: 800px; width: 750px"> -->
+            <h1 class="title ui-widget-header ui-corner-all">${global.get('moduletitle')}${res.get('title')}</h1>
+            <p:messages id="messages" showDetail="true" autoUpdate="true" closable="true" />
+            <br/>
+            <p:toolbar>  
+                <p:toolbarGroup align="right">  
+                    <p:commandButton id="addLink" icon="addIcon" disabled="#{user.type!=2}" value="${res.get('creatvm')}" action="vm_CreatVMTable?faces-redirect=true" update="vmInfos" /> 
+                </p:toolbarGroup> 
+            </p:toolbar>
+            <div style="overflow-x: auto; width:100%;padding-bottom: 2px !important; padding-bottom: 14px;">
+                <p:dataTable id="vmInfos" var="vmBean" value="#{vMList.vmList}" emptyMessage="#{global.get('emptyMessage')}">  
+                   <p:column style="width:2%">  
+                        <p:rowToggler />  
+                    </p:column>   
+                    <p:column headerText="${res.get('vmnname')}" width="200" >  
+                        <p:commandLink id="vm"  immediate="true" update="vmInfos" value="#{vmBean.vmName}" action="#{vMList.toVmInfo()}">
+                            <f:setPropertyActionListener value="#{vmBean}" target="#{vMList.selectedvm}" />
+                        </p:commandLink>
+                    </p:column>   
+                    <p:column headerText="${res.get('belongvol')}" style="white-space: nowrap;">  
+                        <h:outputText value="#{vmBean.belongVol}" />  
+                    </p:column> 
+                    <p:column headerText="${res.get('state')}" width="50" style="white-space: nowrap;">  
+                        <h:outputText value="#{vmBean.state}" />  
+                    </p:column>  
+                    <p:column headerText="${res.get('operate')}" style="white-space: nowrap;">    
+                        <p:spacer width="10"  rendered="#{vmBean.isStart}"/>
+                        <p:graphicImage value="../resources/vm/picture/startVM.png"  width="16" height="16" style="vertical-align:middle" rendered="#{vmBean.isStart}"/>
+                        <p:commandLink id="startButton" value="${res.get('startupvm')}" update="vmInfos" action="#{vMList.startupVM}" rendered="#{vmBean.isStart}" disabled="#{vmBean.notStart}">
+                            <f:setPropertyActionListener value="#{vmBean}" target="#{vMList.selectedvm}" />
+                        </p:commandLink>
+                        
+                        <p:spacer width="10"  rendered="#{vmBean.isPause}"/>
+                        <p:graphicImage value="../resources/vm/picture/pauseVM.png"  width="16" height="16" style="vertical-align:middle"  rendered="#{vmBean.isPause}"/>
+                        <p:commandLink id="pauseButton" value="${res.get('pausevm')}" onclick="pausevm.show();" rendered="#{vmBean.isPause}" disabled="#{vmBean.notPause}">
+                            <f:setPropertyActionListener value="#{vmBean}" target="#{vMList.selectedvm}" />
+                        </p:commandLink>
+                        
+                        <p:spacer width="10" rendered="#{vmBean.isResume}"/>
+                        <p:graphicImage value="../resources/vm/picture/resunme.png"  width="16" height="16" style="vertical-align:middle" rendered="#{vmBean.isResume}"/>
+                        <p:commandLink id="resumeButton" value="${res.get('resumevm')}" update="vmInfos" action="#{vMList.resumeVM()}" rendered="#{vmBean.isResume}" disabled="#{vmBean.notResume}">
+                            <f:setPropertyActionListener value="#{vmBean}" target="#{vMList.selectedvm}" />
+                        </p:commandLink>
+                        
+                        <p:spacer width="10"/>
+                        <p:graphicImage value="../resources/vm/picture/rebootVM.png"  width="16" height="16" style="vertical-align:middle"/>
+                        <p:commandLink id="rebootButton" value="${res.get('rebootvm')}" update="vmInfos" onclick="rebootvm.show();" disabled="#{vmBean.notReboot}">
+                             <f:setPropertyActionListener value="#{vmBean}" target="#{vMList.selectedvm}" />
+                        </p:commandLink>
+                        <p:spacer width="10"/>
+                        <p:graphicImage value="../resources/vm/picture/shutdownVM.png" width="16" height="16" style="vertical-align:middle"/>
+                        <p:commandLink id="closeButton" value="${res.get('closevm')}" onclick="closevm.show();" disabled="#{vmBean.notClose}">
+                            <f:setPropertyActionListener value="#{vmBean}" target="#{vMList.selectedvm}" />
+                        </p:commandLink>
+                        
+                        <p:spacer width="10"/>
+                        <p:graphicImage value="../resources/common/picture/edit.png" width="16" height="16" style="vertical-align:middle" />  
+                        <p:commandLink id="checkButton"  value="${res.get('property')}" update="vmInfos" action="#{vMList.toVmInfo()}" style="width: 20px; height: 20px" disabled="#{vmBean.notCheck}">
+                            <f:setPropertyActionListener value="#{vmBean}" target="#{vMList.selectedvm}" />
+                        </p:commandLink>
+                        
+                        <p:spacer width="10"/>
+                        <p:graphicImage value="../resources/common/picture/delete.png" width="16" height="16" style="vertical-align:middle"/>
+                        <p:commandLink id="deleteButton" value="${res.get('deletevm')}" action="#{vMList.toDeleteVM}" update=":tip1" disabled="#{vmBean.notDelete}">
+                            <f:setPropertyActionListener value="#{vmBean}" target="#{vMList.selectedvm}" />
+                        </p:commandLink>
+                    </p:column>
+                    <p:rowExpansion>
+                        <div style="overflow-x:auto; width: 100%;padding-bottom: 0px!important;padding-bottom: 6px;">
+                            <p:dataTable var="detailBean" value="#{vmBean.detail}" id="detail" style=" margin-top: 10px;margin-bottom: 6px; margin-right: 0px !important;margin-right: -70px;" emptyMessage="#{global.get('emptyMessage')}">  
+                                <p:column headerText="" style="width: 34%;">  
+                                    <h:outputText value="#{detailBean.property}" />  
+                                </p:column> 
+                                <p:column headerText="">  
+                                    <h:outputText value="#{detailBean.name}"/>  
+                                </p:column>      
+                            </p:dataTable>
+                        </div>
+                    </p:rowExpansion>
+                </p:dataTable> 
+            </div>
+
+        </h:form>
+        <p:ajaxStatus style="width:64px;height:64px;position:fixed;right:5px;bottom:5px">  
+            <f:facet name="start">  
+                <p:graphicImage value="../resources/common/picture/loading.gif" />  
+            </f:facet>  
+                
+            <f:facet name="complete">  
+                <h:outputText value="" />  
+            </f:facet>  
+        </p:ajaxStatus>
+        
+    </h:body>
+    <!--    </ui:define>-->
+</ui:composition>

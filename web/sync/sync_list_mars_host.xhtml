@@ -1,0 +1,89 @@
+<?xml version="1.0" encoding="GBK"?>
+<!--
+To change this template, choose Tools | Templates
+and open the template in the editor.
+-->
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.1//EN" "http://www.w3.org/TR/xhtml11/DTD/xhtml11.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:p="http://primefaces.org/ui"
+                xmlns:util="http://java.sun.com/jsf/composite/xhtml">
+    <h:head>
+        <link href="./../resources/common/css/default.css" rel="stylesheet" type="text/css" />
+        <link href="./../resources/common/css/cssIcon.css" rel="stylesheet" type="text/css" />
+    </h:head>
+    <h:body style="width: auto;height:auto;">
+        <h1 title="Remote Mars Host Infomation" class="title ui-widget-header ui-corner-all">#{res.get('title')}</h1>
+        <p:messages id="messages" showDetail="true" autoUpdate="true" closable="true" />
+        <br/> 
+        <p:tabView id="view" style="border:none;">
+            <p:tab id="hostTab"  title="#{res.get('hostTab')}">
+                <h:form id="hostTable">
+                    <p:toolbar>  
+                        <p:toolbarGroup align="right">  
+                            <p:commandButton disabled="#{user.type!=2}" id="addLink" value="#{global.get('add')}" icon="addIcon" immediate="true" update="marsHosts" action="sync_add_mars_host?faces-redirect=true"/>  
+                        </p:toolbarGroup> 
+                    </p:toolbar>
+                    <p:dataTable id="marsHosts" var="marsHost" value="#{configRemoteMarsHost.marsHosts}" emptyMessage="#{global.get('emptyMessage')}" >
+                        <p:column headerText="#{res.get('ip')}">  
+                            <h:outputText value="#{marsHost.ip}" />  
+                        </p:column>     
+                        <p:column headerText="#{res.get('operation')}"  style=" white-space: nowrap;">
+                            <p:graphicImage value="../resources/common/picture/edit.png" width="16" height="16" style="vertical-align:middle;"/>
+                            <p:commandLink disabled="#{user.type!=2}" id="modifyButton" value="#{res.get('modify')}" immediate="true" update="marsHosts" action="#{configRemoteMarsHost.modifyMarsHost()}" style="vertical-align:middle;">
+                                <f:setPropertyActionListener value="#{marsHost}" target="#{configRemoteMarsHost.selected}" />
+                            </p:commandLink>
+                            <p:spacer width="10"/>
+                            <p:graphicImage value="../resources/common/picture/delete.png"  width="16" height="16" style=" vertical-align:middle;"/>
+                            <p:commandLink disabled="#{user.type!=2}" id="deleteButton" value="#{global.get('delete')}" action="#{configRemoteMarsHost.judgeCanDelete()}" update=":view:confirm">
+                                <f:setPropertyActionListener value="#{marsHost}" target="#{configRemoteMarsHost.selected}" />
+                            </p:commandLink>
+                        </p:column>
+                    </p:dataTable>
+                </h:form>
+                <h:form id="confirm">
+                    <util:confirm  uid="deleteHost" mess="#{res.get('dodelete')}#{configRemoteMarsHost.selectedIP}#{res.get('ma')}" action="#{configRemoteMarsHost.deleteMarsHost()}" update=":view:hostTable:marsHosts">
+                    </util:confirm>
+                </h:form>
+            </p:tab>
+            <p:tab id="jobTab" title="#{res.get('copyJob')}">
+                <h:form >
+                    <p:dataTable id="syncinfo" value="#{syncInformation.syncInfos}" var="sync"  emptyMessage="#{global.get('emptyMessage')}" >
+                        <p:column headerText="#{res.get('fileSystem')}">  
+                            <h:outputText value="#{sync.sourceFileSystem}" />  
+                        </p:column>     
+                        <p:column headerText="#{res.get('status')}">  
+                            <h:outputText value="#{sync.status}" />  
+                        </p:column> 
+                        <p:column headerText="#{res.get('speed')}">  
+                            <h:outputText value="#{sync.strSyncSizeSpeed}" />  
+                        </p:column> 
+                        <p:column headerText="#{res.get('targetFileSystem')}">  
+                            <h:outputText value="#{sync.targetFileSystem}" />  
+                        </p:column>     
+                        <p:column headerText="#{res.get('targetHost')}">  
+                            <h:outputText value="#{sync.targetIP}" />  
+                        </p:column> 
+                    </p:dataTable>
+                    <!--</p:panel>-->
+                    <br/>
+                    <p:panel style="border-color: transparent;text-align: center" >
+                        <p:commandButton  value="#{global.get('update')}" icon="updateIcon"  action="#{syncInformation.update()}" update="syncinfo"  >
+                        </p:commandButton>
+                    </p:panel>
+                </h:form>
+            </p:tab>
+        </p:tabView>
+
+        <p:ajaxStatus style="width:64px;height:64px;position:fixed;right:5px;bottom:5px">  
+            <f:facet name="start">  
+                <p:graphicImage value="../resources/common/picture/loading.gif" />  
+            </f:facet>  
+            <f:facet name="complete">  
+                <h:outputText value="" />  
+            </f:facet>  
+        </p:ajaxStatus>
+    </h:body>
+</ui:composition>

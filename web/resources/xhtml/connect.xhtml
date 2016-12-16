@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="GBK"?>
+<!--
+To change this template, choose Tools | Templates
+and open the template in the editor.
+-->
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.1//EN" "http://www.w3.org/TR/xhtml11/DTD/xhtml11.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:composite="http://java.sun.com/jsf/composite"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
+
+    <composite:interface>
+        <composite:attribute name="uid" required="true"/>
+        <composite:editableValueHolder name="userid"/>
+        <composite:editableValueHolder name="password"/>
+        <composite:editableValueHolder name="anony"/>
+        <composite:attribute name="userid"/>
+        <composite:attribute name="password"/>
+        <composite:attribute name="anony"/>      
+        <composite:attribute name="update" />
+        <composite:attribute name="isrender" />
+        <composite:attribute name="connectAction" method-signature="java.lang.String action()"/>  
+        <composite:attribute name="closeAction" method-signature="java.lang.String action()"/>  
+        <composite:actionSource name="connect"  targets="loginButton"/>  
+    </composite:interface>  
+
+    <!-- IMPLEMENTATION -->  
+    <composite:implementation> 
+        <p:dialog id="connect" header="授权用户登录远程主机" widgetVar="#{cc.attrs.uid}"
+                  width="350" modal="true" focus="loginButton">
+            <h:panelGrid id="fresh" style="width: 100%;">
+                <h:panelGrid id="input" columns="2">
+                    <h:outputLabel value="用户名：" />
+                    <p:inputText disabled="#{cc.attrs.anony}" value="#{cc.attrs.userid}" id="username" style="width: 200px;height: 28px;"/>
+
+                    <h:outputLabel escape="false" value="密码：" />  
+                    <p:password disabled="#{cc.attrs.anony}" value="#{cc.attrs.password}" id="password" style="width: 200px;height: 28px;"/>
+                </h:panelGrid>
+                <h:panelGrid columns="2">
+                    <p:selectBooleanCheckbox value="#{cc.attrs.anony}">
+                        <p:ajax event="change" update="input"/>
+                    </p:selectBooleanCheckbox>
+                    <h:outputLabel value="匿名登录"/>
+                </h:panelGrid>
+                <h:panelGroup id="err">
+                    <h:outputLabel id="text1" value="* " style="color: #cc3333;font-size:16pt;font-weight: bold;" rendered="#{cc.attrs.isrender}"/>
+                    <h:outputLabel id="text2"  value="用户名或密码错误，请重新输入。" style="color: #cc3333;font-size:12pt;font-weight: bold;"  rendered="#{cc.attrs.isrender}"/>
+                </h:panelGroup>
+            </h:panelGrid>
+            <h:panelGrid  columns="1" style="text-align : center; width: 100%;"> 
+                <p:row>
+                    <p:commandButton id="loginButton" value="确定" update="#{cc.attrs.update} fresh" action="#{cc.attrs.connectAction}">
+                    </p:commandButton>
+                    <p:spacer style="width: 10px; height: 5px"/>
+                    <p:commandButton id="cancelButton" value="取消" action="#{cc.attrs.closeAction}" update="connect"  oncomplete="#{cc.attrs.uid}.hide();" />
+                </p:row>
+            </h:panelGrid>
+        </p:dialog>
+    </composite:implementation> 
+</html>

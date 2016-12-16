@@ -1,0 +1,257 @@
+<?xml version="1.0" encoding="GBK"?>
+<!--
+To change this template, choose Tools | Templates
+and open the template in the editor.
+-->
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.1//EN" "http://www.w3.org/TR/xhtml11/DTD/xhtml11.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:p="http://primefaces.org/ui"
+      template="../template/framework.xhtml"
+      xmlns:util="http://java.sun.com/jsf/composite/xhtml">
+    <h:head>
+        <link href="./../resources/common/css/default.css" rel="stylesheet" type="text/css" />
+        <link href="./../resources/common/css/cssIcon.css" rel="stylesheet" type="text/css" />
+    </h:head>
+    <h:body id="mybody">            
+
+        <h1 class="title ui-widget-header ui-corner-all">#{res.get('title')}</h1>
+        <!--<p:messages showSummary="true" showDetail="false" autoUpdate="true" closable="true" />-->
+        <p:messages showSummary="true" showDetail="false" autoUpdate="true" closable="true" />
+        <br/>
+        <!--<p:panel style="text-align: left;border-color: transparent;" >rendered="{snapshotlist.rollingRender}" -->
+        <p:tabView id="view" style="border:none;">
+            <p:tab  title="快照">
+                <h:form id="form1" >
+                    <h:panelGrid columns="2" >
+                        <h:outputLabel id="label" rendered="#{snapshotlist.isRollbacking}" value="正在回滚中..." />
+                        <p:ajaxStatus   id="rollingstatus" rendered="#{snapshotlist.rollingRender}" style="width:16px;height:16px;" >  
+                            <f:facet name="start">  
+                                <p:graphicImage value="../resources/common/picture/ajaxloadingbar.gif" />  
+                            </f:facet>
+                            <f:facet name="complete">  
+                                <p:graphicImage value="../resources/common/picture/ajaxloadingbar.gif" />  
+                            </f:facet>
+                        </p:ajaxStatus>
+                    </h:panelGrid>
+                    <p:poll  autoStart="#{snapshotlist.pollAutoStart}" widgetVar="rollbackpoll" listener="#{snapshotlist.checkRollbacking()}"   interval="3" update="form1 :view:form2 " />
+                    <br/>
+                    <p:toolbar >
+                        <p:toolbarGroup align="right">
+                            <p:commandButton disabled="#{user.type!=2 or snapshotlist.addSnapDisabled or snapshotlist.isRollbacking }"  id="add" value="添加手工快照" icon="addIcon" action="#{snapshotlist.doBeforeAddSnap()}"   />
+                            <p:spacer width="5" />
+                            <p:commandButton disabled="#{user.type!=2 or snapshotlist.autoConfigDisabled or snapshotlist.isRollbacking}"  value="自动快照配置" icon="setIcon" action="#{snapshotlist.doBeforeConfigAutoSnap()}"   />
+                        </p:toolbarGroup>  
+                    </p:toolbar>
+                    <div style="overflow-x: auto; width: 100%; padding-bottom: 14px;">
+                        <p:dataTable emptyMessage="#{global.get('emptyMessage')}" id="snaps" value="#{snapshotlist.snaps}"  var="snap" paginator="true" rows="10"     >
+                            <p:column headerText="#{res.get('name')}"   >  
+                                <h:outputText value="#{snap.strName}"/>  
+                            </p:column>
+                            <p:column headerText="#{res.get('type')}" style="white-space: nowrap" >  
+                                <h:outputText value="#{snap.type}"/>  
+                            </p:column>
+                            <p:column headerText="#{res.get('createTime')}"  style="white-space: nowrap" >  
+                                <h:outputText value="#{snap.createdTime}"/>  
+                            </p:column>
+                            <p:column headerText="大小" style="white-space: nowrap" >
+                                <h:outputText value="#{snap.strUsed}B" />
+                            </p:column>
+                            <p:column headerText="#{global.get('operation')}" style="white-space: nowrap"  >
+                                <p:graphicImage value="../resources/common/picture/rollback.png" rendered="#{snap.rollRender}"  style=" vertical-align:middle;" height="16" width="16" />
+                                <p:spacer height="10" width="3" rendered="#{snap.rollRender}"  />
+                                <p:commandLink  id="setButton" value="回滚"  rendered="#{snap.rollRender}" disabled="#{user.type!=2  or snapshotlist.isRollbacking or snapshotlist.rollDisabled}" immediate="true" style=" vertical-align:middle;" onclick="rollBack.show();"> 
+                                    <f:setPropertyActionListener value="#{snap}"  target="#{snapshotlist.selectSnap}" /> 
+                                </p:commandLink>
+                                <p:spacer height="10" width="8" rendered="#{snap.saveRollRender and snap.rollRender }"/>
+                                <!--rendered="{snap.type == 手工 }"-->
+                                <p:graphicImage value="../resources/common/picture/save.png" rendered="#{snap.saveRollRender}"  style=" vertical-align:middle;" height="16" width="16" />
+                                <p:spacer height="10" width="3"  rendered="#{snap.saveRollRender}" />
+                                <p:commandLink  value="保存回滚" rendered="#{snap.saveRollRender}" disabled="#{user.type!=2 or snapshotlist.isRollbacking or snapshotlist.saveRollDisabled}" immediate="true" style=" vertical-align:middle;" onclick="saveRoll.show();"> 
+                                    <f:setPropertyActionListener value="#{snap}"  target="#{snapshotlist.selectSnap}" /> 
+                                </p:commandLink>
+                                <p:spacer height="10" width="8" rendered="#{snap.cancelRollRender}"  />
+                                <!--rendered="{snap.type == 手工 }rendered="{snap.type == res.get('manual')  } " "-->
+                                <p:graphicImage value="../resources/common/picture/cancle.png" rendered="#{snap.cancelRollRender}"  style=" vertical-align:middle;" height="16" width="16" />
+                                <p:spacer height="10" width="3" rendered="#{snap.cancelRollRender}" />
+                                <p:commandLink  value="取消回滚" rendered="#{snap.cancelRollRender}" disabled="#{user.type!=2 or snapshotlist.isRollbacking or snapshotlist.cancelRollDisabled}" immediate="true" style=" vertical-align:middle;" onclick="cancelRoll.show();"> 
+                                    <f:setPropertyActionListener value="#{snap}"  target="#{snapshotlist.selectSnap}" /> 
+                                </p:commandLink>
+                                <p:spacer height="10" width="8" />
+                                <p:graphicImage rendered="#{snap.type == res.get('manual') and snap.deleteRender }"   height="16"  width="16" style="border-color: transparent;vertical-align: middle"   value="../resources/common/picture/delete.png" />  
+                                <p:spacer height="10" width="3" />
+                                <p:commandLink style="vertical-align: middle" rendered="#{snap.type == res.get('manual') and snap.deleteRender }"  disabled="#{(user.type!=2) or (snapshotlist.deleteDisabled) or (snapshotlist.isRollbacking)}" value="#{global.get('delete')}"  onclick="delSnap.show();"  >
+                                    <f:setPropertyActionListener value="#{snap}"  target="#{snapshotlist.selectSnap}" />                    
+                                </p:commandLink>
+                            </p:column>
+
+                        </p:dataTable>
+                    </div>
+
+                    <!--</p:panel>-->
+
+                    <!--        localtable remotetable    </p:panel>-->
+                    <p:ajaxStatus id="globalstatus" rendered="#{snapshotlist.loadingRender}" style="width:64px;height:64px;position:fixed;right:5px;bottom:5px">  
+                        <f:facet name="start">  
+                            <p:graphicImage value="../resources/common/picture/loading.gif" />  
+                        </f:facet>  
+
+                        <f:facet name="complete">  
+                            <h:outputText value="" />  
+                        </f:facet>  
+                    </p:ajaxStatus>
+                </h:form>
+            </p:tab>
+            <p:tab id="sync"   title="复制">
+                <h:form id="form2" >
+                    <!--                    <h:panelGrid columns="3" >
+                                            <h:outputLabel  value="复制类型："   />  
+                                            <p:spacer width="5" />
+                                            <p:selectOneMenu id="style" value="{synclist.selectType}" style="min-width: 120px" >
+                                                <p:ajax event="change" listener="{synclist.listen()}" update="synctable" />
+                                                <f:selectItem itemLabel="本地复制" itemValue="1" />
+                                                <f:selectItem itemLabel="远程复制" itemValue="2" />
+                                            </p:selectOneMenu> 
+                                        </h:panelGrid>-->
+                    <!--<h:panelGrid id="data" width="710" > rendered="{synclist.syncTargetOrNot}"-->
+                    <h:panelGrid  rendered="#{synclist.syncTargetOrNot}" columns="3" >
+                        <h:outputLabel  value="正在被复制" />
+                        <p:spacer width="10" height="10" />
+                        <p:commandButton value="停止复制" disabled="#{user.type!=2 or snapshotlist.isRollbacking}"   onclick="stopsync.show();" />
+                    </h:panelGrid>
+                    <br/>
+                    <p:toolbar >
+                        <p:toolbarGroup align="right">
+                            <p:commandButton disabled="#{user.type!=2 or snapshotlist.isRollbacking or synclist.addLocalSyncDisable}"   value="添加本地复制目标" icon="addIcon" action="#{synclist.addLocalSync()}"  />
+                            <p:spacer width="5" />
+                            <p:commandButton disabled="#{user.type!=2 or snapshotlist.isRollbacking or synclist.addRemoteSyncDisable }"  value="添加远程复制目标" icon="addIcon"  action="#{synclist.addRemoteSync()}"  />
+                        </p:toolbarGroup>  
+                    </p:toolbar>
+                    <div style="overflow-x: auto; width: 100%; padding-bottom: 14px;">
+                        <p:dataTable emptyMessage="#{global.get('emptyMessage')}" id="synctable" value="#{synclist.syncList}" var="sync" >
+                            <p:column headerText="目标共享目录" >
+                                #{sync.targetFileSystem}
+                            </p:column>
+                            <p:column headerText="目标主机" style="white-space: nowrap"  >
+                                #{sync.targetIP} 
+                            </p:column>
+                            <p:column  headerText="上一次复制的快照" >
+                                #{sync.lastSnap} 
+                            </p:column>
+                            <p:column headerText="状态" style="white-space: nowrap"  >
+                                #{sync.status}
+                            </p:column>
+                            <p:column headerText="操作" style="white-space: nowrap"  >
+                                <p:graphicImage rendered="#{sync.start}"    height="16"  width="16" style="border-color: transparent;vertical-align: middle"   value="../resources/common/picture/start.png" />  
+                                <!--<p:spacer height="10" width="1" /> onclick="startsync.show();" -->
+                                <p:commandLink  style="vertical-align: middle" rendered="#{sync.start}"   disabled="#{user.type!=2 or snapshotlist.isRollbacking or synclist.startSyncDisable}" value="开始" actionListener="#{synclist.checkBeforeStartSync(sync)}"   >
+                                    <f:setPropertyActionListener value="#{sync}"  target="#{synclist.selectSync}" />                    
+                                </p:commandLink>
+                                <p:graphicImage rendered="#{sync.stop}"    height="17"  width="17" style="border-color: transparent;vertical-align: middle"   value="../resources/common/picture/stop.png" />  
+                                <!--<p:spacer height="10" width="1" /> onclick="startsync.show();" -->
+                                <p:commandLink  style="vertical-align: middle" rendered="#{sync.stop}"   disabled="#{user.type!=2 or snapshotlist.isRollbacking or synclist.stopSyncDisable }" value="停止"   onclick="sourcestopsync.show();" >
+                                    <f:setPropertyActionListener value="#{sync}"  target="#{synclist.selectSync}" />                    
+                                </p:commandLink>
+                                <p:spacer height="10" width="10" />
+                                <p:graphicImage rendered="#{sync.suspend}"    height="16"  width="16" style="border-color: transparent;vertical-align: middle"   value="../resources/common/picture/pause.png" />  
+                                <!--<p:spacer height="10" width="3" />-->
+                                <p:commandLink  style="vertical-align: middle" rendered="#{sync.suspend}"  disabled="#{user.type!=2 or sync.suspendDisabled or snapshotlist.isRollbacking or synclist.suspendSyncDisable }" value="暂停" onclick="suspendsync.show()" >
+                                    <f:setPropertyActionListener value="#{sync}"  target="#{synclist.selectSync}" />                    
+                                </p:commandLink>
+                                <!--<p:spacer height="10" width="10" />-->
+                                <p:graphicImage rendered="#{sync.resume}"    height="16"  width="16" style="border-color: transparent;vertical-align: middle"   value="../resources/common/picture/start.png" />  
+                                <!--<p:spacer height="10" width="1" /> onclick="startsync.show();" -->
+                                <p:commandLink  style="vertical-align: middle" rendered="#{sync.resume}"   disabled="#{user.type!=2 or snapshotlist.isRollbacking or synclist.resumeSyncDisable }" value="恢复"  actionListener="#{synclist.checkBeforeResumeSync(sync)}" >
+                                    <f:setPropertyActionListener value="#{sync}"  target="#{synclist.selectSync}" />                    
+                                </p:commandLink>
+                                <p:spacer height="10" width="10" />
+                                <p:graphicImage   height="16"  width="16" style="border-color: transparent;vertical-align: middle"   value="../resources/common/picture/delete.png" />  
+                                <p:spacer height="10" width="3" />
+                                <p:commandLink  style="vertical-align: middle"   disabled="#{user.type!=2 or sync.deleteDisabled or snapshotlist.isRollbacking or synclist.deleteSyncDisable }" value="#{global.get('delete')}" onclick="deletesync.show();"   >
+                                    <f:setPropertyActionListener value="#{sync}"  target="#{synclist.selectSync}" />                    
+                                </p:commandLink>
+                            </p:column>
+                        </p:dataTable>
+                    </div>
+
+                    <!--                        <p:dataTable rendered="{syncConfig.remoteRendered}" id="remotetable" value="{synclist.remoteList}" var="remote" >
+                                                <p:column headerText="目标共享目录" >
+                                                    {remote.targetFileSystem}
+                                                </p:column>
+                                                <p:column headerText="目标主机" >
+                                                    <h:outputText value="{remote.targetIP}"/>  
+                                                </p:column>
+                                                <p:column headerText="上一个快照" >
+                                                    {remote.lastSnap} 
+                                                </p:column>
+                                                <p:column headerText="操作" >
+                                                    <p:graphicImage   height="16"  width="16" style="border-color: transparent;vertical-align: middle"   value="../resources/common/picture/start.png" />  
+                                                    <p:spacer height="10" width="3" />
+                                                    <p:commandLink  style="vertical-align: middle"   disabled="{user.type!=2}" value="开始"  onclick="startsync.show();"  >
+                                                    </p:commandLink>
+                                                    <p:spacer height="10" width="10" />
+                                                    <p:graphicImage   height="16"  width="16" style="border-color: transparent;vertical-align: middle"   value="../resources/common/picture/delete.png" />  
+                                                    <p:spacer height="10" width="3" />
+                                                    <p:commandLink  style="vertical-align: middle"   disabled="{user.type!=2}" value="{global.get('delete')}"   >
+                                                    </p:commandLink>
+                                                </p:column>
+                                            </p:dataTable>-->
+                    <!--</h:panelGrid>-->
+                </h:form>
+            </p:tab>
+
+        </p:tabView>
+        <p:panel  style="width: 700px;text-align: center;border-color: transparent" >
+            <p:commandButton value="#{global.get('return')}" icon="cancleIcon"  action="nas_path?faces-redirect=true" />
+        </p:panel> 
+
+        <h:form>
+            <util:confirm  uid="delSnap" mess="确实要删除快照吗？" action="#{snapshotlist.deleteSnap()}" update=":view:form1:snaps"  >
+            </util:confirm>
+        </h:form>
+        <h:form>
+            <util:confirm  uid="rollBack" mess="回滚操作将会使共享目录无法访问，是否继续？" action="#{snapshotlist.rollBackSnap()}" update=":view:form1 :view:form2 :view:form1:globalstatus"  >
+            </util:confirm>
+        </h:form>
+        <h:form>
+            <util:confirm  uid="afterRoll" mess="回滚操作已完成，是否开启共享功能并上线共享目录？" action="#{snapshotlist.doAfterRollBack()}" update=":view:form1"  >
+            </util:confirm>
+        </h:form>
+        <h:form>
+            <util:confirm  uid="saveRoll" mess="保存回滚状态后，保留的回滚快照信息将被删除，不能进行恢复操作，确实要保存吗？" action="#{snapshotlist.saveRoll()}" update=":view:form1 :view:form2"  >
+            </util:confirm>
+        </h:form>
+        <h:form>
+            <util:confirm  uid="cancelRoll" mess="确实要取消回滚吗？" action="#{snapshotlist.cancelRoll()}" update=":view:form1 :view:form2"  >
+            </util:confirm>
+        </h:form>
+        <h:form>
+            <util:confirm  uid="startsync" mess="目标共享目录数据将被覆盖，是否继续？" action="#{synclist.startSYNC()}" update=":view:form2:synctable :view:form1:snaps"  >
+            </util:confirm>
+        </h:form>
+        <h:form>
+            <util:confirm  uid="suspendsync" mess="确实要暂停复制？" action="#{synclist.suspendSYNC()}" update=":view:form2:synctable"  >
+            </util:confirm>
+        </h:form>
+        <h:form>
+            <util:confirm  uid="stopsync" mess="确实要停止复制？" action="#{synclist.stopTargetSync()}" update=":view:form2 :view:form1"  >
+            </util:confirm>
+        </h:form>
+        <h:form>
+            <util:confirm  uid="deletesync" mess="确实要删除复制？" action="#{synclist.deleteSYNC()}" update=":view:form2:synctable"  >
+            </util:confirm>
+        </h:form>
+        <h:form>
+            <util:confirm  uid="sourcestopsync" mess="确实要停止复制？" action="#{synclist.stopSourceSync()}" update=":view:form2:synctable :view:form1:snaps"  >
+            </util:confirm>
+        </h:form>
+        <h:form>
+            <util:confirm  uid="resumesync" mess="确实要恢复复制？" action="#{synclist.resumeSync()}" update=":view:form2:synctable"  >
+            </util:confirm>
+        </h:form>
+        <!--id="globalstatus" -->
+
+    </h:body>
+</html>

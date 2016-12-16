@@ -1,0 +1,74 @@
+<serviceGroup>
+    <service name="CDP" scope="transportsession">
+        <parameter name="ServiceClass">com.marstor.msa.axis2.cdp.impl.AxisCDPInterfaceImpl</parameter>
+        <messageReceivers>
+            <messageReceiver mep="http://www.w3.org/2004/08/wsdl/in-only"
+                             class="org.apache.axis2.rpc.receivers.RPCInOnlyMessageReceiver"/>
+            <messageReceiver mep="http://www.w3.org/2004/08/wsdl/in-out"
+                             class="org.apache.axis2.rpc.receivers.RPCMessageReceiver"/>
+        </messageReceivers>
+        <!--
+    <operation name="hello">
+        <messageReceiver class="org.apache.axis2.rpc.receivers.RPCMessageReceiver"/>
+        <actionMapping>urn:hello</actionMapping>
+    </operation>
+        -->
+    </service>
+
+    <service name="SYNC" scope="transportsession">
+        <parameter name="ServiceClass">com.marstor.msa.axis2.sync.impl.AxisSyncInterfaceImpl</parameter>
+        <messageReceivers>
+            <messageReceiver mep="http://www.w3.org/2004/08/wsdl/in-only"
+                             class="org.apache.axis2.rpc.receivers.RPCInOnlyMessageReceiver"/>
+            <messageReceiver mep="http://www.w3.org/2004/08/wsdl/in-out"
+                             class="org.apache.axis2.rpc.receivers.RPCMessageReceiver"/>
+        </messageReceivers>
+    </service>
+    <service name="Transfer">
+        <parameter name="ServiceClass">com.marstor.msa.sync.web.impl.AxisTransferImpl</parameter>
+        <messageReceivers>
+            <messageReceiver mep="http://www.w3.org/2004/08/wsdl/in-only"
+                             class="org.apache.axis2.rpc.receivers.RPCInOnlyMessageReceiver"/>
+            <messageReceiver mep="http://www.w3.org/2004/08/wsdl/in-out"
+                             class="org.apache.axis2.rpc.receivers.RPCMessageReceiver"/>
+        </messageReceivers>
+    </service>
+    <!--
+    <service name="MDU" scope="transportsession">
+        <parameter name="ServiceClass">com.marstor.msa.mdu.axis2.impl.AxisMDUInterfaceImpl</parameter>
+        <messageReceivers>
+            <messageReceiver mep="http://www.w3.org/2004/08/wsdl/in-only"
+                             class="org.apache.axis2.rpc.receivers.RPCInOnlyMessageReceiver"/>
+            <messageReceiver mep="http://www.w3.org/2004/08/wsdl/in-out"
+                             class="org.apache.axis2.rpc.receivers.RPCMessageReceiver"/>
+        </messageReceivers>
+    </service>
+    -->
+<!--    <service name="MessgaeService" scope="transportsession">
+        <parameter name="ServiceClass">com.marstor.msa.common.axis2.impl.AxisMessageImpl</parameter>
+        <messageReceivers>
+            <messageReceiver mep="http://www.w3.org/2004/08/wsdl/in-only"
+                             class="org.apache.axis2.rpc.receivers.RPCInOnlyMessageReceiver"/>
+            <messageReceiver mep="http://www.w3.org/2004/08/wsdl/in-out"
+                             class="org.apache.axis2.rpc.receivers.RPCMessageReceiver"/>
+        </messageReceivers>
+    </service>-->
+<!--    <service name="SCSIService"  scope="transportsession">
+        <parameter name="ServiceClass">com.marstor.msa.common.axis2.impl.AxisScsiInterfaceImpl</parameter>
+        <messageReceivers>
+            <messageReceiver mep="http://www.w3.org/2004/08/wsdl/in-only"
+                                         class="org.apache.axis2.rpc.receivers.RPCInOnlyMessageReceiver"/>
+            <messageReceiver mep="http://www.w3.org/2004/08/wsdl/in-out"
+                                         class="org.apache.axis2.rpc.receivers.RPCMessageReceiver"/>
+        </messageReceivers>
+    </service>-->
+<!--	<service name="LoginService" scope="transportsession">
+        <parameter name="ServiceClass">com.marstor.msa.common.axis2.impl.AxisLoginServices</parameter>
+        <messageReceivers>
+            <messageReceiver mep="http://www.w3.org/2004/08/wsdl/in-only"
+                             class="org.apache.axis2.rpc.receivers.RPCInOnlyMessageReceiver"/>
+            <messageReceiver mep="http://www.w3.org/2004/08/wsdl/in-out"
+                             class="org.apache.axis2.rpc.receivers.RPCMessageReceiver"/>
+        </messageReceivers>
+    </service>-->
+</serviceGroup>

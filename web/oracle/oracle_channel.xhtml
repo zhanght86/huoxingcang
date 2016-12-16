@@ -1,0 +1,90 @@
+<?xml version="1.0" encoding="GBK"?>
+<!--
+To change this template, choose Tools | Templates
+and open the template in the editor.
+-->
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.1//EN" "http://www.w3.org/TR/xhtml11/DTD/xhtml11.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:f="http://java.sun.com/jsf/core">
+
+    <h:head>
+        <link href="./../resources/common/css/default.css" rel="stylesheet" type="text/css" />
+        <link href="./../resources/common/css/cssIcon.css" rel="stylesheet" type="text/css" />
+    </h:head>
+    <h:body style="overflow-x: hidden">
+        <h:form id="form">
+            <h1 class="title ui-widget-header ui-corner-all">#{global.get('backuptitle')}#{res.get('title')}</h1>
+            <p:messages id="message" for="message" autoUpdate="true" redisplay="true" showDetail="true" closable="true" /><br/>
+            
+            <h:panelGroup>
+                <h:outputLabel value="#{res.get('databaseAlias')}"/>
+                <p:spacer width="18px" height="0px"/>
+                <p:inputText value="#{channelBean.instance.DBName}" disabled="true"/><br/><br/> 
+
+                <h:outputLabel value="#{res.get('userName')}"/>
+                <p:spacer width="50px" height="0px" />
+                <p:inputText value="#{channelBean.instance.user}" disabled="true"/><br/><br/>
+
+                <h:outputLabel value="#{res.get('password')}"/>
+                <p:spacer width="66px" height="0px" />
+                <p:password value="#{channelBean.instance.pass}" redisplay="true" disabled="true"/><br/> 
+
+                <h:outputLabel value="${res.get('netServiceName')} " style="position: relative; top: 2px;" /> 
+                <p:spacer width="14px" height="0px" />
+                <p:selectOneMenu id="select" value="#{channelBean.instance.netServiceName}" style="min-width: 187px; background-attachment: fixed;
+                                  background-position-y: 1px; position: relative; top:10px;">  
+                    <f:selectItems value="#{NSNameBean.netServiceNameList}" /> 
+                    <p:ajax  listener="#{channelBean.changeNetName()}"    update="@widgetVar(channeltable)"></p:ajax>
+                </p:selectOneMenu>  
+                <p:spacer width="38px" />
+                <p:commandButton id="testButton" value="${res.get('test')}"  icon="selectIcon"
+                                 action="#{channelBean.testConnect()}" update="message @widgetVar(channeltable)" 
+                                 style="position: relative; top:4px;" />
+
+            </h:panelGroup >
+            <div  style="position: relative; top: 15px;">
+                <p:toolbar >  
+                    <p:toolbarGroup align="right">  
+                        <p:commandButton id="addLink" value="${global.get('add')}" icon="addIcon"
+                                         action="oracle_channel_add?faces-redirect=true" /> 
+                    </p:toolbarGroup> 
+                </p:toolbar>
+
+                <p:dataTable id="diskList" widgetVar="channeltable"  var="diskList" value="#{channelBean.instance.list}" emptyMessage="#{global.get('emptyMessage')}" >  
+                    <p:column headerText="#{res.get('channel')}" disabledSelection="true"  style="text-align:center">  
+                        <h:outputText value="#{diskList.name}"/>  
+                    </p:column>
+                    <p:column headerText="#{res.get('netServiceName')}" disabledSelection="true"  style="text-align:center">  
+                        <h:outputText value="#{diskList.NSName}"/>  
+                    </p:column>
+                    <p:column headerText="#{res.get('route')}" disabledSelection="true"  style="text-align:center">  
+                        <h:outputText value="#{diskList.path}"/>  
+                    </p:column>
+                    <p:column headerText="#{global.get('operation')}" style="text-align: center;">
+                        <p:graphicImage value="../resources/common/picture/delete.png" style=" vertical-align:middle;"/>
+                        <p:commandLink id="deleteButton" value="${global.get('delete')}" action="#{channelBean.deleteChannel()}" 
+                                       style=" vertical-align:middle;" update="diskList">
+                            <f:setPropertyActionListener value="#{diskList}" target="#{channelBean.SChannel}" />
+                        </p:commandLink>
+                    </p:column>
+                </p:dataTable>
+            </div>
+            <div style="position: relative; top: 50px; left: 270px;">
+                <p:commandButton value="${global.get('save')}"  icon="saveIcon" update="form" action="#{channelBean.modifyDatabase()}" />
+                <p:spacer width="8px"/>
+                <p:commandButton value="${global.get('return')}" icon="cancleIcon" action="#{channelBean.backToRestore()}"/>
+            </div>
+        </h:form>
+        <p:ajaxStatus style="width:64px;height:64px;position:fixed;right:5px;bottom:5px">  
+            <f:facet name="start">  
+                <p:graphicImage value="../resources/common/picture/loading.gif" />  
+            </f:facet>  
+
+            <f:facet name="complete">  
+                <h:outputText value="" />  
+            </f:facet>  
+        </p:ajaxStatus>
+    </h:body>
+</html>

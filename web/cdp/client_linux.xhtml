@@ -1,0 +1,200 @@
+<?xml version="1.0" encoding="GBK"?>
+<!--
+To change this template, choose Tools | Templates
+and open the template in the editor.
+-->
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.1//EN" "http://www.w3.org/TR/xhtml11/DTD/xhtml11.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:p="http://primefaces.org/ui"                
+                xmlns:util="http://java.sun.com/jsf/composite/xhtml">
+
+    <h:head>
+        <link href="./../resources/common/css/default.css" rel="stylesheet" type="text/css" />
+        <link href="./../resources/common/css/cssIcon.css" rel="stylesheet" type="text/css" />
+        <style type="text/css">
+            .position{
+                margin-left: -21px;
+                padding-left: -21px;
+                /*                margin-right: 12px;
+                                padding-right: 12px;*/
+            }
+        </style>
+        <script type="text/javascript">
+            function redirect() {
+                alert("ok");
+                alert(dRestoring);
+
+                var dRestoring = #{linuxClientBean.DRestoring};
+                if (dRestoring) {
+                    window.location.href = ("http://" + #{linuxClientBean.DJumpPara});
+                }
+                window.location.href = "http://www.baidu.com";
+            }
+
+            //window.onload = redirect;
+        </script>
+
+    </h:head>
+    <h:body onload="redirect();">
+        <h:form id="form">
+            <h1 class="title ui-widget-header ui-corner-all">#{global.get('cdp')}${res.get('title')}</h1>
+            <p:messages id="messages" showDetail="true" autoUpdate="true" closable="true" />
+            <br/>
+            <h:panelGrid columns="2" cellpadding="5" >  
+                <h:outputLabel value="${res.get('ip')}"/> 
+                <h:outputLabel value="#{linuxClientBean.ip}" />
+            </h:panelGrid>
+            <br/>
+            
+            <p:accordionPanel id="panel" multiple="true" activeIndex="0,1">
+                <p:tab title="${res.get('p1')}">
+                <p:toolbar>  
+                    <p:toolbarGroup align="right">  
+                        <p:commandButton id="dScan" disabled="#{user.type!=2}" value="${res.get('sd')}" icon="scanIcon" update="disks" action="#{linuxClientBean.scanDisks()}"/> 
+                    </p:toolbarGroup> 
+                </p:toolbar>
+                <div style="overflow-x: auto; width:100%;padding-bottom: 2px !important; padding-bottom: 14px;" class="postion">
+                    <p:treeTable  id="disks" var="object" emptyMessage="#{global.get('emptyMessage')}" value="#{linuxClientBean.root}">  
+                        <p:column headerText="#{res.get('header1')}" style=" width: 100px;" >
+                            <h:outputLabel id="Num" value="#{linuxClientBean.getNum(object)}#{linuxClientBean.addStar(object)}"/> 
+                        </p:column>
+                        <p:column headerText="#{res.get('header2')}" style="white-space:  nowrap" >  
+                            <h:outputLabel id="Size" value="#{linuxClientBean.getSize(object)}"/>                            
+                        </p:column>
+                        <p:column headerText="#{res.get('change1')}" style="white-space:  nowrap" >  
+                            <h:outputLabel id="UsedSize" value="#{linuxClientBean.getUsedSize(object)}"/>                            
+                        </p:column>
+                        <p:column headerText="#{res.get('header3')}" >
+                            <h:outputLabel id="Type" value="#{linuxClientBean.getCDPType(object)}"/>                            
+                        </p:column>
+                        <p:column headerText="#{res.get('header4')}">
+                            <h:outputLabel id="sMirror" value="#{linuxClientBean.getMirror(object)}"/>                            
+                        </p:column>
+                        <p:column headerText="#{res.get('header5')}" >
+                            <h:outputLabel id="dStatus" value="#{linuxClientBean.getStatus(object)}"/>                            
+                        </p:column>
+                        <p:column headerText="#{global.get('operation')}" style="white-space:  nowrap">
+                            <p:graphicImage value="../resources/cdp/mirror.jpg" 
+                                            rendered="#{linuxClientBean.isDisable(object, 1)}" width="16" height="16" style="vertical-align:middle"/>
+                            <p:commandLink id="oMirror" disabled="#{!linuxClientBean.isDisableX(object, 1)}" value="#{linuxClientBean.getO1(object)}"
+                                           rendered="#{linuxClientBean.isDisable(object, 1)}" action="#{linuxClientBean.mirror(object)}" style="vertical-align:middle">
+                                <f:setPropertyActionListener value="#{object}" target="#{linuxClientBean.selected}" />
+                            </p:commandLink>
+                            <p:spacer width="10" rendered="#{linuxClientBean.isDisable(object, 1)}" />
+                            <p:graphicImage value="../resources/common/picture/start.png" rendered="#{linuxClientBean.isDisable(object, 20)}" width="16" height="16" style="vertical-align:middle"/>
+                            <p:graphicImage value="../resources/common/picture/stop.png"  rendered="#{linuxClientBean.isDisable(object, 21)}" width="16" height="16" style="vertical-align:middle"/>
+                            <p:commandLink id="CDP" value="#{linuxClientBean.getO2(object)}" rendered="#{linuxClientBean.isDisable(object, 22)}" update=":form" action="#{linuxClientBean.CDPAction(object)}" style="vertical-align:middle">
+                                <f:setPropertyActionListener value="#{object}" target="#{linuxClientBean.selected}" />
+                            </p:commandLink>
+                            <p:spacer width="10" rendered="#{linuxClientBean.isDisable(object, 22)}"/>
+                            <p:graphicImage value="../resources/cdp/restore.jpg" rendered="#{linuxClientBean.isDisable(object, 3)}" width="16" height="16" style="vertical-align:middle"/>
+                            <p:commandLink id="dRestore"  disabled="#{!linuxClientBean.isDisableX(object, 3)}" value="#{res.get('o3')}" action="#{linuxClientBean.RestoreAction(object)}"  rendered="#{linuxClientBean.isDisable(object, 3)}" style="vertical-align:middle">
+                                <f:setPropertyActionListener value="#{object}" target="#{linuxClientBean.selected}" />
+                            </p:commandLink>
+                            <p:spacer width="10" rendered="#{linuxClientBean.isDisable(object, 3)}" />
+                            <p:graphicImage value="../resources/common/picture/edit.png" rendered="#{linuxClientBean.isDisable(object, 4)}" width="16" height="16" style="vertical-align:middle" />  
+                            <p:commandLink id="dDetails"  value="#{res.get('o4')}" immediate="true" rendered="#{linuxClientBean.isDisable(object, 4)}" action="#{linuxClientBean.DetailsAction(object)}" style="vertical-align:middle">
+                                <f:setPropertyActionListener value="#{object}" target="#{linuxClientBean.selected}" />
+                            </p:commandLink>
+                        </p:column> 
+                    </p:treeTable >
+                </div>
+            </p:tab>
+            <br></br>
+            <p:tab title="${res.get('p2')}">
+                <p:toolbar>  
+                    <p:toolbarGroup align="right">  
+                        <p:commandButton id="vScan" disabled="#{user.type!=2}" value="${res.get('sv')}" icon="scanIcon" update="volumes" action="#{linuxClientBean.scanVolumes()}"/> 
+                    </p:toolbarGroup> 
+                </p:toolbar>
+                <div style="overflow-x: auto; width:100%;padding-bottom: 2px !important; padding-bottom: 14px;" class="postion">
+                    <p:treeTable  id="volumes" var="object" emptyMessage="#{global.get('emptyMessage')}" value="#{linuxClientBean.rootV}" >  
+                        <p:column headerText="#{res.get('header1')}" style=" text-align: left; margin-left: -21px;">
+                            <h:outputLabel id="vNum" value="#{linuxClientBean.getNumV(object)}"/> 
+                        </p:column>
+                        <p:column headerText="#{res.get('header2')}" style="white-space:  nowrap" >  
+                            <h:outputLabel id="vSize" value="#{linuxClientBean.getSizeV(object)}"/>                            
+                        </p:column>
+                        <p:column headerText="#{res.get('change1')}" style="white-space:  nowrap" >  
+                            <h:outputLabel id="vUsedSize" value="#{linuxClientBean.getUsedSizeV(object)}"/>                            
+                        </p:column>
+                        <p:column headerText="#{res.get('header3')}"  >
+                            <h:outputLabel id="vType" value="#{linuxClientBean.getCDPTypeV(object)}"/>                            
+                        </p:column>
+                        <p:column headerText="#{res.get('header4')}"  >
+                            <h:outputLabel id="pMirror" value="#{linuxClientBean.getMirrorV(object)}"/>                            
+                        </p:column>
+                        <p:column headerText="#{res.get('header5')}">
+                            <h:outputLabel id="vStatus" value="#{linuxClientBean.getStatusV(object)}"/>                            
+                        </p:column> 
+                        <p:column headerText="#{global.get('operation')}" style="white-space:  nowrap">
+                            <p:graphicImage value="../resources/cdp/mirror.jpg"  
+                                            rendered="#{linuxClientBean.isDisableV(object, 1)}" width="16" height="16" style="vertical-align:middle"/>
+                            <p:commandLink id="vMirror" value="#{linuxClientBean.getO1V(object)}" update=":form"
+                                           rendered="#{linuxClientBean.isDisableV(object, 1)}" action="#{linuxClientBean.mirrorV(object)}" style="vertical-align:middle">
+                                <f:setPropertyActionListener value="#{object}" target="#{linuxClientBean.selected}" />
+                            </p:commandLink>
+                            <p:spacer width="10" rendered="#{linuxClientBean.isDisableV(object, 1)}" />
+                            <p:graphicImage value="../resources/common/picture/start.png"
+                                            rendered="#{linuxClientBean.isDisableV(object, 20)}" width="16" height="16" style="vertical-align:middle"/>
+                            <p:graphicImage value="../resources/common/picture/stop.png"  
+                                            rendered="#{linuxClientBean.isDisableV(object, 21)}" width="16" height="16" style="vertical-align:middle"/>
+                            <p:commandLink id="vCDP" value="#{linuxClientBean.getO2V(object)}"
+                                           rendered="#{linuxClientBean.isDisableV(object, 22)}" update=":form" action="#{linuxClientBean.CDPActionV(object)}" style="vertical-align:middle">
+                                <f:setPropertyActionListener value="#{object}" target="#{linuxClientBean.selected}" />
+                            </p:commandLink>
+                            <p:spacer width="10" rendered="#{linuxClientBean.isDisableV(object, 22)}"/>
+                            <p:graphicImage value="../resources/cdp/restore.jpg" 
+                                            rendered="#{linuxClientBean.isDisableV(object, 3)}" width="16" height="16" style="vertical-align:middle"/>
+                            <p:commandLink id="vRestore" value="#{res.get('o3')}" action="#{linuxClientBean.RestoreActionV(object)}" 
+                                           rendered="#{linuxClientBean.isDisableV(object, 3)}" style="vertical-align:middle">
+                                <f:setPropertyActionListener value="#{object}" target="#{linuxClientBean.selected}" />
+                            </p:commandLink>
+                            <p:spacer width="10" rendered="#{linuxClientBean.isDisableV(object, 3)}" />
+                            <p:graphicImage value="../resources/common/picture/edit.png"
+                                            rendered="#{linuxClientBean.isDisableV(object, 4)}" width="16" height="16" style="vertical-align:middle" />  
+                            <p:commandLink id="vDetails"  value="#{res.get('o4')}" immediate="true" 
+                                           rendered="#{linuxClientBean.isDisableV(object, 4)}" action="#{linuxClientBean.DetailsActionV(object)}" style="vertical-align:middle">
+                                <f:setPropertyActionListener value="#{object}" target="#{linuxClientBean.selected}" />
+                            </p:commandLink>
+                        </p:column> 
+                    </p:treeTable >
+                </div>
+            </p:tab>
+            </p:accordionPanel>
+            <br></br>
+            <div style="text-align: center;">
+                <p:commandButton id="closeButton" icon="cancleIcon" value="${global.get('return')}"  immediate="true" onclick="javascript: window.location.href = 'clients.xhtml?faces-redirect=true';"/>  
+            </div>
+        </h:form>
+        <h:form>
+            <util:confirm  uid="deleteDiskCDP" mess="#{res.get('confirm0')}" action="#{linuxClientBean.dDelMirror()}" update=":form:panel:disks">
+            </util:confirm>
+            <util:confirm  uid="deletePartitionCDP" mess="#{res.get('confirm1')}" action="#{linuxClientBean.pDelMirror()}" update=":form:panel:disks">
+            </util:confirm>
+            <util:confirm  uid="deleteVolumeCDP" mess="#{res.get('confirm4')}" action="#{linuxClientBean.vDelMirror()}" update=":form">
+            </util:confirm>
+            <util:confirm  uid="stopDiskCDP" mess="#{res.get('confirm2')}" action="#{linuxClientBean.dStopCDP()}" update=":form:panel:disks">
+            </util:confirm>
+            <util:confirm  uid="stopPartitionCDP" mess="#{res.get('confirm3')}" action="#{linuxClientBean.pStopCDP()}" update=":form:panel:disks">
+            </util:confirm>
+            <util:confirm  uid="stopVolumeCDP" mess="#{res.get('confirm5')}" action="#{linuxClientBean.vStopCDP()}" update=":form:panel:volumes">
+            </util:confirm>
+        </h:form>
+        <p:blockUI block="form" widgetVar="bui"/>
+        <p:ajaxStatus style="width:64px;height:64px;position:fixed;right:5px;bottom:5px" onstart="PF('bui').show()" oncomplete="PF('bui').hide()">
+            <f:facet name="start">
+                <p:graphicImage value="../resources/common/picture/loading.gif" />
+            </f:facet>
+
+            <f:facet name="complete">
+                <h:outputText value="" />
+            </f:facet>
+        </p:ajaxStatus>
+        <p:blockUI block="form" widgetVar="bui"/>
+        
+    </h:body>
+</ui:composition>

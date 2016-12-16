@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="GBK"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"  
+      xmlns:h="http://java.sun.com/jsf/html"  
+      xmlns:composite="http://java.sun.com/jsf/composite"
+      xmlns:p="http://primefaces.org/ui">  
+    <!-- INTERFACE -->  
+    <composite:interface>
+        <composite:attribute name="uid" required="true"/>
+        <composite:actionSource name="infoBox:cancelButton"/>
+        <composite:attribute name="action" targets="cancelButton"/>
+    </composite:interface>  
+
+    <!-- IMPLEMENTATION -->  
+    <composite:implementation> 
+        <p:dialog id="infoBox" header="信息" widgetVar="#{cc.attrs.uid}"
+                  width="325" modal="true" resizable="false">
+            <h:panelGrid columns="2" style="text-align : left;">
+                <h:graphicImage value="../resources/common/picture/info.png" style="width: 32px; height: 32px;vertical-align:middle"/>
+                <p:panel style=" border: none; text-align: left;">
+                    <h:outputText value="客户端一致性代理版本较低，请" />
+                    <p:commandLink id="download" disabled="#{user.type!=2}" value="${global.get('download')}"  style=" vertical-align:middle;" ajax="false" >
+                        <p:fileDownload value="#{cdpLevelBean.updateFile}" />
+                    </p:commandLink>
+                    <h:outputText value="并安装升级补丁。" />
+                </p:panel>
+            </h:panelGrid>
+            <h:panelGrid  columns="1" style="text-align : center; width: 300px"> 
+                <p:row>
+                    <p:commandButton id="cancelButton" value="确定" oncomplete="#{cc.attrs.uid}.hide();"/>
+                </p:row>
+            </h:panelGrid>
+        </p:dialog>
+    </composite:implementation>  
+</html>
+

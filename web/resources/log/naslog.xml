@@ -1,0 +1,553 @@
+<?xml version="1.0" encoding="gb2312" ?> 
+<MarsMSA>
+    <ResourceInfo> 
+        <Bean>
+            <Author>张浩</Author>
+            <ResourceID>600001</ResourceID>
+            <Macro>LOG_GET_ALL_VOLUMES_FAILED</Macro>
+            <Chinese>获取所有卷组名称失败，错误：%1</Chinese>
+            <English>Get all volume names failed.Error:%1</English>
+        </Bean>  
+        <Bean>
+            <Author>张浩</Author>
+            <ResourceID>600101</ResourceID>
+            <Macro>LOG_GET_ALL_SHARE_PATHS_FAILED</Macro>
+            <Chinese>获取所有共享目录失败，错误：%1</Chinese>
+            <English>Get all sharepath failed.Error:%1</English>
+        </Bean>   
+         <Bean>
+            <Author>张浩</Author>
+            <ResourceID>600102</ResourceID>
+            <Macro>LOG_CREATE_SHARE_PATH_FAILED</Macro>
+            <Chinese>创建共享目录（共享目录=‘%1’，卷组名称=‘%2’）失败，错误：%3</Chinese>
+            <English>Create sharepath (SharePath='%1',VolumeName='%2')failed.Error:%3</English>
+        </Bean>  
+        <Bean>
+            <Author>张浩</Author>
+            <ResourceID>600103</ResourceID>
+            <Macro>LOG_CREATE_SHARE_PATH_SUCCESS</Macro>
+            <Chinese>创建共享目录（共享目录=‘%1’，卷组名称=‘%2’）成功</Chinese>
+            <English>Create sharepath (SharePath='%1',VolumeName='%2') success</English>
+        </Bean>  
+        <Bean>
+            <Author>张浩</Author>
+            <ResourceID>600104</ResourceID>
+            <Macro>LOG_DELETE_SHARE_PATH_FAILED</Macro>
+            <Chinese>删除共享目录（共享目录=‘%1’，卷组名称=‘%2’）失败，错误：%3</Chinese>
+            <English>Delete sharepath (SharePath='%1',VolumeName='%2') failed.Error:%3</English>
+        </Bean>
+        <Bean>
+            <Author>张浩</Author>
+            <ResourceID>600105</ResourceID>
+            <Macro>LOG_DELETE_SHARE_PATH_SUCCESS</Macro>
+            <Chinese>删除共享目录（共享目录=‘%1’，卷组名称=‘%2’）成功</Chinese>
+            <English>Delete sharepath (SharePath='%1',VolumeName='%2') success</English>
+        </Bean>
+        <Bean>
+            <Author>张浩</Author>
+            <ResourceID>600106</ResourceID>
+            <Macro>LOG_Delete_PATH_FAILED</Macro>
+            <Chinese>删除‘%1’失败，错误：%2</Chinese>
+            <English>Delete '%1' failed.Error:%2 </English>
+        </Bean>
+        <Bean>
+            <Author>张浩</Author>
+            <ResourceID>600107</ResourceID>
+            <Macro>LOG_Delete_PATH_SUCCESS</Macro>
+            <Chinese>删除‘%1’成功</Chinese>
+            <English>Delete '%1' success </English>
+        </Bean>
+        <Bean>
+            <Author>张浩</Author>
+            <ResourceID>600108</ResourceID>
+            <Macro>LOG_SET_SHARE_PATH_OFF_LINE_FAILED</Macro>
+            <Chinese>设置共享目录（共享目录=‘%1’）为离线状态失败，错误：%2</Chinese>
+            <English>Set share path (SharePath='%1') off-line failed.Error:%2 </English>
+        </Bean>
+        <Bean>
+            <Author>张浩</Author>
+            <ResourceID>600109</ResourceID>
+            <Macro>LOG_SET_SHARE_PATH_OFF_LINE_SUCCESS</Macro>
+            <Chinese>设置共享目录（共享目录=‘%1’）为离线状态成功</Chinese>
+            <English>Set share path (SharePath='%1') off-line success.</English>
+        </Bean>
+        <Bean>
+            <Author>张浩</Author>
+            <ResourceID>600110</ResourceID>
+            <Macro>LOG_SET_SHARE_PATH_ON_LINE_FAILED</Macro>
+            <Chinese>设置共享目录（共享目录=‘%1’）为在线状态失败，错误：%2</Chinese>
+            <English>Set share path (SharePath='%1') on-line failed.Error:%2 </English>
+        </Bean>
+        <Bean>
+            <Author>张浩</Author>
+            <ResourceID>600111</ResourceID>
+            <Macro>LOG_SET_SHARE_PATH_ON_LINE_SUCCESS</Macro>
+            <Chinese>设置共享目录（共享目录=‘%1’）为在线状态成功</Chinese>
+            <English>Set share path (SharePath='%1') on-line success.</English>
+        </Bean>
+        <Bean>
+            <Author>张浩</Author>
+            <ResourceID>600201</ResourceID>
+            <Macro>LOG_GET_ALL_ID_MAPS_FAILED</Macro>
+            <Chinese>获取所有ID映射规则失败，错误：%1</Chinese>
+            <English>Get all id map rules failed.Error:%1</English>
+        </Bean>
+        <Bean>
+            <Author>张浩</Author>
+            <ResourceID>600202</ResourceID>
+            <Macro>LOG_CREATE_ID_MAP_FAILED</Macro>
+            <Chinese>创建ID映射规则（Windows系统_%1=‘%2’，Unix系统_%3=‘%4’）失败，错误：%5</Chinese>
+            <English>Create id map rule(Windows_%1='%2',Unix_%3='%4) failed.Error:%5</English>
+        </Bean>
+        <Bean>
+            <Author>张浩</Author>
+            <ResourceID>600203</ResourceID>
+            <Macro>LOG_CREATE_ID_MAP_SUCCESS</Macro>
+            <Chinese>创建ID映射规则（Windows系统_%1=‘%2’，Unix系统_%3=‘%4’）成功</Chinese>
+            <English>Create id map rule(Windows_%1='%2',Unix_%3='%4) success</English>
+        </Bean>
+        <Bean>
+            <Author>张浩</Author>
+            <ResourceID>600204</ResourceID>
+            <Macro>LOG_REMOVE_SPECIFIED_ID_MAP_FAILED</Macro>
+            <Chinese>删除ID映射规则（Windows系统_%1=‘%2’，Unix系统_%3=‘%4’）失败，错误：%5</Chinese>
+            <English>Remove id map rule(Windows_%1='%2',Unix_%3='%4')failed.Error:%5</English>
+        </Bean>
+        <Bean>
+            <Author>张浩</Author>
+            <ResourceID>600205</ResourceID>
+            <Macro>LOG_REMOVE_SPECIFIED_ID_MAP_SUCCESS</Macro>
+            <Chinese>删除ID映射规则（Windows系统_%1=‘%2’，Unix系统_%3=‘%4’）成功</Chinese>
+            <English>Remove id map rule(Windows_%1='%2',Unix_%3='%4')success</English>
+        </Bean>
+        <Bean>
+            <Author>张浩</Author>
+            <ResourceID>600206</ResourceID>
+            <Macro>LOG_REMOVE_ALL_ID_MAPS_FAILED</Macro>
+            <Chinese>删除所有ID映射规则失败，错误：%1</Chinese>
+            <English>Remove all id map rules failed.Error:%1</English>
+        </Bean>
+        <Bean>
+            <Author>张浩</Author>
+            <ResourceID>600207</ResourceID>
+            <Macro>LOG_REMOVE_ALL_ID_MAPS_SUCCESS</Macro>
+            <Chinese>删除所有ID映射规则成功</Chinese>
+            <English>Remove all id map rules success</English>
+        </Bean>
+        <Bean>
+            <Author>张浩</Author>
+            <ResourceID>600301</ResourceID>
+            <Macro>LOG_JOIN_DOMAIN_FAILED</Macro>
+            <Chinese>加入域（用户名=‘%1’,DNS服务器=‘%2’,域名称=‘%3’）失败，错误：%4</Chinese>
+            <English>Join domain(UserName='%1',DNS='%2',DomainName='%3')failed.Error:%4</English>
+        </Bean>
+        <Bean>
+            <Author>张浩</Author>
+            <ResourceID>600302</ResourceID>
+            <Macro>LOG_JOIN_DOMAIN_SUCCESS</Macro>
+            <Chinese>加入域（用户名=‘%1’，DNS服务器=‘%2’，域名称=‘%3’）成功</Chinese>
+            <English>Join domain(UserName='%1',DNS='%2',DomainName='%3')success</English>
+        </Bean>
+        <Bean>
+            <Author>张浩</Author>
+            <ResourceID>600303</ResourceID>
+            <Macro>LOG_GET_JOIN_DOMAIN_PARAMETERS_FAILED</Macro>
+            <Chinese>获取域设置参数失败，错误：%1</Chinese>
+            <English>Get domain set parameters failed.Error:%1</English>
+        </Bean>
+        <Bean>
+            <Author>张浩</Author>
+            <ResourceID>600304</ResourceID>
+            <Macro>LOG_GET_ALL_USERS_IN_DOMAIN_FAILED</Macro>
+            <Chinese>获取域中所有用户失败，错误：%1</Chinese>
+            <English>Get all users in domain failed.Error:%1</English>
+        </Bean>
+        <Bean>
+            <Author>张浩</Author>
+            <ResourceID>600305</ResourceID>
+            <Macro>LOG_GET_ALL_USERGROUPS_IN_DOMAIN_FAILED</Macro>
+            <Chinese>获取域中所有用户组失败，错误：%1</Chinese>
+            <English>Get all usergroups in domain failed.Error:%1</English>
+        </Bean>
+        <Bean>
+            <Author>张浩</Author>
+            <ResourceID>600306</ResourceID>
+            <Macro>LOG_GET_STATUS_IN_DOMAIN_FAILED</Macro>
+            <Chinese>获取系统在域中的状态失败，错误：%1</Chinese>
+            <English>Get status of system in domain failed.Error:%1</English>
+        </Bean>
+        <Bean>
+            <Author>张浩</Author>
+            <ResourceID>600401</ResourceID>
+            <Macro>LOG_SET_GLOBAL_CIFS_PARAMETERS_FAILED</Macro>
+            <Chinese>设置CIFS全局参数（系统说明=‘%1’，激活动态DNS更新=‘%2’，LM验证级别=‘%3’）失败，错误：%4</Chinese>
+            <English>Set global cifs parameters(SystemComment='%1',EnableDynamicDNSupdate='%2',LMauthenticationlevel='%3') failed.Error:%4</English>
+        </Bean>
+        <Bean>
+            <Author>张浩</Author>
+            <ResourceID>600402</ResourceID>
+            <Macro>LOG_SET_GLOBAL_CIFS_PARAMETERS_SUCCESS</Macro>
+            <Chinese>设置CIFS全局参数（系统说明=‘%1’，激活动态DNS更新=‘%2’，LM验证级别=‘%3’）成功</Chinese>
+            <English>Set global cifs parameters(SystemComment='%1',EnableDynamicDNSupdate='%2',LMauthenticationlevel='%3') success</English>
+        </Bean>
+        <Bean>
+            <Author>张浩</Author>
+            <ResourceID>600403</ResourceID>
+            <Macro>LOG_SET_SHARE_PATH_CIFS_PARAMETERS_FAILED</Macro>
+            <Chinese>设置共享目录的CIFS参数（共享目录=‘%1’，共享名称=‘%2’）失败，错误：%3</Chinese>
+            <English>Set cifs parameters of the share path(SharePath='%1',ShareName='%2')failed.Error:%3</English>
+        </Bean>
+        <Bean>
+            <Author>张浩</Author>
+            <ResourceID>600404</ResourceID>
+            <Macro>LOG_SET_SHARE_PATH_CIFS_PARAMETERS_SUCCESS</Macro>
+            <Chinese>设置共享目录CIFS参数（共享目录=‘%1’，共享名称=‘%2’）成功</Chinese>
+            <English>Set cifs parameters of share path(SharePath='%1',ShareName='%2')success</English>
+        </Bean>
+        <Bean>
+            <Author>张浩</Author>
+            <ResourceID>600405</ResourceID>
+            <Macro>LOG_TURN_OFF_SHARE_PATH_CIFS_FAILED</Macro>
+            <Chinese>关闭共享目录的CIFS（共享目录=‘%1’）失败，错误：%2</Chinese>
+            <English>Turn off cifs of share path (SharePath='%1') failed.Error:%2</English>
+        </Bean>
+        <Bean>
+            <Author>张浩</Author>
+            <ResourceID>600406</ResourceID>
+            <Macro>LOG_TURN_OFF_SHARE_PATH_CIFS_SUCCESS</Macro>
+            <Chinese>关闭共享目录的CIFS（共享目录=‘%1’）成功</Chinese>
+            <English>Turn off cifs of share path (SharePath='%1') success</English>
+        </Bean>
+        <Bean>
+            <Author>张浩</Author>
+            <ResourceID>600407</ResourceID>
+            <Macro>LOG_GET_SHARE_PATH_CIFS_PARAMETERS_FAILED</Macro>
+            <Chinese>获取共享目录‘%1’的CIFS参数失败，错误：%2</Chinese>
+            <English>Get cifs parameters of share path '%1' failed.Error:%2</English>
+        </Bean>
+        <Bean>
+            <Author>张浩</Author>
+            <ResourceID>600408</ResourceID>
+            <Macro>LOG_GET_ALL_GLOBAL_CIFS_PARAMETERS_FAILED</Macro>
+            <Chinese>获取所有全局CIFS参数失败，错误：%1</Chinese>
+            <English>Get all global cifs parameters failed.Error:%1</English>
+        </Bean>
+        <Bean>
+            <Author>张浩</Author>
+            <ResourceID>600409</ResourceID>
+            <Macro>LOG_GET_SPECIFIED_SHARE_NAME_OCCUPIED_OR_NOT_FAILED</Macro>
+            <Chinese>获取指定的共享名称‘%1’是否被占用失败，错误：%2</Chinese>
+            <English>Get specified share name '%1' is or not be occupied failed.Error:%2</English>
+        </Bean>
+        <Bean>
+            <Author>张浩</Author>
+            <ResourceID>600501</ResourceID>
+            <Macro>LOG_SET_GLOBAL_NFS_PARAMETERS_FAILED</Macro>
+            <Chinese>设置全局NFS参数（服务端版本=‘%1’，客户端版本=‘%2’，最大请求数量=‘%3’，连接队列长度=‘%4’，已锁定的最大请求数量=‘%5’，已锁定的连接队列长度=‘%6’）失败，错误：%7</Chinese>
+            <English>Set global nfs parameters(ServerVersion='%1',ClientVersion='%2',MaxNFSRequestNum='%3',ConnectQueueLength='%4',MaxNFSLockRequestNum='%5',LockQueueLength='%6') failed.Error:%7</English>
+        </Bean>
+        <Bean>
+            <Author>张浩</Author>
+            <ResourceID>600502</ResourceID>
+            <Macro>LOG_SET_GLOBAL_NFS_PARAMETERS_SUCCESS</Macro>
+            <Chinese>设置全局NFS参数（服务端版本=‘%1’，客户端版本=‘%2’，最大请求数量=‘%3’，连接队列长度=‘%4’，已锁定的最大请求数量=‘%5’，已锁定的连接队列长度=‘%6’）成功</Chinese>
+            <English>Set global nfs parameters(ServerVersion='%1',ClientVersion='%2',MaxNFSRequestNum='%3',ConnectQueueLength='%4',MaxNFSLockRequestNum='%5',LockQueueLength='%6')success</English>
+        </Bean>
+        <Bean>
+            <Author>张浩</Author>
+            <ResourceID>600503</ResourceID>
+            <Macro>LOG_GET_SHARE_PATH_NFS_PARAMETERS_FAILED</Macro>
+            <Chinese>获取共享目录‘%1’的NFS参数失败，错误：%2</Chinese>
+            <English>Get nfs parameters of share path '%1' failed.Error:%2</English>
+        </Bean>
+        <Bean>
+            <Author>张浩</Author>
+            <ResourceID>600504</ResourceID>
+            <Macro>LOG_GET_GLOBAL_NFS_PARAMETERS_FAILED</Macro>
+            <Chinese>获取全局NFS参数失败，错误：%1</Chinese>
+            <English>Get global nfs parameters failed.Error:%1</English>
+        </Bean>
+        <Bean>
+            <Author>张浩</Author>
+            <ResourceID>600505</ResourceID>
+            <Macro>LOG_TURN_OFF_SHARE_PATH_NFS_FAILED</Macro>
+            <Chinese>关闭共享目录的NFS（共享目录=‘%1’）失败，错误：%2</Chinese>
+            <English>Turn off nfs of share path (SharePath='%1') failed.Error:%2</English>
+        </Bean>
+        <Bean>
+            <Author>张浩</Author>
+            <ResourceID>600506</ResourceID>
+            <Macro>LOG_TURN_OFF_SHARE_PATH_NFS_SUCCESS</Macro>
+            <Chinese>关闭共享目录的NFS（共享目录=‘%1’）成功</Chinese>
+            <English>Turn off nfs of share path (SharePath='%1') success</English>
+        </Bean>
+        <Bean>
+            <Author>张浩</Author>
+            <ResourceID>600507</ResourceID>
+            <Macro>LOG_SET_SHARE_PATH_NFS_PARAMETERS_FAILED</Macro>
+            <Chinese>设置共享目录的NFS参数（共享目录=‘%1’，匿名是否可访问=‘%2’，匿名是否可读写=‘%3’，只读='%4’，可读写=‘%5’，允许以root用户访问=‘%6’）失败，错误：%7</Chinese>
+            <English>Set nfs parameters of share path (SharePath='%1',ReadOnlyIp='%2',ReadWriteIP='%3',IsAnonymousCanVisit='%4',IsAnonymousCanReadWrite='%5',CanAsRootVisitIP='%6') failed.Error:%7</English>
+        </Bean>
+        <Bean>
+            <Author>张浩</Author>
+            <ResourceID>600508</ResourceID>
+            <Macro>LOG_SET_SHARE_PATH_NFS_PARAMETERS_SUCCESS</Macro>
+            <Chinese>设置共享目录的NFS参数（共享目录=‘%1’，匿名是否可访问=‘%2’，匿名是否可读写=‘%3’，只读=‘%4’，可读写=‘%5’，允许以root用户访问=‘%6’） 成功</Chinese>
+            <English>Set nfs parameters of share path (SharePath='%1',ReadOnlyIp='%2',ReadWriteIP='%3',IsAnonymousCanVisit='%4',IsAnonymousCanReadWrite='%5',CanAsRootVisitIP='%6') success</English>
+        </Bean>
+        <Bean>
+            <Author>张浩</Author>
+            <ResourceID>600601</ResourceID>
+            <Macro>LOG_GET_ALL_SYSTEM_USERS_FAILED</Macro>
+            <Chinese>获取系统中所有用户失败，错误：%1</Chinese>
+            <English>Get all users in system failed.Error:%1</English>
+        </Bean>
+        <Bean>
+            <Author>张浩</Author>
+            <ResourceID>600602</ResourceID>
+            <Macro>LOG_ADD_USER_FAILED</Macro>
+            <Chinese>添加用户（用户ID=‘%1’，用户名称=‘%2’）失败，错误：%3</Chinese>
+            <English>Add user(UserID='%1',UserName='%2') failed.Error:%3 </English>
+        </Bean>
+        <Bean>
+            <Author>张浩</Author>
+            <ResourceID>600603</ResourceID>
+            <Macro>LOG_ADD_USER_SUCCESS</Macro>
+            <Chinese>添加用户（用户ID=‘%1’，用户名称=‘%2’）成功</Chinese>
+            <English>Add user(UserID='%1',UserName='%2') success</English>
+        </Bean>
+        <Bean>
+            <Author>张浩</Author>
+            <ResourceID>600604</ResourceID>
+            <Macro>LOG_RMOVE_USER_FAILED</Macro>
+            <Chinese>删除用户（用户ID=‘%1’，用户名称=‘%2’）失败，错误：%3</Chinese>
+            <English>Remove user(UserID='%1',UserName='%2') failed.Error:%3 </English>
+        </Bean>
+        <Bean>
+            <Author>张浩</Author>
+            <ResourceID>600605</ResourceID>
+            <Macro>LOG_RMOVE_USER_SUCCESS</Macro>
+            <Chinese>删除用户（用户ID=‘%1’，用户名称=‘%2’）成功</Chinese>
+            <English>Remove user(UserID='%1',UserName='%2') success</English>
+        </Bean>
+        
+        <Bean>
+            <Author>张浩</Author>
+            <ResourceID>600606</ResourceID>
+            <Macro>LOG_GET_ALL_SYSTEM_USERGROUPS_FAILED</Macro>
+            <Chinese>获取系统中所有用户组失败，错误：%1</Chinese>
+            <English>Get all usergroups in system failed.Error:%1</English>
+        </Bean>
+        <Bean>
+            <Author>张浩</Author>
+            <ResourceID>600607</ResourceID>
+            <Macro>LOG_ADD_USERGROUP_FAILED</Macro>
+            <Chinese>添加用户组（组ID=‘%1’，组名称=‘%2’）失败，错误：%3</Chinese>
+            <English>Add usergroup(GroupID='%1',GroupName='%2') failed.Error:%3</English>
+        </Bean>
+        <Bean>
+            <Author>张浩</Author>
+            <ResourceID>600608</ResourceID>
+            <Macro>LOG_ADD_USERGROUP_SUCCESS</Macro>
+            <Chinese>添加用户组（组ID=‘%1’，组名称=‘%2’）成功</Chinese>
+            <English>Add usergroup(GroupID='%1',GroupName='%2') success</English>
+        </Bean>
+        <Bean>
+            <Author>张浩</Author>
+            <ResourceID>600609</ResourceID>
+            <Macro>LOG_REMOVE_USERGROUP_FAILED</Macro>
+            <Chinese>删除用户组（组ID=‘%1’，组名称=‘%2’）失败，错误：%3</Chinese>
+            <English>Remove usergroup(GroupID='%1',GroupName='%2') failed. Error:%3</English>
+        </Bean>
+        <Bean>
+            <Author>张浩</Author>
+            <ResourceID>600610</ResourceID>
+            <Macro>LOG_REMOVE_USERGROUP_SUCCESS</Macro>
+            <Chinese>删除用户组（组ID=‘%1’，组名称=‘%2’）成功</Chinese>
+            <English>Remove usergroup(GroupID='%1',GroupName='%2') success</English>
+        </Bean>
+        <Bean>
+            <Author>张浩</Author>
+            <ResourceID>600611</ResourceID>
+            <Macro>LOG_MODIFY_USERGROUP_FAILED</Macro>
+            <Chinese>修改用户‘%1’所属用户组（%2）失败，错误：%3</Chinese>
+            <English>Modify user(UserName='%1') belong to new usergroup (%2)  failed.Error:%3</English>
+        </Bean>
+        <Bean>
+            <Author>张浩</Author>
+            <ResourceID>600612</ResourceID>
+            <Macro>LOG_MODIFY_USERGROUP_SUCCESS</Macro>
+            <Chinese>修改用户‘%1’所属用户组（%2）成功</Chinese>
+            <English>Modify user(UserName='%1') belong to new usergroup (%2) success.</English>
+        </Bean>
+        <Bean>
+            <Author>张浩</Author>
+            <ResourceID>600613</ResourceID>
+            <Macro>LOG_CANCEL_USER_BELONG_TO_USERGROUP_FAILED</Macro>
+            <Chinese>取消用户‘%1’所属用户组失败，错误：%2</Chinese>
+            <English>Cancel user(UserName='%1') belong to usergroup failed.Error:%2</English>
+        </Bean>
+        <Bean>
+            <Author>张浩</Author>
+            <ResourceID>600614</ResourceID>
+            <Macro>LOG_CANCEL_USER_BELONG_TO_USERGROUP_SUCCESS</Macro>
+            <Chinese>取消用户‘%1’所属用户组成功</Chinese>
+            <English>Cancel user(UserName='%1') belong to usergroup success.</English>
+        </Bean>
+        <Bean>
+            <Author>张浩</Author>
+            <ResourceID>600615</ResourceID>
+            <Macro>LOG_GET_SPECIFIED_USER_EXIST_OR_NOT_FAILED</Macro>
+            <Chinese>获取指定用户（用户名称=‘%1’）是否存在失败，错误：%2</Chinese>
+            <English>Get the specified user exist or not.( UserName ='%1' ) failed.Error:%2</English>
+        </Bean>
+        <Bean>
+            <Author>张浩</Author>
+            <ResourceID>600616</ResourceID>
+            <Macro>LOG_GET_SPECIFIED_USER_GROUP_EXIST_OR_NOT_FAILED</Macro>
+            <Chinese>获取指定用户组（用户组名称=‘%1’）是否存在失败，错误：%2</Chinese>
+            <English>Get the specified user group exist or not.( UserGroupName ='%1' ) failed.Error:%2</English>
+        </Bean>
+        <Bean>
+            <Author>张浩</Author>
+            <ResourceID>600617</ResourceID>
+            <Macro>LOG_EXPORT_USER_AND_GROUP_INFORMATION_FAILED</Macro>
+            <Chinese>导出用户和用户组信息失败，错误：%1</Chinese>
+            <English>Export user and group information failed.Error:%1</English>
+        </Bean>
+        <Bean>
+            <Author>张浩</Author>
+            <ResourceID>600618</ResourceID>
+            <Macro>LOG_EXPORT_USER_AND_GROUP_INFORMATION_SUCCESS</Macro>
+            <Chinese>导出用户和用户组信息成功</Chinese>
+            <English>Export user and group information success</English>
+        </Bean>
+        <Bean>
+            <Author>张浩</Author>
+            <ResourceID>600619</ResourceID>
+            <Macro>LOG_IMPORT_USER_AND_GROUP_INFORMATION_FAILED</Macro>
+            <Chinese>导入用户和用户组信息失败，错误：%1</Chinese>
+            <English>Import user and group information failed.Error:%1</English>
+        </Bean>
+        <Bean>
+            <Author>张浩</Author>
+            <ResourceID>600620</ResourceID>
+            <Macro>LOG_IMPORT_USER_AND_GROUP_INFORMATION_SUCCESS</Macro>
+            <Chinese>导入用户和用户组信息成功</Chinese>
+            <English>Import user and group information success</English>
+        </Bean>
+        <Bean>
+            <Author>张浩</Author>
+            <ResourceID>600701</ResourceID>
+            <Macro>LOG_GET_SHARE_PATH_ACCESS_AUTHORITY_FAILED</Macro>
+            <Chinese>获取共享目录‘%1’的访问权限失败，错误：%2</Chinese>
+            <English>Get access authority of share path '%1' failed.Error:%2</English>
+        </Bean>
+        <Bean>
+            <Author>张浩</Author>
+            <ResourceID>600702</ResourceID>
+            <Macro>LOG_ADD_SHARE_PATH_ACCESS_AUTHORITY_FAILED</Macro>
+            <Chinese>添加访问权限（共享目录=‘%1’，类型=‘%2’，名称=‘%3’，权限=‘%4’）失败，错误：%6</Chinese>
+            <English>Add access authority of share path (SharePath='%1',Style='%2',EntityName='%3',AuthorityId='%4') failed.Error:%6</English>
+        </Bean>
+        <Bean>
+            <Author>张浩</Author>
+            <ResourceID>600703</ResourceID>
+            <Macro>LOG_ADD_SHARE_PATH_ACCESS_AUTHORITY_SUCCESS</Macro>
+            <Chinese>添加访问权限（共享目录=‘%1’，类型=‘%2’，名称=‘%3’，权限=‘%4’）成功</Chinese>
+            <English>Add access authority of share path (SharePath='%1',Style='%2',EntityName='%3',AuthorityId='%4') success</English>
+        </Bean>
+        <Bean>
+            <Author>张浩</Author>
+            <ResourceID>600703</ResourceID>
+            <Macro>LOG_REMOVE_SHARE_PATH_ACCESS_AUTHORITY_FAILED</Macro>
+            <Chinese>删除访问权限（共享目录=‘%1’，类型=‘%2’，名称=‘%3’）失败，错误：%6</Chinese>
+            <English>Remove access authority of share path (SharePath='%1',Style='%2',EntityName='%3') failed.Error:%6</English>
+        </Bean>
+        <Bean>
+            <Author>张浩</Author>
+            <ResourceID>600704</ResourceID>
+            <Macro>LOG_REMOVE_SHARE_PATH_ACCESS_AUTHORITY_SUCCESS</Macro>
+            <Chinese>删除访问权限 （共享目录=‘%1’，类型=‘%2’，名称=‘%3’）成功</Chinese>
+            <English>Remove access authority of share path  (SharePath='%1',Style='%2',EntityName='%3') success</English>
+        </Bean>
+        <Bean>
+            <Author>张浩</Author>
+            <ResourceID>600705</ResourceID>
+            <Macro>LOG_MODIFY_SHARE_PATH_ACCESS_AUTHORITY_FAILED</Macro>
+            <Chinese>修改访问权限（共享目录=‘%1’，类型=‘%2’，名称=‘%3’，权限编号=‘%4’，索引编号=‘%5’） 失败，错误：%6</Chinese>
+            <English>Modify access authority of share path (SharePath='%1',IndexId='%2',Style='%3',EntityName='%4',AuthorityId='%5') failed.Error:%6</English>
+        </Bean>
+        <Bean>
+            <Author>张浩</Author>
+            <ResourceID>600706</ResourceID>
+            <Macro>LOG_MODIFY_SHARE_PATH_ACCESS_AUTHORITY_SUCCESS</Macro>
+            <Chinese>修改共享目录访问权限（共享目录=‘%1’，类型=‘%2’，名称=‘%3’，权限编号=‘%4’，索引编号=‘%5’） 成功</Chinese>
+            <English>Modify access authority of share path (SharePath='%1',IndexId='%2',Style='%3',EntityName='%4',AuthorityId='%5') success</English>
+        </Bean>
+        <Bean>
+            <Author>张浩</Author>
+            <ResourceID>600707</ResourceID>
+            <Macro>LOG_RESET_SHARE_PATH_ACCESS_AUTHORITY_FAILED</Macro>
+            <Chinese>重置共享目录访问权限（共享目录=‘%1’） 失败，错误：%2</Chinese>
+            <English>Reset access authority of share path (SharePath='%1') failed.Error:%2</English>
+        </Bean>
+        <Bean>
+            <Author>张浩</Author>
+            <ResourceID>600708</ResourceID>
+            <Macro>LOG_RESET_SHARE_PATH_ACCESS_AUTHORITY_SUCCESS</Macro>
+            <Chinese>重置共享目录访问权限（共享目录=‘%1’） 成功</Chinese>
+            <English>Reset access authority of share path (SharePath='%1') success</English>
+        </Bean>
+        <Bean>
+            <Author>张浩</Author>
+            <ResourceID>600709</ResourceID>
+            <Macro>LOG_SET_SHARE_PATH_CHILD_ACCESS_AUTHORITY_SAME_AS_ITS_FAILD</Macro>
+            <Chinese>设置共享目录的子目录访问权限与其相同（共享目录=‘%1’） 失败，错误：%2</Chinese>
+            <English>Set share path  authority of share path the same as its child (SharePath='%1') failed.Error:%2</English>
+        </Bean>
+        <Bean>
+            <Author>张浩</Author>
+            <ResourceID>600710</ResourceID>
+            <Macro>LOG_SET_SHARE_PATH_CHILD_ACCESS_AUTHORITY_SAME_AS_ITS_SUCCESS</Macro>
+            <Chinese>设置共享目录的子目录访问权限与其相同（共享目录=‘%1’） 成功</Chinese>
+            <English>Set share path  authority of share path the same as its child (SharePath='%1') success</English>
+        </Bean>
+        <Bean>
+            <Author>张浩</Author>
+            <ResourceID>600801</ResourceID>
+            <Macro>LOG_EXPORT_CONFIG_FILES_FAILED</Macro>
+            <Chinese>导出配置文件失败，错误：%1</Chinese>
+            <English>Export config files failed.Error:%1</English>
+        </Bean>
+        <Bean>
+            <Author>张浩</Author>
+            <ResourceID>600802</ResourceID>
+            <Macro>LOG_EXPORT_CONFIG_FILES_SUCCESS</Macro>
+            <Chinese>导出配置文件成功</Chinese>
+            <English>Export config files success.</English>
+        </Bean>
+        <Bean>
+            <Author>张浩</Author>
+            <ResourceID>600803</ResourceID>
+            <Macro>LOG_IMPORT_CONFIG_FILES_FAILED</Macro>
+            <Chinese>导入配置文件失败，错误：%1</Chinese>
+            <English>Import config files failed.Error:%1</English>
+        </Bean>
+        <Bean>
+            <Author>张浩</Author>
+            <ResourceID>600804</ResourceID>
+            <Macro>LOG_IMPORT_CONFIG_FILES_SUCCESS</Macro>
+            <Chinese>导入配置文件成功</Chinese>
+            <English>Import config files success.</English>
+        </Bean>
+        <Bean>
+            <Author>张浩</Author>
+            <ResourceID>600901</ResourceID>
+            <Macro>LOG_GET_SHARE_PATH_HAS_OR_NOT_FILES_FAILED</Macro>
+            <Chinese>获取共享目录（共享目录=‘%1’）下是否存在文件或目录失败，错误：%2</Chinese>
+            <English>Get has or not has file or dir in the share path ( SharePath ='%1' ) failed.Error:%2</English>
+        </Bean>
+    </ResourceInfo>      
+</MarsMSA>
+

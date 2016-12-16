@@ -1,0 +1,90 @@
+<?xml version="1.0" encoding="GBK"?>
+<!--
+To change this template, choose Tools | Templates
+and open the template in the editor.
+-->
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.1//EN" "http://www.w3.org/TR/xhtml11/DTD/xhtml11.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:p="http://primefaces.org/ui">
+    <h:head>
+        <link href="./../resources/common/css/default.css" rel="stylesheet" type="text/css" />
+        <link href="./../resources/common/css/cssIcon.css" rel="stylesheet" type="text/css" />
+    </h:head>
+    <h:body>
+        <h:form id="editHost">
+            <h1 class="title ui-widget-header ui-corner-all">${res.get('title')}</h1>
+            <p:messages id="messages" showDetail="true" autoUpdate="true" closable="true" />
+            <br></br>
+            <p:panel style="border: none;">  
+                <h:panelGrid columns="1">  
+                    <p:fieldset legend="${res.get('connectpara')}" style="width: 335px;">
+                        <h:panelGrid columns="3" cellpadding="5">
+                            <h:outputLabel for="ip" value="${res.get('ip')}"/>  
+                            <p:inputText id="ip" value="#{editRemoteMarsHost.ip}"  disabled="false" label="ip"/>
+                            <!--<h:outputLabel for="ipvalue" value="#{editRemoteMarsHost.ip}"/>-->
+                            <!--<p:message id="errIP" for="ip"/>-->
+                            
+                            <h:outputLabel for="port" value="${res.get('port')}" />  
+                            <p:inputText id="port" value="#{editRemoteMarsHost.port}"  disabled="false" label="port"/>
+                            <p:message id="errPort" for="port"/>
+                            <!--
+                            <h:outputLabel for="username" value="${res.get('username')}" />  
+                            <p:inputText id="username" value="#{editRemoteMarsHost.username}"  disabled="true" label="username"/>
+                            <p:message id="errUserName" for="username"/>
+                            
+                            <h:outputLabel for="pwd" value="${res.get('pwd')}" />  
+                            <p:password id="pwd" value="#{editRemoteMarsHost.pwd}" label="pwd"/> 
+                            <p:message id="errPwd" for="pwd"/>
+                            -->
+                        </h:panelGrid>
+                        <h:panelGrid columns="2" cellpadding="5"> 
+                            <p:spacer width="165" height="0"/>
+                            <p:commandButton id="connect" icon="reconnectIcon" value="${res.get('connect')}" action="#{editRemoteMarsHost.test}"/>  
+                        </h:panelGrid>
+                    </p:fieldset> 
+                    <br></br>
+                    <p:fieldset legend="${res.get('transferpara')}" style="width: 335px;">
+                        <h:panelGrid columns="3" cellpadding="5">  
+                            <h:outputLabel for="sshport" value="${res.get('sshport')}" />  
+                            <p:inputText id="sshport" value="#{editRemoteMarsHost.sshport}"  disabled="true" label="sshport"/>
+                            <p:message id="errSshPort" for="sshport"/>
+                  
+                            <h:outputLabel for="sshpwd" value="${res.get('sshpwd')}" />  
+                            <p:password id="sshpwd" value="#{editRemoteMarsHost.sshpwd}" disabled="#{editRemoteMarsHost.defaultRoot}" label="sshpwd"/>
+                            <p:message id="errSshPwd" for="sshpwd"/>
+                    
+                            <h:outputLabel for="confirmSshPwd" value="${res.get('confirm')}" />  
+                            <p:password id="confirmSshPwd" value="#{editRemoteMarsHost.confirmSshPwd}" disabled="#{editRemoteMarsHost.defaultRoot}" label="confirmSshPwd"/> 
+                            <p:message id="errConfirmSshPwd" for="confirmSshPwd"/>
+                        </h:panelGrid> 
+                        <h:panelGrid columns="3" cellpadding="5">
+                            <p:spacer width="140" height="0"/>
+                            <p:selectBooleanCheckbox value="#{editRemoteMarsHost.defaultRoot}">
+                                <p:ajax event="change" update="editHost:sshpwd confirmSshPwd"/>
+                            </p:selectBooleanCheckbox>
+                            <h:outputLabel value="${res.get('root')}" />            
+                        </h:panelGrid> 
+                    </p:fieldset>
+                </h:panelGrid> 
+                <br></br>
+                <p:spacer width="80" height="6" />
+                <p:commandButton id="addButton" icon="saveIcon" value="${global.get('save')}"  action="#{editRemoteMarsHost.modifyMarsHost()}"/>  
+                <p:spacer width="10"/>
+                <p:commandButton id="closeButton" icon="cancleIcon" value="${global.get('return')}"  immediate="true" onclick="javascript: window.history.go(-1);"/>  
+            </p:panel>
+        </h:form>
+        <!--
+        <p:ajaxStatus style="width:64px;height:64px;position:fixed;right:5px;bottom:5px">  
+            <f:facet name="start">  
+                <p:graphicImage value="../resources/common/picture/loading.gif" />  
+            </f:facet>  
+            <f:facet name="complete">  
+                <h:outputText value="" />  
+            </f:facet>  
+        </p:ajaxStatus>
+        -->
+    </h:body>
+</ui:composition>

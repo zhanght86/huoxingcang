@@ -1,0 +1,362 @@
+<?xml version="1.0" encoding="GBK"?>
+<!--
+To change this template, choose Tools | Templates
+and open the template in the editor.
+-->
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.1//EN" "http://www.w3.org/TR/xhtml11/DTD/xhtml11.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:util="http://java.sun.com/jsf/composite/xhtml"
+      xmlns:c="http://java.sun.com/jsp/jstl/core"  >
+
+    <h:head>
+        <link href="./../resources/common/css/default.css" rel="stylesheet" type="text/css" />
+        <link href="./../resources/common/css/cssIcon.css" rel="stylesheet" type="text/css" />
+        <style type="text/css">
+            .acordionPanelPostion{
+                padding-top: -10px;
+                margin-top: -10px;
+                margin-left: -21px;
+                padding-left: -21px;
+                margin-right: -21px;
+                padding-right: -21px;
+/*                width: 1200px;*/
+
+            }
+
+        </style>
+    </h:head>
+
+    <h:body>
+        <!--<h:form id="form">-->
+        <h1  class="title ui-widget-header ui-corner-all">#{res.get('title')}</h1>
+        <p:messages showSummary="true" showDetail="false" autoUpdate="true" closable="true" />
+        <br/>
+        <!--:form:view:fctab:pannel:tab1:-->
+        <p:tabView id="view" style="border:none;" activeIndex="#{iSCSIGlobalInitiatorData.tabViewActiveIndex}">
+            <p:tab id="fctab"  title="FC">
+                <h:form id="form1">
+                    <p:dataTable emptyMessage="#{global.get('emptyMessage')}"  id="asd"  value="#{fCInitiatorData.initiators}" var="initiator" >
+                        <p:ajax event="rowToggle" listener="#{fCInitiatorData.onRowToggle}" update="rowexpan" /> 
+                        <p:column style="width:2%">  
+                            <p:rowToggler id="bbb" />  
+                        </p:column>
+                        <p:column headerText="#{res.get('name')}">
+                            #{initiator.name}
+                        </p:column>
+                        <p:column headerText="#{res.get('status')}" >
+                            <!--          {initiator.targetInfos.size()}                  <h:outputLabel rendered="{initiator.isConnected}" value="{res.get('connected')}" />
+                                                        <h:outputLabel rendered="{not initiator.isConnected}" value="{res.get('notConnected')}" />-->
+                            #{initiator.state}
+                        </p:column>
+                        <p:column headerText="#{res.get('speed')}" >
+                            #{initiator.currentSpeed}
+                        </p:column>
+                        <p:rowExpansion id="rowexpan">
+                             <h:outputLabel rendered="#{not initiator.isContainsTarget}" value="#{global.get('emptyMessage')}" />
+                            <c:forEach id="forEach"  var="i"  begin="0"  end="#{fCInitiatorData.targetNum}"   >
+                                <br/> 
+                                <h:outputLabel value="#{res.get('targetName1')}" />
+                                <h:outputLabel value="#{initiator.targetInfos.get(i).targetName}" /> 
+                                <br/>
+                                <br/>
+                                <p:dataTable emptyMessage="#{global.get('emptyMessage')}" value="#{initiator.targetInfos.get(i).devices}" var="device" >
+                                    <p:column headerText="#{res.get('manufacturer')}" style="white-space: nowrap"  >
+                                        #{device.vendor}
+                                    </p:column>
+                                     <p:column headerText="#{res.get('product')}" style="white-space: nowrap" >
+                                        #{device.product}
+                                    </p:column>
+                                    <p:column headerText="LUN" style="white-space: nowrap"  >
+                                        #{device.lun}
+                                    </p:column>
+                                    <p:column headerText="#{res.get('deviceName')}">
+                                        #{device.deviceName}
+                                    </p:column>
+                                </p:dataTable>
+                            </c:forEach> 
+                            <!--                            <p:dataTable emptyMessage="{global.get('emptyMessage')}" id="fctarget"  value="{initiator.targetInfos}" var="target" >
+                                                            <p:column style="width:2%">  
+                                                                <p:rowToggler id="aaa" />  
+                                                            </p:column>
+                                                            <p:column headerText="{res.get('targetName')}">
+                                                                {target.targetName}
+                                                            </p:column>
+                                                            <p:rowExpansion id="ddd">
+                                                                <p:dataTable emptyMessage="{global.get('emptyMessage')}" value="{target.devices}" var="device" >
+                                                                    <p:column headerText="LUN">
+                                                                        {device.lun}
+                                                                    </p:column>
+                                                                    <p:column headerText="{res.get('deviceName')}">
+                                                                        {device.deviceName}
+                                                                    </p:column>
+                                                                    <p:column headerText="{res.get('product')}">
+                                                                        {device.product}
+                                                                    </p:column>
+                                                                    <p:column headerText="{res.get('manufacturer')}">
+                                                                        {device.vendor}
+                                                                    </p:column>
+                                                                </p:dataTable>
+                                                            </p:rowExpansion>
+                                                        </p:dataTable>-->
+                            <!--                            <p:dataTable id="initiator" value="{initiator.targetInfos}" var="target" >
+                                                            <p:column headerText="LUN">
+                                                                {target.name}
+                                                            </p:column>
+                                                            <p:column headerText="{res.get('deviceName')}">
+                                                                {target.deviceName}
+                                                            </p:column>
+                                                            <p:column headerText="{res.get('product')}">
+                                                                {target.product}
+                                                            </p:column>
+                                                            <p:column headerText="{res.get('manufacturer')}">
+                                                                {target.manufacturer}
+                                                            </p:column>
+                                                        </p:dataTable>-->
+                        </p:rowExpansion>
+                    </p:dataTable>
+                </h:form>
+
+            </p:tab>
+            <p:tab title="iSCSI">
+                <p:accordionPanel styleClass="acordionPanelPostion "   id="iscsipannel" multiple="true" activeIndex="#{iSCSIGlobalInitiatorData.accordionPanelActiveIndex}"  >
+                    <p:tab  id="iscsitab1" title="#{res.get('global')}">
+                        <h:form id="form2">
+                            <div style="overflow-x: auto;padding-bottom: 14px;">
+                                <p:dataTable emptyMessage="#{global.get('emptyMessage')}"  value="#{iSCSIGlobalInitiatorData.initiators}" var="initiator" >
+                                    <p:column headerText="#{res.get('name')}" style="white-space: nowrap"  >
+                                        #{initiator.name}
+                                    </p:column>
+                                    <p:column headerText="#{res.get('alias')}" style="white-space: nowrap"  >
+                                        #{initiator.alias}
+                                    </p:column>
+                                    <p:column headerText="CHAP" style="white-space: nowrap"  >
+                                        <!--<p:spacer width="12" height="10" />-->
+                                        <!--<h:outputLabel style="text-align: center" rendered="{initiator.isFC}" value="-" />-->
+                                        <!--rendered="{not initiator.isFC}"-->
+                                        <!--<p:selectBooleanCheckbox disabled="true" style="vertical-align: middle"  value="{initiator.chap.isStart}" />-->
+                                        <!--</h:panelGrid>-->
+                                        <h:outputLabel rendered="#{initiator.startCHAPOrNot}" value="#{global.get('enable')}"/>
+                                        <h:outputLabel rendered="#{not initiator.startCHAPOrNot}" value="#{global.get('notEnable')}"/>
+                                    </p:column>
+                                    <p:column headerText="#{global.get('operation')}" style="white-space: nowrap"  >
+                                        <p:graphicImage height="16"  width="16" style="border-color: transparent;vertical-align: middle"   value="../resources/common/picture/edit.png" />
+                                        <p:commandLink disabled="#{user.type!=2}" value="#{res.get('SetAlias')}" action="#{iSCSIGlobalInitiatorData.doBeforeModifyAlias(initiator)}" />
+                                        <p:spacer  height="5" width="10" />
+                                        <p:graphicImage style="vertical-align: middle"  value="../resources/common/picture/binding.png" height="16" width="16" />
+                                        <p:commandLink disabled="#{user.type!=2}" value="#{res.get('chap')}"  style="vertical-align: middle" action="#{iSCSIGlobalInitiatorData.doBeforeModifyCHAP(initiator)}"  /> 
+                                    </p:column>
+                                </p:dataTable>
+                            </div>
+                        </h:form>
+
+
+                    </p:tab >
+                    <p:tab id="tab2" title="#{res.get('host')}">
+                        <h:form id="form3">
+                            <p:toolbar>
+                                <p:toolbarGroup align="right">
+                                    <p:commandButton disabled="#{user.type!=2}" value="#{global.get('add')}" icon="addIcon" action="scsi_create_iscsi_host?faces-redirect=true"/>
+                                </p:toolbarGroup>
+                            </p:toolbar>
+                            <div style="overflow-x: auto;padding-bottom: 14px;">
+                                <p:dataTable emptyMessage="#{global.get('emptyMessage')}"  id="iscsihost" value="#{initiatorHostBean.hosts}" var="host" >
+                                    <!--                                    <f:facet name="header">
+                                                                            <div style=" text-align: right; margin-right: 20px;">
+                                                                                <p:commandButton value="{global.get('add')}" icon="addIcon" action="scsi_create_iscsi_host?faces-redirect=true"/>
+                                                                            </div>
+                                                                        </f:facet>-->
+                                    <p:ajax event="rowToggle" listener="#{initiatorHostBean.onRowToggle}" update="target" />
+                                    <p:column style="width:2%">  
+                                        <p:rowToggler />  
+                                    </p:column>
+                                    <p:column headerText="#{res.get('address')}" style="white-space: nowrap">
+                                        #{host.address}
+                                    </p:column>
+                                    <p:column headerText="#{global.get('operation')}" style="white-space: nowrap" >
+
+                                        <p:graphicImage height="16"  width="16" style="border-color: transparent;vertical-align: middle"   value="../resources/common/picture/delete.png" />
+                                        <!--oncomplete="deletehost.show()"  actionListener="{initiatorHostBean.doBeforeDeleteHost(host)}" update="iscsihost"-->  
+
+                                        <p:commandLink disabled="#{user.type!=2}" value="#{global.get('delete')}"  style="vertical-align: middle"  oncomplete="deletehost.show();" update=":form5"  >
+                                            <f:setPropertyActionListener value="#{host}" target="#{initiatorHostBean.tempHost}" />
+                                        </p:commandLink>
+                                    </p:column>
+                                    <!--<div style="overflow-x: auto; width: 100%; padding-bottom: 14px;">-->
+                                    <p:rowExpansion>
+                                        <p:dataTable emptyMessage="#{global.get('emptyMessage')}" id="target" value="#{host.targets}" var="target" >
+                                            <p:column headerText="#{res.get('target')}" style="white-space: nowrap">
+                                                #{target.targetName}
+                                            </p:column>
+<!--                                            <p:column headerText="{res.get('address')}" style="white-space: nowrap">
+                                                {target.targetAddress}
+                                            </p:column>-->
+                                            <p:column headerText="#{res.get('status')}" style="white-space: nowrap">
+                                                <h:outputLabel rendered="#{target.addedOrNot}" value="#{res.get('connected')}" />
+                                                <h:outputLabel rendered="#{not target.addedOrNot}" value="#{res.get('notConnected')}" />
+                                            </p:column>
+                                            <p:column headerText="#{global.get('operation')}" style="white-space: nowrap">
+                                                <p:graphicImage rendered="#{not target.addedOrNot}"  height="16"  width="16" style="border-color: transparent;vertical-align: middle"   value="../resources/common/picture/add.png" />
+                                                <p:graphicImage rendered="#{target.addedOrNot}" height="16"  width="16" style="border-color: transparent;vertical-align: middle"   value="../resources/common/picture/delete.png" />
+                                                <p:spacer rendered="#{target.addedOrNot}" width="2"  />
+                                                <p:commandLink disabled="#{user.type!=2}" rendered="#{target.addedOrNot}" value="#{res.get('logout')}" oncomplete="deletetarget.show();"  update=":form7" style="vertical-align: middle"  >
+                                                    <f:setPropertyActionListener value="#{target}" target="#{initiatorHostBean.tempTarget}" />
+                                                </p:commandLink>
+                                                <!--oncomplete="addedtarget.show()" actionListener="{initiatorHostBean.doBeforeDeleteTarget(target)}" update=":form:view:iscsipannel:iscsihost"   actionListener="{initiatorHostBean.addTarget(target)}" update=":form:view:iscsipannel:iscsihost"--> 
+                                                <p:commandLink disabled="#{user.type!=2}" rendered="#{not target.addedOrNot}" value="#{res.get('register')}" oncomplete="addtarget.show();" update=":form6" >
+                                                    <f:setPropertyActionListener value="#{target}" target="#{initiatorHostBean.tempTarget}" />
+                                                </p:commandLink>
+                                            </p:column> 
+                                            <!--actionListener="{initiatorHostBean.doBeforeModifyTargetStatus(target)}" oncomplete="addtarget.show()"--> 
+                                        </p:dataTable>
+                                    </p:rowExpansion>
+                                    <!--</div>-->
+                                </p:dataTable>
+                            </div>
+                            <!--                                <util:confirm  uid="deletehost" mess="{res.get('confirmDeleteHost')}" action="{initiatorHostBean.deleteHost()}" update="iscsihost"  >
+                            
+                                                            </util:confirm>
+                                                            <util:confirm  uid="addtarget" mess="{res.get('confirmAddTarget')}" action="{initiatorHostBean.addTarget()}" update="iscsihost"  >
+                            
+                                                            </util:confirm>-->
+                        </h:form>
+
+                    </p:tab>
+                    <p:tab id="tab3" title="#{res.get('target')}">
+                        <h:form id="form4">
+                            <p:toolbar>
+                                <p:toolbarGroup align="right">
+                                    <!--<p:graphicImage style="background-color: transparent" value="../resources/common/picture/connect.GIF" />-->
+                                    <p:commandButton disabled="#{user.type!=2}" value="#{res.get('reConnect')}" icon="reconnectIcon" actionListener="#{initiatorHostBean.hostTargets.reConnecedTarget()}" update="targets" />
+                                </p:toolbarGroup>
+                            </p:toolbar>
+                            <div style="overflow-x: auto;padding-bottom: 14px;">
+                                <!--value="{initiatoriSCSITargetsBean.targets}"--> 
+                                <p:dataTable emptyMessage="#{global.get('emptyMessage')}" id="targets" value="#{initiatorHostBean.hostTargets.targets}" var="target" >
+                                    <p:ajax event="rowToggle" listener="#{initiatorHostBean.hostTargets.onRowToggle}" update="summary devices connections" />
+                                    <p:column style="width:2%">  
+                                        <p:rowToggler />  
+                                    </p:column>
+                                    <p:column headerText="#{res.get('name')}">
+                                        #{target.targetName}
+                                    </p:column>
+                                    <!--                                    <p:column headerText="{res.get('alias')}">
+                                                                            {target.targetAlias}
+                                                                        </p:column>
+                                                                        <p:column headerText="{res.get('connectNum')}">
+                                                                            {target.connectionCount}
+                                                                        </p:column>-->
+                                    <!--                                    <p:column headerText="CHAP" style="text-align: center" >
+                                                                            <h:outputLabel rendered="{target.chap.isStart}" value="{global.get('enable')}"/>
+                                                                            <h:outputLabel rendered="{not target.chap.isStart}" value="{global.get('notEnable')}"/>
+                                                                        </p:column>-->
+                                    <p:column headerText="#{global.get('operation')}"  style="white-space: nowrap"  >
+                                        <p:graphicImage style="vertical-align: middle"  value="../resources/common/picture/binding.png" height="16" width="16" />
+                                        <p:commandLink disabled="#{user.type!=2}" value="#{res.get('chap')}" action="#{initiatorHostBean.hostTargets.doBeforeConfigChap(target)}"  style="vertical-align: middle"  /> 
+                                        <p:spacer height="10"  width="8"  />
+                                        <p:graphicImage  height="16"  width="16" style="border-color: transparent;vertical-align: middle"   value="../resources/common/picture/delete.png" />
+                                        <p:spacer height="10" width="2"  />
+                                        <p:commandLink disabled="#{user.type!=2}"  value="#{global.get('delete')}" oncomplete="deletetargetconfig.show();" update=":form8" style="vertical-align: middle"  >
+                                            <f:setPropertyActionListener value="#{target}" target="#{initiatorHostBean.hostTargets.selectTarget}" />
+                                        </p:commandLink>
+                                    </p:column>
+                                    <!--                                <p:rowExpansion>
+                                                                        <p:dataTable  value="{target.connects}" var="connect" >
+                                                                            <p:column headerText="{res.get('localAddress')}" >
+                                                                                {connect.localAddress}
+                                                                            </p:column>
+                                                                            <p:column headerText="{res.get('TargetAddress')}" >
+                                                                                {connect.targetAddress}
+                                                                            </p:column>
+                                    
+                                                                        </p:dataTable>
+                                                                        
+                                                                    </p:rowExpansion>-->
+                                    <p:rowExpansion>
+                                        <p:dataTable emptyMessage="#{global.get('emptyMessage')}" id="summary" value="#{target.summary}" var="sum" >
+                                            <p:column headerText="#{res.get('name')}" >
+                                                #{sum.name}
+                                            </p:column>
+                                            <p:column headerText="#{res.get('value')}" >
+                                                #{sum.value}
+                                            </p:column>
+                                        </p:dataTable>
+                                        <br/>
+                                        <p:dataTable emptyMessage="#{global.get('emptyMessage')}" id="devices" value="#{target.devices}" var="device" >
+                                            <p:column headerText="#{res.get('manufacturer')}">
+                                                #{device.vendor}
+                                            </p:column>
+                                            <p:column headerText="#{res.get('product')}">
+                                                #{device.product}
+                                            </p:column>
+                                            <p:column headerText="LUN">
+                                                #{device.lun}
+                                            </p:column>
+                                            <p:column headerText="#{res.get('deviceName')}">
+                                                #{device.deviceName}
+                                            </p:column>
+                                        </p:dataTable>
+                                        <br/>
+                                        <p:dataTable emptyMessage="#{global.get('emptyMessage')}" id="connections"  value="#{target.connections}" var="connect" >
+                                            <p:column headerText="#{res.get('localAddress')}" >
+                                                #{connect.localAddress}
+                                            </p:column>
+                                            <p:column headerText="#{res.get('targetAddress')}" >
+                                                #{connect.peerAddress}
+                                            </p:column>
+                                        </p:dataTable>
+                                    </p:rowExpansion>
+                                </p:dataTable>
+                            </div>
+                        </h:form>
+
+                    </p:tab>
+                </p:accordionPanel>
+            </p:tab>
+        </p:tabView>
+
+        <!--            <util:confirm  uid="addtarget" update=":form:view:iscsipannel:iscsihost"  mess="确定要添加Target吗？" >
+                        <f:actionListener for="okButton" binding="{initiatorHostBean.addTarget()}" />
+                    </util:confirm>
+                    <util:info uid="addedtarget"  mess="请选择未添加的Target" >
+        
+                    </util:info>
+                    <util:confirm  uid="deletehost" update=":form:view:iscsipannel:iscsihost"  mess="确定要删除该Directory吗？" >
+                        <f:actionListener for="okButton" binding="{initiatorHostBean.deleteHost()}" />
+                    </util:confirm>-->
+        <!--</h:form>-->
+        <h:form id="form5">
+            <util:confirm  uid="deletehost" mess="#{global.get('confirmDel')} #{global.get('lquote')}#{initiatorHostBean.tempHost.address}#{global.get('rquote')} #{global.get('what')}" action="#{initiatorHostBean.deleteHost()}" update=":view:iscsipannel:form3:iscsihost"  >
+            </util:confirm>
+
+        </h:form>
+        <h:form id="form6" >
+            <util:confirm  uid="addtarget" mess="#{res.get('confirmRegister')} #{global.get('lquote')}#{initiatorHostBean.tempTarget.targetName}#{global.get('rquote')} #{global.get('what')}" action="#{initiatorHostBean.addTarget()}" update=":view:iscsipannel:form3:iscsihost :view:iscsipannel:form4:targets"  >
+
+            </util:confirm>
+        </h:form>
+        <h:form id="form7">
+            <util:confirm  uid="deletetarget" mess="#{res.get('confirmLogOut')} #{global.get('lquote')}#{initiatorHostBean.tempTarget.targetName}#{global.get('rquote')} #{global.get('what')}" action="#{initiatorHostBean.removeTarget()}" update=":view:iscsipannel:form3:iscsihost :view:iscsipannel:form4:targets"  >
+
+            </util:confirm>
+        </h:form>
+        <h:form id="form8">
+            <util:confirm  uid="deletetargetconfig" mess="#{global.get('confirmDel')} #{global.get('lquote')}#{initiatorHostBean.hostTargets.selectTarget.targetName}#{global.get('rquote')} #{global.get('what')}" action="#{initiatorHostBean.hostTargets.removeTarget()}" update=":view:iscsipannel:form3:iscsihost :view:iscsipannel:form4:targets"  >
+            </util:confirm>
+        </h:form>
+
+        <p:ajaxStatus style="width:64px;height:64px;position:fixed;right:5px;bottom:5px">  
+            <f:facet name="start">  
+                <p:graphicImage value="../resources/common/picture/loading.gif" />  
+            </f:facet>  
+
+            <f:facet name="complete">  
+                <h:outputText value="" />  
+            </f:facet>  
+        </p:ajaxStatus>
+    </h:body>
+</html>
+

@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="GBK"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"  
+      xmlns:h="http://java.sun.com/jsf/html"  
+      xmlns:composite="http://java.sun.com/jsf/composite"
+      xmlns:p="http://primefaces.org/ui">  
+    <!-- INTERFACE -->  
+    <composite:interface>
+        <composite:attribute name="mess" targets="s" />
+        <composite:actionSource name="confirmBox:okButton"/>
+    </composite:interface>  
+
+    <!-- IMPLEMENTATION -->  
+    <composite:implementation> 
+        <p:dialog id="confirmBox" header="信息" widgetVar="confirmBox"  width="350px"
+                  style="margin-left: 150px; margin-bottom: 150px; margin-right: 150px;">
+            <h:panelGrid columns="2" style="text-align : center;width: 300px">
+                <h:graphicImage value="../resources/common/picture/confirm.png" style="width: 32px; height: 32px;vertical-align:middle"/>
+                <h:outputText value="#{cc.attrs.mess}" />
+            </h:panelGrid>
+            <h:panelGrid  columns="1" style="text-align : center;width: 300px"> 
+                <p:row>
+                    <p:commandButton id="okButton" value="确定" oncomplete="confirmBox.hide()"/>
+                    <p:spacer style="width: 10px; height: 5px"/>
+                    <p:commandButton id="cancelButton" value="取消" onclick="confirmBox.hide()"/>
+                </p:row>
+            </h:panelGrid>
+        </p:dialog>
+    </composite:implementation>  
+</html>
+

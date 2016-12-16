@@ -1,0 +1,214 @@
+<?xml version="1.0" encoding="GBK"?>
+<!--
+To change this template, choose Tools | Templates
+and open the template in the editor.
+-->
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.1//EN" "http://www.w3.org/TR/xhtml11/DTD/xhtml11.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:p="http://primefaces.org/ui">
+<!--                template="../template/framework.xhtml">-->
+<!--    <ui:define name="left">
+        <ui:include src="../panel/leftMenu.xhtml"/>
+    </ui:define>-->
+<h:head>
+        <link href="./../resources/common/css/default.css" rel="stylesheet" type="text/css" />
+    </h:head>
+
+<!--    <ui:define name="head">
+        <script type="text/javascript">
+           
+        </script>
+    </ui:define>-->
+
+<!--    <ui:define name="content">-->
+<h:body>
+        <script language="JavaScript">
+            function clickConfirm(xhr, status, args) {
+              //document.getElementById("form:myaddDialog").shide();
+              // window.close();
+//              var  name = document.getElementById("form:username").value;
+//              if(name=="") {
+//                   alert("用户名不能为空！");
+//              }
+//              alert(name);
+               var r = args.result;
+               if(r!="success") {
+                   alert(r);
+                   return  false;
+               }
+               
+              return  true;
+            }
+            function  clickAdd(xhr, status, args) {
+                var r = args.result;
+                if(r!="success") {
+                   alert(r);
+                   
+               }
+            }
+            function  save(xhr, status, args) {
+                var r = args.result;
+               if(r=="设置成功！") {
+                  alert(r);
+                  // return  false;
+               }
+               
+             // return  true;
+            }
+            function  displayAddUser() {
+                document.getElementById("form:username").value = "";
+                document.getElementById("form:pwd1").value = "";
+                document.getElementById("form:pwd2").value = "";
+                document.getElementById("form:username").focus();
+            
+            } 
+            function  displayAddGroup() {
+                document.getElementById("form:groupname").value = "";
+                document.getElementById("form:groupname").focus();
+            }
+            function displayUpdatePasswd() {
+                document.getElementById("form:passwd1").value = "";
+                document.getElementById("form:passwd2").value = "";
+                document.getElementById("form:passwd1").focus();
+            }
+            
+        </script>
+
+        <p:accordionPanel id="pannel" multiple="true"    >
+            <p:tab id="tab1" title="域设置"     >
+                <h:form id="form1" >
+
+
+                    <h1 title="System Infomation" class="title ui-widget-header ui-corner-all">存储功能>NAS网络存储>CIFS设置>域设置</h1>
+                    <br/>
+                    <h:panelGrid columns="3" id="domainset"    >
+                        <h:outputLabel value="DNS服务器：" />
+                        <p:inputText id="dns" value="#{joinDomain.dnsIP}" required="true" label="DNS服务器" >
+                            <!--<f:validator validatorId="IPValidator" ></f:validator>-->
+                        </p:inputText>
+                        <p:message for="dns" />
+                        <h:outputLabel value="AD域名：" />
+                        <p:inputText id="domain" value="#{joinDomain.ADDomainName}" required="true" label="AD域名" >
+                            <!--<f:validator validatorId="DomainValidate" ></f:validator>-->
+                        </p:inputText>
+                        <p:message for="domain" />
+                        <h:outputLabel value="AD连接用户：" />
+                        <p:inputText id="user" value="#{joinDomain.ADUserName}" required="true" label="AD连接用户" />
+                        <p:message for="user" />
+                        <h:outputLabel  value="AD连接密码：" />
+                        <p:password id="passwd" value="#{joinDomain.ADPasswd}" /> 
+                        <p:message for="passwd" />
+                    </h:panelGrid>
+                    <br/>
+                    <p:spacer width="230px" height="10px" />
+                    <p:commandLink disabled="#{user.type!=2}" value="查看域" style="text-decoration: underline;padding-bottom: 1px;border-bottom: 1px;font-size: 13px" oncomplete="lookDomainDialog.show()" />
+                    <!--                   <p:spacer width="10px" height="10px" />-->
+                    <br/>
+                    <p:commandButton value="保存" style="font-size: 15px" update="domainset lookDomain" actionListener="#{joinDomain.save()}" oncomplete="save(xhr, status, args)" />
+                    <p:dialog id="lookDomain" header="查看域" widgetVar="lookDomainDialog" resizable="false" >  
+                        <br/>
+                        <h:panelGrid columns="2" cellpadding="5" >  
+                            <h:outputLabel value="是否在域中：" />  
+                            <h:outputLabel   value="#{domainBean.isOrNot}"  >
+                            </h:outputLabel>
+                            <h:outputLabel  value="域控制器：" />  
+                            <h:outputLabel  value="#{domainBean.domainController}"  >
+                            </h:outputLabel>
+                            <h:outputLabel   value="域名：" />  
+                            <h:outputLabel   value="#{domainBean.domainName}"  >
+                            </h:outputLabel >
+                            <p:spacer width="2" height="10" />
+
+                        </h:panelGrid>  
+                        <p:spacer width="75" height="6" />
+
+                        <p:commandButton  value="确定"   oncomplete="lookDomainDialog.hide()">
+
+                        </p:commandButton>  
+
+                    </p:dialog>
+
+                </h:form>
+
+                <!--                    <p:commandButton id="addUser" value="添加用户" />  actionListener="{editGroupOfUser.update}"  update=":form:setgroup" -->
+
+                <!--                                        <p:commandButton  value="设置所属组"  actionListener="{editGroupOfUser.update}"    oncomplete="setGroupDialog.show()" update=":form:setgroup" />-->
+            </p:tab>
+            <p:tab id="tab2" title="ID映射">
+                <h1 title="System Infomation" class="title ui-widget-header ui-corner-all">存储功能>NAS网络存储>CIFS设置>ID映射设置</h1>
+
+                <!--                            <h:outputLabel value="Windows用户类型:" />-->
+                <h:form id="form2" >
+
+
+                    <h:panelGrid columns="2"  >
+                        <h:panelGrid columns="1" >
+                            <h:panelGrid columns="1" width="260px" >
+                                <p:selectOneMenu  style="width: 200px;font-size: 14px" id="winType" value="#{IDMapBean().selectedWinType}" >
+                                    <p:ajax event="change" listener="#{IDMapBean().changeWinTypeValue}" update="unixType winName unixName win unix" />
+                                    <f:selectItems value="#{IDMapBean().winTypes}" />
+                                </p:selectOneMenu> 
+                            </h:panelGrid>
+                            <h:panelGrid columns="1"  >
+                                <h:outputLabel id="win" value="#{IDMapBean().winTypeName}" style="line-height: 35px" />
+                                <p:selectOneMenu style="width: 200px;font-size: 14px" id="winName" value="#{IDMapBean().selectedWinName}" effect="fold" editable="true" filter="true" filterMatchMode="startsWith" >
+                                    <f:selectItems value="#{IDMapBean().winNames}" />
+                                </p:selectOneMenu>
+                            </h:panelGrid>
+                        </h:panelGrid>
+                        <h:panelGrid columns="1" >
+                            <h:panelGrid columns="1" >
+                                <p:selectOneMenu style="width: 200px;font-size: 14px" id="unixType" value="#{IDMapBean().selectedUnixType}" >
+                                    <p:ajax event="change" listener="#{IDMapBean().changeUnixTypeValue}" update="winType unixName winName win unix" />
+                                    <f:selectItems value="#{IDMapBean().unixTypes}" />
+                                </p:selectOneMenu>
+                            </h:panelGrid>
+                            <h:panelGrid columns="1" >
+                                <h:outputLabel id="unix" value="#{IDMapBean().unixTypeName}" style="line-height: 35px" />
+                                <p:selectOneMenu style="width: 200px;font-size: 14px" id="unixName" value="#{IDMapBean().selectedUnixName}" effect="fold" editable="true" filter="true" filterMatchMode="startsWith" >
+                                    <f:selectItems value="#{IDMapBean().unixNames}" />
+                                </p:selectOneMenu>
+
+                            </h:panelGrid>
+
+
+                        </h:panelGrid>
+                    </h:panelGrid>
+                    <p:spacer width="415px" height="10px" />
+                    <p:commandButton value="添加" immediate="true"  actionListener="#{IDMapBean().addIDMap}" update="idmaptable" oncomplete="clickAdd(xhr, status, args)" />
+                    <br/>
+                    <br/>
+                    <h:panelGrid columns="2" >
+                        <h:panelGrid columns="1" >
+                            <p:dataTable emptyMessage="#{global.get('emptyMessage')}" id="idmaptable" style="width: 400px" value="#{IDMapBean().dataModel.maps}" var="map" selectionMode="single" selection="#{IDMapBean().selectedMap}" rowKey="#{map.winName}" paginator="true" rows ="5">
+                                <p:column headerText="Windows" style="width: 200px"  >
+                                    #{map.winNameStr}
+                                </p:column>
+                                <p:column headerText="NAS" style="width: 200px" >
+                                    #{map.unixNameStr}
+                                </p:column>
+                            </p:dataTable>  
+                        </h:panelGrid>
+                        <h:panelGrid columns="1" >
+                            <p:commandButton value="删除" immediate="true" oncomplete="confirmDeleteMap.show()"  />
+                        </h:panelGrid>
+
+                    </h:panelGrid>
+                    <p:confirmDialog id="confirmGroupDialog" message="确定删除此映射？"   severity="alert" widgetVar="confirmDeleteMap" >  
+                        <p:commandButton  value="确定" immediate="true" update="idmaptable" oncomplete="confirmDeleteMap.hide()"  actionListener="#{IDMapBean().removeIDMap}" />  
+                        <p:commandButton  value="返回" oncomplete="confirmDeleteMap.hide()"  />    
+
+                    </p:confirmDialog>
+
+                </h:form>
+            </p:tab>
+
+
+        </p:accordionPanel>
+
+</h:body>
+<!--    </ui:define>-->
+</html>

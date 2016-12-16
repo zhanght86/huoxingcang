@@ -1,0 +1,185 @@
+<?xml version="1.0" encoding="GBK"?>
+<!--
+To change this template, choose Tools | Templates
+and open the template in the editor.
+-->
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.1//EN" "http://www.w3.org/TR/xhtml11/DTD/xhtml11.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+    <!--                template="../template/framework.xhtml">-->
+
+    <!--    <ui:define name="left">
+            <ui:include src="../panel/leftMenu.xhtml"/>
+        </ui:define>
+    
+        <ui:define name="content">-->
+    <h:head>
+        <link href="./../resources/common/css/cssIcon.css" rel="stylesheet" type="text/css" />
+        <link href="./../resources/common/css/default.css" rel="stylesheet" type="text/css" />
+    </h:head>
+    <h:body>
+
+
+        <script language="JavaScript">
+            function clickConfirm(xhr, status, args) {
+                //document.getElementById("form:myaddDialog").shide();
+                // window.close();
+                //              var  name = document.getElementById("form:username").value;
+                //              if(name=="") {
+                //                   alert("用户名不能为空！");
+                //              }
+                //              alert(name);
+                var r = args.result;
+                if (r != "success") {
+                    alert(r);
+                    return  false;
+                }
+
+                return  true;
+            }
+            function  clickAdd(xhr, status, args) {
+                var r = args.result;
+                if (r != "success") {
+                    alert(r);
+
+                }
+            }
+            function  save(xhr, status, args) {
+                var r = args.result;
+                if (r == "设置成功！") {
+                    alert(r);
+                    // return  false;
+                }
+
+                // return  true;
+            }
+
+
+        </script>
+        <h:form id="form">
+            <h1 title="Share Path Infomation" class="title ui-widget-header ui-corner-all">#{res.get('title')}</h1>
+            <p:messages  showSummary="true"  autoUpdate="true" closable="true" />
+            <br/>
+            <!--            <p:layout style="min-width:100px;min-height:500px;max-width: 900px;max-height: 2000px; border-bottom-color: chartreuse" id="layout"  >-->
+            <!--                <p:layoutUnit size="300px"   position="center"   >-->
+            <p:panel  style="width: 600px;border-color: transparent;text-align: center" >
+
+                <h:panelGrid columns="2" >
+                    <h:panelGrid columns="1" style=" width: 183px; text-align: left;">
+                    <h:outputLabel value="#{res.get('serverVersion')}"  /> 
+                    </h:panelGrid>
+                    <h:panelGrid columns="1" >
+                        <p:selectOneMenu  style="width: 180px;text-align: left" value="#{globalNFSDataBean.selectedServerVersion}" >
+                            <f:selectItems value="#{globalNFSDataBean.serverVersions}" />
+                        </p:selectOneMenu>
+                    </h:panelGrid>
+                </h:panelGrid>
+                <h:panelGrid columns="2" >
+                    <h:panelGrid columns="1" style=" width: 183px; text-align: left;">
+                        <h:outputLabel value="#{res.get('clientVersion')}" />
+                    </h:panelGrid>
+                    <h:panelGrid columns="1" >
+                        <p:selectOneMenu style="width: 100px;text-align: left" value="#{globalNFSDataBean.selectedClientVersion}" >
+                            <f:selectItems value="#{globalNFSDataBean.clientVersions}" />
+                        </p:selectOneMenu>
+                    </h:panelGrid>  
+                </h:panelGrid>
+                <h:panelGrid columns="4" >
+                    <h:panelGrid columns="1"  >
+                        <h:outputLabel value="#{res.get('maxRequest')}" />
+                    </h:panelGrid>
+                    <p:spacer width="61" height="10" />
+                    <h:panelGrid columns="1">
+                        <p:inputText id="requestNum" value="#{globalNFSDataBean.maxNFSRequestNum}" >
+                            <!--<f:validateLongRange minimum="1" maximum="2100000000" />-->
+                        </p:inputText>
+                    </h:panelGrid>
+                    <h:panelGrid columns="1">
+                        <h:outputLabel value="(1-2100000000)" />
+                    </h:panelGrid>
+                </h:panelGrid>
+                <!--<p:message for="requestNum" />-->
+
+                <h:panelGrid columns="4" >
+                    <h:panelGrid columns="1"  >
+                        <h:outputLabel value="#{res.get('connectQueue')}" />
+                    </h:panelGrid>
+                    <p:spacer width="61" height="10" />
+                    <h:panelGrid columns="1"  >
+                        <p:inputText id="queueLength"  value="#{globalNFSDataBean.connectQueueLength}" >
+                            <!--<f:validateLongRange minimum="0" maximum="2100000000" />-->
+                        </p:inputText>
+                    </h:panelGrid>
+                    <h:panelGrid columns="1">
+                        <h:outputLabel value="(0-2100000000)" />
+                    </h:panelGrid>
+                </h:panelGrid>
+                <!--<p:message for="queueLength" />-->
+                <!--<p:spacer width="9" height="10" />-->
+                <h:panelGrid columns="3" >
+                    <h:panelGrid columns="1"   >
+                        <h:outputLabel value="#{res.get('lockedReq')}" />
+                    </h:panelGrid>
+                    <h:panelGrid columns="1">
+                        <p:inputText id="lockrequest" value="#{globalNFSDataBean.maxNFSLockRequestNum}" >
+                            <!--<f:validateLongRange minimum="1" maximum="2100000000" />-->
+                        </p:inputText>
+                    </h:panelGrid>
+                    <h:panelGrid columns="1">
+                        <h:outputLabel value="(1-2100000000)" />
+                    </h:panelGrid>
+                </h:panelGrid>
+                <!--                <p:spacer width="20" height="10" />-->
+                <!--<p:message for="lockrequest" />-->
+                <!--<p:spacer width="9" height="10" />-->
+                <h:panelGrid columns="3" >
+                    <h:panelGrid columns="1"  >
+                        <h:outputLabel value="#{res.get('lockedQueue')}" />
+                    </h:panelGrid>
+                    <h:panelGrid columns="1">
+                        <p:inputText id="lockqueue" value="#{globalNFSDataBean.lockQueueLength}" >
+                            <!--<f:validateLongRange minimum="32" maximum="2100000000" />-->
+                        </p:inputText>
+                    </h:panelGrid>
+                    <h:panelGrid columns="1">
+                        <h:outputLabel value="(32-2100000000)" />
+                    </h:panelGrid>
+                </h:panelGrid>
+                <!--<p:message for="lockqueue"  />-->
+
+
+                <!--                    <p:spacer width="230px" height="10px" />-->
+                <!--                   <p:spacer width="10px" height="10px" />-->
+                <br/>
+                <!--<p:panel style="text-align: right" > action="{globalNFSDataBean.save}"-->
+                <p:commandButton disabled="#{user.type!=2}"  icon="saveIcon" value="#{global.get('save')}" actionListener="#{globalNFSDataBean.save}"   />
+                <!--</p:panel>-->
+                <!--                <p:separator style="width: 500pt" />
+                                <br/>-->
+                <!--                <p:spacer width="206px" height="10px" />
+                                <p:commandButton disabled="{user.type!=2}"  update="form" value="提交"  action="{globalNFSData.save}"  />
+                                <p:spacer width="5px" height="10px" />-->
+                <!--<p:commandButton disabled="{user.type!=2}"  immediate="true" value="返回"  action="nas_display?faces-redirect=true"  />-->
+
+                <!--                </p:layoutUnit>-->
+
+                <!--            </p:layout>-->
+            </p:panel>
+        </h:form>  
+        <p:ajaxStatus style="width:64px;height:64px;position:fixed;right:5px;bottom:5px">  
+            <f:facet name="start">  
+                <p:graphicImage value="../resources/common/picture/loading.gif" />  
+            </f:facet>  
+
+            <f:facet name="complete">  
+                <h:outputText value="" />  
+            </f:facet>  
+        </p:ajaxStatus>
+
+        <!--    </ui:define>-->
+    </h:body>
+
+</html>

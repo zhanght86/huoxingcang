@@ -1,0 +1,97 @@
+<?xml version="1.0" encoding="GBK"?>
+<!--
+To change this template, choose Tools | Templates
+and open the template in the editor.
+-->
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.1//EN" "http://www.w3.org/TR/xhtml11/DTD/xhtml11.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
+    <h:head>
+        <link href="./../resources/common/css/default.css" rel="stylesheet" type="text/css" />
+        <link href="./../resources/common/css/cssIcon.css" rel="stylesheet" type="text/css" />
+
+    </h:head>
+    <h:body>
+
+        <h:form id="form">
+            <h1 class="title ui-widget-header ui-corner-all">${global.get('moduletitle')}${res.get('title')}#{sSBean.fileSystemName} </h1>
+            <p:messages id="messages" showDetail="true" autoUpdate="true" closable="true" />
+            <br/>
+            <p:panel style="border: none;">
+                
+                <h:panelGrid columns="2" cellpadding="5" >
+                    <h:panelGroup>
+                        <p:selectBooleanCheckbox style="vertical-align: middle" id="duplicate"  value="#{sSBean.isSetDedup}" >
+                            <p:ajax  listener="#{sSBean.changDuplicate}" update="check" /> 
+                        </p:selectBooleanCheckbox>
+                        ${res.get('issetdedup')}
+                    </h:panelGroup>
+
+                    <h:panelGroup>
+                        <p:selectBooleanCheckbox style="vertical-align: middle" id="check" value="#{sSBean.isVerify}" disabled="#{sSBean.notVerify}"  >
+                        </p:selectBooleanCheckbox>
+                        ${res.get('isverify')}
+                    </h:panelGroup>
+                </h:panelGrid>
+                <h:panelGrid columns="2" cellpadding="5">
+                    <h:panelGroup>
+                            <p:selectBooleanCheckbox style="vertical-align: middle"  value="#{sSBean.isCompress}" >
+                                <p:ajax  listener="#{sSBean.changeCompress}" update="pannelSpin" /> 
+                            </p:selectBooleanCheckbox>
+                            ${res.get('iscompress')}
+                    </h:panelGroup>
+                    <h:panelGroup> 
+                            <p:spinner id="pannelSpin" size="2" disabled="#{sSBean.notCompress}"  value="#{sSBean.compress}" min="1" max="9"/>  
+                            <h:outputLabel value="${res.get('level')}"/>
+                    </h:panelGroup>
+                </h:panelGrid>
+                <h:panelGrid columns="2" cellpadding="5" >
+                    <h:panelGroup>
+                        <p:selectBooleanCheckbox  style="vertical-align: middle" id="quota"  value="#{sSBean.isSetQuota}" >
+                            <p:ajax  listener="#{sSBean.changeQuota}" update="maxSpace" /> 
+                        </p:selectBooleanCheckbox>
+                        ${res.get('issetquota')}
+                    </h:panelGroup>
+                    <p:spacer width="1"/>
+                </h:panelGrid>
+
+                <h:panelGrid columns="2" >
+                    <h:panelGrid columns="1"  >
+                        <h:outputLabel value="${res.get('quotavalue')}" />
+                    </h:panelGrid>
+                    <h:panelGrid columns="3">
+                        <p:spacer width="4px"/>
+                        <p:inputText id="maxSpace" value="#{sSBean.quotaValue}" disabled ="#{sSBean.notQuota}" style="width: 80px"  />
+                        <h:outputLabel value="GB ${res.get('min')}${sSBean.minQuotaValue}${res.get('units')}" />
+                    </h:panelGrid>
+                    <h:panelGrid columns="1">
+                        <h:outputLabel value="${res.get('recordsize')}" />
+                    </h:panelGrid>
+                    <h:panelGrid columns="2">
+                         <p:spacer width="4px"/>
+                        <p:selectOneMenu value="#{sSBean.recordsize}"  style="width: 90px"  >
+                            <f:selectItems value="#{sSBean.blockSize}" />
+                        </p:selectOneMenu>
+                    </h:panelGrid>
+                </h:panelGrid>  
+                <br></br>
+                <p:spacer width="50" height="6" />
+
+                <p:commandButton id="addButton" icon="saveIcon" value="${global.get('save')}"  action="#{sSBean.saveFileSet}"/>  
+                <p:spacer width="8"/>
+                <p:commandButton id="closeButton" icon="cancleIcon" value="${global.get('return')}"  immediate="true" onclick="javascript: window.history.go(-1);"/>  
+            </p:panel>
+        </h:form>
+        <p:ajaxStatus style="width:64px;height:64px;position:fixed;right:5px;bottom:5px">  
+            <f:facet name="start">  
+                <p:graphicImage value="../resources/common/picture/loading.gif" />  
+            </f:facet>  
+
+            <f:facet name="complete">  
+                <h:outputText value="" />  
+            </f:facet>  
+        </p:ajaxStatus>
+    </h:body>
+</html>

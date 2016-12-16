@@ -1,0 +1,88 @@
+<?xml version="1.0" encoding="GBK"?>
+<!--
+To change this template, choose Tools | Templates
+and open the template in the editor.
+-->
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.1//EN" "http://www.w3.org/TR/xhtml11/DTD/xhtml11.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:util="http://java.sun.com/jsf/composite/xhtml">
+    <h:head>
+        <link href="./../resources/common/css/default.css" rel="stylesheet" type="text/css" />
+        <link href="./../resources/common/css/cssIcon.css" rel="stylesheet" type="text/css" />
+        <script type="text/javascript">
+            $(document).ready(function() {
+                $("#tabView\\:form1\\:upload").change(function() {
+                    $("#img").hide();
+                    var str = document.getElementById("tabView:form1:upload").value.toString();
+                    var len = str.length;
+                    var last = str.lastIndexOf("\\");
+                    var filename;
+                    if (-1 === last) {
+                        filename = str;
+                    } else {
+                        filename = str.substring(last + 1, len);
+                    }
+                    var name = /^MarsServer.xml$/i;
+                    var result = name.test(filename);
+                    if (result !== true) {
+                        $("#tabView\\:form1")[0].reset();
+                        remind.show();
+                    }
+                });
+            });
+
+            $(document).ready(function() {
+                $("#tabView\\:form1\\:button").click(function() {
+                    $("#img").show();
+                });
+            });
+
+            function select() {
+                document.getElementById("#tabView\\tab1").click();
+            }
+        </script>
+    </h:head>
+    <h:body>
+        <h1 title="System Infomation" class="title ui-widget-header ui-corner-all">#{res.get('title')}</h1>
+        <!--<p:messages autoUpdate="true" redisplay="true" showDetail="true" closable="true" />-->
+        <p:messages showSummary="true" showDetail="false" autoUpdate="true" closable="true" />
+        <h:form >
+            <p:panel  style="border: 0">
+                <br/>
+                <h:outputLabel value="#{res.get('volume')}" />
+                <!--                <p:selectOneMenu id="volume" style="min-width: 200px; position: relative; top:8px" value="{backupVDL.pool}" >
+                                    <f:selectItems value="{backupVDL.poolNames}" />
+                                    <p:ajax update="vdl" listener="{backupVDL.vdlNames}" />  
+                                </p:selectOneMenu><br/><br/>-->
+                <h:outputLabel value="#{backupVDL.pool}" />
+                <br/>
+                <h:outputLabel value="#{res.get('vdl')}" />
+                <p:selectOneMenu id="vdl" style="min-width: 200px; position: relative; top:8px" value="#{backupVDL.VDL}">
+                    <f:selectItems value="#{backupVDL.VDLNames}"/>
+                </p:selectOneMenu><br/><br/>
+
+                <p:spacer width="50px" height="0"/>
+                <p:commandButton icon="clearIcon" disabled="#{user.type!=2}" value="#{res.get('clean')}" 
+                                 action="#{backupVDL.clearVDL()}" />
+                <p:spacer width="5px" height="0"/>
+                <p:commandButton  icon="cancleIcon" immediate="true" value="#{global.get('return')}" action="#{backupVDL.goBack()}" /> 
+            </p:panel>
+        </h:form>
+
+
+        <p:ajaxStatus style="width:64px;height:64px;position:fixed;right:5px;bottom:5px">  
+            <f:facet name="start">  
+                <p:graphicImage value="../resources/common/picture/loading.gif" />  
+            </f:facet>  
+
+            <f:facet name="complete">  
+                <h:outputText value="" />  
+            </f:facet>  
+        </p:ajaxStatus>
+    </h:body>
+</html>
+

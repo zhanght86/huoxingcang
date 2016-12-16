@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="GBK"?>
+<!--
+To change this template, choose Tools | Templates
+and open the template in the editor.
+-->
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.1//EN" "http://www.w3.org/TR/xhtml11/DTD/xhtml11.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:p="http://primefaces.org/ui">
+    <!--template="../template/framework.xhtml"-->
+
+    <!--    <ui:define name="content">-->
+    <h:head>
+        <link href="./../resources/common/css/default.css" rel="stylesheet" type="text/css" />
+        
+    </h:head>
+    <h:body>
+        <h:form id="form">
+            
+            <h1 title="VM List Infomation" class="title ui-widget-header ui-corner-all">
+                VTL>磁带库>驱动器信息>概要信息</h1>
+            <h:panelGrid style="width: 695px; text-align: right">
+                <p:row>
+                    <p:commandButton id="return" icon="ui-icon-arrowreturn-1-w" value="返回" action="vtl_sub_VTL?faces-redirect=true"/> 
+                </p:row>
+            </h:panelGrid>
+            <p:panelGrid id ="DriveInformation" columns="2" style="width: 690px" class="ui-panelgrid-odd">                            
+                <h:outputText value="驱动器ID" />
+                <h:outputText id="id" value="#{drive_Information.driveBean.id}" />
+
+                <h:outputText value="驱动器名称"/>
+                <h:outputText id="name" value="#{drive_Information.driveBean.name}" />
+
+                <h:outputText value="厂商"/>
+                <h:outputText id="vendorID" value="#{drive_Information.driveBean.vendorID}" />       
+
+                <h:outputText value="产品" />
+                <h:outputText id="productID" value="#{drive_Information.driveBean.productID}" />
+
+                <h:outputText value="版本"/>
+                <h:outputText id="revision" value="#{drive_Information.driveBean.revision}" />
+
+                <h:outputText value="驱动器序号"/>
+                <h:outputText id="number" value="#{drive_Information.driveBean.number}" />   
+
+                <h:outputText value="序列号" />
+                <h:outputText id="serialNumber" value="#{drive_Information.driveBean.serialNumber}" />
+
+                <h:outputText value="GUID"/>
+                <h:outputText id="GUID" value="#{drive_Information.driveBean.GUID}" />
+
+                <h:outputText value="装载状态"/>
+                <h:outputText id="full" value="#{drive_Information.driveBean.full}" />
+            </p:panelGrid> 
+            
+        </h:form>
+    </h:body>
+
+
+
+    <!--    </ui:define>-->
+</ui:composition>

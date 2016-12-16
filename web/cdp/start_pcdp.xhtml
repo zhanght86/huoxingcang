@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="GBK"?>
+<!--
+To change this template, choose Tools | Templates
+and open the template in the editor.
+-->
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.1//EN" "http://www.w3.org/TR/xhtml11/DTD/xhtml11.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:p="http://primefaces.org/ui"
+                xmlns:util="http://java.sun.com/jsf/composite/xhtml">
+
+    <h:head>
+        <link href="./../resources/common/css/default.css" rel="stylesheet" type="text/css" />
+        <link href="./../resources/common/css/cssIcon.css" rel="stylesheet" type="text/css" />
+
+    </h:head>
+    <h:body>
+        <h:form id="form">
+            <h1 class="title ui-widget-header ui-corner-all">#{global.get('cdp')}${res.get('title')}</h1>
+            <p:messages id="messages" showDetail="true" autoUpdate="true" closable="true" />
+            <h:panelGrid id="status" columns="2" cellpadding="5" >
+                <h:outputLabel value="${global.get('host')}"/>
+                <h:outputLabel value="#{clientBean.ip}" />
+            </h:panelGrid>
+            <br></br>
+            <p:panel style="border: none;">
+                <p:fieldset legend="${res.get('fs1')}" style=" width: 230px;">
+                    <h:selectOneRadio id="mode" value="#{clientBean.mode}">
+                        <f:selectItem itemLabel="${res.get('rd1')}" itemValue="1" />
+                        <f:selectItem itemLabel="${res.get('rd2')}" itemValue="0" />
+                        <p:ajax event="change" update="immediate" />
+                    </h:selectOneRadio>
+                    <p:selectBooleanCheckbox id="immediate" disabled="#{clientBean.mode == 0}" style="vertical-align: middle" value="#{clientBean.immediate}" >                        
+                    <p:ajax event="change" listener="#{clientBean.change()}"/>
+                    </p:selectBooleanCheckbox>
+                    <h:outputLabel value="${res.get('chb1')}"  style="line-height: 25px;vertical-align: middle" /><br></br>
+                    <h:outputLabel value="${res.get('chb1_u')}"  style="line-height: 20px;vertical-align: middle" />
+                </p:fieldset>
+                <br></br>
+                <p:selectBooleanCheckbox style="vertical-align: middle" value="#{clientBean.protectAfterRestart}" >
+                    <p:ajax event="change" update="restart"/>
+                </p:selectBooleanCheckbox>
+                <h:outputLabel value="${res.get('chb2')}"  style="line-height: 25px;vertical-align: middle" />
+                <p:fieldset id="restart" legend="${res.get('fs2')}" style=" width: 230px;">
+                    <h:selectOneRadio id="auto" value="#{clientBean.auto}" disabled="#{!clientBean.protectAfterRestart}">
+                        <f:selectItem itemLabel="${res.get('rd3')}" itemValue="3" />  
+                        <f:selectItem itemLabel="${res.get('rd4')}" itemValue="1" />  
+                    </h:selectOneRadio>
+                </p:fieldset>
+                <br></br>
+                <p:selectBooleanCheckbox id="fast" style="vertical-align: middle" value="#{clientBean.fast}" >                        
+                <p:ajax event="change" listener="#{clientBean.change()}"/>
+                </p:selectBooleanCheckbox>
+                <h:outputLabel value="${res.get('chb3')}"  style="line-height: 25px;vertical-align: middle" />
+                <p:spacer width="50" height="6" />
+                <br></br>
+                <br></br>
+                <p:panel style="border: none; text-align: center;  width: 230px;">
+                    <p:commandButton id="addButton" icon="saveIcon" value="${global.get('save')}"  action="#{clientBean.pStartCDP()}"/>  
+                    <p:spacer width="8"/>
+                    <p:commandButton id="closeButton" icon="cancleIcon" value="${global.get('return')}"  immediate="true" action="#{clientBean.returnStr()}"/>  
+                </p:panel>
+            </p:panel>
+
+        </h:form>
+        <p:ajaxStatus style="width:64px;height:64px;position:fixed;right:5px;bottom:5px">  
+            <f:facet name="start">  
+                <p:graphicImage value="../resources/common/picture/loading.gif" />  
+            </f:facet>  
+
+            <f:facet name="complete">
+                <h:outputText value="" />
+            </f:facet>  
+        </p:ajaxStatus>
+    </h:body>
+</ui:composition>

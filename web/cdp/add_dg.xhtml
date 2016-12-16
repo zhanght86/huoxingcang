@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="GBK"?>
+<!--
+To change this template, choose Tools | Templates
+and open the template in the editor.
+-->
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.1//EN" "http://www.w3.org/TR/xhtml11/DTD/xhtml11.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:p="http://primefaces.org/ui"
+                xmlns:util="http://java.sun.com/jsf/composite/xhtml">
+
+    <h:head>
+        <link href="./../resources/common/css/default.css" rel="stylesheet" type="text/css" />
+        <link href="./../resources/common/css/cssIcon.css" rel="stylesheet" type="text/css" />
+
+    </h:head>
+    <h:body>
+        <h:form id="form">
+            <h1 class="title ui-widget-header ui-corner-all">#{global.get('cdp')}${res.get('title')}</h1>
+            <p:messages id="messages" showDetail="true" autoUpdate="true" closable="true" />
+            <br/>
+            <p:panel style="border: none;">
+
+                <h:panelGrid columns="2" cellpadding="5" id="matchGrid" >  
+                    <h:panelGrid columns="1" style=" width: 60px;">
+                        <h:outputLabel for="dgName" value="${res.get('label1')}" />  
+                    </h:panelGrid>
+                    <p:inputText value="#{addDGBean.dgName}" id="dgName" label="dgName" style="width: 186px"/>           
+                    <h:panelGrid columns="1">
+                        <h:outputLabel for="volume" value="${res.get('label2')}" />  
+                    </h:panelGrid>
+                    <p:selectOneMenu id="volume" value="#{addDGBean.volume}" style="min-width: 194px">  
+                        <f:selectItems value="#{addDGBean.volumes}" /> 
+                    </p:selectOneMenu>
+                </h:panelGrid>  
+                <br></br>
+                <p:spacer width="50" height="6" />
+
+                <p:commandButton id="addButton" icon="saveIcon" value="${global.get('save')}"  action="#{addDGBean.addDG()}"/>  
+                <p:spacer width="8"/>
+                <p:commandButton id="closeButton" icon="cancleIcon" value="${global.get('return')}"  immediate="true" onclick="javascript: window.location.href = 'dgs.xhtml?faces-redirect=true';"/>  
+            </p:panel>
+
+            <util:question1  uid="adddg" mess="${res.get('q0')}" action="#{addDGBean.toAdd_d()}"  cancelAction="#{addDGBean.toDgs()}" >
+
+            </util:question1>
+        </h:form>
+        <p:ajaxStatus style="width:64px;height:64px;position:fixed;right:5px;bottom:5px">  
+            <f:facet name="start">  
+                <p:graphicImage value="../resources/common/picture/loading.gif" />  
+            </f:facet>  
+
+            <f:facet name="complete">  
+                <h:outputText value="" />
+            </f:facet>  
+        </p:ajaxStatus>
+    </h:body>
+</ui:composition>

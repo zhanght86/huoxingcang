@@ -1,0 +1,145 @@
+<?xml version="1.0" encoding="gb2312" ?> 
+<MarsMSA>
+    <ResourceInfo>
+        <Bean>
+            <Author>王麒</Author> 
+            <ResourceID>400001</ResourceID> 
+            <Macro>LOG_START_BA_SERVICE_SUCCES</Macro> 
+            <Chinese>'%1''%2'成功</Chinese> 
+            <English>'%1''%2'Success</English> 
+        </Bean>
+        <Bean>
+            <Author>王麒</Author> 
+            <ResourceID>400002</ResourceID> 
+            <Macro>LOG_START_BA_SERVICE_FAILE</Macro> 
+            <Chinese>'%1''%2'失败</Chinese> 
+            <English>'%1''%2'Failed</English> 
+        </Bean>
+        <Bean>
+            <Author>王麒</Author> 
+            <ResourceID>400003</ResourceID> 
+            <Macro>LOG_MODIFY_BA_SETUP_SUCCESS</Macro> 
+            <Chinese>更新MBA安装程序成功</Chinese> 
+            <English>Modify MBA Setup Success</English> 
+        </Bean>
+        <Bean>
+            <Author>王麒</Author> 
+            <ResourceID>400004</ResourceID> 
+            <Macro>LOG_MODIFY_BA_SETUP_FAILED</Macro> 
+            <Chinese>更新MBA安装程序失败</Chinese> 
+            <English>Modify MBA Setup Success</English> 
+        </Bean>
+        <Bean>
+            <Author>王麒</Author> 
+            <ResourceID>400005</ResourceID> 
+            <Macro>LOG_MODIFY_BA_CONFIG_SUCCESS</Macro> 
+            <Chinese>更新MBA配置文件成功</Chinese> 
+            <English>Modify MBA Config File Success</English> 
+        </Bean>
+        <Bean>
+            <Author>王麒</Author> 
+            <ResourceID>400006</ResourceID> 
+            <Macro>LOG_MODIFY_BA_CONFIG_FAILED</Macro> 
+            <Chinese>更新MBA配置文件失败</Chinese> 
+            <English>Modify MBA Config File Success</English> 
+        </Bean>
+		<Bean>
+            <Author>王麒</Author> 
+            <ResourceID>400007</ResourceID> 
+            <Macro>LOG_START_BA_SERVICE_SUCCESS</Macro> 
+            <Chinese>启动'%1'服务成功</Chinese> 
+            <English>Start '%1' Service Success</English> 
+        </Bean>
+        <Bean>
+            <Author>王麒</Author> 
+            <ResourceID>400008</ResourceID> 
+            <Macro>LOG_START_BA_SERVICE_FAILED</Macro> 
+            <Chinese>启动'%1'服务失败</Chinese> 
+            <English>Start '%1' Services Failed</English> 
+        </Bean>
+		<Bean>
+            <Author>王麒</Author> 
+            <ResourceID>400009</ResourceID> 
+            <Macro>LOG_STOP_BA_SERVICE_SUCCESS</Macro> 
+            <Chinese>停止'%1'服务成功</Chinese> 
+            <English>Stop '%1' Service Success</English> 
+        </Bean>
+        <Bean>
+            <Author>王麒</Author> 
+            <ResourceID>400010</ResourceID> 
+            <Macro>LOG_STOP_BA_SERVICE_FAILED</Macro> 
+            <Chinese>停止'%1'服务失败</Chinese> 
+            <English>Stop '%1' Services Failed</English> 
+        </Bean>
+        <Bean>
+            <Author>王麒</Author> 
+            <ResourceID>400011</ResourceID> 
+            <Macro>LOG_RESTART_BA_SERVICE_SUCCESS</Macro> 
+            <Chinese>重启'%1'服务成功</Chinese> 
+            <English>Restart '%1' Service Success</English> 
+        </Bean>
+        <Bean>
+            <Author>王麒</Author> 
+            <ResourceID>400012</ResourceID> 
+            <Macro>LOG_RESTART_BA_SERVICE_FAILED</Macro> 
+            <Chinese>重启'%1'服务失败</Chinese> 
+            <English>Restart '%1' Services Failed</English> 
+        </Bean>
+        <Bean>
+            <Author>王麒</Author> 
+            <ResourceID>400013</ResourceID> 
+            <Macro>LOG_CLEAR_VDL_SUCCESS</Macro> 
+            <Chinese>清理VDL:'%1'成功</Chinese> 
+            <English>Clear VDL: '%1' Success</English> 
+        </Bean>
+        <Bean>
+            <Author>王麒</Author> 
+            <ResourceID>400014</ResourceID> 
+            <Macro>LOG_CLEAR_VDL_FAILED</Macro> 
+            <Chinese>清理VDL:'%1'失败</Chinese> 
+            <English>Clear VDL: '%1' Failed</English> 
+        </Bean>
+        <Bean>
+            <Author>王麒</Author> 
+            <ResourceID>400015</ResourceID> 
+            <Macro>LOG_SETTING_IP_SUCCESS</Macro> 
+            <Chinese>设置MarsServer.xml中IP为:'%1'成功</Chinese> 
+            <English>Setting MarsServer.xml IP is: '%1' Success</English> 
+        </Bean>
+        <Bean>
+            <Author>王麒</Author> 
+            <ResourceID>400016</ResourceID> 
+            <Macro>LOG_SETTING_IP_FAILED</Macro> 
+            <Chinese>设置MarsServer.xml中IP为:'%1'失败</Chinese> 
+            <English>Setting MarsServer.xml IP is: '%1' Failed</English> 
+        </Bean>
+        <Bean>
+            <Author>王麒</Author> 
+            <ResourceID>400017</ResourceID> 
+            <Macro>LOG_DOWMLOAD_AGENT_SETUP_SUCCESS</Macro> 
+            <Chinese>下载代理程序'%1'成功</Chinese> 
+            <English>Download Agent '%1' Success</English> 
+        </Bean>
+        <Bean>
+            <Author>王麒</Author> 
+            <ResourceID>400018</ResourceID> 
+            <Macro>LOG_DOWMLOAD_AGENT_SETUP_FAILED</Macro> 
+            <Chinese>下载代理程序'%1'失败</Chinese> 
+            <English>Download Agent '%1' Failed</English> 
+        </Bean>
+        <Bean>
+            <Author>王麒</Author> 
+            <ResourceID>400019</ResourceID> 
+            <Macro>LOG_UPLOAD_AGENT_SETUP_SUCCESS</Macro> 
+            <Chinese>上传代理程序'%1'成功</Chinese> 
+            <English>Upload Agent '%1' Success</English> 
+        </Bean>
+        <Bean>
+            <Author>王麒</Author> 
+            <ResourceID>400020</ResourceID> 
+            <Macro>LOG_UPLOAD_AGENT_SETUP_FAILED</Macro> 
+            <Chinese>上传代理程序'%1'失败</Chinese> 
+            <English>Upload Agent '%1' Failed</English> 
+        </Bean>
+    </ResourceInfo>
+</MarsMSA>

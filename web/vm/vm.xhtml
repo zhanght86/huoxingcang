@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="GBK"?>
+<!--
+To change this template, choose Tools | Templates
+and open the template in the editor.
+-->
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.1//EN" "http://www.w3.org/TR/xhtml11/DTD/xhtml11.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:p="http://primefaces.org/ui">
+    <h:head>
+        <link href="./../resources/common/css/default.css" rel="stylesheet" type="text/css" />
+        <link href="./../resources/common/css/cssIcon.css" rel="stylesheet" type="text/css" />
+        <style type="text/css">
+            .postion{
+                margin-left: -21px;
+                padding-left: -21px;
+/*                margin-right: 12px;
+                padding-right: 12px;*/
+            }
+        </style>
+    </h:head>
+    <h:body>
+        <h:form id="form">
+            <h1 class="title ui-widget-header ui-corner-all">${global.get('moduletitle')}${res.get('title')}</h1>
+            <br/>
+<!--            <p:tabView id="tabView" dynamic="true" cache="true" style="border: none; "> 
+                
+                <p:tab id="tab1" title="{res.get('tab1')}">-->
+                    <div style="overflow-x: auto; width:100%;padding-bottom: 2px !important; padding-bottom: 14px;">
+                        <p:dataTable id="vmInfos" var="vmBean" value="#{vMList.vmList}" rowIndexVar="row" emptyMessage="#{global.get('emptyMessage')}">  
+                            <p:column headerText="${res.get('num')}" width="80" style="text-align:center">  
+                                <h:outputText value="#{row + 1}"/>  
+                            </p:column>  
+                            <p:column headerText="${res.get('vmname')}">  
+                                <h:outputText value="#{vmBean.vmName}"/>  
+                            </p:column>     
+                            <p:column headerText="${res.get('state')}" style="text-align:center">  
+                                <h:outputText value="#{vmBean.state}" />  
+                            </p:column>  
+                        </p:dataTable>  
+                    </div>
+<!--                </p:tab>   -->
+
+<!--                <p:tab id="tab2" title="{res.get('tab2')}"> 
+                    <div style="overflow-x: auto; width:100%;padding-bottom: 2px !important; padding-bottom: 14px;" class="postion">
+                        <p:dataTable id="isoList" var="iSOPathBean" value="{iSOPathList.mediumISOsModel}" rowIndexVar="row" emptyMessage="{global.get('emptyMessage')}">  
+                            <p:column headerText="{res.get('num')}" width="80" style="text-align:center">  
+                                <h:outputText value="{row + 1}"/>  
+                            </p:column>  
+                            <p:column headerText="{res.get('tab2')}" disabledSelection="true" sortBy="{iSOPathBean.isoPath}">  
+                                <h:outputText value="{iSOPathBean.isoPath}"/>  
+                            </p:column>
+                        </p:dataTable>   
+                    </div>
+                </p:tab>
+
+                <p:tab id="tab3" title="{res.get('tab3')}">  
+                    <div style="overflow-x: auto; width:100%;padding-bottom: 2px !important; padding-bottom: 14px;" class="postion">
+                        <p:dataTable id="diskList" var="clearHDInfo" value="{diskPathList.hdModel}" rowIndexVar="row" emptyMessage="{global.get('emptyMessage')}">  
+                            <p:column headerText="{res.get('num')}" width="80" style="text-align:center">  
+                                <h:outputText value="{row + 1}"/>  
+                            </p:column>  
+                            <p:column headerText="{res.get('hdname')}" disabledSelection="true" sortBy="{clearHDInfo.hdName}">  
+                                <h:outputText value="{clearHDInfo.hdName}"/>  
+                            </p:column>
+                            <p:column headerText="{res.get('state')}" disabledSelection="true" sortBy="{clearHDInfo.state}" style="text-align:center">  
+                                <h:outputText value="{clearHDInfo.state}"/>  
+                            </p:column>
+                        </p:dataTable> 
+                    </div>
+                </p:tab>    -->
+<!--            </p:tabView>-->
+        </h:form>       
+    </h:body>
+</ui:composition>

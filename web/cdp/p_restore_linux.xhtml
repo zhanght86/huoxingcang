@@ -1,0 +1,133 @@
+<?xml version="1.0" encoding="GBK"?>
+<!--
+To change this template, choose Tools | Templates
+and open the template in the editor.
+-->
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.1//EN" "http://www.w3.org/TR/xhtml11/DTD/xhtml11.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:p="http://primefaces.org/ui"
+                xmlns:util="http://java.sun.com/jsf/composite/xhtml">
+
+    <h:head>
+        <link href="./../resources/common/css/default.css" rel="stylesheet" type="text/css" />
+        <link href="./../resources/common/css/cssIcon.css" rel="stylesheet" type="text/css" />
+    </h:head>
+    <h:body>
+        <h:form id="form">
+            <h1 class="title ui-widget-header ui-corner-all">#{global.get('cdp')}${res.get('title')}</h1>
+            <p:messages id="messages" showDetail="true" autoUpdate="true" closable="true" />
+            <br></br>
+            <h:panelGrid id="status" columns="2" cellpadding="5" >
+                <h:outputLabel value="${global.get('host')}"/> 
+                <h:outputLabel value="#{linuxPRestoreBean.ip}" />
+            </h:panelGrid>
+            <br></br>
+            <p:panel style="border: none;">                
+                <h:panelGrid columns="1" cellpadding="5">  
+                    <p:fieldset legend="${res.get('p1')}" style="width: 660px;">
+                        <h:panelGrid columns="2" cellpadding="5" id="matchGrid" >  
+                            <h:outputLabel value="${res.get('key1')}" />  
+                            <h:outputLabel value="#{linuxPRestoreBean.device}"/>
+
+                            <h:outputLabel value="${res.get('key2')}" />  
+                            <h:outputLabel value="#{linuxPRestoreBean.PDevice}"/>
+
+                            <h:outputLabel value="${res.get('key3')}" />  
+                            <h:outputLabel value="#{linuxPRestoreBean.PSize}"/>
+
+                            <h:outputLabel value="${res.get('key4')}" />  
+                            <h:outputLabel value="#{linuxPRestoreBean.cdpType}"/>
+                        </h:panelGrid>  
+                    </p:fieldset>
+                    <p:fieldset legend="${res.get('p2')}" style="width: 660px;">
+                        <p:dataTable id="mirrors" var="mirror" value="#{linuxPRestoreBean.mirrorPartitions}" emptyMessage="#{global.get('emptyMessage')}" >
+                            <p:column headerText="${res.get('change1')}" style="white-space: nowrap">  
+                                <h:outputText value="#{linuxPRestoreBean.getHeader1(mirror)}" />  
+                            </p:column>
+                            <p:column headerText="${res.get('change2')}" style="white-space: nowrap">  
+                                <h:outputText value="#{linuxPRestoreBean.getHeader2(mirror)}" />  
+                            </p:column>
+                            <p:column headerText="${res.get('header1')}"  style="white-space: nowrap">  
+                                <h:outputText value="#{mirror.device}" />  
+                            </p:column>
+                            <p:column headerText="${res.get('header2')}" style="white-space: nowrap">  
+                                <h:outputText value="#{mirror.PDevice}" />  
+                            </p:column>
+                            <p:column headerText="${res.get('header3')}" style="white-space: nowrap">  
+                                <h:outputText value="#{linuxClientBean.getStrSize(mirror.partitionSize)}" />  
+                            </p:column>
+                            <p:column headerText="${global.get('operation')}" style="white-space: nowrap">
+                                <p:graphicImage rendered="#{!linuxPRestoreBean.getStopRendered(mirror.device, mirror.PDevice) and linuxPRestoreBean.noMirror()}" 
+                                                value="../resources/common/picture/start.png" width="16" height="16" 
+                                                style="vertical-align:middle; white-space: nowrap;"/>
+                                <p:commandLink rendered="#{!linuxPRestoreBean.getStopRendered(mirror.device, mirror.PDevice) and linuxPRestoreBean.noMirror()}" 
+                                               id="set" value="${res.get('o1')}" immediate="true" action="#{linuxPRestoreBean.setting0()}" 
+                                               update=":form" style="vertical-align:middle;">
+                                    <f:setPropertyActionListener value="#{mirror}" target="#{linuxPRestoreBean.selected}" />  
+                                </p:commandLink>
+                                <p:spacer width="10" rendered="#{!linuxPRestoreBean.getStopRendered(mirror.device, mirror.PDevice) and linuxPRestoreBean.noMirror()}" />
+                                <p:graphicImage rendered="#{!linuxPRestoreBean.getStopRendered(mirror.device, mirror.PDevice) and linuxPRestoreBean.noMirror()}" 
+                                                value="../resources/common/picture/start.png" width="16" height="16" 
+                                                style="vertical-align:middle; white-space: nowrap;"/>
+                                <p:commandLink rendered="#{!linuxPRestoreBean.getStopRendered(mirror.device, mirror.PDevice) and linuxPRestoreBean.noMirror()}" 
+                                               value="快速恢复" immediate="true" action="#{linuxPRestoreBean.setting1()}" 
+                                               update=":form" style="vertical-align:middle;">
+                                    <f:setPropertyActionListener value="#{mirror}" target="#{linuxPRestoreBean.selected}" />  
+                                </p:commandLink>
+                                
+                                <p:spacer width="10" rendered="#{linuxPRestoreBean.getStopRendered(mirror.device, mirror.PDevice)}" />
+                                <p:graphicImage rendered="#{linuxPRestoreBean.getStopRendered(mirror.device, mirror.PDevice)}" 
+                                                value="../resources/common/picture/stop.png" width="16" height="16"
+                                                style="vertical-align:middle; white-space: nowrap;"/>
+                                <p:commandLink rendered="#{linuxPRestoreBean.getStopRendered(mirror.device, mirror.PDevice)}" 
+                                               id="stop" value="停止" immediate="true" onclick="cancelRestore.show();"
+                                               update=":form" style="vertical-align:middle;"/>
+                                
+                                <p:spacer rendered="#{linuxPRestoreBean.getStopRendered(mirror.device, mirror.PDevice)}" width="10" />
+                                <p:graphicImage rendered="#{linuxPRestoreBean.getStopRendered(mirror.device, mirror.PDevice)}" 
+                                                value="../resources/common/picture/edit.png" width="16" height="16" 
+                                                style="vertical-align:middle; white-space: nowrap;"/>
+                                <p:commandLink rendered="#{linuxPRestoreBean.getStopRendered(mirror.device, mirror.PDevice)}"
+                                               id="process" value="进度信息" immediate="true" 
+                                               action="#{linuxPRestoreBean.process()}" style="vertical-align:middle;"/>
+                            </p:column>
+                        </p:dataTable>
+                    </p:fieldset>
+                </h:panelGrid> 
+                <br></br>
+                <p:selectBooleanCheckbox  rendered="false"  id="fast" style="vertical-align: middle" value="#{linuxPRestoreBean.fast}" >                        
+                <p:ajax event="change" listener="#{linuxPRestoreBean.change()}"/>
+                </p:selectBooleanCheckbox>
+                <h:outputLabel  rendered="false"  value="${res.get('chb3')}"  style="line-height: 25px;vertical-align: middle" />
+                <p:spacer width="135" height="6" />
+                <br/>
+                <h:panelGrid columns="1" cellpadding="5" style=" text-align: center; width: 660px;">
+                    <p:commandButton id="closeButton" icon="cancleIcon" value="${global.get('return')}"  immediate="true" 
+                                     onclick="javascript: window.location.href = 'client_linux.xhtml?faces-redirect=true&amp;ip=#{linuxPRestoreBean.ip}&amp;port=#{linuxPRestoreBean.port}';"/>  
+                </h:panelGrid>
+            </p:panel>
+            <p:panel id="c" style=" border: none;">
+                <util:question1 uid="restore0" mess="#{res.get('c')}" action="#{linuxPRestoreBean.restore0()}" cancelAction="#{linuxPRestoreBean.cancel0()}" update=":form" >
+                </util:question1>
+                <util:question1 uid="restore1" mess="#{res.get('c')}" action="#{linuxPRestoreBean.restore1()}" cancelAction="#{linuxPRestoreBean.cancel1()}" update=":form" >
+                </util:question1>
+            </p:panel>
+        </h:form>
+        <h:form style=" border: none;">
+            <util:confirm  uid="cancelRestore" mess="#{res.get('cancelRestore')}" action="#{linuxPRestoreBean.cancelRestore()}" update=":form"  >
+            </util:confirm>
+        </h:form>
+        <p:ajaxStatus style="width:64px;height:64px;position:fixed;right:5px;bottom:5px">  
+            <f:facet name="start">  
+                <p:graphicImage value="../resources/common/picture/loading.gif" />  
+            </f:facet>  
+
+            <f:facet name="complete">  
+                <h:outputText value="" />
+            </f:facet>  
+        </p:ajaxStatus>
+    </h:body>
+</ui:composition>

@@ -1,0 +1,231 @@
+<?xml version="1.0" encoding="GBK"?>
+<!--
+To change this template, choose Tools | Templates
+and open the template in the editor.
+-->
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.1//EN" "http://www.w3.org/TR/xhtml11/DTD/xhtml11.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:util="http://java.sun.com/jsf/composite/xhtml">
+    <h:head>
+        <link href="./../resources/common/css/default.css" rel="stylesheet" type="text/css" />
+        <link href="./../resources/common/css/cssIcon.css" rel="stylesheet" type="text/css" />
+    </h:head>
+    <h:body>
+        <!--<h:form id="form">-->
+         <script type="text/javascript">
+            navigateToTab = function() {
+                if (window.location.hash) {
+                    jQuery('ul.ui-tabs-nav li a').each(function(i, el) {
+                        if (jQuery(el).text() === window.location.hash.replace('#', '')) {
+                            jQuery(el).click();
+                            return;
+                        }
+                    })
+                }
+            };
+
+            jQuery().ready(navigateToTab);
+            jQuery(window).bind('hashchange', navigateToTab);
+            setupTabFragmentLinks = function() {
+                jQuery('ul.ui-tabs-nav li a').each(function(i, el) {
+                    el.onclick = function() {
+                        window.location = '#' + jQuery(el).text()
+                    };
+                })
+            };
+            jQuery().ready(setupTabFragmentLinks);
+        </script>
+        <h1 class="title ui-widget-header ui-corner-all">#{res.get('title')}</h1>
+        <p:messages showSummary="true" showDetail="false" autoUpdate="true" closable="true" />
+        <br/>
+        <p:tabView id="view" style="border:none;" activeIndex="#{iSCSITargetData.activeIndex}" >
+            <p:tab id="fctab"  title="FC"> 
+                <h:form id="form1">
+                    <p:dataTable emptyMessage="#{global.get('emptyMessage')}" value="#{FCTargetData.targets}" var="target" id="fctarget" >
+                        <!--                        <f:facet name="header">
+                                                    <div style=" text-align: right; margin-right: 20px;">
+                                                        <p:commandButton value="创建" icon="addIcon" action="scsi_create_fc_target?faces-redirect=true"/>
+                                                    </div>
+                                                </f:facet>-->
+                        <p:column headerText="#{res.get('targetName')}" >
+                            #{target.name}
+                        </p:column>
+<!--                        <p:column headerText="{res.get('TargetAlias')}" >
+                            {target.alias}
+                        </p:column>-->
+                        <p:column headerText="#{res.get('status')}" >
+                            <!--                            <h:outputLabel rendered="{target.status == "online"}" value="{res.get('online')}" ></h:outputLabel>
+                                                        <h:outputLabel rendered="{target.status == "offline"}" value="{res.get('offLine')}" />
+                                                        <h:outputLabel rendered="{target.status == "offlining"}" value="{res.get('offLining')}" />-->
+                            #{target.status}
+                        </p:column>
+                    </p:dataTable>
+                </h:form>
+            </p:tab>
+            <p:tab title="iSCSI">
+                <h:form id="form2">
+                    <p:toolbar >
+                        <p:toolbarGroup align="right">
+                            <p:commandButton disabled="#{user.type!=2}" value="#{global.get('create')}" icon="addIcon" action="scsi_create_iscsi_target?faces-redirect=true"/>
+                        </p:toolbarGroup>  
+                    </p:toolbar>
+                    <div style="overflow-x: auto; width: 100%; padding-bottom: 14px;">
+                        <p:dataTable  emptyMessage="#{global.get('emptyMessage')}" value="#{iSCSITargetData.targets}"  var="target" id="iscsitarget" >
+                            <!--                        <f:facet name="header">
+                                                        <div style=" text-align: right; margin-right: 20px;">
+                                                            <p:commandButton value="创建" icon="addIcon" action="scsi_create_iscsi_target?faces-redirect=true"/>
+                                                        </div>
+                                                    </f:facet>-->
+                            <p:column headerText="#{res.get('targetName')}" style="white-space: nowrap"  >
+                                #{target.targetInfo.targetName}
+                            </p:column>
+                            <p:column headerText="#{res.get('targetAlias')}" style="white-space: nowrap"  >
+                                #{target.targetInfo.aliasName}
+                            </p:column>
+                            <p:column headerText="CHAP" style="white-space: nowrap"  >
+                                <!--<p:spacer height="10" width="20" />-->
+                                <!--                                <p:selectBooleanCheckbox style="text-align: center;vertical-align: middle;" value ="{target.chap.isStart}" >
+                                                                    <p:ajax event="change" listener="{iSCSITargetData.listenCHAPStart(target)}" oncomplete="if(test(xhr, status, args)) confirmONNFS.show(); else confirmOFFNFS.show();" />
+                                                                </p:selectBooleanCheckbox>-->
+
+                                <h:outputLabel rendered="#{target.isStartChap}" value="#{res.get('enabled')}"/>
+                                <h:outputLabel rendered="#{not target.isStartChap}" value="#{res.get('notEnabled')}"/>
+                            </p:column>
+                            <p:column headerText="#{res.get('IPBinding')}" style="white-space: nowrap"  >
+                                <!--<p:spacer height="10" width="10" />-->
+                                <!--                                <p:selectBooleanCheckbox style="text-align: center;vertical-align: middle;" value ="{target.isStartBind}" >
+                                                                </p:selectBooleanCheckbox>-->
+                                <h:outputLabel rendered="#{target.isStartBind}" value="#{res.get('enabled')}" />
+                                <h:outputLabel rendered="#{not target.isStartBind}" value="#{res.get('notEnabled')}" />   
+                            </p:column>
+                            <p:column headerText="#{res.get('status')}" style="white-space: nowrap"  >
+                                <!--                                <h:outputLabel rendered="{target.targetInfo.state == "online"}" value="{res.get('online')}" />
+                                                                <h:outputLabel rendered="{target.targetInfo.state == "offline"}" value="{res.get('offLine')}" />
+                                                                <h:outputLabel rendered="{target.targetInfo.state == "offlining"}" value="{res.get('offLining')}" />-->
+                                #{target.status}  
+                            </p:column>
+                            <p:column headerText="#{global.get('operation')}" style="white-space: nowrap"  >
+                                <p:graphicImage style="vertical-align: middle;"  value="../resources/common/picture/binding.png" height="16" width="16" />
+                                <p:commandLink disabled="#{user.type!=2}" value="#{res.get('ChapAuthenticate')}" style="vertical-align: middle" action="#{iSCSITargetData.doBeforeConfigChap(target)}"  >
+                                    <!--<f:param name="startOrNot" value="{target.isStartChap}" ></f:param>-->
+                                </p:commandLink>
+                                <p:spacer height="10" width="10" />
+                                <p:graphicImage style="vertical-align: middle"  value="../resources/common/picture/edit.png" height="16" width="16" />
+                                <p:spacer height="10" width="1" />
+                                <p:commandLink disabled="#{user.type!=2}" value="#{res.get('IPBinding')}" style="vertical-align: middle" action="#{iSCSITargetData.doBeforeConfigIPBinding(target)}"  />
+                                <p:spacer height="10" width="10" />
+                                <p:graphicImage height="16"  width="16" style="border-color: transparent;vertical-align: middle"   value="../resources/common/picture/delete.png" />
+                                <!--oncomplete="deletetarget.show()" update="iscsitarget"   actionListener="{iSCSITargetData.beforeRemoveTarget(target)}"-->
+                                <p:commandLink disabled="#{user.type!=2}" value="#{global.get('delete')}"  style="vertical-align: middle"  oncomplete="deletetarget.show();"  update=":form3"  >
+                                    <f:setPropertyActionListener value="#{target}" target="#{iSCSITargetData.temp}" />
+                                </p:commandLink>                      
+                            </p:column>
+                        </p:dataTable>
+
+                        <!--                        <util:confirm  uid="deletetarget" update=":view:form2:iscsitarget"  mess="确定要删除Target吗？" >
+                                                    <f:actionListener for="okButton" binding="{iSCSITargetData.removeTarget()}" />
+                                                </util:confirm>-->
+                    </div>
+                    <!--                    <util:confirm  uid="deletetarget" mess="{res.get('confirmDeleteTarget')}"  action="{iSCSITargetData.removeTarget()}" update="iscsitarget"  >
+                    
+                                        </util:confirm>-->
+                </h:form>    
+            </p:tab>
+        </p:tabView>
+        <h:form id="form3">
+            <!--:view:form1:fcinitiatorgroup-->
+            <util:confirm  uid="deletetarget" mess="#{global.get('confirmDel')} #{global.get('lquote')}#{iSCSITargetData.temp.targetInfo.targetName}#{global.get('rquote')} #{global.get('what')}"  action="#{iSCSITargetData.removeTarget()}" update=":view:form2"  >
+
+            </util:confirm>
+        </h:form>
+        <!--            <p:accordionPanel  style="width: 700px"  id="pannel" multiple="true">
+                        <p:tab id="tab1" title="FC Target">
+                            <p:dataTable value="{FCTargetData.targets}" var="target" id="fctarget" >
+                                                        <f:facet name="header">
+                                                            <div style=" text-align: right; margin-right: 20px;">
+                                                                <p:commandButton value="创建" icon="addIcon" action="scsi_create_fc_target?faces-redirect=true"/>
+                                                            </div>
+                                                        </f:facet>
+                                <p:column headerText="{res.get('TargetName')}" >
+                                    {target.name}
+                                </p:column>
+                                <p:column headerText="{res.get('TargetAlias')}" >
+                                    {target.alias}
+                                </p:column>
+                                <p:column headerText="{res.get('status')}" >
+                                    {target.status}
+                                </p:column>
+                            </p:dataTable>
+                        </p:tab >
+                        <p:tab title="iSCSI Target">
+                            <p:toolbar style="width: 620px">
+                                <p:toolbarGroup align="right">
+                                    <p:commandButton value="{global.get('create')}" icon="addIcon" action="scsi_create_iscsi_target?faces-redirect=true"/>
+                                </p:toolbarGroup>  
+                            </p:toolbar>
+                            <div style="overflow-x: auto; width: 100%; padding-bottom: 14px;">
+                                <p:dataTable value="{iSCSITargetData.targets}" var="target" id="iscsitarget" >
+                                                            <f:facet name="header">
+                                                                <div style=" text-align: right; margin-right: 20px;">
+                                                                    <p:commandButton value="创建" icon="addIcon" action="scsi_create_iscsi_target?faces-redirect=true"/>
+                                                                </div>
+                                                            </f:facet>
+                                    <p:column headerText="{res.get('TargetName')}" >
+                                        {target.name}
+                                    </p:column>
+                                    <p:column headerText="{res.get('TargetAlias')}" >
+                                        {target.alias}
+                                    </p:column>
+                                    <p:column headerText="{res.get('ChapAuthenticate')}" >
+                                        <p:spacer height="10" width="20" />
+                                        <p:selectBooleanCheckbox style="text-align: center;vertical-align: middle;" value ="{target.chap.isStart}" >
+                                            <p:ajax event="change" listener="{iSCSITargetData.listenCHAPStart(target)}" oncomplete="if(test(xhr, status, args)) confirmONNFS.show(); else confirmOFFNFS.show();" />
+        
+                                        </p:selectBooleanCheckbox>
+                                    </p:column>
+                                    <p:column headerText="{res.get('IPBinding')}" >
+                                        <p:spacer height="10" width="10" />
+                                        <p:selectBooleanCheckbox style="text-align: center;vertical-align: middle;" value ="{target.bing.isStart}" >
+                                            <p:ajax event="change" listener="{sharelist.nfsListen(share)}" oncomplete="if(test(xhr, status, args)) confirmONNFS.show(); else confirmOFFNFS.show();" />
+                                        </p:selectBooleanCheckbox>
+                                    </p:column>
+                                    <p:column headerText="{res.get('status')}" >
+                                        {target.status}
+                                    </p:column>
+                                    <p:column headerText="{global.get('operation')}" >
+                                        <p:graphicImage style="vertical-align: middle"  value="../resources/common/picture/binding.png" height="16" width="16" />
+                                        <p:commandLink value="{res.get('ChapAuthenticate')}" style="vertical-align: middle"  />
+                                        <p:spacer height="10" width="20" />
+                                        <p:graphicImage style="vertical-align: middle"  value="../resources/common/picture/edit.png" height="16" width="16" />
+                                        <p:spacer height="10" width="1" />
+                                        <p:commandLink value="{res.get('IPBinding')}" style="vertical-align: middle"  />
+                                        <p:spacer height="10" width="20" />
+                                        <p:graphicImage height="16"  width="16" style="border-color: transparent;vertical-align: middle"   value="../resources/common/picture/delete.png" />
+                                        <p:commandLink value="{global.get('delete')}" actionListener="{iSCSITargetData.beforeRemoveTarget(target)}" style="vertical-align: middle" oncomplete="deletetarget.show()"      >
+                                        </p:commandLink>                      
+                                    </p:column>
+                                </p:dataTable>
+                                <util:confirm  uid="deletetarget" update=":form:pannel:iscsitarget"  mess="确定要删除Target吗？" >
+                                    <f:actionListener for="okButton" binding="{iSCSITargetData.removeTarget()}" />
+                                </util:confirm>
+                            </div>
+                        </p:tab>
+        
+                    </p:accordionPanel>-->
+
+        <!--</h:form>-->
+        <p:ajaxStatus style="width:64px;height:64px;position:fixed;right:5px;bottom:5px">  
+            <f:facet name="start">  
+                <p:graphicImage value="../resources/common/picture/loading.gif" />  
+            </f:facet>  
+
+            <f:facet name="complete">  
+                <h:outputText value="" />  
+            </f:facet>  
+        </p:ajaxStatus>
+    </h:body>
+</html>

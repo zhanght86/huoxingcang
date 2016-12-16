@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="GBK"?>
+<!--
+To change this template, choose Tools | Templates
+and open the template in the editor.
+-->
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.1//EN" "http://www.w3.org/TR/xhtml11/DTD/xhtml11.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:f="http://java.sun.com/jsf/core">
+    <h:head>
+        <link href="./../resources/common/css/default.css" rel="stylesheet" type="text/css" />
+        <link href="./../resources/common/css/cssIcon.css" rel="stylesheet" type="text/css" />
+    </h:head>
+    <h:body>
+        <h:form id="form">
+            <h1 class="title ui-widget-header ui-corner-all">#{global.get('backuptitle')}#{res.get('title')}</h1>
+            <p:messages  id="message" for="message" showDetail="true" autoUpdate="true" closable="true" />
+            <p:panel style="border: 0">
+                <h:panelGroup>
+                    <p:selectOneRadio id="customRadio"  layout="custom" value="#{rman.rmanNum}" >  
+                        <p:ajax listener="#{rman.rmanListener()}" update="text1  text2"/>
+                        <f:selectItem  itemValue="1"/>  
+                        <f:selectItem  itemValue="2" />  
+                    </p:selectOneRadio>  
+
+                    <h:panelGrid columns="3">  
+                        <p:radioButton id="opt1" for="customRadio" itemIndex="0"/>  
+                        <h:outputLabel for="opt1" value="#{res.get('series')}"  />  
+                        <p:inputText id="text1" disabled="#{rman.series}" value="#{rman.IUnit}" />  
+
+                        <p:radioButton id="opt2" for="customRadio" itemIndex="1"/>  
+                        <h:outputLabel for="opt2" value="#{res.get('days')}" />  
+                        <p:inputText id="text2" disabled="#{rman.days}" value="#{rman.idays}"  />  
+                    </h:panelGrid>  
+
+                    <br/>
+                    <h:panelGroup>
+                        <h:selectBooleanCheckbox value="#{rman.isPath}" >
+                            <p:ajax listener="#{rman.pathListener()}" update="path"/>
+                        </h:selectBooleanCheckbox>
+                        #{res.get('auto')} <br/><br/>  
+
+                        <h:outputLabel  value="#{res.get('path')}"/>
+                        <p:spacer width="57px" height="0px" />
+                        <p:inputText id="path" value="#{rman.SPath}" disabled="#{rman.path}"  /><br/><br/>    
+                    </h:panelGroup>
+                </h:panelGroup>
+                <div>
+                    <p:spacer width="75px" height="30px"/>
+                    <p:commandButton value="${global.get('save')}" icon="saveIcon" action="#{rman.setRMAN()}"  />
+                    <p:spacer width="8px"/>
+                    <p:commandButton value="${global.get('return')}" icon="cancleIcon" onclick="javascript: window.history.go(-1);"/>
+                </div>
+            </p:panel>
+        </h:form>
+        <p:ajaxStatus style="width:64px;height:64px;position:fixed;right:5px;bottom:5px">  
+            <f:facet name="start">  
+                <p:graphicImage value="../resources/common/picture/loading.gif" />  
+            </f:facet>  
+
+            <f:facet name="complete">  
+                <h:outputText value="" />  
+            </f:facet>  
+        </p:ajaxStatus>
+    </h:body>
+</html>

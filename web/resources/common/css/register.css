@@ -1,0 +1,79 @@
+﻿
+/* 
+   TODO customize this sample style
+   Syntax recommendation http://www.w3.org/TR/REC-CSS2/
+*/
+
+root { 
+    display: block;
+    background-color: black;
+}
+
+body{
+    background-color: white;
+    font-family:Microsoft YaHe,"微软雅黑",sans-serif;
+    max-width: 1000px;
+    height: 100%;
+    position: relative;
+    margin: auto;
+    padding-bottom: 0px;
+    margin-bottom: 0px;
+}
+
+.title{
+    letter-spacing: 5px; 
+    text-align: center;
+    font-family:Microsoft YaHe,"微软雅黑",sans-serif;
+    font-size: medium; 
+    margin-top: 3px;
+    height: 34px;
+    padding-top: 4px; 
+    font-size: 24px;
+    font-weight: 900; 
+    vertical-align: middle;
+}
+
+#form{
+    font-family:Microsoft YaHe,"微软雅黑",sans-serif;
+    text-align: left;
+    margin-top: 10px;
+}
+
+.ui-fileupload-content{
+    visibility: hidden;
+    display: none;
+}
+
+.ui-fileupload-buttonbar{
+    visibility: hidden;
+}
+
+.ui-button{
+    font-family:Microsoft YaHe,"微软雅黑",sans-serif;
+    visibility: visible;
+}
+
+.ui-fileinput-button{
+    font-family:Microsoft YaHe,"微软雅黑",sans-serif;
+    visibility: visible;
+}
+
+.upload{
+    left: 439px;
+    width: 200px;
+    top: -46px;
+    position: relative;   
+}
+
+td{
+    font-size: 12pt;
+    font-family: Microsoft YaHe,"微软雅黑",sans-serif;
+    table-layout: fixed;
+    word-break: break-all; 
+    font-weight: normal;
+}
+
+th{  /*控制表格字体*/
+    font-size: 12pt;
+    font-family: Microsoft YaHe,"微软雅黑",sans-serif;
+}

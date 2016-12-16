@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="GBK"?>
+<!--
+To change this template, choose Tools | Templates
+and open the template in the editor.
+-->
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.1//EN" "http://www.w3.org/TR/xhtml11/DTD/xhtml11.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+     <h:head>
+        <link href="./../resources/common/css/default.css" rel="stylesheet" type="text/css" />
+        <link href="./../resources/common/css/cssIcon.css" rel="stylesheet" type="text/css" />
+        <script type="text/javascript" >
+            function test(){
+                var txt = document.getElementById("form:aaa");
+                if(txt!=="hello") {
+                    e.cancel =true;
+                }
+            }
+        </script>
+    </h:head>
+    <h:body>
+        <h:form id="form">
+            <p:messages showSummary="true" showDetail="false" autoUpdate="true" closable="true" />
+         <p:inputText id="targetName" required="true"  value="#{createISCSITarget.name}" >
+            <f:validator  validatorId="targetNameValidator" />
+        </p:inputText>
+            <p:message id="info" for="targetName" />
+            <p:inputText   id="alias" required="true" value="#{createISCSITarget.alias}" />
+        <p:message for="alias" />
+        <p:selectOneMenu  style="width: 170px;height: 25px" editable="true"  label="Windows域用户或用户组名称"   required="true"   id="winName" value="#{IDMapBean().selectedWinName}"   >
+                                <!--<f:validator validatorId="WindowsNameValidate"  />-->
+                                <f:selectItems value="#{IDMapBean().winNames}" />
+                            </p:selectOneMenu>
+        <p:message for="winName" />
+        <p:commandButton   id="addButton" value="提交" icon="saveIcon" update="info"   action="#{createISCSITarget.save}" >
+        </p:commandButton>
+        <p:inputText id="aaa" value="hello" >
+            <p:ajax event="change" listener=""  />
+        </p:inputText>
+        <p:graphicImage style="background-color: transparent" value="../resources/common/picture/connect.GIF" />
+        </h:form>
+    </h:body>
+</html>

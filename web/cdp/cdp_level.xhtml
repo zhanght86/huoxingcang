@@ -1,0 +1,188 @@
+<?xml version="1.0" encoding="GBK"?>
+<!--
+To change this template, choose Tools | Templates
+and open the template in the editor.
+-->
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.1//EN" "http://www.w3.org/TR/xhtml11/DTD/xhtml11.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core" 
+      xmlns:p="http://primefaces.org/ui"
+      template="../template/framework.xhtml"
+      xmlns:util="http://java.sun.com/jsf/composite/xhtml">
+    <h:head>
+        <link href="./../resources/common/css/default.css" rel="stylesheet" type="text/css" />
+        <link href="./../resources/common/css/cssIcon.css" rel="stylesheet" type="text/css" />
+    </h:head>
+
+    <h:body>            
+        <h:form id="form">
+            <h1 class="title ui-widget-header ui-corner-all">#{global.get('cdp')}#{res.get('title')}</h1>
+            <p:messages showSummary="true" showDetail="false" autoUpdate="true" closable="true" />
+            <br/>
+            <h:panelGrid id="status" columns="2" cellpadding="5" >  
+                <h:outputLabel value="${global.get('dg')}"/>
+                <h:outputLabel value="#{cdpLevelBean.dg}" />
+            </h:panelGrid>
+            <p:panel id="settings" style=" border: none;">
+                <p:selectOneRadio rendered="#{!cdpLevelBean.register}" value="#{cdpLevelBean.strategy}" style=" width: 230px;">
+                    <p:ajax listener="#{cdpLevelBean.switchPanel()}" update=":form:settings"/>
+                    <f:selectItem itemValue="0" itemLabel="#{res.get('mirror')}" />
+                    <f:selectItem itemValue="1" itemLabel="#{res.get('snapshot')}" />
+                </p:selectOneRadio>
+                <p:selectOneRadio rendered="#{cdpLevelBean.register}"  value="#{cdpLevelBean.strategy}" style=" width: 230px;">
+                    <p:ajax listener="#{cdpLevelBean.switchPanel()}" update=":form:settings"/>
+                    <f:selectItem itemValue="0" itemLabel="#{res.get('mirror')}" />
+                    <f:selectItem itemValue="1" itemLabel="#{res.get('snapshot')}" />
+                    <f:selectItem itemValue="2" itemLabel="#{res.get('record')}" />
+                </p:selectOneRadio>
+                <div style="text-align: center; width: 550px;">
+                    <p:panel id="mirror" style=" border: 0px; width: 550px;" rendered="#{cdpLevelBean.mirror}">
+                        <div style="width: 190px;">
+                            <br></br>
+                            <p:commandButton id="c1" disabled="#{user.type!=2}"  rendered="#{cdpLevelBean.mirror}" value="${global.get('save')}" icon="saveIcon" action="#{cdpLevelBean.preMirror()}"   />
+                            <p:spacer width="8"/>
+                            <p:commandButton id="c2" icon="cancleIcon"  rendered="#{cdpLevelBean.mirror}" value="${global.get('return')}"  immediate="true" onclick="javascript: window.location.href = 'cdp.xhtml?faces-redirect=true';"/>  
+                        </div>
+                    </p:panel>
+                    <p:panel  style=" border: 0px;" rendered="#{cdpLevelBean.snapshot}">
+                        <h:panelGrid columns="2" cellpadding="2" rendered="#{cdpLevelBean.snapshot}">
+                            <h:outputLabel value="时间间隔：" />
+                            <h:panelGrid columns="2" >
+                                <p:spinner id="interval" size="3"  disabled="#{!cdpLevelBean.snapshot}" value="#{cdpLevelBean.SInterval}" min="0" />
+                                <h:outputLabel value="分钟" />
+                            </h:panelGrid>
+                            <h:outputLabel value="保留数量：" />
+                            <h:panelGrid columns="2" >
+                                <p:spinner id="reserve" size="3" value="#{cdpLevelBean.snapNum}"  disabled="#{!cdpLevelBean.snapshot}" min="0"/>
+                                <h:outputLabel value="个" />
+                            </h:panelGrid>
+                        </h:panelGrid>
+
+                        <div style="text-align: center; width: 190px;">
+                            <br></br>
+                            <p:commandButton id="c3"  rendered="#{cdpLevelBean.snapshot}" disabled="#{user.type!=2}" value="${global.get('save')}" icon="saveIcon" action="#{cdpLevelBean.preSnapshot()}"   />
+                            <p:spacer width="8"/>
+                            <p:commandButton id="c4" icon="cancleIcon"  rendered="#{cdpLevelBean.snapshot}" value="${global.get('return')}" immediate="true" onclick="javascript: window.location.href = 'cdp.xhtml?faces-redirect=true';"/>
+                        </div>
+                    </p:panel>
+                    <p:panel style=" border: 0px;" rendered="#{cdpLevelBean.RECORD}">
+                        <p:fieldset legend="${res.get('panel1')}" style="width: 450px; text-align: left">
+                            <h:panelGrid columns="4" border="0" cellpadding="5"  style=" text-align: left; width: 350px;"> 
+                                <h:outputLabel value="${res.get('label1')}" />  
+                                <h:outputLabel value="#{cdpLevelBean.group.diskCount}"/>
+                                <h:outputLabel value="${res.get('label2')}" />  
+                                <h:outputLabel value="#{cdpLevelBean.getts()}" /> 
+                            </h:panelGrid>
+                            <h:panelGrid columns="5" cellpadding="5"  style=" text-align: left; width: 350px;"> 
+                                <h:outputLabel value="${res.get('label4')}" /> 
+                                <p:spinner  value="#{cdpLevelBean.size}" size="3" min="1" >
+                                    <p:ajax event="change" listener="#{cdpLevelBean.change()}"/>
+                                </p:spinner>
+                                <h:outputLabel value="GB"/> 
+                                <h:outputLabel/> 
+                                <h:outputLabel/> 
+
+                                <h:outputLabel value="${res.get('label5')}" /> 
+                                <p:spinner id="keepTime" value="#{cdpLevelBean.keepTime}" disabled="#{cdpLevelBean.tillFull}" size="3" min="1">
+                                    <p:ajax event="change" listener="#{cdpLevelBean.change()}"/>
+                                </p:spinner> 
+                                <h:outputLabel value="#{global.get('hour')}" style="width: 100px" />  
+                                <p:selectBooleanCheckbox style="vertical-align: middle" value="#{cdpLevelBean.tillFull}" >
+                                    <p:ajax event="change" update="keepTime"/>
+                                </p:selectBooleanCheckbox>
+                                <h:outputLabel value="${res.get('chb')}"  style="line-height: 25px;vertical-align: middle" />
+                            </h:panelGrid>
+                            <h:panelGrid columns="2" cellpadding="5"   style=" text-align: left; width: 450px;"  >
+                                <h:outputLabel value="${res.get('label6')}" />
+                                <p:selectOneRadio id="state" value="#{cdpLevelBean.fullOption}">  
+                                    <f:selectItem itemValue="1"  itemLabel="${res.get('rd1')}"/>  
+                                    <f:selectItem itemValue="3"  itemLabel="${res.get('rd2')}"/>  
+                                    <f:selectItem itemValue="2"  itemLabel="${res.get('rd3')}"/>  
+                                    <p:ajax listener="#{cdpLevelBean.change()}"/>
+                                </p:selectOneRadio>  
+                            </h:panelGrid>
+                        </p:fieldset>
+                        <br></br>
+                        <p:fieldset legend="${res.get('panel2')}" style="width: 450px; text-align: left">
+                            <h:panelGrid columns="6" cellpadding="5">
+                                <p:selectBooleanCheckbox style="vertical-align: middle" value="#{cdpLevelBean.isDefault}">
+                                    <p:ajax event="change" listener="#{cdpLevelBean.change()}"  update=" default ip port addAgent agents" />
+                                </p:selectBooleanCheckbox>
+                                <h:outputLabel value="${res.get('chk')}"  style="line-height: 25px;vertical-align: middle" />
+                                <p:spacer width="12"/>
+                                <h:outputLabel value="${res.get('label1l')}" /> 
+                                <p:spinner value="#{cdpLevelBean.interval}" id="default" disabled="#{!cdpLevelBean.isDefault}" min="1" label="interval" size="3">
+                                    <p:ajax listener="#{cdpLevelBean.change()}"/>
+                                </p:spinner> 
+                                <h:outputLabel value="#{global.get('mins')}" />                    
+                            </h:panelGrid>
+                            
+                            <h:panelGrid columns="2" cellpadding="5" >
+                                <h:outputLabel for="ip" value="${res.get('label7')}" />  
+                                <p:inputText value="#{cdpLevelBean.host}" id="ip" label="ip" disabled="#{cdpLevelBean.isDefault}">
+                                    <p:ajax listener="#{cdpLevelBean.change()}"/>
+                                </p:inputText>
+                                <h:outputLabel for="port" value="${res.get('label8')}" />  
+                                <p:inputText value="#{cdpLevelBean.port}" id="port" label="port" disabled="#{cdpLevelBean.isDefault}">
+                                    <p:ajax listener="#{cdpLevelBean.change()}"/>
+                                </p:inputText>
+                            </h:panelGrid>
+                            <p:toolbar>  
+                                <p:toolbarGroup align="right">
+                                    <p:commandButton id="addAgent" immediate="true" icon="addIcon" disabled="#{cdpLevelBean.isDefault or cdpLevelBean.disableAdd}" action="#{cdpLevelBean.addAgent()}" value="#{global.get('add')}" update="agents" /> 
+                                </p:toolbarGroup>
+                            </p:toolbar>
+                            <p:dataTable id="agents" var="table" value="#{cdpLevelBean.listDB}"  emptyMessage="#{global.get('emptyMessage')}" >
+                                <p:column headerText="${res.get('header0')}" width="60" style="text-align:center; white-space: nowrap;">
+                                    <h:outputText value="#{cdpLevelBean.strType(table.agentType)}" />  
+                                </p:column>
+                                <p:column headerText="${res.get('header1')}">  
+                                    <h:outputText value="#{table.dbInstance}" />  
+                                </p:column>
+                                <p:column headerText="${global.get('operation')}" style="white-space: nowrap;">
+                                    <p:graphicImage value="../resources/common/picture/edit.png" width="16" height="16" style="vertical-align:middle;"/>
+                                    <p:commandLink id="set" disabled="#{cdpLevelBean.isDefault}" value="${res.get('o1')}" immediate="true" update="agents" action="#{cdpLevelBean.editAgent()}" style="vertical-align:middle;">
+                                        <f:setPropertyActionListener value="#{table}" target="#{cdpLevelBean.db}" />
+                                    </p:commandLink>
+                                    <p:spacer width="10"/>
+                                    <p:graphicImage value="../resources/common/picture/delete.png" width="16" height="16" style=" vertical-align:middle;"/>
+                                    <p:commandLink id="deleteLink" disabled="#{cdpLevelBean.isDefault}" value="#{global.get('delete')}" immediate="true" update="agents :form"  onclick="deleteAgent.show();" style=" vertical-align:middle;">
+                                        <f:setPropertyActionListener value="#{table}" target="#{cdpLevelBean.db}" />
+                                    </p:commandLink>
+                                </p:column>
+                            </p:dataTable>
+                        </p:fieldset>
+                        <br></br>
+                        <p:commandButton id="addButton"   disabled="#{user.type!=2}"  icon="saveIcon" value="${global.get('save')}" immediate="true"  action="#{cdpLevelBean.preRecord()}"/>  
+                        <p:spacer width="8"/>
+                        <p:commandButton id="closeButton"   icon="cancleIcon" value="${global.get('return')}"  immediate="true" action="#{cdpLevelBean.cancel()}"/>  
+                    </p:panel>
+                </div>
+            </p:panel>
+
+        </h:form>
+        <h:form id="c" style=" border: none;">
+            <util:confirm  uid="mirror" mess="#{res.get('alter')}" action="#{cdpLevelBean.mirror()}">
+            </util:confirm>
+            <util:confirm  uid="snapshot" mess="#{res.get('alter')}" action="#{cdpLevelBean.snapshot()}">
+            </util:confirm>
+            <util:confirm  uid="record" mess="#{res.get('alter')}" action="#{cdpLevelBean.record()}">
+            </util:confirm>
+            <util:confirm  uid="deleteAgent" mess="#{res.get('confirm')}" action="#{cdpLevelBean.deleteAgent()}" update=":form:agents :form:addAgent">
+            </util:confirm>
+        </h:form>
+        <h:form id="form1">
+            <util:info_1 uid="update" />
+        </h:form>
+        <p:ajaxStatus style="width:64px;height:64px;position:fixed;right:5px;bottom:5px">  
+            <f:facet name="start">  
+                <p:graphicImage value="../resources/common/picture/loading.gif" />  
+            </f:facet>  
+
+            <f:facet name="complete">  
+                <h:outputText value="" />  
+            </f:facet>  
+        </p:ajaxStatus>
+    </h:body>
+</html>

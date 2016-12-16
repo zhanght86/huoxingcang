@@ -1,0 +1,87 @@
+<?xml version="1.0" encoding="GBK"?>
+<!--
+To change this template, choose Tools | Templates
+and open the template in the editor.
+-->
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.1//EN" "http://www.w3.org/TR/xhtml11/DTD/xhtml11.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:p="http://primefaces.org/ui">
+    <!--template="../template/framework.xhtml"-->
+
+    <!--    <ui:define name="content">-->
+    <h:head>
+        <link href="./../resources/common/css/default.css" rel="stylesheet" type="text/css" />
+    </h:head>
+    <h:body>
+        <h:form id="form"> 
+            <h1 title="System Infomation" class="title ui-widget-header ui-corner-all">${global.get('moduletitle')}${res.get('title')}</h1>
+            <br></br>
+            <p:tabView  dynamic="true" style="border: 0px" cache="true" >
+                <p:tab title="#{res.get('vtl')}">
+                    <p:dataTable id="VTLInformation" var="vtlBean" value="#{vtl_InformationList.vtlList}"  emptyMessage="#{global.get('emptyMessage')}" rowKey="#{vtlBean.name}" style="width: 688px">                              
+                        <p:column headerText="${res.get('name')}" style="text-align: center">
+                            <h:outputText value="#{vtlBean.name}" />  
+                        </p:column>     
+                        <p:column headerText="${res.get('type')}" style="text-align: center">  
+                            <h:outputText value="#{vtlBean.vendorID}  #{vtlBean.productID}"/>  
+                        </p:column>  
+                        <p:column headerText="${res.get('numberofslots')}" style="text-align: center"> 
+                            <h:outputText value="#{vtlBean.numberOfSlots}" />  
+                        </p:column>
+                        <p:column headerText="${res.get('numberofdrives')}" style="text-align: center">  
+                            <h:outputText value="#{vtlBean.numberOfDrives}" />  
+                        </p:column>
+                        <p:column headerText="${res.get('numberoftapes')}" style="text-align: center">  
+                            <h:outputText value="#{vtlBean.numberOfTapes}" />  
+                        </p:column>
+                        <p:column headerText="${res.get('numberofports')}" style="text-align: center">  
+                            <h:outputText value="#{vtlBean.numberOfPorts}" />  
+                        </p:column>  
+                    </p:dataTable>
+                    <!--                  
+                                      <h:panelGrid style="width: 600px; text-align: right">
+                                          <p:row>
+                                              <p:commandButton id="enterVTL" icon="ui-icon-link" value="进入" action="vtl_sub?faces-redirect=true"/>                                
+                                          </p:row>
+                                      </h:panelGrid>
+                    -->
+                </p:tab> 
+                <p:tab title="${res.get('vault')}" >
+                    <p:dataTable id="VaultInformation" var="vaultBean" value="#{vtl_InformationList.vaultList}"  emptyMessage="#{global.get('emptyMessage')}" editable="true" rowKey="#{vaultBean.name}" style="width: 688px">  
+                        <p:column headerText="${res.get('name')}" style="text-align: center">
+                            <h:outputText value="#{vtl_InformationList.enToStr(vaultBean)}" />  
+                        </p:column>     
+                        <p:column headerText="${res.get('vault_numberoftapes')}" style="text-align: center">  
+                            <h:outputText value="#{vaultBean.numberOfTapes}" />  
+                        </p:column>                            
+                    </p:dataTable>
+                </p:tab> 
+
+                <p:tab title="${res.get('tape')}" > 
+                    <p:dataTable id="TapeInformation" var="tapeBean" value="#{vtl_InformationList.tapeList}"  emptyMessage="#{global.get('emptyMessage')}"  editable="true" rowKey="#{tapeBean.name}" style="width: 688px"> 
+                        <p:column headerText="${res.get('barcode')}">  
+                            <h:outputText value="#{tapeBean.barcode}"/>  
+                        </p:column>  
+                        <p:column headerText="${res.get('tapesize')}"> 
+                            <h:outputText value="#{vtl_util.sizeToString(tapeBean.tapeSize)}" />  
+                        </p:column>
+                        <p:column headerText="${res.get('usedsize')}">  
+                            <h:outputText value="#{vtl_util.sizeToString(tapeBean.usedSize)}" />  
+                        </p:column>
+                        <p:column headerText="${res.get('postion')}">  
+                            <h:outputText value="#{vtl_util.strLocation(tapeBean)}" />  
+                        </p:column>                            
+                    </p:dataTable>
+                </p:tab>  
+
+            </p:tabView>
+        </h:form>
+    </h:body>
+
+
+
+    <!--    </ui:define>-->
+</ui:composition>

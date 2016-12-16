@@ -1,0 +1,132 @@
+<?xml version="1.0" encoding="GBK"?>
+<!--
+To change this template, choose Tools | Templates
+and open the template in the editor.
+-->
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.1//EN" "http://www.w3.org/TR/xhtml11/DTD/xhtml11.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:p="http://primefaces.org/ui">
+
+    <h:head>
+        <link href="./../resources/common/css/default.css" rel="stylesheet" type="text/css" />
+        <link href="./../resources/common/css/cssIcon.css" rel="stylesheet" type="text/css" />
+
+    </h:head>
+    <h:body>
+        <h1 class="title ui-widget-header ui-corner-all">#{global.get('cdp')}${addAgentBean.title}</h1>
+        <p:messages id="messages" showDetail="true" autoUpdate="true" closable="true" />
+        <h:form id="form">
+            <h:panelGrid columns="1" cellpadding="5">   
+                <p:panel style=" border: none;">
+                    <h:panelGrid columns="1" cellpadding="5" >
+                        <p:fieldset legend="${res.get('p1')}" style="width: 350px;">
+                            <h:panelGrid columns="2" cellpadding="5"> 
+                                <h:panelGrid columns="1" style=" width: 100px;" >
+                                    <h:outputLabel for="ip" value="${res.get('label1')}" />  
+                                </h:panelGrid>                                
+                                <p:selectOneMenu id="ip" value="#{addAgentBean.agent.MSAIP}" style="width: 182px;" >  
+                                    <f:selectItems value="#{addAgentBean.ips}" /> 
+                                </p:selectOneMenu>
+                                
+                                <h:panelGrid columns="1">
+                                    <h:outputLabel for="type" value="${res.get('label10')}" />  
+                                </h:panelGrid>
+                                <p:selectOneMenu id="type" value="#{addAgentBean.type}" style="width: 182px;" disabled="#{addAgentBean.isEdit}">  
+                                    <p:ajax event="change" listener="#{addAgentBean.switchPanel()}" update=":form:agent"/>
+                                    <f:selectItem itemLabel="Oracle" itemValue="2" /> 
+                                    <f:selectItem itemLabel="SQL Server"  itemValue="3"/> 
+                                </p:selectOneMenu>
+                            </h:panelGrid>
+                        </p:fieldset>
+                    </h:panelGrid>
+                </p:panel>
+                <p:panel  style=" border: none;" id="agent">
+                    <h:panelGrid  columns="1" cellpadding="5" rendered="#{addAgentBean.oracle}">  
+                        <p:fieldset id="oracle" legend="${res.get('p2')}" style="width: 350px;" rendered="#{addAgentBean.oracle}">
+                            <h:panelGrid columns="2" cellpadding="5">  
+                                <h:outputLabel for="Dip" value="${res.get('label3')}" />  
+                                <p:inputText value="#{addAgentBean.agentOracle.ip}" id="Oip"/>
+
+                                <h:outputLabel for="Dinstance" value="${res.get('label4')}" />  
+                                <p:inputText value="#{addAgentBean.agentOracle.port}" id="Oport"/>
+
+                                <h:outputLabel for="D" value="${res.get('label5')}" />  
+                                <p:inputText value="#{addAgentBean.agentOracle.instanceName}" id="Oinstance" label="port"/>
+
+                                <h:outputLabel for="user" value="${res.get('label6')}" />  
+                                <p:inputText value="#{addAgentBean.agentOracle.dbaName}" id="Ouser" />
+
+                                <h:outputLabel for="pwd" value="${res.get('label7')}" />  
+                                <p:password value="#{addAgentBean.agentOracle.password}" id="Opwd" redisplay="true"/>
+                            </h:panelGrid>
+                            <h:panelGrid columns="4" cellpadding="5">  
+                                <h:outputLabel for="interval" value="${res.get('label8')}" />  
+                                <p:spacer width="2" height="2"/>
+                                <p:inputText value="#{addAgentBean.agentOracle.interval}" id="Ointerval"/>
+                                <h:outputLabel for="interval" value="${global.get('second')}" />  
+                            </h:panelGrid>
+                        </p:fieldset>
+                        <h:panelGrid columns="4">
+                            <p:spacer width="70"/>
+                            <p:commandButton id="OaddButton" icon="saveIcon" value="${global.get('save')}"  action="#{addAgentBean.settingOracle()}"/>  
+                            <p:spacer width="8"/>
+                            <p:commandButton id="OcloseButton" icon="cancleIcon" partialSubmit="true" value="${global.get('return')}" action="#{addAgentBean.cancel()}" process="@this"/>  
+                        </h:panelGrid>
+                    </h:panelGrid>
+                    <h:panelGrid columns="1" cellpadding="5" rendered="#{addAgentBean.sql}">  
+                        <p:fieldset id="sql" legend="${res.get('p3')}" style="width: 350px;"  rendered="#{addAgentBean.sql}">
+                            <h:panelGrid columns="2" cellpadding="5">  
+                                <h:outputLabel for="Dip" value="${res.get('label30')}" />  
+                                <p:inputText value="#{addAgentBean.agentSQL.ip}" id="Dip"/>
+
+                                <h:outputLabel for="Dinstance" value="${res.get('label40')}" />  
+                                <p:inputText value="#{addAgentBean.agentSQL.instanceName}" id="Dinstance"/>
+
+                                <h:outputLabel for="D" value="${res.get('label50')}" />  
+                                <p:inputText value="#{addAgentBean.agentSQL.database}" id="D" label="port"/>
+
+                                <h:outputLabel for="verify" value="${res.get('label60')}" />  
+                                <h:selectOneRadio id="verify" value="#{addAgentBean.agentSQL.mode}" >
+                                    <p:ajax event="change" listener="#{addAgentBean.setDis()}"  update=":form:user :form:pwd" />
+                                    <f:selectItem itemLabel="${res.get('r1')}" itemValue="1"  />  
+                                    <f:selectItem itemLabel="${res.get('r2')}" itemValue="2" />                                
+                                </h:selectOneRadio>
+
+                                <h:outputLabel for="user" value="${res.get('label70')}" />  
+                                <p:inputText value="#{addAgentBean.agentSQL.userName}" id="user" disabled="#{addAgentBean.disable}"/>
+
+                                <h:outputLabel for="pwd" value="${res.get('label80')}" />  
+                                <p:password value="#{addAgentBean.agentSQL.password}" id="pwd" disabled="#{addAgentBean.disable}" redisplay="true"/>
+                            </h:panelGrid>
+                            <h:panelGrid columns="4" cellpadding="5">  
+                                <h:outputLabel for="interval" value="${res.get('label90')}" />  
+                                <p:spacer width="2" height="2"/>
+                                <p:inputText value="#{addAgentBean.agentSQL.interval}" id="interval"/>
+                                <h:outputLabel for="interval" value="${global.get('second')}" /> 
+                            </h:panelGrid>
+                        </p:fieldset>                    
+                        <h:panelGrid columns="4">
+                            <p:spacer width="70"/>
+                            <p:commandButton id="addButton" icon="saveIcon" value="${global.get('save')}"  action="#{addAgentBean.settingSQL()}"/>  
+                            <p:spacer width="8"/>
+                            <p:commandButton id="closeButton" icon="cancleIcon" partialSubmit="true" value="${global.get('return')}" action="#{addAgentBean.cancel()}" process="@this"/>  
+                        </h:panelGrid>
+                    </h:panelGrid>
+                </p:panel>
+            </h:panelGrid> 
+        </h:form>
+
+        <p:ajaxStatus style="width:64px;height:64px;position:fixed;right:5px;bottom:5px">  
+            <f:facet name="start">  
+                <p:graphicImage value="../resources/common/picture/loading.gif" />  
+            </f:facet>  
+
+            <f:facet name="complete">  
+                <h:outputText value="" />
+            </f:facet>  
+        </p:ajaxStatus>
+    </h:body>
+</ui:composition>

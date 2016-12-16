@@ -1,0 +1,279 @@
+<?xml version="1.0" encoding="GBK"?>
+<!--
+To change this template, choose Tools | Templates
+and open the template in the editor.
+-->
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.1//EN" "http://www.w3.org/TR/xhtml11/DTD/xhtml11.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:util="http://java.sun.com/jsf/composite/xhtml">
+    <h:head>
+        <link href="./../resources/common/css/default.css" rel="stylesheet" type="text/css" />
+        <link href="./../resources/common/css/cssIcon.css" rel="stylesheet" type="text/css" />
+        <style type="text/css">
+            .acordionPanelPostion{
+                padding-top: -10px;
+                margin-top: -10px;
+                margin-left: -21px;
+                padding-left: -21px;
+                margin-right: -50px;
+                padding-right: -21px;
+                float:left;
+            }
+        </style>
+    </h:head>
+    <h:body>
+        <!--<h:form id="form">-->
+        <h1  class="title ui-widget-header ui-corner-all">#{res.get('title')}</h1>
+        <p:messages showSummary="true" showDetail="false" autoUpdate="true" closable="true" />
+        <br/>
+        <!--:form:view:fctab:pannel:tab1:-->
+
+        <p:tabView id="view" style="border:none;" activeIndex="#{remoteInitiatorData.activeIndex}">
+            <p:tab id="fctab"  title="FC">
+                <!--                    <p:accordionPanel  style="width: 700px"  id="pannel" multiple="true">
+                                        <p:tab id="tab1" title="{res.get('list')}">
+                                            <div style="overflow-x: auto; width: 100%; padding-bottom: 14px;">
+                                                <p:dataTable value="{remoteInitiatorData.fcInitiators}" var="initiator" id="fcinitiators" >
+                                                    <p:column headerText="{res.get('name')}" >
+                                                        {initiator.name}
+                                                    </p:column>-->
+                <!--                                    <p:column headerText="{res.get('style')}" >
+                                                        {initiator.style}
+                                                    </p:column>-->
+                <!--                            <p:column headerText="CHAP" style="text-align: center" >
+                                                <h:panelGrid>
+                                                <p:spacer width="15" height="10" />
+                                                <h:outputLabel style="text-align: center" rendered="{initiator.isFC}" value="-" />
+                                                <p:selectBooleanCheckbox disabled="true" style="vertical-align: middle" rendered="{not initiator.isFC}" value="{initiator.chap.isStart}" />
+                                                </h:panelGrid>
+                                            </p:column>-->
+                <!--                                    <p:column headerText="{res.get('status')}" >
+                                                        <h:outputLabel rendered="{initiator.connectedOrNot}" value="已连接" />
+                                                        <h:outputLabel rendered="{not initiator.connectedOrNot}" value="未连接" />
+                                                    </p:column>-->
+                <!--                            <p:column headerText="{global.get('operation')}" >
+                                                <p:spacer rendered="{not initiator.isFC}" height="10" width="10" />
+                                                <p:graphicImage rendered="{not initiator.isFC}" style="vertical-align: middle"  value="../resources/common/picture/binding.png" height="16" width="16" />
+                                                <p:commandLink rendered="{not initiator.isFC}" value="{res.get('ChapAuthenticate')}"  style="vertical-align: middle" action="{remoteInitiatorData.beforeSkipToConfigCHAP(initiator)}"   /> 
+                                                <p:spacer height="10" width="10" />
+                                                <p:graphicImage height="16"  width="16" style="border-color: transparent;vertical-align: middle"   value="../resources/common/picture/delete.png" />
+                                                <p:commandLink value="{global.get('delete')}" actionListener="{remoteInitiatorData.beforeRemoveInitiator(initiator)}" style="vertical-align: middle"  oncomplete="deleteinitiators.show()"     /> 
+                                            </p:column>-->
+                <!--</p:dataTable>-->
+                <!--</div>-->
+                <!--</p:tab >-->
+                <!--<p:tab id="tab2" title="{res.get('group')}">-->
+                <h:form id="form1"> 
+
+                    <p:toolbar >
+                        <p:toolbarGroup align="right">
+                            <!--&amp;url=scsi_host-->
+                            <p:commandButton disabled="#{user.type!=2}"  value="#{global.get('add')}" icon="addIcon" action="scsi_create_fc_initiator_group?faces-redirect=true"/>
+                        </p:toolbarGroup>  
+                    </p:toolbar>
+                    <div style="overflow-x: auto; width: 100%; padding-bottom: 14px;">
+                        <p:dataTable id="fcinitiatorgroup" value="#{remoteInitiatorData.fcGroups}" var="group" emptyMessage="#{global.get('emptyMessage')}" >
+                            <!--                        <f:facet name="header">
+                                                        <div style=" text-align: right; margin-right: 20px;">
+                                                            <p:commandButton disabled="{user.type!=2}"  value="{global.get('add')}" icon="addIcon" action="scsi_create_fc_initiator_group?faces-redirect=true"/>
+                                                        </div>
+                                                    </f:facet>-->
+                            <p:column style="width:2%">  
+                                <p:rowToggler />  
+                            </p:column>
+                            <p:column headerText="#{res.get('groupName')}">
+                                #{group.groupName}
+                            </p:column>
+                            <p:column headerText="#{global.get('operation')}" >
+                                <p:graphicImage height="16"  width="16" style="border-color: transparent;vertical-align: middle"   value="../resources/common/picture/edit.png" />
+                                <p:commandLink disabled="#{user.type!=2}" value="#{res.get('member')}" action="#{remoteInitiatorData.updateFCInitiatorGroup(group)}" />
+                                <p:spacer width="10" height="10" />
+                                <p:graphicImage height="16"  width="16" style="border-color: transparent;vertical-align: middle"   value="../resources/common/picture/delete.png" />
+                                <!--oncomplete="deletefcinitiatorgroup.show()"   actionListener="{remoteInitiatorData.doBeforeRemoveGroup(group)}" update=":view"--> 
+                                <!--onclick="deletefcinitiatorgroup.show();" onclick="deleteFCGroup.show();"   -->
+                                <p:commandLink disabled="#{user.type!=2}" value="#{global.get('delete')}"  style="vertical-align: middle" actionListener="#{remoteInitiatorData.doBeforeRemoveFCInitiorGroup(group)}" update=":form6 :form7"  >
+                                    <f:setPropertyActionListener value="#{group}" target="#{remoteInitiatorData.selectFCGroup}" />
+                                </p:commandLink>
+                            </p:column>
+                            <p:rowExpansion>
+                                <p:dataTable id="initiator" value="#{group.initiatorNames}" var="initiator" emptyMessage="#{global.get('emptyMessage')}" >
+                                    <p:column headerText="#{res.get('initiatorName')}">
+                                        #{initiator}
+                                    </p:column>
+                                    <!--                                <p:column headerText="{res.get('style')}">
+                                                                        {groupInitiator.style}
+                                                                    </p:column>-->
+                                    <!--                                <p:column headerText="{res.get('status')}">
+                                                                        {groupInitiator.status}
+                                                                    </p:column>-->
+                                </p:dataTable>
+                            </p:rowExpansion>
+                        </p:dataTable>
+                        <!--                        <util:confirm  uid="deletefcinitiatorgroup" mess="{res.get('confirmDeleteGroup')}" action="{remoteInitiatorData.removeFCInitiorGroup()}" update="fcinitiatorgroup"  >
+                        
+                                                </util:confirm>
+                                                <util:question  action="{remoteInitiatorData.skipToRemoveFCBind()}"   uid="fcquestion" />-->
+                    </div>
+
+                </h:form>
+                <!--</p:tab>-->
+                <!--</p:accordionPanel>-->
+
+            </p:tab>
+            <p:tab id="iscsitab" title="iSCSI">
+                <!--<p:accordionPanel styleClass="acordionPanelPostion"  style="border:none; " id="iscsipannel" multiple="true">-->
+                <!--                    <p:tab id="tab1" title="{res.get('list')}" >
+                                        <h:form id="form2">
+                                            <p:toolbar >
+                                                <p:toolbarGroup align="right">
+                                                    <p:commandButton disabled="{user.type!=2}" value="{global.get('add')}" icon="addIcon" action="scsi_create_remote_initiator?faces-redirect=true"/>
+                                                </p:toolbarGroup>  
+                                            </p:toolbar>
+                                            <div style="overflow-x: auto; width: 100%; padding-bottom: 14px;">
+                                                <p:dataTable style="width: 700px;text-align: left" value="{remoteInitiatorData.iscsiInitiators}" var="initiator" id="iscsiinitiators" emptyMessage="{global.get('emptyMessage')}" >
+                                                    <p:column headerText="{res.get('name')}" >
+                                                        {initiator.name}
+                                                    </p:column>
+                                                    <p:column headerText="CHAP"  >
+                                                        <h:outputLabel rendered="{initiator.startCHAPOrNot}" value="{global.get('enable')}"/>
+                                                        <h:outputLabel rendered="{not initiator.startCHAPOrNot}" value="{global.get('notEnable')}"/>
+                                                    </p:column>
+                                                    <p:column headerText="{res.get('status')}" >
+                                                        <h:outputLabel rendered="{initiator.connectedOrNot}" value="{res.get('connected')}" />
+                                                        <h:outputLabel rendered="{not initiator.connectedOrNot}" value="{res.get('notConnected')}" />
+                                                    </p:column>
+                                                    <p:column headerText="{global.get('operation')}" >
+                                                        <p:graphicImage style="vertical-align: middle"  value="../resources/common/picture/binding.png" height="16" width="16" />
+                                                        <p:commandLink disabled="{user.type!=2}" value="{res.get('ChapAuthenticate')}"  style="vertical-align: middle" action="{remoteInitiatorData.configCHAP(initiator)}"   /> 
+                                                        <p:spacer height="10" width="10" />
+                                                        <p:graphicImage height="16"  width="16" style="border-color: transparent;vertical-align: middle"   value="../resources/common/picture/delete.png" />
+                                                        <p:commandLink disabled="{user.type!=2}" value="{global.get('delete')}"  style="vertical-align: middle" actionListener="{remoteInitiatorData.doBeforeRemoveInitiator(initiator)}"  >
+                                                            <f:setPropertyActionListener value="{initiator}" target="{remoteInitiatorData.temp}" />
+                                                        </p:commandLink> 
+                                                    </p:column>
+                                                </p:dataTable>
+                                            </div>
+                
+                                        </h:form>
+                                    </p:tab >-->
+                <!--<p:tab id="tab2" title="{res.get('group')}">-->
+                <h:form id="form3">
+                    <p:toolbar >
+                        <p:toolbarGroup align="right">
+                            <p:commandButton disabled="#{user.type!=2}" value="#{global.get('add')}" icon="addIcon" action="scsi_create_iscsi_initiator_group?faces-redirect=true"/>
+                        </p:toolbarGroup>  
+                    </p:toolbar>
+                    <div style="overflow-x: auto; width: 100%; padding-bottom: 14px;">
+                        <p:dataTable id="iscsiinitiatorgroup" value="#{remoteInitiatorData.iscsiGroups}" var="group" emptyMessage="#{global.get('emptyMessage')}" >
+                            <!--                                <f:facet name="header">
+                                                                <div style=" text-align: right; margin-right: 20px;">
+                                                                    <p:commandButton disabled="{user.type!=2}" value="{global.get('add')}" icon="addIcon" action="scsi_create_iscsi_initiator_group?faces-redirect=true"/>
+                                                                </div>
+                                                            </f:facet>-->
+                            <p:column style="width:2%">  
+                                <p:rowToggler />  
+                            </p:column>
+                            <p:column headerText="#{res.get('groupName')}">
+                                #{group.groupName}
+                            </p:column>
+                            <p:column headerText="#{global.get('operation')}" >
+                                <p:graphicImage height="16"  width="16" style="border-color: transparent;vertical-align: middle"   value="../resources/common/picture/edit.png" />
+                                <p:commandLink disabled="#{user.type!=2}" value="#{res.get('member')}" action="#{remoteInitiatorData.updateiSCSIInitiatorGroup(group)}" />
+                                <p:spacer width="10" height="10" />
+                                <p:graphicImage height="16"  width="16" style="border-color: transparent;vertical-align: middle"   value="../resources/common/picture/delete.png" />
+                                <!--oncomplete="deleteiscsiinitiatorgroup.show()"onclick="deleteIscsiGroup.show();"   action="{remoteInitiatorData.doBeforeRemoveiSCSIInitiorGroup()}"-->
+                                <!---->
+                                <p:commandLink disabled="#{user.type!=2}" value="#{global.get('delete')}"  style="vertical-align: middle" actionListener="#{remoteInitiatorData.doBeforeRemoveiSCSIInitiorGroup(group)}" update=":form4 :form5" >
+                                    <f:setPropertyActionListener value="#{group}" target="#{remoteInitiatorData.selectIscsiGroup}" />
+                                </p:commandLink> 
+                            </p:column>
+                            <p:rowExpansion>
+                                <p:dataTable id="initiator" value="#{group.initiatorNames}" var="initiator" emptyMessage="#{global.get('emptyMessage')}" >
+                                    <p:column headerText="#{res.get('initiatorName')}">
+                                        #{initiator}
+                                    </p:column>
+                                    <!--                                <p:column headerText="{res.get('style')}">
+                                                                        {groupInitiator.style}
+                                                                    </p:column>-->
+                                    <!--                                <p:column headerText="{res.get('status')}">
+                                                                        {groupInitiator.status}
+                                                                    </p:column>-->
+                                </p:dataTable>
+                            </p:rowExpansion>
+                        </p:dataTable>
+
+                        <!--                                <util:confirm  uid="deleteIscsiGroup" mess="{res.get('confirmDeleteGroup')}" action="{remoteInitiatorData.removeiSCSIInitiorGroup()}"   update="iscsiinitiatorgroup" >
+                                                        </util:confirm>-->
+                        <!--<util:question  action="{remoteInitiatorData.skipToRemoveiSCSIBind()}"   uid="iscsiquestion" />-->
+                        <!--                          <util:confirm  uid="mytest" mess="aaaaa" action="{remoteInitiatorData.test1()}" >
+                                                  </util:confirm>-->
+                    </div>
+                    <!--                            <util:confirm  uid="deleteIscsiGroup" mess="{res.get('confirmDeleteGroup')}" action="{remoteInitiatorData.removeiSCSIInitiorGroup()}"   update="view:iscsipannel:form3:iscsiinitiatorgroup" >
+                                                </util:confirm>-->
+                    <!--<p:commandLink value="test" oncomplete="mytest.show();" />-->
+                    <!--                                <util:question  action="{remoteInitiatorData.skipToRemoveiSCSIBind()}"   uid="iscsiquestion" />
+                                                    <util:confirm  uid="deleteIscsiGroup" mess="{res.get('confirmDeleteGroup')}" action="{remoteInitiatorData.removeiSCSIInitiorGroup()}"   update=":form:view:iscsipannel:form3:iscsiinitiatorgroup" >
+                                                    </util:confirm>-->
+                </h:form>
+
+                <!--</p:tab>-->
+                <!--</p:accordionPanel>-->
+            </p:tab>
+        </p:tabView>
+
+        <!--</h:form>-->
+        <!--            <util:confirm  uid="deleteinitiators" update="view:iscsipannel:form2:iscsiinitiators"  mess="确定要删除initiator吗？" >
+                        <f:actionListener for="okButton" binding="{remoteInitiatorData.removeInitiator()}" />
+                    </util:confirm>
+        -->            
+        <!--<util:confirm  uid="deletefcinitiatorgroup" update="view:form1:fcinitiatorgroup"  mess="确定要删除initiator Group吗？" >
+                        <f:actionListener for="okButton" binding="{remoteInitiatorData.removeFCInitiorGroup()}" />
+                    </util:confirm>-->
+        <!--
+                    <util:confirm  uid="deleteiscsiinitiatorgroup" update="view:iscsipannel:form3:iscsiinitiatorgroup"  mess="确定要删除initiator Group吗？" >
+                        <f:actionListener for="okButton" binding="{remoteInitiatorData.removeiSCSIInitiorGroup()}" />
+                    </util:confirm>-->
+
+        <!--<h:outputLabel value="{user.type}" />-->
+        <!--        <util:confirm  uid="deleteinitiators" mess="确定要删除initiator吗？" action="{remoteInitiatorData.removeInitiator()}"  >
+        
+                </util:confirm>-->
+        <!--<p:commandLink value="abc" onclick="deleteIscsiGroup.show();"  />-->
+        <h:form id="form4" >
+            <util:confirm uid="iscsiquestion"   mess="#{global.get('delete')} #{global.get('lquote')}#{remoteInitiatorData.selectIscsiGroup.groupName}#{global.get('rquote')} #{res.get('lunbind')}"  action="#{remoteInitiatorData.removeISCSIBindedGroup()}"  update=":view:form3:iscsiinitiatorgroup"  />
+            <!--            <util:confirm  uid="iscsiquestion" mess="test" action="{remoteInitiatorData.skipToRemoveiSCSIBind()}"  >
+                        </util:confirm>-->
+        </h:form>
+        <h:form id="form5" >
+            <util:confirm  uid="deleteIscsiGroup" mess="#{global.get('confirmDel')} #{global.get('lquote')}#{remoteInitiatorData.selectIscsiGroup.groupName}#{global.get('rquote')} #{global.get('what')}" action="#{remoteInitiatorData.removeiSCSIInitiorGroup()}"   update=":view:form3:iscsiinitiatorgroup" >
+            </util:confirm>
+        </h:form>
+        <h:form id="form6" >
+            <util:confirm uid="fcquestion" mess="#{global.get('delete')} #{global.get('lquote')}#{remoteInitiatorData.selectFCGroup.groupName}#{global.get('rquote')} #{res.get('lunbind')}"  action="#{remoteInitiatorData.removeFCBindedGroup()}" update=":view:form1:fcinitiatorgroup"   />
+        </h:form>
+        <h:form id="form7" >
+            <util:confirm  uid="deleteFCGroup" mess="#{global.get('confirmDel')} #{global.get('lquote')} #{remoteInitiatorData.selectFCGroup.groupName} #{global.get('rquote')} #{global.get('what')}" action="#{remoteInitiatorData.removeFCInitiorGroup()}"   update=":view:form1:fcinitiatorgroup" >
+            </util:confirm>
+        </h:form>
+        <!--        <h:form>
+                    <util:confirm  uid="deleteinitiator" mess="{res.get('confirmDeleteInitiator')}" action="{remoteInitiatorData.removeInitiator()}" update=":view:iscsipannel:form2:iscsiinitiators"  >
+                    </util:confirm>
+                </h:form>-->
+        <h:form>
+            <util:info uid="delgroupinitiator" mess="#{res.get('thisInitiatorIs')}#{remoteInitiatorData.temp.groupName}#{res.get('delGroupInitiator')}" />
+        </h:form>
+        <p:ajaxStatus style="width:64px;height:64px;position:fixed;right:5px;bottom:5px">  
+            <f:facet name="start">  
+                <p:graphicImage value="../resources/common/picture/loading.gif" />  
+            </f:facet>  
+
+            <f:facet name="complete">  
+                <h:outputText value="" />  
+            </f:facet>  
+        </p:ajaxStatus>
+    </h:body>
+</html>

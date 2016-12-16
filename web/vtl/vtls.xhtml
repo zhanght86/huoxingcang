@@ -1,0 +1,173 @@
+<?xml version="1.0" encoding="GBK"?>
+<!--
+To change this template, choose Tools | Templates
+and open the template in the editor.
+-->
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.1//EN" "http://www.w3.org/TR/xhtml11/DTD/xhtml11.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:p="http://primefaces.org/ui"
+                xmlns:util="http://java.sun.com/jsf/composite/xhtml">
+    <!--template="../template/framework.xhtml"-->
+
+    <!--    <ui:define name="content">-->
+    <h:head>
+        <link href="./../resources/common/css/default.css" rel="stylesheet" type="text/css" />
+        <link href="./../resources/common/css/cssIcon.css" rel="stylesheet" type="text/css" />
+    </h:head>
+    <h:body>
+        <h:form id="form">
+            <h1 class="title ui-widget-header ui-corner-all">#{global.get('moduletitle')}#{res.get('title')}</h1>
+            <p:messages id="messages" showDetail="true" autoUpdate="true" closable="true" />
+            <br></br>
+
+            <p:toolbar>  
+                <p:toolbarGroup align="right">
+                    <p:commandButton id="addLink" icon="addIcon" value="#{global.get('create')}"  disabled="#{user.type!=2}" action="#{vtlsBean.addVtl()}" update="dgs" /> 
+                </p:toolbarGroup>
+            </p:toolbar>
+            <div style="overflow-x: auto; width:100%;padding-bottom: 2px !important; padding-bottom: 14px;">
+                <p:dataTable id="dgs" var="diskGroup" value="#{vtlsBean.diskGroups}" emptyMessage="#{global.get('emptyMessage')}" >
+                    <p:ajax event="rowToggle" listener="#{vtlsBean.getExpansions(diskGroup)}"/>
+                    <p:column style="width:2%">
+                        <p:rowToggler />  
+                    </p:column>
+                    <p:column headerText="#{res.get('header1')}" width="200" >  
+                        <h:outputText value="#{diskGroup.name}" />  
+                    </p:column>
+                    <p:column headerText="#{global.get('operation')}" style="white-space: nowrap">                        
+                        <p:graphicImage value="../resources/common/picture/download.png"  width="16" height="16" style=" vertical-align:middle;"/>
+                        <p:commandLink id="tapePutin" disabled="#{user.type!=2}" value="#{res.get('operation1')}" action="#{vtlsBean.tapePutin()}" style="vertical-align:middle;">
+                            <f:setPropertyActionListener value="#{diskGroup}" target="#{vtlsBean.selectedDG}" />
+                        </p:commandLink>
+                        <p:spacer width="10"/>
+                        <p:graphicImage value="../resources/common/picture/upload.png"  width="16" height="16" style=" vertical-align:middle;"/>
+                        <p:commandLink id="tapegetout" disabled="#{user.type!=2}" value="#{res.get('operation2')}" action="#{vtlsBean.tapeGetout()}"  style=" vertical-align:middle;">
+                            <f:setPropertyActionListener value="#{diskGroup}" target="#{vtlsBean.selectedDG}" />
+                        </p:commandLink>
+                        <p:spacer width="10"/>
+                        <p:graphicImage value="../resources/vtl/picture/unloadtape.png"  style=" vertical-align:middle; width: 16px; height: 16px;"/>
+                        <p:commandLink id="unloadtape" disabled="#{user.type!=2}" value="#{res.get('operation3')}"  action="#{vtlsBean.toUnloadDrives()}" update=":tip2" style=" vertical-align:middle;">
+                            <f:setPropertyActionListener value="#{diskGroup}" target="#{vtlsBean.selectedDG}" />
+                        </p:commandLink>
+                        <p:spacer width="10"/>
+                        <p:graphicImage value="../resources/common/picture/lun.png"  style=" vertical-align:middle; width: 16px; height: 16px;"/>
+                        <p:commandLink id="lunmap" disabled="#{user.type!=2}" value="#{res.get('lunmapping')}" action="#{vtlsBean.lunMapping()}" style=" vertical-align:middle;">
+                            <f:setPropertyActionListener value="#{diskGroup}" target="#{vtlsBean.selectedDG}" />
+                        </p:commandLink>
+                        <p:spacer width="10"/>
+                        <p:graphicImage value="../resources/common/picture/edit.png"  width="16" height="16" style=" vertical-align:middle;"/>
+                        <p:commandLink id="vtlAttrs" disabled="#{user.type!=2}" value="#{res.get('operation5')}" action="#{vtlsBean.vtlAttrs()}" style=" vertical-align:middle;">
+                            <f:setPropertyActionListener value="#{diskGroup}" target="#{vtlsBean.selectedDG}" />
+                        </p:commandLink>
+                         <p:spacer width="10"/>
+                        <p:graphicImage value="../resources/common/picture/delete.png"  width="16" height="16" style=" vertical-align:middle; width: 16px; height: 16px;"/>
+                        <p:commandLink id="deleteVTLLib" disabled="#{user.type!=2}" value="#{res.get('operation4')}" action="#{vtlsBean.deleteVTLLib()}" style=" vertical-align:middle;" update=":tip1 :tip4 :tip5" onclick="this.blur()">
+                            <f:setPropertyActionListener value="#{diskGroup}" target="#{vtlsBean.selectedDG}" />
+                        </p:commandLink>
+                    </p:column>
+
+                    <p:rowExpansion >
+                        <p:accordionPanel id="accord" style="border:none; " styleClass="acordionPanelPostion" multiple="true">
+                            <p:tab title="#{res.get('tb1')}">
+                                <p:dataTable var="detailBean" value="#{vtlsBean.dgInfo}" id="detail" style=" margin-top: 10px;margin-bottom: 6px; margin-right: 0px !important;margin-right: -70px;">  
+                                    <p:column headerText="#{res.get('name')}">  
+                                        <h:outputText value="#{detailBean.name}" />  
+                                    </p:column> 
+                                    <p:column headerText="#{res.get('value')}">  
+                                        <h:outputText value="#{detailBean.value}"/>  
+                                    </p:column>                      
+                                </p:dataTable>
+                            </p:tab>
+                            <p:tab title="#{res.get('tb2')}" >
+                                <p:dataTable emptyMessage="#{global.get('emptyMessage')}" id="disks" value="#{vtlsBean.lun}" var="dgd" >
+                                    <p:column headerText="#{res.get('header2_1')}">
+                                        <h:outputText value="#{dgd.name}" />
+                                    </p:column>
+                                    <p:column headerText="#{res.get('header2_2')}">
+                                        <h:outputText value="#{dgd.vendorID}" />  
+                                    </p:column>
+                                    <p:column headerText="#{res.get('header2_3')}">
+                                        <h:outputText value="#{dgd.productID}" />  
+                                    </p:column>
+                                    <p:column headerText="#{res.get('header2_4')}">
+                                        <h:outputText value="#{dgd.revision}" />  
+                                    </p:column>
+                                    <p:column headerText="#{res.get('header2_5')}">
+                                        <h:outputText value="#{vtlsBean.tapeIDtoName(dgd.tapeID)}" />  
+                                    </p:column>
+                                    <p:column headerText="#{global.get('operation')}" style="white-space: nowrap">                        
+                                        <p:graphicImage value="../resources/common/picture/cancle.png"  width="16" height="16" style=" vertical-align:middle;"/>
+                                        <p:commandLink id="diskL" disabled="#{user.type!=2}" value="#{res.get('o1')}" action="#{vtlsBean.renameDrive()}" style="vertical-align:middle;">
+                                            <f:setPropertyActionListener value="#{dgd}" target="#{vtlsBean.SDrive}" />
+                                            <f:setPropertyActionListener value="#{diskGroup}" target="#{vtlsBean.selectedDG}" />
+                                        </p:commandLink>
+                                        <p:spacer width="10"/>
+                                        <p:graphicImage value="../resources/vtl/picture/unloadtape.png"  width="16" height="16" style=" vertical-align:middle;"/>
+                                        <p:commandLink id="logL" disabled="#{vtlsBean.cantUnloadDriver(dgd.id)}" value="#{res.get('o2')}" update=":tip3" action="#{vtlsBean.toUnloadDrive()}" style=" vertical-align:middle;">                                            
+                                            <f:setPropertyActionListener value="#{diskGroup}" target="#{vtlsBean.selectedDG}" />
+                                             <f:setPropertyActionListener value="#{dgd}" target="#{vtlsBean.SDrive}" />
+                                        </p:commandLink>                                        
+                                    </p:column>
+
+                                </p:dataTable>
+                            </p:tab>
+                            <p:tab title="#{res.get('tb3')}">
+                                <p:dataTable emptyMessage="#{global.get('emptyMessage')}" id="luns" value="#{vtlsBean.disks}" var="lun" >
+<!--                                    <p:column headerText="{res.get('header3_1')}">
+                                        <h:outputText value="{lun.name}" />
+                                    </p:column>-->
+                                    <p:column headerText="#{res.get('header3_2')}">
+                                        <h:outputText value="#{lun.barcode}"/>  
+                                    </p:column>
+                                    <p:column headerText="#{res.get('header3_3')}">
+                                        <h:outputText value="#{vtl_util.sizeToString(lun.tapeSize)}" />
+                                    </p:column>
+                                    <p:column headerText="#{res.get('header3_4')}">
+                                        <h:outputText value="#{vtl_util.sizeToString(lun.usedSize)}" />
+                                    </p:column>
+                                    <p:column headerText="#{res.get('header3_5')}">
+                                        <h:outputText value="#{vtl_util.locationIDtoStr(lun)}"/>  
+                                    </p:column>
+                                </p:dataTable>
+                            </p:tab>
+                        </p:accordionPanel>
+
+                    </p:rowExpansion>
+                </p:dataTable> 
+            </div>            
+        </h:form>
+        <h:form id="tip1">
+            <util:confirm  uid="deleteDG" mess="#{res.get('del_left')}#{vtlsBean.libName}#{res.get('del_right')}" action="#{vtlsBean.deleteVTL()}" update=":form:dgs">
+            </util:confirm>
+        </h:form>
+        <h:form id="tip2">
+            <util:confirm  uid="deleteD" mess="#{res.get('confirm1_left')}#{vtlsBean.libName}#{res.get('confirm1_right')}" action="#{vtlsBean.unloadDrives()}" update=":form:dgs">
+            </util:confirm>
+        </h:form>
+        <h:form id="tip3">
+            <util:confirm  uid="unloadD" mess="#{res.get('confirm0_left')}#{vtlsBean.seleteDriverName}#{res.get('confirm0_right')}" action="#{vtlsBean.unloadDrive()}" update=":form:dgs :form:messages">
+            </util:confirm>
+        </h:form>
+        <h:form id="tip4">
+            <util:question1 uid="outTape" mess="#{res.get('outTape_left')}#{vtlsBean.libName}#{res.get('outTape_right')}" action="#{vtlsBean.tapeGetout()}" cancelAction="#{vtlsBean.toCancle()}">
+            </util:question1>
+        </h:form>
+        <h:form id="tip5">
+            <util:confirm  uid=" forceLib" mess="#{res.get('forceLib_left')}#{vtlsBean.libName}#{res.get('forceLib_right')}" action="#{vtlsBean.deleteVTL_real()}" update=":form:dgs">
+            </util:confirm>
+        </h:form>
+       
+        <p:ajaxStatus style="width:64px;height:64px;position:fixed;right:5px;bottom:5px">  
+            <f:facet name="start">  
+                <p:graphicImage value="../resources/common/picture/loading.gif" />  
+            </f:facet>  
+
+            <f:facet name="complete">  
+                <h:outputText value="" />
+            </f:facet>  
+        </p:ajaxStatus>
+    </h:body>
+</ui:composition>

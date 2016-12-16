@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="GBK"?>
+<!--
+To change this template, choose Tools | Templates
+and open the template in the editor.
+-->
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.1//EN" "http://www.w3.org/TR/xhtml11/DTD/xhtml11.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:p="http://primefaces.org/ui">
+    <h:head>
+        <link href="./../resources/common/css/default.css" rel="stylesheet" type="text/css" />
+        <link href="./../resources/common/css/cssIcon.css" rel="stylesheet" type="text/css" />
+    </h:head>
+    <h:body>
+        <h:form>
+            <h1 style="width: 710px" class="title ui-widget-header ui-corner-all">设备管理>Target>创建</h1>
+            <br/>
+            <p:panel style="width: 350px;text-align: left;border-color: transparent;" >
+                <h:panelGrid columns="2" cellpadding="5" >
+                    <h:panelGrid columns="1" width="100" >
+                        <h:outputLabel value="Target名称：" style="width: 150px" />
+                    </h:panelGrid>
+                    <p:inputText value="#{createFCTarget.name}" />
+                    <h:panelGrid columns="1" width="100" >
+                        <h:outputLabel value="Target别名：" style="width: 150px" />
+                    </h:panelGrid>
+                    <p:inputText value="#{createFCTarget.alias}" />
+                </h:panelGrid>
+            </p:panel>
+            <br/><br/>
+            <p:panel style="width: 350px;text-align: center;border-color: transparent;" >
+                <p:commandButton  id="addButton" value="#{global.get('save')}" icon="saveIcon"  action="#{createFCTarget.save}" >
+                </p:commandButton>
+                <p:spacer width="8" height="6" />
+                <p:commandButton  id="closeButton" icon="cancleIcon" immediate="true" value="#{global.get('return')}" action="scsi_target?faces-redirect=true" />  
+            </p:panel>
+        </h:form>
+    </h:body>
+</html>

@@ -1,0 +1,110 @@
+<?xml version="1.0" encoding="GBK"?>
+<!--
+To change this template, choose Tools | Templates
+and open the template in the editor.
+-->
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.1//EN" "http://www.w3.org/TR/xhtml11/DTD/xhtml11.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:p="http://primefaces.org/ui">
+    <!--template="../template/framework.xhtml"-->
+
+
+    <!--    <ui:define name="content">-->
+    <h:head>
+        <link href="./../resources/common/css/default.css" rel="stylesheet" type="text/css" />
+        <script type="text/javascript">
+            function stopRefresh() {
+                if (document.getElementById("load").getAttribute("activeIndex") === 0) {
+                    document.getElementById("refreshNet").setAttribute("stop", true);
+                    document.getElementById("efreshVolume").setAttribute("stop", true);
+                    document.getElementById("refreshCPU").setAttribute("stop", false);
+                    document.getElementById("refreshTmp").setAttribute("stop", false);
+                    document.getElementById("refreshMem").setAttribute("stop", false);
+                }
+                if (document.getElementById("load").getAttribute("activeIndex") === 1) {
+                    document.getElementById("refreshCPU").setAttribute("stop", true);
+                    document.getElementById("refreshTmp").setAttribute("stop", true);
+                    document.getElementById("refreshMem").setAttribute("stop", true);
+                    document.getElementById("refreshNet").setAttribute("stop", false);
+                }
+                if (document.getElementById("load").getAttribute("activeIndex") === 2) {
+                    document.getElementById("refreshNet").setAttribute("stop", true);
+                    document.getElementById("refreshCPU").setAttribute("stop", true);
+                    document.getElementById("refreshTmp").setAttribute("stop", true);
+                    document.getElementById("refreshMem").setAttribute("stop", true);
+                }
+            }
+        </script> 
+
+        <style type="text/css"> 
+            .jqplot-meterGauge-tick {
+                font-size: 0.75em;
+                color: #000000;
+            }
+
+            .jqplot-meterGauge-label {
+                font-size: 1em;
+                color: #000000;
+            }
+        </style> 
+
+    </h:head>
+    <h:body style="overflow-x: hidden">   
+        <h1 title="System Infomation" class="title ui-widget-header ui-corner-all">#{res.get('title')}</h1><br/>
+        <p:tabView id="load" dynamic="true" cache="true" style="border: none;" activeIndex="0">
+            <p:ajax event="tabChange" oncomplete="stopRefresh()"/>
+            <p:tab title="#{res.get('cpu')}" >
+                <h:form id="CPU"> 
+                    <p:poll id="refreshCPU" interval="2" listener="#{cpuBean.getCpuModel()}" update="cpuInfo" stop="false" />  
+                    <p:poll id="refreshTmp" interval="2" listener="#{cpuBean.getTmpModel()}" update="tmpInfo" />              
+                    <p:fieldset legend="#{res.get('cpuInfo')}" style=" width: 680px; height: 240px"> 
+                        <h:panelGrid columns="2">
+                            <p:meterGaugeChart id="cpuInfo" value="#{cpuBean.cpuModel}" seriesColors="009933, FFCC33, CC3300"
+                                               style="height:210px; width: 330px; background-size: 300px; float: left; color: #000000;" 
+                                               labelHeightAdjust="0"
+                                               intervalOuterRadius="100" label="百分比" title="CPU" />            
+                            <p:meterGaugeChart id="tmpInfo" value="#{cpuBean.tmpModel}" seriesColors="009933,FFCC33, CC3300"
+                                               style="height:210px; width: 330px; background-size: 300px; float: left; color: #000000;" 
+                                               labelHeightAdjust="0"
+                                               intervalOuterRadius="100" label="℃" title="温度"/>
+                        </h:panelGrid> 
+                    </p:fieldset>  <br/>
+                    <p:poll id="refreshMem" interval="2" listener="#{ramBean.getMemModel()}" update="memory" />  
+                    <p:fieldset legend="#{res.get('memoryInfo')}" style=" width: 680px; height: 240px"> 
+                        <h:panelGrid columns="2">  
+                            <p:meterGaugeChart id="memory" value="#{ramBean.memModel}" seriesColors="009933,FFCC33, CC3300"
+                                               style="height:210px; width: 330px; background-size: 300px; float: left; color: #000000;" 
+                                               labelHeightAdjust="0"
+                                               intervalOuterRadius="100" label="#{res.get('percent')}" title="#{res.get('memory')}"/>
+                        </h:panelGrid>                       
+                    </p:fieldset>
+                </h:form>
+            </p:tab> 
+            <p:tab title="#{res.get('network')}">
+                <h:form id="NET"> 
+                    <p:poll id="refreshNet" interval="1" listener="#{networkBean.updateModel()}" update="net" stop="false" />
+                    <p:lineChart id="net" style="width:700px;height:400px" showMarkers="false"
+                                 yaxisLabel="#{res.get('speed')}"
+                                 value="#{networkBean.linearModel}"
+                                 legendPosition="e" seriesColors="009933, CC3300"
+                                 stacked="true"  xaxisAngle="10"/>
+                </h:form>
+            </p:tab>
+            <p:tab title="#{res.get('disk')}">
+                <h:form id="VOL"> 
+                    <p:poll id="refreshVolume" interval="1" update="Volume"/>
+                    <p:lineChart id="Volume" style="width:600px;height:400px" showMarkers="false"
+                                 yaxisLabel="#{res.get('speed')}"
+                                 value="#{thirdTabBean.linearModel}"
+                                 legendPosition="e" seriesColors="009933, CC3300"
+                                 stacked="true"  xaxisAngle="10"/>
+                    <p:graphicImage value="../resources/common/picture/disk1.png"  style="position: relative; left: -10px; width: 700px"/>
+                </h:form>
+            </p:tab>  
+        </p:tabView>
+
+    </h:body>
+</ui:composition>

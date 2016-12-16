@@ -1,0 +1,156 @@
+<?xml version="1.0" encoding="GBK"?>
+<!--
+To change this template, choose Tools | Templates
+and open the template in the editor.
+-->
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.1//EN" "http://www.w3.org/TR/xhtml11/DTD/xhtml11.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:p="http://primefaces.org/ui"                
+                xmlns:util="http://java.sun.com/jsf/composite/xhtml">
+
+    <h:head>
+        <link href="./../resources/common/css/default.css" rel="stylesheet" type="text/css" />
+        <link href="./../resources/common/css/cssIcon.css" rel="stylesheet" type="text/css" />
+        <style type="text/css">
+            .position{
+                margin-left: -21px;
+                padding-left: -21px;
+                /*                margin-right: 12px;
+                                padding-right: 12px;*/
+            }
+        </style>
+    </h:head>
+    <h:body>
+        <h:form id="form">
+            <h1 class="title ui-widget-header ui-corner-all">#{global.get('cdp')}${res.get('title')}</h1>
+            <p:messages id="messages" showDetail="true" autoUpdate="true" closable="true" />
+            <br></br>
+            <div style="overflow-x: auto; width:100%;padding-bottom: 2px !important; padding-bottom: 14px;" class="postion">
+                <p:dataTable id="disks" var="disk"  emptyMessage="#{global.get('emptyMessage')}" value="#{clientBean.client.clientDisks}">  
+                    <p:column style="width:2%">
+                        <p:rowToggler />
+                    </p:column>
+                    <p:column headerText="#{res.get('header1')}" width="200" style="text-align:center;" >
+                        <h:outputLabel id="dNum" value="#{disk.diskNumber}"/> 
+                    </p:column>
+                    <p:column headerText="#{res.get('header2')}" width="200" style="text-align:center; white-space:  nowrap" >  
+                        <h:outputLabel id="dSize" value="#{clientBean.getStrSize(disk.diskSize)}"/>                            
+                    </p:column>
+                    <p:column headerText="#{res.get('header3')}" width="200" style="text-align:center" >
+                        <h:outputLabel id="dType" value="#{util.getCDPTypeString(disk.CDPType)}"/>                            
+                    </p:column>
+                    <p:column headerText="#{res.get('header4')}" width="200" style="text-align:center" >
+                        <h:outputLabel id="dMirrorInfo" value="#{clientBean.getDStrMirror(disk)}"/>                            
+                    </p:column>
+                    <p:column headerText="#{res.get('header5')}" width="200" style="text-align:center" >
+                        <h:outputLabel id="dStatus" value="#{clientBean.getDStrStatus(disk)}"/>                            
+                    </p:column>
+                    <p:column headerText="#{global.get('operation')}" style="white-space:  nowrap">
+                        <p:graphicImage value="../resources/cdp/mirror.jpg"  
+                                        rendered="#{clientBean.DiskDisable(disk, 1)}" width="16" height="16" style="vertical-align:middle"/>
+                        <p:commandLink id="dMirror" value="#{clientBean.getO1(disk.CDPType)}" update="disks"
+                                       rendered="#{clientBean.DiskDisable(disk, 1)}" action="#{clientBean.dMirror()}" style="vertical-align:middle">
+                            <f:setPropertyActionListener value="#{disk}" target="#{clientBean.selectedD}" />
+                        </p:commandLink>
+                        <p:spacer width="10" rendered="#{clientBean.DiskDisable(disk, 2)}" />
+                        <p:graphicImage value="../resources/cdp/start.png"  
+                                        rendered="#{clientBean.DiskDisable(disk, 2) and disk.CDPStatus != 4}" width="16" height="16" style="vertical-align:middle"/>
+                        <p:graphicImage value="../resources/cdp/stop.png"  
+                                        rendered="#{clientBean.DiskDisable(disk, 2) and disk.CDPStatus == 4}" width="16" height="16" style="vertical-align:middle"/>
+                        <p:commandLink id="dCDP" value="#{clientBean.getO2(disk.CDPStatus)}"
+                                       rendered="#{clientBean.DiskDisable(disk, 2)}" action="#{clientBean.dCDP()}" style="vertical-align:middle">
+                            <f:setPropertyActionListener value="#{disk}" target="#{clientBean.selectedD}" />
+                        </p:commandLink><p:spacer width="10" rendered="#{clientBean.DiskDisable(disk, 3)}"/>
+                        <p:graphicImage value="../resources/cdp/restore.jpg" 
+                                        rendered="#{clientBean.DiskDisable(disk, 3)}" width="16" height="16" style="vertical-align:middle"/>
+                        <p:commandLink id="dRestore" value="#{res.get('o3')}" action="#{clientBean.dRestore()}" 
+                                       rendered="#{clientBean.DiskDisable(disk, 3)}" style="vertical-align:middle">
+                            <f:setPropertyActionListener value="#{disk}" target="#{clientBean.selectedD}" />
+                        </p:commandLink>
+                        <p:spacer width="10" rendered="#{!clientBean.DiskDisable(disk, 4)}" />
+                        <p:graphicImage value="../resources/common/picture/edit.png"
+                                        rendered="#{clientBean.DiskDisable(disk, 4)}" width="16" height="16" style="vertical-align:middle" />  
+                        <p:commandLink id="dDetails"  value="#{res.get('o4')}" immediate="true" 
+                                       rendered="#{clientBean.DiskDisable(disk, 4)}" action="#{clientBean.dDetails()}" style="vertical-align:middle">
+                            <f:setPropertyActionListener value="#{disk}" target="#{clientBean.selectedD}" />
+                        </p:commandLink>
+                    </p:column> 
+
+                    <p:rowExpansion >
+                        <p:dataTable var="partition" value="#{disk.partitionInfos}" emptyMessage="#{global.get('emptyMessage')}"  id="detail" style=" margin-top: 10px;margin-bottom: 6px; margin-right: 0px !important;margin-right: -70px;">  
+                            <p:column headerText="#{res.get('h1')}" width="200" style="text-align:center;" >  
+                                <h:outputLabel id="pNum" value="#{partition.partitionNumber}"/>                            
+                            </p:column>
+                            <p:column headerText="#{res.get('h2')}" width="200" style="text-align:center; white-space:  nowrap" >  
+                                <h:outputLabel id="pSize" value="#{clientBean.getStrSize(partition.partitionSize)}"/>                            
+                            </p:column>
+                            <p:column headerText="#{res.get('header3')}" width="200" style="text-align:center" >
+                                <h:outputLabel id="pType" value="#{util.getCDPTypeString(partition.CDPType)}"/>                            
+                            </p:column>
+                            <p:column headerText="#{res.get('header4')}" width="200" style="text-align:center" >
+                                <h:outputLabel id="pMirrorInfo" value="#{clientBean.getPStrMirror(partition)}"/>                            
+                            </p:column>
+                            <p:column headerText="#{res.get('header5')}" width="200" style="text-align:center" >
+                                <h:outputLabel id="pStatus" value="#{clientBean.getPStrStatus(partition)}"/>                            
+                            </p:column>
+                            <p:column headerText="#{global.get('operation')}" style="white-space:  nowrap">                     
+                                <p:graphicImage value="../resources/cdp/mirror.jpg" 
+                                                rendered="#{clientBean.PartitionDisable(partition, 1)}" width="16" height="16" style="vertical-align:middle"/>
+                                <p:commandLink id="pMirror" value="#{clientBean.getO1(partition.CDPType)}" update=":form:disks"
+                                               rendered="#{clientBean.PartitionDisable(partition, 1)}" action="#{clientBean.pMirror()}" style="vertical-align:middle">
+                                    <f:setPropertyActionListener value="#{partition}" target="#{clientBean.selectedP}" />
+                                </p:commandLink>
+                                <p:spacer width="10" rendered="#{clientBean.PartitionDisable(partition, 2)}" />
+                                <p:graphicImage value="../resources/cdp/start.png"  
+                                                rendered="#{clientBean.PartitionDisable(partition, 2)}" width="16" height="16" style="vertical-align:middle"/>
+                                <p:commandLink id="pCDP" value="#{clientBean.getO2(partition.CDPType)}" action="#{clientBean.pCDP()}"
+                                               rendered="#{clientBean.PartitionDisable(partition, 2)}" style="vertical-align:middle">
+                                    <f:setPropertyActionListener value="#{partition}" target="#{clientBean.selectedP}" />
+                                </p:commandLink>
+                                <p:spacer width="10" rendered="#{!clientBean.PartitionDisable(partition, 3)}" />
+                                <p:graphicImage value="../resources/cdp/restore.jpg" 
+                                                rendered="#{clientBean.PartitionDisable(partition, 3)}" width="16" height="16" style="vertical-align:middle"/>
+                                <p:commandLink id="pRestore" value="#{res.get('o3')}"
+                                               rendered="#{clientBean.PartitionDisable(partition, 3)}" action="#{clientBean.pRestore()}" style="vertical-align:middle">
+                                    <f:setPropertyActionListener value="#{partition}" target="#{clientBean.selectedP}" />
+                                </p:commandLink>
+                                <p:spacer width="10" rendered="#{!clientBean.PartitionDisable(partition, 4)}" />
+                                <p:graphicImage value="../resources/common/picture/edit.png" 
+                                                rendered="#{clientBean.PartitionDisable(partition, 4)}" width="16" height="16" style="vertical-align:middle" />  
+                                <p:commandLink id="pDetails"  value="#{res.get('o4')}"
+                                               rendered="#{clientBean.PartitionDisable(partition, 4)}" immediate="true" action="#{clientBean.pDetails()}" style="vertical-align:middle">
+                                    <f:setPropertyActionListener value="#{disk}" target="#{clientBean.selectedD}" />
+                                    <f:setPropertyActionListener value="#{partition}" target="#{clientBean.selectedP}" />
+                                </p:commandLink>
+                            </p:column>
+                        </p:dataTable>
+                    </p:rowExpansion>
+                </p:dataTable> 
+            </div>
+            <br></br>
+            <div style="text-align: center;">
+                <p:commandButton id="closeButton" icon="cancleIcon" value="${global.get('return')}"  immediate="true" onclick="javascript: window.location.href = 'clients.xhtml?faces-redirect=true';"/>  
+            </div>
+        </h:form>
+        <util:confirm  uid="deleteDiskCDP" mess="#{res.get('confirm0')}" action="#{clientBean.dDelMirror()}" update=":form:disks">
+        </util:confirm>
+        <util:confirm  uid="deletePartitionCDP" mess="#{res.get('confirm1')}" action="#{clientBean.pDelMirror()}" update=":form:disks">
+        </util:confirm>
+        <util:confirm  uid="stopDiskCDP" mess="#{res.get('confirm2')}" action="#{clientBean.dStopCDP()}" update=":form:disks">
+        </util:confirm>
+        <util:confirm  uid="stopPartitionCDP" mess="#{res.get('confirm3')}" action="#{clientBean.pStopCDP()}" update=":form:disks">
+        </util:confirm>
+        <p:ajaxStatus style="width:64px;height:64px;position:fixed;right:5px;bottom:5px">  
+            <f:facet name="start">  
+                <p:graphicImage value="../resources/common/picture/loading.gif" />  
+            </f:facet>
+
+            <f:facet name="complete">  
+                <h:outputText value="" />
+            </f:facet>  
+        </p:ajaxStatus>
+    </h:body>
+</ui:composition>

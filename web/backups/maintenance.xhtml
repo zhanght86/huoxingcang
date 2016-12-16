@@ -1,0 +1,162 @@
+<?xml version="1.0" encoding="GBK"?>
+<!--
+To change this template, choose Tools | Templates
+and open the template in the editor.
+-->
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.1//EN" "http://www.w3.org/TR/xhtml11/DTD/xhtml11.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:p="http://primefaces.org/ui"
+                xmlns:util="http://java.sun.com/jsf/composite/xhtml">
+    <h:head>
+        <link href="./../resources/common/css/default.css" rel="stylesheet" type="text/css" />
+        <link href="./../resources/common/css/cssIcon.css" rel="stylesheet" type="text/css" />
+        <script type="text/javascript">
+            $(document).ready(function() {
+                $("#tabView\\:form1\\:upload").change(function() {
+                    $("#img").hide();              
+                    var str = document.getElementById("tabView:form1:upload").value.toString();
+                    var len = str.length;
+                    var last = str.lastIndexOf("\\");
+                    var filename;
+                    if (-1 === last) {
+                        filename = str;
+                    } else {
+                        filename = str.substring(last + 1, len);
+                    }
+                    var name = /^MarsServer.xml$/i;
+                    var result = name.test(filename);
+                    if (result !== true) {
+                        $("#tabView\\:form1")[0].reset();
+                        remind.show();
+                    }
+                });
+            });
+            
+            $(document).ready(function() {
+                $("#tabView\\:form1\\:button").click(function() {
+                    $("#img").show();
+                });
+            });
+            
+            function select() {
+                document.getElementById("#tabView\\tab1").click();
+            }
+        </script>
+    </h:head>
+    <h:body>
+        <h1 title="System Infomation" class="title ui-widget-header ui-corner-all">#{global.get('backuptitle')}#{res.get('title')}</h1>
+        <!--<p:messages autoUpdate="true" redisplay="true" showDetail="true" closable="true" />-->
+        <p:messages showSummary="true" showDetail="false" autoUpdate="true" closable="true" />
+        <p:tabView  style="border: 0" id="tabView" activeIndex="#{bServiceManager.IIndex}">
+            <p:tab title="#{res.get('storageSpace')}" >
+                <p:dataTable  var="vdl" value="#{vDLStorage.vdlList}" emptyMessage="#{global.get('emptyMessage')}">  
+                    <p:column headerText="#{global.get('name')}">
+                        <h:outputText value="#{vdl.path}"/> 
+                    </p:column>
+                    <p:column headerText="#{res.get('used')}">
+                        <h:outputText value="#{vdl.used}#{res.get('B')}"/> 
+                    </p:column>
+                    <p:column headerText="#{res.get('available')}">
+                        <h:outputText value="#{vdl.available}#{res.get('B')}"/> 
+                    </p:column>
+                    <p:column headerText="#{global.get('operation')}">
+                        <p:graphicImage value="../resources/common/picture/edit.png" style=" vertical-align:middle;"/>
+                        <p:commandLink  value="#{global.get('set')}" disabled="#{user.type!=2}" action="#{vDLStorage.configProperty(vdl)}"  style=" vertical-align:middle;"> 
+                        </p:commandLink>
+                         <p:spacer width="10"/>
+                         <p:graphicImage value="../resources/common/picture/clear.png" style=" vertical-align:middle;"/>
+                         <p:commandLink   value="#{res.get('cleanVDL')}" disabled="#{user.type!=2}" action="#{vDLStorage.cleanVDL(vdl)}"  style=" vertical-align:middle;"> 
+                        </p:commandLink>
+                    </p:column>
+                </p:dataTable>
+            </p:tab>
+            <p:tab title="#{res.get('setip')}" id="tab0">
+                <h:form id="form0">
+                    <p:panel  style="border: 0">
+                        <h:outputLabel value="#{res.get('SetIP')}" style="color: #cc3333;font-size:14pt;font-weight: bold;" rendered="#{backupVDL.isrender}"/><br/>
+                        <h:outputLabel value="#{res.get('ip')}" />
+                        <p:inputText value="#{backupIP.IP}"  /><br/><br/>
+                        <p:spacer width="90px" height="0"/>
+                        <p:commandButton icon="saveIcon" action="#{backupIP.configIP()}" disabled="#{user.type!=2}" value="#{global.get('save')}" />
+                    </p:panel>
+                </h:form>
+            </p:tab>
+            <p:tab title="#{res.get('manage')}" id="tab1">
+                <h:form id="form1" enctype="multipart/form-data">
+                    <p:toolbar>  
+                        <p:toolbarGroup align="right">  
+                            <p:commandButton id="restart" value="#{res.get('restartService')}" disabled="#{user.type!=2}" update="service"
+                                             icon="cancleIcon" action="#{bServiceManager.restartAll()}" /> 
+                        </p:toolbarGroup> 
+                    </p:toolbar>
+                    <p:dataTable id="service" var="service" value="#{bServiceManager.list}" emptyMessage="#{global.get('emptyMessage')}" >
+                        <p:column headerText="#{res.get('service')}"  style="text-align:center" >  
+                            <h:outputText value="#{service.agentName}"/>  
+                        </p:column>   
+                        <p:column headerText="#{res.get('status')}"  style="text-align:center" >  
+                            <h:outputText value="#{service.agentState}"/>  
+                        </p:column> 
+                        <p:column headerText="#{global.get('operation')}">
+                            <p:graphicImage value="#{service.image}" style=" vertical-align:middle; width: 16px; height: 16px;"/>
+                            <p:commandLink id="start" value="${service.operation}"  style=" vertical-align:middle;"
+                                           disabled="#{user.type!=2}"  action="#{bServiceManager.operation()}" update="service" >
+                                <f:setPropertyActionListener value="#{service}" target="#{bServiceManager.selectedAgent}" />
+                            </p:commandLink>
+                            <p:spacer width="10"/>
+                            <p:graphicImage value="../resources/common/picture/cancle.png" style=" vertical-align:middle;"/>
+                            <p:commandLink id="restartsingle" value="${res.get('restart')}"  style=" vertical-align:middle;" 
+                                           disabled="#{service.visible}" action="#{bServiceManager.restartAgent()}" update="service" >
+                                <f:setPropertyActionListener value="#{service}" target="#{bServiceManager.selectedAgent}" />
+                            </p:commandLink>
+                        </p:column>
+                    </p:dataTable><br/>
+                    <p:selectBooleanCheckbox id="restartAll" value="#{bServiceManager.BRestartAll}">
+                        <p:ajax listener="#{bServiceManager.change()}" update="restartAll"/>
+                    </p:selectBooleanCheckbox><h:outputLabel for="restartAll" value="#{res.get('restartAll')}"/><br/>
+
+                    <p:fileUpload  id="upload" mode="simple" label="#{res.get('browser')}" 
+                                   value="#{bServiceManager.file}" disabled="#{user.type!=2}" multiple="true"/>
+                    <p:spacer height="0" width="20"/>
+                    <p:commandButton id="button" value="#{res.get('upload')}" ajax="false" icon="uploadIcon" disabled="#{user.type!=2}" 
+                                     actionListener="#{bServiceManager.handleFileUpload()}" />
+                    <img id="img" style="width:64px;height:64px;position:fixed;right:5px;bottom:5px;display: none" src="../resources/common/picture/loading.gif"/><br/>
+                </h:form>
+            </p:tab>          
+<!--            <p:tab title="{res.get('cleanVDL')}" id="tab2">
+                <h:form id="form2">
+                    <p:panel  style="border: 0">
+                        <h:outputLabel value="{res.get('volume')}" />
+                        <p:selectOneMenu id="volume" style="min-width: 200px; position: relative; top:8px" value="{backupVDL.pool}" >
+                            <f:selectItems value="{backupVDL.poolNames}" />
+                            <p:ajax update="vdl" listener="{backupVDL.vdlNames}" />  
+                        </p:selectOneMenu><br/><br/>
+
+                        <h:outputLabel value="{res.get('vdl')}" />
+                        <p:selectOneMenu id="vdl" style="min-width: 200px; position: relative; top:8px" value="{backupVDL.VDL}">
+                            <f:selectItems value="{backupVDL.VDLNames}"/>
+                        </p:selectOneMenu><br/><br/>
+
+                        <p:spacer width="80px" height="0"/>
+                        <p:commandButton icon="clearIcon" disabled="{user.type!=2}" value="{res.get('clean')}" 
+                                         update="vdl volume"  action="{backupVDL.clearVDL()}" />
+                    </p:panel>
+                </h:form>
+            </p:tab>-->
+        </p:tabView>
+        <h:form id="form3">
+            <util:info id="remind"  uid="remind" mess="#{res.get('updateRight')}"  />
+        </h:form>  
+        <p:ajaxStatus style="width:64px;height:64px;position:fixed;right:5px;bottom:5px">  
+            <f:facet name="start">  
+                <p:graphicImage value="../resources/common/picture/loading.gif" />  
+            </f:facet>  
+
+            <f:facet name="complete">  
+                <h:outputText value="" />  
+            </f:facet>  
+        </p:ajaxStatus>
+    </h:body>
+</ui:composition>

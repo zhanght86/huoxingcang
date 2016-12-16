@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="GBK"?>
+<!--
+To change this template, choose Tools | Templates
+and open the template in the editor.
+-->
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.1//EN" "http://www.w3.org/TR/xhtml11/DTD/xhtml11.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
+    <h:head>
+        <link href="./../resources/common/css/default.css" rel="stylesheet" type="text/css" />
+        <link href="./../resources/common/css/cssIcon.css" rel="stylesheet" type="text/css" />
+    </h:head>
+    <h:body>
+        <h:form id="form">  
+            <h1 class="title ui-widget-header ui-corner-all">${global.get('moduletitle')}${res.get('title')}</h1>
+            <p:messages id="messages" showDetail="true" autoUpdate="true" closable="true" />
+            <br></br>
+            <div style="overflow-x: auto; width:100%;padding-bottom: 2px !important; padding-bottom: 14px;">
+                <p:dataTable id="isoList" var="iSOPathBean" value="#{selectDriverBean.mediumDriversModel}" paginator="true" rows="10"  
+                             paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"  
+                             rowsPerPageTemplate="10,20,50" selection="#{selectDriverBean.selectedDriver}"  rowIndexVar="row" emptyMessage="#{global.get('emptyMessage')}">  
+                    <p:column selectionMode="single" width="60" style="text-align:center"/> 
+                    <p:column headerText="${res.get('num')}" width="80" style="text-align:center">  
+                        <h:outputText value="#{row + 1}"/>  
+                    </p:column>  
+                    <p:column headerText="${res.get('driver')}" disabledSelection="true" sortBy="#{iSOPathBean.isoPath}">  
+                        <h:outputText value="#{iSOPathBean.isoPath}"/>  
+                    </p:column>
+                </p:dataTable> 
+            </div>
+            <br/>
+            <div style=" text-align: center;">
+                <p:commandButton value="${global.get('save')}" icon="saveIcon" action="#{selectDriverBean.okButton}" update="isoList"/>
+                <p:spacer style="width: 8px; height: 5px"/>
+                <p:commandButton value="${global.get('return')}" icon="cancleIcon" action="#{selectDriverBean.cancleButton}" id="btnCancle"/> 
+            </div>
+         
+        </h:form>
+        <p:ajaxStatus style="width:64px;height:64px;position:fixed;right:5px;bottom:5px">  
+            <f:facet name="start">  
+                <p:graphicImage value="../resources/common/picture/loading.gif" />  
+            </f:facet>  
+                
+            <f:facet name="complete">  
+                <h:outputText value="" />  
+            </f:facet>  
+        </p:ajaxStatus>
+    </h:body>
+</html>

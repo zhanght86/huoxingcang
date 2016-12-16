@@ -1,0 +1,270 @@
+<?xml version="1.0" encoding="GBK"?>
+<!--
+To change this template, choose Tools | Templates
+and open the template in the editor.
+-->
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.1//EN" "http://www.w3.org/TR/xhtml11/DTD/xhtml11.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:util="http://java.sun.com/jsf/composite/xhtml">
+    <!--                template="../template/framework.xhtml">-->
+
+    <!--    <ui:define name="left">
+            <ui:include src="../panel/leftMenu.xhtml"/>
+        </ui:define>
+    
+        <ui:define name="content">-->
+    <h:head>
+        <link href="./../resources/common/css/default.css" rel="stylesheet" type="text/css" />
+        <link href="./../resources/common/css/cssIcon.css" rel="stylesheet" type="text/css" />
+    </h:head>
+    <h:body  >
+        <!--            <ui:insert name="head" >-->
+        <script type="text/javascript">
+            function init() {
+                var value = document.getElementById("form:open_input").checked;
+                //alert(value);
+                if (value) {
+                    document.getElementById("form:add1").disabled = false;
+                    document.getElementById("form:del1").disabled = false;
+                    document.getElementById("form:add2").disabled = false;
+                    document.getElementById("form:del2").disabled = false;
+                    document.getElementById("form:add3").disabled = false;
+                    document.getElementById("form:del3").disabled = false;
+                    document.getElementById("form:anon").checked = true;
+                    document.getElementById("form:anonRW").checked = true;
+                }
+                if (!value) {
+                    document.getElementById("form:add1").setAttribute("disabled", "true");
+                    document.getElementById("form:del1").setAttribute("disabled", "true");
+                    document.getElementById("form:add2").setAttribute("disabled", "true");
+                    document.getElementById("form:del2").setAttribute("disabled", "true");
+                    document.getElementById("form:add3").setAttribute("disabled", "true");
+                    document.getElementById("form:del3").setAttribute("disabled", "true");
+                    document.getElementById("form:anon").checked = false;
+                    document.getElementById("form:anonRW").checked = false;
+                }
+
+            }
+            function clickConfirm(xhr, status, args) {
+
+                var r = args.result;
+                if (r != "success") {
+                    //alert(r);
+                    return  false;
+                }
+
+                return  true;
+            }
+            function clickSave(xhr, status, args) {
+
+                var r = args.result;
+                alert(r);
+
+
+            }
+            function  displayAddRW() {
+                document.getElementById("form:rw").value = "";
+                document.getElementById("form:rwerror").style.display = "none";
+                document.getElementById("form:rwerror").display = "none";
+                document.getElementById("form:rw").focus();
+
+
+            }
+            function  displayAddRO() {
+                document.getElementById("form:ro").value = "";
+                document.getElementById("form:ro").focus();
+
+            }
+            function  displayAddRoot() {
+                document.getElementById("form:root").value = "";
+                document.getElementById("form:root").focus();
+
+            }
+        </script>
+        <!--            </ui:insert>-->
+        <h:form id="form">
+            <h1 title="Share Path Infomation" class="title ui-widget-header ui-corner-all">#{res.get('title')}</h1>
+            <p:messages showSummary="true" showDetail="false" autoUpdate="true" closable="true" />
+
+            <br/>
+            <h:panelGrid columns="2" >
+                <h:outputLabel value="#{global.get('shareName')}" />
+                <h:outputLabel value="/#{configNFSBean.path}" />
+            </h:panelGrid>
+            <br/>
+
+            <!--                    <p:panel style="width: 50%;text-align:center"  >-->
+            <!--                    <p:panel style="width: 50%;border-color:transparent">-->
+            <h:panelGrid columns="3" >
+                <h:panelGrid columns="1" >
+                    <p:selectBooleanCheckbox style="vertical-align: middle;"  value="#{configNFSBean.openOrNot}"  >
+                        <p:ajax  update="anonyvisit anonyrw rwbutton deleteRW addRO deleteRO addRoot deleteRoot" listener="#{configNFSBean.changeOpen()}" />
+                    </p:selectBooleanCheckbox>
+                </h:panelGrid>
+                <p:spacer width="1" height="10" />
+                <h:outputLabel value="#{res.get('openNFS')}" style="vertical-align: middle" /> 
+            </h:panelGrid>
+            <h:panelGrid id="pannel1" columns="3" >
+                <h:panelGrid columns="1" >
+                    <p:selectBooleanCheckbox id="anonyvisit" disabled="#{configNFSBean.anonoyVisitEnable}" style="vertical-align: middle"  value="#{configNFSBean.anonoyVisit}"  ></p:selectBooleanCheckbox>
+                </h:panelGrid>
+                <p:spacer width="1" height="10" />
+                <h:outputLabel value="#{res.get('anonVisit')}" style="vertical-align: middle" /> 
+            </h:panelGrid>
+            <!--                    <p:spacer width="170" height="10" />
+                                <h:outputLabel style="font-size: 8px" value="如果勾选上，则匿名用户可以访问。" /> -->
+            <!--                    <br/><br/>-->
+            <!--                <p:spacer width="93" height="10" />-->
+            <h:panelGrid id="pannel2" columns="3" >
+                <h:panelGrid columns="1" >
+                    <p:selectBooleanCheckbox id="anonyrw" disabled="#{configNFSBean.anonoyRWEnable}" style="vertical-align: middle" value="#{configNFSBean.anonoyRW}"  ></p:selectBooleanCheckbox>
+                </h:panelGrid>
+                <p:spacer width="1" height="10" />
+                <h:outputLabel value="#{res.get('anonRW')}" />
+            </h:panelGrid>
+            <br/>
+            <!--<h:panelGrid columns="4" >-->
+            <!--<p:spacer width="90" height="10" />-->
+            <h:panelGrid id="pannel3" style="text-align: center" columns="5" >
+                <h:outputLabel value="#{res.get('rwAuthor')}" />
+                <p:spacer width="4" height="10" />
+                <p:inputText style="width: 180px" id="rw"  value="#{configNFSBean.rwIP}">
+                    <!--<f:validator validatorId="IPValidator" ></f:validator>required="true"-->
+                </p:inputText>
+                <p:spacer width="5" height="10" />
+                <p:commandButton    icon="addIcon"  id="rwbutton" value="#{global.get('add')}" disabled="#{configNFSBean.buttonEnable}" actionListener="#{configNFSBean.addRWIP()}" update="rwlist" />
+            </h:panelGrid>
+            <!--<br/>-->
+            <h:panelGrid id="pannel4" columns="4">
+                <p:spacer width="72" height="10" />
+                <p:selectOneListbox   id="rwlist"  value="#{configNFSBean.selectedRW}" var="ip" style="height:100px; width: 180px;">
+                    <f:selectItems   value="#{configNFSBean.rw}"  />
+                    <p:column>
+                        #{ip}
+                    </p:column>
+                </p:selectOneListbox>
+                <p:spacer width="5" height="10" />
+                <h:panelGrid>
+                    <p:commandButton  icon="deleteIcon" id="deleteRW"  value="#{global.get('delete')}" disabled="#{configNFSBean.buttonEnable}" actionListener="#{configNFSBean.delRWIP()}" update="rwlist" />
+                    <br/><br/><br/><br/>
+                </h:panelGrid>
+            </h:panelGrid>
+            <h:panelGrid id="pannel5" columns="5" >
+                <h:outputLabel value="#{res.get('roAuthor')}" />
+                <p:spacer width="4" height="10" />
+                <p:inputText style="width: 180px" id="ro" value="#{configNFSBean.roIP}"/>
+                <p:spacer width="5" height="10" />
+                <p:commandButton  icon="addIcon"  id="addRO" value="#{global.get('add')}" disabled="#{configNFSBean.buttonEnable}" actionListener="#{configNFSBean.addROIP}" update="rolist"  />
+            </h:panelGrid>
+            <h:panelGrid id="pannel6" columns="4">
+                <p:spacer width="72" height="10" />
+                <p:selectOneListbox  id="rolist"   value="#{configNFSBean.selectedRO}" var="ip" style="height:100px;width: 180px">
+                    <f:selectItems   value="#{configNFSBean.readOnly}"  />
+                    <p:column>
+                        #{ip}
+                    </p:column>
+                </p:selectOneListbox>
+                <p:spacer width="5" height="10" />
+                <h:panelGrid>
+                    <p:commandButton id="deleteRO"  icon="deleteIcon" value="#{global.get('delete')}" disabled="#{configNFSBean.buttonEnable}" actionListener="#{configNFSBean.delROIP}" update="rolist"  />
+                    <br/><br/><br/><br/>
+                </h:panelGrid>
+            </h:panelGrid>
+            <h:panelGrid id="pannel7" columns="5" >
+                <h:outputLabel value="#{res.get('rootAuthor')}" />
+                <p:spacer width="9" height="10" />
+                <p:inputText style="width: 180px" id="root" value="#{configNFSBean.rootIP}" />
+                <p:spacer width="5" height="10" />
+                <p:commandButton  id="addRoot" icon="addIcon"  value="#{global.get('add')}" disabled="#{configNFSBean.buttonEnable}" actionListener="#{configNFSBean.addRootIP}" update="rootlist"  />
+            </h:panelGrid>
+            <h:panelGrid id="pannel8" columns="4">
+                <p:spacer width="72" height="10" />
+                <p:selectOneListbox id="rootlist"  value="#{configNFSBean.selectedRoot}" var="ip" style="height:100px;width: 180px">
+                    <f:selectItems   value="#{configNFSBean.root}"  />
+                    <p:column>
+                        #{ip}
+                    </p:column>
+                </p:selectOneListbox>
+                <p:spacer width="5" height="10" />
+                <h:panelGrid>
+                    <p:commandButton id="deleteRoot" icon="deleteIcon" value="#{global.get('delete')}" disabled="#{configNFSBean.buttonEnable}" actionListener="#{configNFSBean.delRootIP}" update="rootlist" />
+                    <br/><br/><br/><br/>
+                </h:panelGrid>
+            </h:panelGrid>
+            <h:panelGrid id="pannel9" >
+                <p:watermark for="rw" value="#{res.get('eg')}" />
+                <p:watermark for="ro" value="#{res.get('eg')}" />
+                <p:watermark for="root" value="#{res.get('eg')}" />
+            </h:panelGrid>
+            <p:panel style="width: 360px;text-align:center;border-color: transparent" >
+                <p:commandButton disabled="#{user.type!=2}"  id="save" value="#{global.get('save')}"   icon="saveIcon"  action="#{configNFSBean.save()}"  ></p:commandButton>
+                <p:spacer width="8" height="6" />
+                <p:commandButton disabled="#{user.type!=2}"  id="back" value="#{global.get('return')}" icon="cancleIcon" action="nas_path?faces-redirect=true"  immediate="true"  />
+
+            </p:panel>
+            <!--            <br/>
+            
+                        <p:dialog  width="300" position="240,150" id="addRO" header="添加IP" widgetVar="addRODialog" modal="true" onShow="displayAddRO()" >
+                            <br/>
+                            <h:panelGrid columns="3" >
+                                <p:spacer width="10" height="10" />
+                                <h:outputLabel value="IP地址：" ></h:outputLabel>
+                            </h:panelGrid>
+                            <br/>
+                            <p:spacer width="70" height="6" />
+                            <p:commandButton disabled="{user.type!=2}"  style="font-size: 14px"  value="确定" actionListener="{addNFSIP.addROIP}" update="rolist" oncomplete="if(clickConfirm(xhr, status, args)) addRODialog.hide()"   />
+                            <p:commandButton disabled="{user.type!=2}"  style="font-size: 14px"  value="返回" oncomplete="addRODialog.hide()"    />
+                        </p:dialog>
+                        <p:dialog width="300" position="240,150" id="addRoot" header="添加IP" widgetVar="addRootDialog" modal="true" onShow="displayAddRoot()" >
+                            <br/>
+                            <h:panelGrid columns="3" >
+                                <p:spacer width="10" height="10" />
+                                <h:outputLabel value="IP地址：" ></h:outputLabel>
+                            </h:panelGrid>
+                            <br/>
+                            <p:spacer width="70" height="6" />
+                            <p:commandButton disabled="{user.type!=2}"  style="font-size: 14px" value="返回" oncomplete="addRootDialog.hide()"    />
+                        </p:dialog>
+                        <p:dialog width="300" position="240,150" id="addRW" header="添加IP" resizable="false" widgetVar="addRWDialog" modal="true" onShow="displayAddRW()" >
+            
+                            <h:panelGrid columns="3" id="rwpannel" >
+                                <p:spacer width="10" height="10" />
+                                <h:outputLabel value="IP地址：" ></h:outputLabel>
+                            </h:panelGrid>
+                            <p:message display="text"   id="rwerror" for="rw" />
+                            <br/>
+                            <p:spacer width="45" height="6" />
+            
+                            <p:commandButton disabled="{user.type!=2}"  style="font-size: 14px" value="确定" actionListener="{addNFSIP.addRWIP}" update="rwerror rwlist " oncomplete="if(clickConfirm(xhr, status, args)) addRWDialog.hide()"   />
+                            <p:spacer width="5" height="6" />
+                            <p:commandButton disabled="{user.type!=2}"  style="font-size: 14px" value="返回" immediate="true" oncomplete="addRWDialog.hide()"    />
+            
+            
+                        </p:dialog>-->
+
+        </h:form>
+        <h:form>
+            <util:confirm  uid="turnoffnfs" mess="#{res.get('confirmCloseNFS')}" action="#{configNFSBean.turnOffNFS()}"  >
+            </util:confirm>
+        </h:form>
+        <p:ajaxStatus style="width:64px;height:64px;position:fixed;right:5px;bottom:5px">  
+            <f:facet name="start">  
+                <p:graphicImage value="../resources/common/picture/loading.gif" />  
+            </f:facet>  
+
+            <f:facet name="complete">  
+                <h:outputText value="" />  
+            </f:facet>  
+        </p:ajaxStatus>
+        <!--       <h:form id="form1" > -->
+
+        <!--      </h:form>  -->
+    </h:body>
+    <!--    </ui:define>-->
+
+
+</html>

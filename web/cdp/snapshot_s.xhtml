@@ -1,0 +1,139 @@
+<?xml version="1.0" encoding="GBK"?>
+<!--
+To change this template, choose Tools | Templates
+and open the template in the editor.
+-->
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.1//EN" "http://www.w3.org/TR/xhtml11/DTD/xhtml11.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:p="http://primefaces.org/ui"
+      template="../template/framework.xhtml"
+      xmlns:util="http://java.sun.com/jsf/composite/xhtml">
+    <h:head>        
+        <link href="./../resources/common/css/default.css" rel="stylesheet" type="text/css" />
+        <link href="./../resources/common/css/cssIcon.css" rel="stylesheet" type="text/css" />
+    </h:head>
+
+    <h:body>
+        <h:form id="form">
+            <h1 class="title ui-widget-header ui-corner-all">#{global.get('cdp')}#{res.get('title')}</h1>
+            <p:messages showSummary="true" showDetail="false" autoUpdate="true" closable="true" />
+            <p:outputPanel deferred="true">
+                <br></br>
+                <h:panelGrid id="status" columns="2" cellpadding="5" >  
+                    <h:outputLabel value="${global.get('dg')}"/> 
+                    <h:outputLabel value="#{snapshot_SBean.dg}" />
+                </h:panelGrid>
+                <p:panel id="levelS" style=" border: none; margin-left: -21px;">
+                    <h:panelGrid columns="2" >
+                        <h:outputLabel id="label" rendered="#{snapshot_SBean.globalStatus.isRollbacking}" value="#{res.get('rolling')}" />
+                        <p:ajaxStatus   id="rollingstatus" rendered="#{snapshot_SBean.globalStatus.rollingRender}" style="width:16px;height:16px;" >  
+                            <f:facet name="start">
+                                <p:graphicImage value="../resources/common/picture/ajaxloadingbar.gif" />  
+                            </f:facet>
+                            <f:facet name="complete">
+                                <p:graphicImage value="../resources/common/picture/ajaxloadingbar.gif" />  
+                            </f:facet>
+                        </p:ajaxStatus>
+                    </h:panelGrid>
+                    <p:poll  autoStart="#{snapshot_SBean.globalStatus.pollAutoStart}" widgetVar="rollbackpoll" listener="#{snapshot_SBean.checkRollbacking()}"   interval="3" update=":form" />
+                    <p:toolbar >
+                        <p:toolbarGroup align="right">
+                            <p:commandButton disabled="#{user.type!=2 or snapshot_SBean.globalStatus.addSnapDisabled }"  id="add_msnap" value="#{res.get('addManualSnap')}" icon="addIcon" action="#{snapshot_SBean.doBeforeAddMSnap()}"   />
+                            <p:spacer height="10" width="8"/>
+                            <p:commandButton disabled="#{user.type!=2 or snapshot_SBean.getDeleteAllDis() or snapshot_SBean.globalStatus.deleteSnapDisabled}" value="#{res.get('delAllSnap')}" icon="deleteIcon" action="#{snapshot_SBean.beforeDeleteAllMSnap()}"/>
+                        </p:toolbarGroup>  
+                    </p:toolbar>
+                    <div style="overflow-x: auto; width:100%;padding-bottom: 2px !important; padding-bottom: 14px;">
+                        <p:dataTable emptyMessage="#{global.get('emptyMessage')}" 
+                                     id="snaps" value="#{snapshot_SBean.snapModel}" 
+                                     var="snap" paginator="true" rows="10" lazy="true" 
+                                     paginatorTemplate="{FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink}">
+                            <p:column headerText="#{res.get('type')}">
+                                <h:outputText value="#{snap.isbAuto() ? '自动' : snap.getAlias()}"/>  
+                            </p:column>
+                            <p:column headerText="#{res.get('createTime')}"  style="white-space: nowrap" >  
+                                <h:outputText value="#{snap.createdTime}"/>  
+                            </p:column>
+                            <p:column headerText="#{res.get('size')}" style="white-space: nowrap" >
+                                <h:outputText value="#{snap.strUsed}B" />
+                            </p:column>
+                            <p:column headerText="#{global.get('operation')}" style="white-space: nowrap"  >
+                                <p:graphicImage value="../resources/common/picture/rollback.png" rendered="#{snap.rollRender}"  style=" vertical-align:middle;" height="16" width="16" />
+                                <p:spacer height="10" width="3" rendered="#{snap.rollRender}"  />
+                                <p:commandLink  id="setButton" value="#{res.get('rollback')}" rendered="#{snap.rollRender}" disabled="#{user.type!=2 or snapshot_SBean.globalStatus.rollDisabled}" immediate="true" style=" vertical-align:middle;" action="#{snapshot_SBean.beforeRollback()}"> 
+                                    <f:setPropertyActionListener value="#{snap}"  target="#{snapshot_SBean.selectSnap}" /> 
+                                </p:commandLink>
+                                <p:spacer height="10" width="8" rendered="#{snap.saveRollRender and snap.rollRender }"/>
+                                <p:graphicImage value="../resources/common/picture/save.png" rendered="#{snap.saveRollRender}"  style=" vertical-align:middle;" height="16" width="16" />
+                                <p:spacer height="10" width="3"  rendered="#{snap.saveRollRender}" />
+                                <p:commandLink  value="#{res.get('saveRollback')}"  rendered="#{snap.saveRollRender}" disabled="#{user.type!=2  or snapshot_SBean.globalStatus.saveRollDisabled}" immediate="true" style=" vertical-align:middle;" onclick="saveRoll.show();"> 
+                                    <f:setPropertyActionListener value="#{snap}"  target="#{snapshot_SBean.selectSnap}" /> 
+                                </p:commandLink>
+                                <p:spacer height="10" width="8" rendered="#{snap.cancelRollRender}"  />
+                                <p:graphicImage value="../resources/common/picture/cancle.png" rendered="#{snap.cancelRollRender}"  style=" vertical-align:middle;" height="16" width="16" />
+                                <p:spacer height="10" width="3" rendered="#{snap.cancelRollRender}" />
+                                <p:commandLink  value="#{res.get('cancelRollBack')}" rendered="#{snap.cancelRollRender}" disabled="#{user.type!=2 or snapshot_SBean.globalStatus.cancelRollDisabled}" immediate="true" style=" vertical-align:middle;" onclick="cancelRoll.show();"> 
+                                    <f:setPropertyActionListener value="#{snap}"  target="#{snapshot_SBean.selectSnap}" /> 
+                                </p:commandLink>
+                                <p:spacer height="10" width="8" />
+                                <p:graphicImage value="../resources/common/picture/copy.png"   style=" vertical-align:middle;" height="16" width="16" />
+                                <p:spacer height="10" width="3"   />
+                                <p:commandLink  value="#{res.get('createCopy')}" disabled="#{user.type!=2 or snapshot_SBean.globalStatus.createCopyDisabled}" immediate="true" style=" vertical-align:middle;" onclick="createCopy.show();" > 
+                                    <f:setPropertyActionListener value="#{snap}"  target="#{snapshot_SBean.selectSnap}" /> 
+                                </p:commandLink>
+                                <p:spacer height="10" width="8" />
+                                <p:graphicImage rendered="#{snap.deleteRender}"   height="16"  width="16" style="border-color: transparent;vertical-align: middle"   value="../resources/common/picture/delete.png" />  
+                                <p:spacer height="10" width="3" />
+                                <p:commandLink style="vertical-align: middle" rendered="#{snap.deleteRender}"  disabled="#{(user.type!=2) or (snapshot_SBean.globalStatus.deleteSnapDisabled) }" value="#{global.get('delete')}" action="#{snapshot_SBean.beforeDeleteMSnap()}">
+                                    <f:setPropertyActionListener value="#{snap}"  target="#{snapshot_SBean.selectSnap}" />                    
+                                </p:commandLink>
+                            </p:column>
+                        </p:dataTable>
+                    </div>
+                </p:panel>                
+                <br></br>
+                <div style="text-align: center;">
+                    <p:commandButton value="#{global.get('update')}" icon="updateIcon" immediate="true"  action="#{snapshot_SBean.updateSnapAndSync()}" update=":form" />
+                    <p:spacer width="8" height="6" />
+                    <p:commandButton id="closeBut" icon="cancleIcon" value="${global.get('return')}" immediate="true" onclick="javascript: window.location.href = 'cdp.xhtml?faces-redirect=true';"/>  
+                </div>
+            </p:outputPanel>
+        </h:form>
+        <h:form id="s" style=" border: none;">
+            <util:confirm  uid="createCopy" mess="#{res.get('confirmCreateCopy')}" action="#{snapshot_SBean.createCopy()}" update=":form:levelS :s">
+            </util:confirm>
+            <util:info uid="finishCreateCopy" mess="#{res.get('finishCreateCopy')}"  />
+            <util:question1  uid="dgs" mess="#{res.get('createCopy')}#{global.get('lquote')}#{snapshot_SBean.copyName}#{global.get('rquote')}#{global.get('success')}，#{res.get('q0')}" action="#{snapshot_SBean.toDGs()}" cancelAction="#{snapshot_SBean.updateSnapAndSync()}">
+            </util:question1>
+            <util:confirm  uid="delMSnap" mess="#{res.get('confirmDelSnap')}" action="#{snapshot_SBean.deleteMSnap()}" update=":form"  >
+            </util:confirm>
+            <util:confirm  uid="delAllMSnap" mess="#{res.get('confirmDelAllSnap')}" action="#{snapshot_SBean.deleteAllMSnap()}" update=":form "  >
+            </util:confirm>
+            <util:confirm  uid="rollBack" mess="#{res.get('rollBackOperation')}" action="#{snapshot_SBean.rollBackSnap()}" update=":form"  >
+            </util:confirm>
+            <util:confirm  uid="saveRoll" mess="#{res.get('saveRollOperation')}" action="#{snapshot_SBean.saveRoll()}" update=":form"  >
+            </util:confirm>
+            <util:confirm  uid="cancelRoll" mess="#{res.get('cancelRollBackOperation')}" action="#{snapshot_SBean.cancelRoll()}" update=":form"  >
+            </util:confirm>
+            <util:confirm  uid="deleteDGBoxXX" mess="#{res.get('confirm')}#{global.get('what')}" action="#{snapshot_SBean.rollBackSnap()}" update=":form">
+            </util:confirm>
+            <util:confirm  uid="disLUNDelXX" mess="#{res.get('confirm2')}#{global.get('what')}" action="#{snapshot_SBean.rollBackSnap()}"  update=":form">
+            </util:confirm >
+            <util:confirm  uid="SdeleteDGBoxXX" mess="#{res.get('confirm4')}#{global.get('what')}" action="#{snapshot_SBean.rollBackSnap()}" update=":form">
+            </util:confirm>
+            <util:confirm  uid="SdisLUNDelXX" mess="#{res.get('confirm5')}#{global.get('what')}" action="#{snapshot_SBean.rollBackSnap()}"  update=":form">
+            </util:confirm>
+        </h:form>
+        <p:ajaxStatus style="width:64px;height:64px;position:fixed;right:5px;bottom:5px">  
+            <f:facet name="start">  
+                <p:graphicImage value="../resources/common/picture/loading.gif" />  
+            </f:facet>  
+
+            <f:facet name="complete">  
+                <h:outputText value="" />  
+            </f:facet>  
+        </p:ajaxStatus>
+    </h:body>
+</html>

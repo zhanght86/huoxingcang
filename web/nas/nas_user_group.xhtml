@@ -1,0 +1,340 @@
+<?xml version="1.0" encoding="GBK"?>
+<!--
+To change this template, choose Tools | Templates
+and open the template in the editor.
+-->
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.1//EN" "http://www.w3.org/TR/xhtml11/DTD/xhtml11.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:util="http://java.sun.com/jsf/composite/xhtml">
+    <!--                template="../template/framework.xhtml">-->
+    <!--    <ui:define name="left">
+            <ui:include src="../panel/leftMenu.xhtml"/>
+        </ui:define>
+    
+        <ui:define name="head">
+            <script type="text/javascript">
+               
+            </script>
+        </ui:define>-->
+    <h:head>
+        <link href="./../resources/common/css/default.css" rel="stylesheet" type="text/css" />
+        <link href="./../resources/common/css/cssIcon.css" rel="stylesheet" type="text/css" />
+    </h:head>
+    <h:body>
+        <!--    <ui:define name="content">-->
+        <script type="text/javascript">
+            navigateToTab = function() {
+                if (window.location.hash) {
+                    jQuery('ul.ui-tabs-nav li a').each(function(i, el) {
+                        if (jQuery(el).text() === window.location.hash.replace('#', '')) {
+                            jQuery(el).click();
+                            return;
+                        }
+                    })
+                }
+            };
+
+            jQuery().ready(navigateToTab);
+            jQuery(window).bind('hashchange', navigateToTab);
+            setupTabFragmentLinks = function() {
+                jQuery('ul.ui-tabs-nav li a').each(function(i, el) {
+                    el.onclick = function() {
+                        window.location = '#' + jQuery(el).text()
+                    };
+                })
+            };
+            jQuery().ready(setupTabFragmentLinks);
+            
+            function clickConfirm(xhr, status, args) {
+                //document.getElementById("form:myaddDialog").shide();
+                // window.close();
+//              var  name = document.getElementById("form:username").value;
+//              if(name=="") {
+//                   alert("用户名不能为空！");
+//              }
+//              alert(name);
+                var r = args.result;
+                if (r != "success") {
+                    alert(r);
+                    return  false;
+                }
+
+                return  true;
+            }
+
+            function  displayAddUser() {
+                document.getElementById("form:username").value = "";
+                document.getElementById("form:pwd1").value = "";
+                document.getElementById("form:pwd2").value = "";
+                document.getElementById("form:username").focus();
+
+            }
+            function  displayAddGroup() {
+                document.getElementById("form:groupname").value = "";
+                document.getElementById("form:groupname").focus();
+            }
+            function displayUpdatePasswd() {
+                document.getElementById("form:passwd1").value = "";
+                document.getElementById("form:passwd2").value = "";
+                document.getElementById("form:passwd1").focus();
+            }
+        </script>
+
+
+        <h1  class="title ui-widget-header ui-corner-all">存储功能>NAS网络存储>用户和组</h1>
+        <br/>
+        <p:accordionPanel  style="width: 700px" styleClass="acordionPanelPostion "   id="pannel" multiple="true"  activeIndex="#{userGroupBean.tabViewActive}"  >               
+            <p:tab id="tab1" title="用户"> 
+                <h:form id="form1" >
+                    <p:toolbar style="width: 620px">
+                        <p:toolbarGroup align="right">
+                            <p:commandButton disabled="#{user.type!=2}"  value="添加" icon="addIcon" action="nas_add_user?faces-redirect=true"/>
+                        </p:toolbarGroup>
+                    </p:toolbar>
+                    <div style="overflow-x: auto; width: 100%; padding-bottom: 14px;">
+                        <p:dataTable emptyMessage="#{global.get('emptyMessage')}"  id="users" value="#{userGroupBean.allUserList}" var="sysuser"    paginator="true" rows="10"   >
+                            <!--                        <f:facet name="header">
+                                                        <div style=" text-align: right; margin-right: 20px;">
+                                                            <p:commandButton disabled="{user.type!=2}"  value="添加" icon="addIcon" action="nas_add_user?faces-redirect=true"/>
+                                                        </div>
+                                                    </f:facet>-->
+                            <p:column headerText="用户名称" style="white-space: nowrap">
+                                #{sysuser.name}
+                            </p:column>
+                            <p:column    headerText="用户所属组"  width="190" >
+                                #{sysuser.groupStrs}
+                            </p:column>
+                            <p:column headerText="操作" style="white-space: nowrap"  >
+                                <p:spacer width="5" height="10" />
+                                <p:graphicImage value="../resources/common/picture/edit.png" style="border-color: transparent;vertical-align: middle" />
+                                <p:spacer width="2" height="10" />
+                                <!--                          action="{userGroupData.updateSelectedUserForModifyPasswd}"   update=":form:editpasswdDialog" oncomplete="editPasswdDialog.show()"-->
+                                <p:commandLink disabled="#{user.type!=2}" value="修改密码" action="#{userGroupBean.doBeforeModifyPasswd(sysuser)}" >
+                                    <!--<f:param name="username" value="{cifsuser.name}" />-->
+                                </p:commandLink>
+                                <p:spacer width="10" height="10" />
+                                <p:graphicImage value="../resources/common/picture/edit.png" style="border-color: transparent;vertical-align: middle" />
+                                <p:spacer width="2" height="10" />
+                                <!--                action="{userGroupData.updateSelectedUserForModifyGroup}"             update=":form:setgroup" oncomplete="setGroupDialog.show()"-->
+                                <p:commandLink disabled="#{user.type!=2}" value="设置用户所属组" action="#{userGroupBean.doBeforeModifyUserGroup(sysuser)}"  >
+                                    <!--<f:param name="username" value="{cifsuser.name}" />-->
+                                </p:commandLink>
+                                <p:spacer width="10" height="10" />
+                                <p:graphicImage height="16" style="border-color: transparent;vertical-align: middle"   value="../resources/common/picture/delete.png" />   
+                                <!--<p:spacer width="2" height="10" />-->
+                                <!--actionListener="{userGroupData.updateSelectedUserForDel}"  oncomplete="confirmation.show()"--> 
+                                <p:commandLink disabled="#{user.type!=2}" style="vertical-align: middle" value="删除"  onclick="deleteuser.show();"  >
+                                    <f:setPropertyActionListener value="#{sysuser}" target="#{userGroupBean.selectedUser}" />                    
+                                </p:commandLink>
+                            </p:column>
+                        </p:dataTable>
+                        <!--                        <util:confirm    uid="deleteuser" mess="{res.get('confirmDelUser')}" action="{userGroupBean.deleteUser()}" update="users groups"  >
+                                                </util:confirm>-->
+                    </div>
+                    <!--
+                    <util:confirm  uid="deletehost" mess="{res.get('confirmDeleteHost')}" action="{initiatorHostBean.deleteHost()}" update="iscsihost"  >
+
+                    </util:confirm>-->
+
+                </h:form>
+
+            </p:tab>
+
+            <p:tab id="tab2" title="用户组">
+                <h:form id="form2" >
+                    <p:toolbar style="width: 620px">
+                        <p:toolbarGroup align="right">
+                            <p:commandButton disabled="#{user.type!=2}"  icon="addIcon"  value="添加" action="nas_add_group?faces-redirect=true"/>
+                        </p:toolbarGroup>
+                    </p:toolbar>
+                    <div style="overflow-x: auto; width: 100%; padding-bottom: 14px;">
+                        <p:dataTable emptyMessage="#{global.get('emptyMessage')}" id="groups" value="#{userGroupBean.allGroupList}" var="group" paginator="true" rows="10"  >
+                            <!--                            <f:facet name="header">
+                                                            <div style=" text-align: right; margin-right: 20px;">
+                                                                <p:commandButton disabled="#{user.type!=2}"  icon="addIcon"  value="添加" action="nas_add_group?faces-redirect=true"/>
+                                                            </div>
+                                                        </f:facet>-->
+                            <p:column headerText="用户组名称" style="white-space: nowrap" >
+                                #{group.name}
+                            </p:column>
+                            <p:column headerText="组内用户"  >
+                                #{group.userStrs}
+                            </p:column>
+                            <p:column headerText="操作" style="white-space: nowrap" >
+                                <p:spacer width="5" height="10" />
+                                <p:graphicImage value="../resources/common/picture/edit.png" style="border-color: transparent;vertical-align: middle" />
+                                <p:spacer width="2" height="10" />
+                                <!--update=":form:setUsersInGroup" oncomplete="setUsersInGroupDialog.show()"--> 
+                                <p:commandLink disabled="#{user.type!=2}" style="vertical-align: middle" value="设置组内用户"  action="#{userGroupBean.doBeforeModifyGroupUser(group)}" >
+                                    <!--<f:param name="groupname" value="{group.name}" />-->
+                                </p:commandLink>
+                                <p:spacer width="10" height="10" />
+                                <p:graphicImage height="16" width="16" style="border-color: transparent;vertical-align: middle"   value="../resources/common/picture/delete.png" />   
+                                <p:spacer width="5" height="10" />
+                                <p:commandLink disabled="#{user.type!=2}"   value="删除" style="vertical-align: middle" onclick="deletegroup.show();"  >
+                                    <f:setPropertyActionListener value="#{group}" target="#{userGroupBean.selectedGroup}" />                    
+                                </p:commandLink>
+                            </p:column>
+                        </p:dataTable>
+                        <!--:iscsipannel:form1:users  :iscsipannel:form2:groups-->
+                        <!--                        <util:confirm    uid="deletegroup" mess="{res.get('confirmDelGroup')}" action="{userGroupBean.deleteGroup()}" update="users  groups"  >
+                                                </util:confirm>-->
+                    </div>
+
+
+                </h:form>
+            </p:tab>
+
+
+        </p:accordionPanel>
+        <h:form>
+            <util:confirm    uid="deleteuser" mess="#{res.get('confirmDelUser')}" action="#{userGroupBean.deleteUser()}" update=":pannel:form1:users :pannel:form2:groups"  >
+            </util:confirm>
+        </h:form>
+        <h:form>
+            <util:confirm    uid="deletegroup" mess="#{res.get('confirmDelGroup')}" action="#{userGroupBean.deleteGroup()}" update=":pannel:form1:users :pannel:form2:groups"  >
+            </util:confirm>
+        </h:form>
+
+
+        <p:ajaxStatus style="width:64px;height:64px;position:fixed;right:5px;bottom:5px">  
+            <f:facet name="start">  
+                <p:graphicImage value="../resources/common/picture/loading.gif" />  
+            </f:facet>  
+
+            <f:facet name="complete">  
+                <h:outputText value="" />  
+            </f:facet>  
+        </p:ajaxStatus>
+        <!--        <p:dialog  id="confirmUserDialog" modal="true" resizable="false"  position="240,150" width="300"   header="确认"   widgetVar="confirmation"  >  
+                    <p:graphicImage  value="../resources/nas/picture/Question.gif" /> 
+                    <p:spacer width="10" height="10" />
+                    <h:outputLabel value="确定删除用户吗？" />
+                    <br/>
+                    <br/>
+                    <p:spacer width="48" height="10" />
+                    <p:commandButton disabled="{user.type!=2}"   value="确定" update=":form:pannel:users :form:pannel:groups"  oncomplete="confirmation.hide()"    actionListener="{userGroupData.deleteOneUser}" />  
+                    <p:spacer width="5" height="10" />
+                    <p:commandButton disabled="{user.type!=2}"   value="返回" oncomplete="confirmation.hide()"  />    
+        
+                </p:dialog>
+                <p:dialog  id="confirmGroupDialog" modal="true" resizable="false"  position="200,300" width="300"   header="确认"   widgetVar="confirmDeleteGroup"  >  
+                    <p:graphicImage  value="../resources/nas/picture/Question.gif" /> 
+                    <p:spacer width="10" height="10" />
+                    <h:outputLabel value="确定删除用户组吗？" />
+                    <br/>
+                    <br/>
+                    <p:spacer width="48" height="10" />
+                    <p:commandButton disabled="{user.type!=2}"   value="确定" update=":form:pannel:groups :form:pannel:users" oncomplete="confirmDeleteGroup.hide()"  actionListener="{userGroupData.deleteGroup}" />  
+                    <p:spacer width="5" height="10" />
+                    <p:commandButton disabled="{user.type!=2}"   value="返回" oncomplete="confirmDeleteGroup.hide()"  />    
+                </p:dialog>
+        
+                <p:dialog id="addDialog" header="添加用户" widgetVar="addUserDialog" resizable="false" onShow="displayAddUser()" >  
+        
+                    <h:panelGrid columns="3" cellpadding="5" id="matchGrid"  >  
+                        <h:outputLabel for="username" value="用户名：" />  
+                        <p:inputText id="username" label="username" value="{addUserBean.name}"  >
+        
+                        </p:inputText>
+                                            <h:outputLabel  id="usererror"  value="{addUser.errorinfo}" />
+        
+                                            <p:message for="username" id="lblErrFirstName" />
+        
+                        <h:outputLabel for="pwd1" value="密码：" />  
+                        <p:password id="pwd1"  label="Password 1" value="{addUserBean.passwd}" />  
+                                            <p:spacer width="2" height="6" />
+                                            <h:outputLabel  value="{addUser.errorinfo}" />
+        
+                        <h:outputLabel for="pwd2" value="确认密码：" />  
+                        <p:password id="pwd2"  label="Password 2" value="{addUserBean.confirmPasswd}" /> 
+                                             <h:outputLabel  value="{addUser.errorinfo}" />
+        
+                                            <p:spacer width="2" height="10" />
+        
+                    </h:panelGrid>  
+                    <p:spacer width="80" height="6" />
+        
+                    <p:commandButton disabled="{user.type!=2}"   value="确定"  update=":form:pannel:users :form:pannel:groups " actionListener="{addUserBean.save}"  oncomplete="if(clickConfirm(xhr, status, args)) addUserDialog.hide()">
+        
+                    </p:commandButton>  
+                    <p:commandButton disabled="{user.type!=2}"   value="返回" oncomplete="addUserDialog.hide()"/>  
+        
+                </p:dialog>
+                            <p:dialog id="editpasswdDialog" header="修改用户{userGroupData.selectedUser.name}的密码" widgetVar="editPasswdDialog" resizable="false" onShow="displayUpdatePasswd()" >  
+                                                <h:outputText value="{groups.selectedUser.name}" />
+                                <h:panelGrid columns="3" cellpadding="5"  >  
+                                    <h:outputLabel for="passwd1" value="密码：" />  
+                                    <p:password id="passwd1"  label="Password 1" value="{userGroupData.selectedUser.passwd}"  />  
+                                    <p:spacer width="2" height="6" />
+                                    <h:outputLabel for="passwd2" value="确认密码：" />  
+                                    <p:password id="passwd2"  label="Password 2" value="{userGroupData.selectedUser.confirmPasswd}" /> 
+                                    <p:spacer width="2" height="10" />
+                                </h:panelGrid>  
+                                <p:spacer width="80" height="6" />
+                                <p:commandButton disabled="{user.type!=2}"   value="确定"  update=":form:pannel:users" actionListener="{userGroupData.editUserPasswd}"  oncomplete="if(clickConfirm(xhr, status, args))  editPasswdDialog.hide()">
+                                </p:commandButton>  
+                                <p:commandButton disabled="{user.type!=2}"   value="返回" oncomplete="editPasswdDialog.hide()"/>  
+                
+                            </p:dialog>
+                <p:dialog id="setgroup" header="设置用户所属组" widgetVar="setGroupDialog" resizable="false" modal="true" >
+                    <br/>
+                                        <h:outputText value="{editGroupOfUser.name}" />
+                                       <h:outputText value="{editGroupOfUser.selectedUser.name}"></h:outputText>
+                    <p:pickList   value="{userGroupData.selectedUser.modelGroups}" var="group" itemLabel="{group}" itemValue="{group}" showSourceFilter="true" showTargetFilter="true"  >
+                        <f:facet name="targetCaption">组</f:facet>
+                        <f:facet name="sourceCaption">用户{userGroupData.selectedUser.name}所属组</f:facet> 
+                        <p:column style="width:75%;">
+                            {group}
+                        </p:column>
+                    </p:pickList>
+                    <br/>
+                    <p:spacer width="150" height="6" />
+        
+                    <p:commandButton disabled="{user.type!=2}"  value="确定" actionListener="{userGroupData.editUserGroup}" update=":form:pannel:users :form:pannel:groups" oncomplete="setGroupDialog.hide()"  />
+                    <p:spacer width="10" height="6" />
+                    <p:commandButton disabled="{user.type!=2}"  value="返回"  oncomplete="setGroupDialog.hide()"   />
+        
+                </p:dialog>
+        
+                <p:dialog id="setUsersInGroup" header="设置组内用户" widgetVar="setUsersInGroupDialog" resizable="false" modal="true" >
+                    <br/>
+                    <p:pickList value="{userGroupData.selectedRowGroup.modelUsers}" var="username" itemLabel="{username}" itemValue="{username}"  showSourceFilter="true" showTargetFilter="true"  >
+                        <f:facet name="sourceCaption">用户</f:facet>  
+                        <f:facet name="targetCaption">组{userGroupData.selectedRowGroup.name}内的用户</f:facet>
+                        <p:column >
+                            {username}
+                        </p:column>
+                    </p:pickList>
+                    <br/>
+                    <p:spacer width="150" height="6" />
+                    <p:commandButton disabled="{user.type!=2}"  value="确定" actionListener="{userGroupData.editGroupContainedUser}" update=":form:pannel:users :form:pannel:groups" oncomplete="setUsersInGroupDialog.hide()"  />
+                    <p:spacer width="10" height="6" />
+                    <p:commandButton disabled="{user.type!=2}"  value="返回"  oncomplete="setUsersInGroupDialog.hide()"   />
+        
+                </p:dialog>
+                <p:dialog  modal="true"  position="240,50" width="300" height="150" id="addGroup" header="添加用户组" widgetVar="addGroupDialog" resizable="false" onShow="displayAddGroup()" >  
+                    <br/>
+                    <h:panelGrid columns="2" cellpadding="5" >  
+                        <h:outputLabel for="groupname" value="组名：" />  
+                        <p:inputText style="width: 150px" id="groupname" label="groupname" value="{addGroup.groupName}"  >
+                        </p:inputText>
+                    </h:panelGrid>  
+                    <p:spacer width="80" height="6" />
+                    <br/>
+                    <p:spacer width="70" height="10" />
+                    <p:commandButton disabled="{user.type!=2}"   value="确定"  update=":form:pannel:groups" actionListener="{addGroup.save}"  oncomplete="if(clickConfirm(xhr, status, args)) addGroupDialog.hide()">
+        
+                    </p:commandButton>  
+                    <p:spacer width="5" height="10" />
+                    <p:commandButton disabled="{user.type!=2}"   value="返回" oncomplete="addGroupDialog.hide()"/>  
+        
+                </p:dialog>-->
+        <!--
+                </h:form>-->
+    </h:body>
+</html>

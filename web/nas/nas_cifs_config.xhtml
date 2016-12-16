@@ -1,0 +1,112 @@
+<?xml version="1.0" encoding="GBK"?>
+<!--
+To change this template, choose Tools | Templates
+and open the template in the editor.
+-->
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.1//EN" "http://www.w3.org/TR/xhtml11/DTD/xhtml11.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:util="http://java.sun.com/jsf/composite/xhtml">
+    <h:head>
+        <link href="./../resources/common/css/default.css" rel="stylesheet" type="text/css" />
+        <link href="./../resources/common/css/cssIcon.css" rel="stylesheet" type="text/css" />
+    </h:head>
+    <h:body>
+        <script type="text/javascript">
+            function init() {
+                var value = document.getElementById("form:bool_input").checked;
+                //alert(value);
+                if (value) {
+                    document.getElementById("form:testshare").disabled = false;
+
+                }
+                if (!value) {
+                    document.getElementById("form:testshare").setAttribute("disabled", "true");
+
+                    //document.getElementById("form:testshare").focus();
+                }
+                //document.getElementById("form:testshare").value = "";
+                //document.getElementById("form:testshare").focus();
+            }
+
+        </script>
+        <h:form id="form">
+            <h1 title="Share Path Infomation" class="title ui-widget-header ui-corner-all">#{res.get('title')}</h1>
+            <p:messages  showSummary="true" showDetail="false" autoUpdate="true" closable="true"  />
+            <!--            <p:layout style="min-width:100px;min-height:200px;" >
+                            <p:layoutUnit position="center" >
+                                <br/>
+                                <br/>
+                                <h:panelGrid style="text-align:center;width:979px;">
+            
+                                    <h:panelGrid>
+                                        <h:panelGrid style="text-align:center">
+                                                                    <h:outputText value="您好，朋友！您好，朋友！"/>
+                                            <h:outputText value="您好，朋友！"/>
+                                            <h:outputText value="您好，朋友！"/>
+                                        </h:panelGrid>
+                                    </h:panelGrid>
+            
+                                </h:panelGrid>
+                            </p:layoutUnit>
+                        </p:layout>-->               
+            <!--                <h:panelGrid columns="2" style="line-height: 50px" >
+                                <p:selectBooleanCheckbox id="bool" value="{sharelist.editPath.cifsOnOrOff}" style="line-height: 35px" >
+                                    <p:ajax  listener="{sharelist.editPath.change}" update="testshare" /> 
+                                </p:selectBooleanCheckbox>
+                                <h:outputText value="开启CIFS" />   
+                            </h:panelGrid>-->
+            <br/>
+            <h:panelGrid columns="2" >
+                <h:outputLabel value="#{global.get('shareName')}" />
+                <h:outputLabel value="/#{configCIFSBean.path}" />
+            </h:panelGrid>
+            <br/>
+            <!--<p:panel style="width: 320px;text-align: center;border-color: transparent" >-->
+                <h:panelGrid columns="3" >
+                    <h:panelGrid columns="2" >
+                        <p:selectBooleanCheckbox style="vertical-align: middle"  value="#{configCIFSBean.startOrNot}"  >
+                            <p:ajax event="change" listener="#{configCIFSBean.listen()}" update="testshare"   />
+                        </p:selectBooleanCheckbox>
+                    </h:panelGrid>
+                    <h:outputLabel  value="#{res.get('openCIFS')}" style="vertical-align: middle" /> 
+                </h:panelGrid>
+                <br/>
+                <h:panelGrid columns="3" >
+                    <h:outputLabel value="#{res.get('shareName')}" />
+                    <p:spacer width="2" height="10" />
+                    <p:inputText id="testshare" disabled="#{configCIFSBean.shareInputEnabled}" value="#{configCIFSBean.shareName}"  />
+                </h:panelGrid>
+            <!--</p:panel>-->
+            <br/>
+            <p:panel style="width: 300px;text-align: center;border-color: transparent" >
+
+                <!--<p:spacer width="65" height="6" />-->
+                <p:commandButton value="#{global.get('save')}" icon="saveIcon"  action="#{configCIFSBean.save()}" />
+                <p:spacer width="8" height="6" />
+                <p:commandButton value="#{global.get('return')}" icon="cancleIcon" immediate="true" action="nas_path?faces-redirect=true" />
+            </p:panel>
+
+            <!--            <p:dialog id="configCIFS" header="CIFS设置" widgetVar="configCIFSDialog" resizable="false" modal="true" >
+            
+                        </p:dialog>-->
+        </h:form>
+        <h:form>
+            <util:confirm  uid="turnoffcifs" mess="#{res.get('closeCIFS')}" action="#{configCIFSBean.turnOffCIFS()}"  >
+            </util:confirm>
+        </h:form>
+        <p:ajaxStatus style="width:64px;height:64px;position:fixed;right:5px;bottom:5px">  
+            <f:facet name="start">  
+                <p:graphicImage value="../resources/common/picture/loading.gif" />  
+            </f:facet>  
+
+            <f:facet name="complete">  
+                <h:outputText value="" />  
+            </f:facet>  
+        </p:ajaxStatus>
+    </h:body>
+
+</html>

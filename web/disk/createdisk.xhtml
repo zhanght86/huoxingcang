@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="GBK"?>
+<!--
+To change this template, choose Tools | Templates
+and open the template in the editor.
+-->
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.1//EN" "http://www.w3.org/TR/xhtml11/DTD/xhtml11.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:util="http://java.sun.com/jsf/composite/xhtml">
+    <h:head>
+        <link href="./../resources/common/css/default.css" rel="stylesheet" type="text/css" />
+        <link href="./../resources/common/css/cssIcon.css" rel="stylesheet" type="text/css" />
+    </h:head>
+    <h:body> 
+        <h:form id="form">
+            <h1 class="title ui-widget-header ui-corner-all">${res.get('title')}</h1>
+            <p:messages id="messages" showDetail="true" autoUpdate="true" closable="true" />
+            <br></br>
+            <p:panel style="border: none;">
+                
+                <h:panelGrid columns="1" cellpadding="5" id="matchGrid" >  
+                    <h:panelGroup>
+                    <h:outputLabel for="diskpool" value="${res.get('diskpool')}" />  
+                    <p:spacer width="30"/>
+                    <h:outputLabel value="#{createDisksBean.poolZFSPath}" id="diskpool" />
+                    </h:panelGroup>
+                    
+                    <h:panelGroup>
+                    <h:outputLabel for="diskcount" value="${res.get('diskcount')}" />  
+                    <p:spacer width="16"/>
+                    <p:inputText value="#{createDisksBean.diskcount}" id="diskcount" disabled="#{createDisksBean.cantuse}"/>
+                    </h:panelGroup>
+
+                    <h:panelGroup>
+                    <h:outputLabel for="diskszie" value="${res.get('diskszie')}" />  
+                    <h:panelGroup>
+                        <p:inputText value="#{createDisksBean.diskSize}" id="diskszie" style=" width: 152px;" disabled="#{createDisksBean.cantuse}"/>GB
+                    </h:panelGroup>
+                    </h:panelGroup>
+                    
+                    <h:panelGroup>
+                        <p:selectBooleanCheckbox  id="isenable" value="#{createDisksBean.isEnable}" disabled="#{createDisksBean.cantuse}" style=" text-align: center; vertical-align: middle; height: 20px;">
+                        </p:selectBooleanCheckbox>
+                        ${res.get('enabel')}
+                    </h:panelGroup> 
+
+                </h:panelGrid>  
+                <p:poll interval="4000" update="num" /> 
+                <h:outputLabel id="num" value="${res.get('createtip1')}${createDisksBean.diskcount}${res.get('createtip2')}${createDisksBean.index}${res.get('createtip3')}" rendered="#{createDisksBean.istip}"/>
+                
+                <br></br>
+                <p:spacer width="50" height="6" />
+
+                <p:commandButton id="addButton" icon="saveIcon" value="${global.get('save')}"  action="#{createDisksBean.saveCreateDisk}" disabled="#{createDisksBean.cantuse}"/>  
+                <p:spacer width="8"/>
+                <p:commandButton id="closeButton" icon="cancleIcon" value="${global.get('return')}" action="virtualdisklist?faces-redirect=true" disabled="#{createDisksBean.cantuse}"/>  
+            </p:panel>
+            
+            <util:question  uid="adddiskok" mess="${res.get('tolun')}" action="#{createDisksBean.toLUNMapping()}" actionListener="#{createDisksBean.toVirtualdisklist()}" >
+
+            </util:question>
+        </h:form>
+           <p:ajaxStatus style="width:64px;height:64px;position:fixed;right:5px;bottom:5px">  
+            <f:facet name="start">  
+                <p:graphicImage value="../resources/common/picture/loading.gif" />  
+            </f:facet>  
+                
+            <f:facet name="complete">  
+                <h:outputText value="" />  
+            </f:facet>  
+        </p:ajaxStatus>
+        </h:body>
+</html>

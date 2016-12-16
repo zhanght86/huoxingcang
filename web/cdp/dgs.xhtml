@@ -1,0 +1,151 @@
+<?xml version="1.0" encoding="GBK"?>
+<!--
+To change this template, choose Tools | Templates
+and open the template in the editor.
+-->
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.1//EN" "http://www.w3.org/TR/xhtml11/DTD/xhtml11.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:p="http://primefaces.org/ui"                
+                xmlns:util="http://java.sun.com/jsf/composite/xhtml">
+
+    <h:head>
+        <link href="./../resources/common/css/default.css" rel="stylesheet" type="text/css" />
+        <link href="./../resources/common/css/cssIcon.css" rel="stylesheet" type="text/css" />
+    </h:head>
+    <h:body id="bb">
+        <h:form id="form">
+            <h1 class="title ui-widget-header ui-corner-all" >#{global.get('cdp')}#{res.get('title')}</h1>
+            <p:messages id="messages" showDetail="true" autoUpdate="true" closable="true" />
+            <p:outputPanel id="output" deferred="true">
+                <br></br>
+
+                <p:toolbar>  
+                    <p:toolbarGroup align="right">
+                        <p:commandButton id="addLink" icon="addIcon" disabled="#{user.type!=2}"  value="#{global.get('add')}" immediate="true" action="#{diskGroupsBean.addDG()}" update="dgs" /> 
+                    </p:toolbarGroup>
+                </p:toolbar>
+                <div style="overflow-x: auto; width:100%;padding-bottom: 2px !important; padding-bottom: 14px;">
+                    <p:dataTable id="dgs" var="diskGroup" value="#{diskGroupsBean.diskGroups}" emptyMessage="#{global.get('emptyMessage')}" >
+                        <p:ajax event="rowToggle" listener="#{diskGroupsBean.getExpansions(diskGroup)}"/>
+                        <p:column style="width:2%">
+                            <p:rowToggler />
+                        </p:column>
+                        <p:column headerText="#{res.get('header1')}" width="200"  style="white-space: nowrap">  
+                            <h:outputText value="#{diskGroup.diskGroupName}" />  
+                        </p:column>
+                        <p:column headerText="#{res.get('header2')}" width="50" style="text-align:center; white-space: nowrap">  
+                            <h:outputText value="#{diskGroupsBean.getsMount(diskGroup)}" />
+                        </p:column>  
+                        <p:column headerText="#{global.get('operation')}" style="white-space: nowrap">                        
+                            <p:graphicImage value="../resources/vm/picture/disk.png"  width="16" height="16" style=" vertical-align:middle;"/>
+                            <p:commandLink id="diskL" value="#{res.get('operation1')}" 
+                                           disabled="#{user.type!=2 or diskGroupsBean.disableAll(diskGroup) or diskGroupsBean.getOffline(diskGroup.getiMount())}" 
+                                           action="#{diskGroupsBean.disk()}" style="vertical-align:middle;">
+                                <f:setPropertyActionListener value="#{diskGroup}" target="#{diskGroupsBean.selectedDG}" />
+                            </p:commandLink>
+                            <p:spacer width="10"/>
+                            <p:graphicImage value="../resources/common/picture/lun.png"  width="16" height="16" style=" vertical-align:middle;"/>
+                            <p:commandLink id="lunLink" value="#{res.get('operation3')}" immediate="true" 
+                                           disabled="#{user.type!=2 or diskGroupsBean.disableAll(diskGroup) or diskGroupsBean.getOffline(diskGroup.getiMount()) or diskGroup.diskCount == 0}" 
+                                           action="#{diskGroupsBean.lun()}" style=" vertical-align:middle;">
+                                <f:setPropertyActionListener value="#{diskGroup}" target="#{diskGroupsBean.selectedDG}" />
+                            </p:commandLink>                        
+                            <p:spacer width="10"/>
+                            <p:graphicImage id="on" value="../resources/common/picture/online.png" rendered="#{diskGroupsBean.RONLine(diskGroup)}" width="16" height="16" style=" vertical-align:middle;"/>
+                            <p:graphicImage id="off" value="../resources/common/picture/offline.png" rendered="#{diskGroupsBean.ROFFLine(diskGroup)}"  width="16" height="16" style=" vertical-align:middle;"/>
+                            <p:commandLink id="OnOfflineLink" disabled="#{user.type!=2 or diskGroupsBean.disableAll(diskGroup)}"  value="#{diskGroupsBean.getONOFFLine(diskGroup)}" immediate="true" action="#{diskGroupsBean.preonoffLine()}" update=":c dgs on off"  style=" vertical-align:middle;">
+                                <f:setPropertyActionListener value="#{diskGroup}" target="#{diskGroupsBean.selectedDG}" />
+                            </p:commandLink> 
+                            <p:spacer width="10"/>
+                            <p:graphicImage value="../resources/common/picture/edit.png" style=" vertical-align:middle;"/>
+                            <p:commandLink id="setButton" value="${res.get('o1')}" disabled="#{user.type!=2 or diskGroupsBean.disableAll(diskGroup)}" immediate="true" action="#{diskGroupsBean.settings()}" update="dgs" style=" vertical-align:middle;"> 
+                                <f:setPropertyActionListener value="#{diskGroup.diskGroupPath}" target="#{diskGroupsBean.path}" />
+                                <f:setPropertyActionListener value="#{diskGroup}" target="#{diskGroupsBean.selectedDG}" />
+                            </p:commandLink>
+                            <p:spacer width="10"/>
+                            <p:graphicImage value="../resources/common/picture/delete.png" width="16" height="16" style=" vertical-align:middle;"/>
+                            <p:commandLink id="deleteLink" disabled="#{user.type!=2 or diskGroupsBean.disableAll(diskGroup)}"  value="#{global.get('delete')}" update=":c dgs" action="#{diskGroupsBean.preDelDG(diskGroup)}"  style=" vertical-align:middle;">
+                                <f:setPropertyActionListener value="#{diskGroup}" target="#{diskGroupsBean.selectedDG}" />
+                            </p:commandLink>
+                        </p:column> 
+
+                        <p:rowExpansion >
+                            <p:accordionPanel id="accord" style="border:none; " styleClass="acordionPanelPostion" multiple="true">
+                                <p:tab title="#{res.get('tb1')}">
+                                    <p:dataTable var="detailBean" value="#{diskGroupsBean.dgInfo}" id="detail" style=" margin-top: 10px;margin-bottom: 6px; margin-right: 0px !important;margin-right: -70px;">  
+                                        <p:column headerText="名称" >  
+                                            <h:outputText value="#{detailBean.name}" />  
+                                        </p:column> 
+                                        <p:column headerText="值" >  
+                                            <h:outputText value="#{detailBean.value}"/>
+                                        </p:column>                      
+                                    </p:dataTable>
+                                </p:tab>
+                                <p:tab title="#{res.get('tb2')}" >
+                                    <p:dataTable emptyMessage="#{global.get('emptyMessage')}" id="disks" value="#{diskGroupsBean.disks}" var="dgd" >
+                                        <p:column headerText="#{res.get('header2_1')}">
+                                            <h:outputText value="#{dgd.diskName}" />  
+                                        </p:column>
+                                        <p:column headerText="#{res.get('header2_2')}">
+                                            <h:outputText value="#{dgd.luInfoBean.serialNum}" />  
+                                        </p:column>
+                                        <p:column headerText="#{res.get('header2_3')}" style=" text-align: center;">
+                                            <h:outputText value="#{util.getSizeString(dgd.diskSize)}GB" />  
+                                        </p:column>
+                                        <p:column headerText="#{res.get('header2_4')}" style=" text-align: center;">
+                                            <h:outputText value="#{cu.getStringDiskStatus(dgd.diskCreateStatus)}" />  
+                                        </p:column>
+                                    </p:dataTable>
+                                </p:tab>
+                                <p:tab title="#{res.get('tb3')}">
+                                    <p:dataTable emptyMessage="#{global.get('emptyMessage')}" id="luns" value="#{diskGroupsBean.lun}" var="lun" >
+                                        <p:column headerText="#{res.get('header3_1')}">
+                                            <h:outputText value="#{diskGroupsBean.getType(lun.hostGroupName)}" />
+                                        </p:column>
+                                        <p:column headerText="#{res.get('header3_2')}">
+                                            <h:outputText value="#{diskGroupsBean.getStrLun(lun.hostGroupName)}"/>  
+                                        </p:column>
+                                    </p:dataTable>
+                                </p:tab>
+                            </p:accordionPanel>
+
+                        </p:rowExpansion>
+                    </p:dataTable> 
+                </div>   
+            </p:outputPanel>
+        </h:form>
+        <h:form id="c" style=" border: none;">
+            <util:confirm  uid="deleteDGBox" mess="#{res.get('confirm')}#{global.get('lquote')}#{diskGroupsBean.selectedDG.diskGroupName}#{global.get('rquote')}#{global.get('what')}" action="#{diskGroupsBean.deleteDG()}"  update=":form">
+            </util:confirm>
+            <util:confirm  uid="disLUNDel" mess="#{res.get('confirm2')}#{global.get('lquote')}#{diskGroupsBean.selectedDG.diskGroupName}#{global.get('rquote')}#{global.get('what')}" action="#{diskGroupsBean.deleteDG()}"  update=":form">
+            </util:confirm >
+            <util:confirm  uid="SdeleteDGBox" mess="#{res.get('confirm4')}#{global.get('lquote')}#{diskGroupsBean.selectedDG.diskGroupName}#{global.get('rquote')}#{global.get('what')}" action="#{diskGroupsBean.deleteDG()}" update=":form">
+            </util:confirm>
+            <util:confirm  uid="SdisLUNDel" mess="#{res.get('confirm5')}#{global.get('lquote')}#{diskGroupsBean.selectedDG.diskGroupName}#{global.get('rquote')}#{global.get('what')}" action="#{diskGroupsBean.deleteDG()}"  update=":form">
+            </util:confirm >
+            <util:confirm  uid="deleteDGBoxPlus" mess="#{res.get('confirmPlus')}#{global.get('lquote')}#{diskGroupsBean.selectedDG.diskGroupName}#{global.get('rquote')}#{global.get('what')}" action="#{diskGroupsBean.deleteDG()}" update=":form">
+            </util:confirm>
+            <util:confirm  uid="disLUNDelPlus" mess="#{res.get('confirm2Plus')}#{global.get('lquote')}#{diskGroupsBean.selectedDG.diskGroupName}#{global.get('rquote')}#{global.get('what')}" action="#{diskGroupsBean.deleteDG()}"  update=":form">
+            </util:confirm >
+            <util:confirm  uid="SdeleteDGBoxPlus" mess="#{res.get('confirm4Plus')}#{global.get('lquote')}#{diskGroupsBean.selectedDG.diskGroupName}#{global.get('rquote')}#{global.get('what')}" action="#{diskGroupsBean.deleteDG()}" update=":form">
+            </util:confirm>
+            <util:confirm  uid="SdisLUNDelPlus" mess="#{res.get('confirm5Plus')}#{global.get('lquote')}#{diskGroupsBean.selectedDG.diskGroupName}#{global.get('rquote')}#{global.get('what')}" action="#{diskGroupsBean.deleteDG()}"  update=":form">
+            </util:confirm >
+            <util:confirm uid="disLUN" mess="#{res.get('confirm1')}#{global.get('lquote')}#{diskGroupsBean.selectedDG.diskGroupName}#{global.get('rquote')}#{global.get('what')}" action="#{diskGroupsBean.onoffLine()}" update=":form"/>
+            <util:confirm  uid="offlineDG" mess="#{res.get('confirm3')}#{global.get('lquote')}#{diskGroupsBean.selectedDG.diskGroupName}#{global.get('rquote')}#{global.get('what')}" action="#{diskGroupsBean.onoffLine()}" update=":form">
+            </util:confirm>
+        </h:form>
+        <p:ajaxStatus style="width:64px;height:64px;position:fixed;right:5px;bottom:5px">
+            <f:facet name="start">
+                <p:graphicImage value="../resources/common/picture/loading.gif" />  
+            </f:facet>
+
+            <f:facet name="complete">
+                <h:outputText value="" />
+            </f:facet>
+        </p:ajaxStatus>
+    </h:body>
+</ui:composition>

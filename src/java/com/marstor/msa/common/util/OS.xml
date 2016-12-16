@@ -1,0 +1,175 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<MarsVM>
+    <OS>
+        <OSItem>
+            <OSName>Microsoft Windows</OSName>
+            <OSType>
+                <ID>Windows2003</ID>
+                <TypeName>Windows 2003</TypeName>
+                <MemorySize>256</MemorySize>
+                <DiskSize>20</DiskSize>
+            </OSType>
+            <OSType>
+                <ID>Windows2003_64</ID>
+                <TypeName>Windows 2003 (64 bit)</TypeName>
+                <MemorySize>256</MemorySize>
+                <DiskSize>20</DiskSize>
+            </OSType>
+            <OSType>
+                <ID>Windows2008</ID>
+                <TypeName>Windows 2008</TypeName>
+                <MemorySize>512</MemorySize>
+                <DiskSize>20</DiskSize>
+            </OSType>
+            <OSType>
+                <ID>Windows2008_64</ID>
+                <TypeName>Windows 2008 (64 bit)</TypeName>
+                <MemorySize>512</MemorySize>
+                <DiskSize>20</DiskSize>
+            </OSType>
+            <OSType>
+                <ID>Windows7</ID>
+                <TypeName>Windows 7</TypeName>
+                <MemorySize>512</MemorySize>
+                <DiskSize>20</DiskSize>
+            </OSType>
+            <OSType>
+                <ID>Windows7_64</ID>
+                <TypeName>Windows 7 (64 bit)</TypeName>
+                <MemorySize>512</MemorySize>
+                <DiskSize>20</DiskSize>
+            </OSType>
+               
+             <OSType>
+                <ID>Windows8_64</ID>
+                <TypeName>Windows 8 (64 bit)</TypeName>
+                <MemorySize>512</MemorySize>
+                <DiskSize>20</DiskSize>
+            </OSType>
+             <OSType>
+                <ID>Windows81_64</ID>
+                <TypeName>Windows 8.1 (64 bit)</TypeName>
+                <MemorySize>512</MemorySize>
+                <DiskSize>20</DiskSize>
+            </OSType>
+            <OSType>
+                <ID>Windows2012_64</ID>
+                <TypeName>Windows 2012 (64 bit)</TypeName>
+                <MemorySize>512</MemorySize>
+                <DiskSize>20</DiskSize>
+            </OSType>
+            
+            <OSType>
+                <ID>WindowsNT</ID>
+                <TypeName>Other Windows</TypeName>
+                <MemorySize>512</MemorySize>
+                <DiskSize>20</DiskSize>
+            </OSType>
+        </OSItem>
+        <OSItem>
+            <OSName>Linux</OSName>
+             <OSType>
+                <ID>Linux24</ID>
+                <TypeName>Linux 2.4</TypeName>
+                <MemorySize>128</MemorySize>
+                <DiskSize>4</DiskSize>
+            </OSType>
+            <OSType>
+                <ID>Linux24_64</ID>
+                <TypeName>Linux 2.4 (64 bit)</TypeName>
+                <MemorySize>128</MemorySize>
+                <DiskSize>4</DiskSize>
+            </OSType>
+             <OSType>
+                <ID>Linux26</ID>
+                <TypeName>Linux 2.6 / 3.x</TypeName>
+                <MemorySize>256</MemorySize>
+                <DiskSize>8</DiskSize>
+            </OSType>
+            <OSType>
+                <ID>Linux26_64</ID>
+                <TypeName>Linux 2.6 / 3.x (64 bit)</TypeName>
+                <MemorySize>256</MemorySize>
+                <DiskSize>8</DiskSize>
+            </OSType>
+            <OSType>
+                <ID>RedHat</ID>
+                <TypeName>Red Hat</TypeName>
+                <MemorySize>512</MemorySize>
+                <DiskSize>8</DiskSize>
+            </OSType>
+            <OSType>
+                <ID>RedHat_64</ID>
+                <TypeName>Red Hat (64 bit)</TypeName>
+                <MemorySize>512</MemorySize>
+                <DiskSize>8</DiskSize>
+            </OSType>            
+            <OSType>
+                <ID>Ubuntu</ID>
+                <TypeName>Ubuntu</TypeName>
+                <MemorySize>512</MemorySize>
+                <DiskSize>8</DiskSize>
+            </OSType>
+            <OSType>
+                <ID>Ubuntu_64</ID>
+                <TypeName>Ubuntu (64 bit)</TypeName>
+                <MemorySize>512</MemorySize>
+                <DiskSize>8</DiskSize>
+            </OSType>
+        </OSItem>
+        <OSItem>
+            <OSName>Solaris</OSName>
+            <OSType>
+                <ID>OpenSolaris</ID>
+                <TypeName>Oracle Solaris 10 10/09 and later</TypeName>
+                <MemorySize>768</MemorySize>
+                <DiskSize>16</DiskSize>
+            </OSType>
+            <OSType>
+                <ID>OpenSolaris_64</ID>
+                <TypeName>Oracle Solaris 10 10/09 and later (64 bit)</TypeName>
+                <MemorySize>768</MemorySize>
+                <DiskSize>16</DiskSize>
+            </OSType>
+       </OSItem>
+       <OSItem>
+            <OSName>Other</OSName>
+            <OSType>
+                <ID>DOS</ID>
+                <TypeName>DOS</TypeName>
+                <MemorySize>32</MemorySize>
+                <DiskSize>1</DiskSize>
+            </OSType>
+            <OSType>
+                <ID>Other</ID>
+                <TypeName>Other/Unknown</TypeName>
+                <MemorySize>64</MemorySize>
+                <DiskSize>2</DiskSize>
+            </OSType>
+       </OSItem>
+   </OS>
+   <Controller>
+        <ControllerItem>
+            <ControllerName>IDE 控制器</ControllerName>
+            <ChipType>
+                <ChipItem>PIIX4</ChipItem>
+                <ChipItem>PIIX3</ChipItem>
+                <ChipItem>ICH6</ChipItem>
+            </ChipType>            
+        </ControllerItem>
+        <ControllerItem>
+            <ControllerName>SCSI 控制器</ControllerName>
+            <ChipType>
+                <ChipItem>LsiLogic</ChipItem>
+                <ChipItem>BusLogic</ChipItem>
+            </ChipType>
+        </ControllerItem>
+         <ControllerItem>
+            <ControllerName>SAS 控制器</ControllerName>
+            <ChipType>
+                <ChipItem>LsiLogic SAS</ChipItem>
+            </ChipType>
+        </ControllerItem>
+   </Controller>
+
+</MarsVM>

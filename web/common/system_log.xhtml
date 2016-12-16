@@ -1,0 +1,119 @@
+<?xml version="1.0" encoding="GBK"?>
+<!--
+To change this template, choose Tools | Templates
+and open the template in the editor.
+-->
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.1//EN" "http://www.w3.org/TR/xhtml11/DTD/xhtml11.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:util="http://java.sun.com/jsf/composite/xhtml"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
+    <h:head>
+        <link href="./../resources/common/css/default.css" rel="stylesheet" type="text/css" />
+        <link href="./../resources/common/css/cssIcon.css" rel="stylesheet" type="text/css" />
+        <script type="text/javascript">
+            PrimeFaces.locales['cn'] = {
+                closeText: '确定',
+                prevText: '上',
+                nextText: '下',
+                monthNames: ['1月', '2月', '3月', '4月', '5月', '6月', '7月', '8月', '9月', '10月', '11月', '12月'],
+                monthNamesShort: ['1月', '2月', '3月', '4月', '5月', '6月', '7月', '8月', '9月', '10月', '11月', '12月'],
+                dayNames: ['日', '一', '二', '三', '四', '五', '六'],
+                dayNamesShort: ['日', '一', '二', '三', '四', '五', '六'],
+                dayNamesMin: ['日', '一', '二', '三', '四', '五', '六'],
+                weekHeader: 'Woche',
+                FirstDay: 1,
+                isRTL: false,
+                showMonthAfterYear: false,
+                yearSuffix: '',
+                timeOnlyTitle: 'Nur Zeit',
+                timeText: '时间',
+                hourText: '时',
+                minuteText: '分',
+                secondText: '秒',
+                currentText: '当前时间',
+                ampm: false,
+                month: 'Monat',
+                week: 'Woche',
+                day: 'Tag',
+                allDayText: 'Ganzer Tag'
+            };
+        </script>
+    </h:head>
+    <h:body>
+        <h:form id="form0">
+            <h1 title="System Infomation" class="title ui-widget-header ui-corner-all">#{res.get('title')}</h1>
+            <p:messages autoUpdate="true" redisplay="true" showDetail="true" closable="true" /><br/>
+            <p:toolbar>  
+                <p:toolbarGroup align="left">
+                    <h:panelGrid columns="2" cellpadding="4" >
+                        <h:panelGrid columns="2" cellpadding="0" >
+                            <h:outputLabel value="#{res.get('begin')}"/>
+                            <p:calendar locale="cn" pattern="yyyy-MM-dd HH:mm:ss" showButtonPanel="true" navigator="true" 
+                                        id="date0" value="#{systemLog.begin}"  /> 
+                        </h:panelGrid> 
+                        <h:panelGrid columns="2" cellpadding="0">
+                            <h:outputLabel value="#{res.get('end')}" />
+                            <p:calendar locale="cn" pattern="yyyy-MM-dd HH:mm:ss" showButtonPanel="true" navigator="true" 
+                                        id="date1" value="#{systemLog.end}" /> 
+                        </h:panelGrid>
+                        <h:panelGrid columns="2" cellpadding="0" >
+                            <h:outputLabel value="#{res.get('logtype')}"/>
+                            <p:selectOneMenu id="storage" value="#{systemLog.selcetType}" style="min-width: 185px; max-width:170px;">  
+                                <f:selectItems value="#{systemLog.typeList}"/> 
+                            </p:selectOneMenu>
+                        </h:panelGrid>
+
+                        <h:panelGrid columns="4" cellpadding="0" >
+                            <p:commandButton value="#{res.get('query')}" icon="testIcon" action="#{systemLog.appointedLog()}" style="left: -5px" update="log" />
+                            <p:commandButton id="download" value="#{res.get('export')}" icon="exportIcon" ajax="fale" oncomplete="show();" >
+                                <p:fileDownload id="file" value="#{systemLog.file}" />  
+                            </p:commandButton>
+                            <p:commandButton id="down" value="#{res.get('down')}" icon="downloadIcon" ajax="fale" oncomplete="show();" >
+                                <p:fileDownload id="logfile" value="#{systemLog.logFile}" />  
+                            </p:commandButton>
+                            <p:commandButton value="#{res.get('delete')}" icon="deleteIcon" onclick="del.show();" disabled="#{user.type!=3}" style="left: 5px"/>
+                        </h:panelGrid>
+                    </h:panelGrid>
+                </p:toolbarGroup>
+            </p:toolbar>
+            <p:dataTable id="log" var="log"  emptyMessage="#{global.get('emptyMessage')}" 
+                         value="${systemLog.lazyModel}" paginator="true" rows="10"  styleClass="datatable" 
+                         paginatorTemplate="{FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"  
+                         rowsPerPageTemplate="10,20,50" selectionMode="single" selection="#{systemLog.selectedLog}" lazy="true">  
+                <!--sortBy="type" sortBy="time" sortBy="user"--> 
+                <p:column headerText="#{res.get('type')}"  style="white-space:nowrap;" >  
+                    <h:outputText value="${log.type}"/>  
+                </p:column>   
+                <p:column headerText="#{res.get('time')}"  style="white-space:nowrap;" >  
+                    <h:outputText value="${log.time}"/>  
+                </p:column>
+                <p:column headerText="#{res.get('user')}"  style="white-space:nowrap;" >  
+                    <h:outputText value="${log.user}"/>  
+                </p:column>
+                <p:column headerText="#{res.get('loginfo')}"  style="word-wrap:normal;">  
+                    <h:outputText value="${log.detail}"/>  
+                </p:column>
+                <p:column headerText="#{res.get('operate')}"  style="white-space:nowrap;" width="50px" >  
+                    <p:graphicImage value="../resources/oracle/picture/look.png" style=" vertical-align:middle;height: 16px; width: 16px;"/>
+                    <p:commandLink id="look" value="#{res.get('look')}" action="#{systemLog.showDetail()}" style="vertical-align:middle;">
+                        <f:setPropertyActionListener value="#{log}" target="#{systemLog.selectedLog}" />
+                    </p:commandLink>
+                </p:column> 
+            </p:dataTable>
+        </h:form>
+        <h:form id="form1">
+            <util:confirm  uid="del"  mess="#{res.get('ifDelete')}"  action="#{systemLog.deleteLogs()}" update=":form0:log"/>
+        </h:form>
+        <p:ajaxStatus style="width:64px;height:64px;position:fixed;right:5px;bottom:5px">  
+            <f:facet name="start">  
+                <p:graphicImage value="../resources/common/picture/loading.gif" />  
+            </f:facet>  
+
+            <f:facet name="complete">  
+                <h:outputText value="" />  
+            </f:facet>  
+        </p:ajaxStatus>
+    </h:body>
+</html>

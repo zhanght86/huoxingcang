@@ -1,0 +1,47 @@
+<?xml  version="1.0" encoding="GB18030" standalone="no" ?>
+<CDP>
+  <Setup>
+    <SetupItem>
+      <OS>Windows</OS>
+      <Platform>x86,x64</Platform>
+      <FileName>AdvancedMirrorAgentSetup_Windows.zip</FileName>
+      <Description>Windows代理</Description>
+    </SetupItem>
+<!--    <SetupItem>
+      <OS>Windows</OS>
+      <Platform>x86,x64</Platform>
+      <FileName>AdvancedMirrorAgentSetup_WindowsPatch.zip</FileName>
+      <Description>Windows代理 补丁</Description>
+    </SetupItem>-->
+    <SetupItem>
+      <OS>Linux</OS>
+      <Platform>x86,x64</Platform>
+      <FileName>AdvancedMirrorAgentSetup_Linux.zip</FileName>
+      <Description>Linux代理</Description>
+    </SetupItem>
+<!--    <SetupItem>
+      <OS>Linux</OS>
+      <Platform>x86,x64</Platform>
+      <FileName>AdvancedMirrorAgentSetup_LinuxPatch.zip</FileName>
+      <Description>Linux代理 补丁</Description>
+    </SetupItem>-->
+    <SetupItem>
+      <OS>AIX</OS>
+      <Platform>64</Platform>
+      <FileName>AdvancedMirrorAgentSetup_AIX.zip</FileName>
+      <Description>AIX代理</Description>
+    </SetupItem>
+    <SetupItem>
+      <OS>HP-UX</OS>
+      <Platform>IA64</Platform>
+      <FileName>AdvancedMirrorAgentSetup_HP-UX.zip</FileName>
+      <Description>HP-UX代理</Description>
+    </SetupItem>
+    <SetupItem>
+      <OS>Solaris</OS>
+      <Platform>Sparc 64</Platform>
+      <FileName>AdvancedMirrorAgentSetup_Solaris.zip</FileName>
+      <Description>Solaris代理</Description>
+    </SetupItem>
+  </Setup>
+</CDP>
